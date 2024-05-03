@@ -12,3 +12,4 @@
 - **npm run prepare** - invokes automatically after each install and runs husky
 - **npm run prettier:check** - runs prettier check
 - **npm run prettier:write** - format the entire project
+- **npm run test** - runs Jest tests
