@@ -13,3 +13,4 @@
 - **npm run prettier:check** - runs prettier check
 - **npm run prettier:write** - format the entire project
 - **npm run test** - runs Jest tests
+- **npm run test:coverage** - runs test coverage check
