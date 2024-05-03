@@ -7,6 +7,7 @@ We welcome all, from beginners to experts, to come into our store and find a pla
 
 ## Our stack 🗃️
 - GitHub 💻
+- TypeScript 📘
 - React ⚛️
 - Redux Toolkit ⚛️
 - Trello  🗂️ 
