@@ -1,6 +1,9 @@
-# e-commerce
+# e-commerce Plant Shop
+*Buy more plants, it helps you to be relaxed*
 
-// TODO: add description
+## Project's Description 📝
+The theme of our project is the creation of a modern and convenient application for buying flowers and plants.
+We welcome all, from beginners to experts, to come into our store and find a plant that speaks to your individual personalities. We don't just sell plants, we love educating you on where your plant comes from and how to care for it. So come on by and say hello!
 
 ## Scripts📄
 
