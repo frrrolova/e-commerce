@@ -24,11 +24,10 @@ The purpose of the project is to create an application where users can freely pu
 ## How to set up and run the project
 1. Install Node.js
 2. Install GIT
-3. Fork this repository: https://github.com/frrrolova/e-commerce.git
-4. Clone your newly created repo: `https://github.com/<%your_github_username%>/e-commerce.git/`
-5. Go to folder `e-commerce` using `cd e-commerce`
-6. To install all dependencies use `npm install`
-7. To run the project  use `npm run dev`
+3. Clone this repository: https://github.com/frrrolova/e-commerce.git
+4. Go to folder `e-commerce` using `cd e-commerce`
+5. To install all dependencies use `npm install`
+6. To run the project  use `npm run dev`
 
 ## Scripts📄
 
