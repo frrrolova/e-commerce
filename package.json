@@ -12,7 +12,8 @@
     "prepare": "husky",
     "prettier:check": "npx prettier ./src",
     "prettier:write": "prettier --write --ignore-unknown",
-    "test": "jest"
+    "test": "jest",
+    "test:coverage": "jest --coverage"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
