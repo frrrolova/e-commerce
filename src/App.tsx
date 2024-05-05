@@ -1,17 +1,13 @@
-import { Button, Container, CssBaseline } from '@mui/material';
 import './App.scss';
+import { ThemeProvider } from '@mui/material/styles';
 import Routing from './routes/Routing';
+import theme from './themes/theme';
 
 function App() {
   return (
-    <>
-      <CssBaseline />
-      <Container>
-        <h1>Plant shop</h1>
-        <Button variant="outlined">Contained</Button>
-        <Routing />
-      </Container>
-    </>
+    <ThemeProvider theme={theme}>
+      <Routing />
+    </ThemeProvider>
   );
 }
 
