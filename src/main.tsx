@@ -13,7 +13,7 @@ document.body.insertAdjacentElement('afterbegin', root);
 ReactDOM.createRoot(root).render(
   <React.StrictMode>
     <Provider store={store}>
-      <BrowserRouter basename={import.meta.env.BASE_URL}>
+      <BrowserRouter>
         <App />
       </BrowserRouter>
     </Provider>
