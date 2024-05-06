@@ -6,23 +6,31 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
+import LoginIcon from '@mui/icons-material/Login';
 import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import { navLinksData } from '../../routes/routeConstants';
+import { navLinksData, rightMenuData } from '../../routes/routeConstants';
 import { useNavigate } from 'react-router-dom';
+import styles from './Header.module.scss';
 
 const pages = [navLinksData.home, navLinksData.catalog, navLinksData.about];
-const settings = [navLinksData.profile, navLinksData.logout];
 
 function Header() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
   const navigate = useNavigate();
+
+  // TODO take @isLogged from store and update @menuData and @currentIcon
+  const isLogged = false;
+
+  const menuData = isLogged ? rightMenuData.isAuth : rightMenuData.notAuth;
+
+  const currentIcon = isLogged ? <Avatar alt="User" src="/static/images/avatar/2.jpg" /> : <LoginIcon />;
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -31,18 +39,22 @@ function Header() {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseNavMenu = (toUrl: string) => {
-    if (typeof toUrl === 'string') navigate(toUrl);
+  const handleCloseNavMenu = (_e: React.MouseEvent<HTMLLIElement | HTMLButtonElement, MouseEvent>, toUrl: string) => {
+    if (toUrl !== 'backdropClick') {
+      navigate(toUrl);
+    }
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = (toUrl: string) => {
-    if (typeof toUrl === 'string') navigate(toUrl);
+  const handleCloseUserMenu = (_e: React.MouseEvent<HTMLLIElement, MouseEvent>, toUrl: string) => {
+    if (toUrl !== 'backdropClick') {
+      navigate(toUrl);
+    }
     setAnchorElUser(null);
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" className={styles.header}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
@@ -54,9 +66,7 @@ function Header() {
               display: { xs: 'none', md: 'flex' },
               fontFamily: 'monospace',
               fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
+              letterSpacing: '0.3rem',
             }}
           >
             Plant Shop
@@ -92,7 +102,7 @@ function Header() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page.title} onClick={() => handleCloseNavMenu(page.url)}>
+                <MenuItem key={page.title} onClick={(e) => handleCloseNavMenu(e, page.url)}>
                   <Typography textAlign="center">{page.title}</Typography>
                 </MenuItem>
               ))}
@@ -108,9 +118,7 @@ function Header() {
               flexGrow: 1,
               fontFamily: 'monospace',
               fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
+              letterSpacing: '0.3rem',
             }}
           >
             Plant
@@ -119,7 +127,7 @@ function Header() {
             {pages.map((page) => (
               <Button
                 key={page.title}
-                onClick={() => handleCloseNavMenu(page.url)}
+                onClick={(e) => handleCloseNavMenu(e, page.url)}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 {page.title}
@@ -128,9 +136,15 @@ function Header() {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+            <Tooltip title={menuData.tooltipTitle}>
+              <IconButton
+                onClick={handleOpenUserMenu}
+                className={styles.customIconButton}
+                size="large"
+                sx={{ p: 0 }}
+                aria-label="login"
+              >
+                {currentIcon}
               </IconButton>
             </Tooltip>
             <Menu
@@ -149,9 +163,9 @@ function Header() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting.title} onClick={() => handleCloseUserMenu(setting.url)}>
-                  <Typography textAlign="center">{setting.title}</Typography>
+              {menuData.links.map((link) => (
+                <MenuItem key={link.title} onClick={(e) => handleCloseUserMenu(e, link.url)}>
+                  <Typography textAlign="center">{link.title}</Typography>
                 </MenuItem>
               ))}
             </Menu>

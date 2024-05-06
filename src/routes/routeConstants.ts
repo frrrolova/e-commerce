@@ -22,11 +22,24 @@ export enum Titles {
 
 export const navLinksData = {
   home: { url: Paths.HOME, title: Titles.HOME },
-  login: { url: Paths.AUTH, title: Titles.AUTH },
-  register: { url: Paths.REGISTER, title: Titles.REGISTER },
   catalog: { url: Paths.CATALOG, title: Titles.CATALOG },
   about: { url: Paths.ABOUT, title: Titles.ABOUT },
   basket: { url: Paths.BASKET, title: Titles.BASKET },
-  profile: { url: Paths.PROFILE, title: Titles.PROFILE },
-  logout: { url: Paths.AUTH, title: Titles.LOGOUT },
+};
+
+export const rightMenuData = {
+  notAuth: {
+    tooltipTitle: 'Login or Register',
+    links: [
+      { url: Paths.AUTH, title: Titles.AUTH },
+      { url: Paths.REGISTER, title: Titles.REGISTER },
+    ],
+  },
+  isAuth: {
+    tooltipTitle: 'Profile or Logout',
+    links: [
+      { url: Paths.PROFILE, title: Titles.PROFILE },
+      { url: Paths.AUTH, title: Titles.LOGOUT },
+    ],
+  },
 };
