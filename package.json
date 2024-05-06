@@ -16,6 +16,8 @@
     "test:coverage": "jest --coverage"
   },
   "dependencies": {
+    "@commercetools/platform-sdk": "^7.8.0",
+    "@commercetools/sdk-client-v2": "^2.5.0",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@mui/icons-material": "^5.15.16",
@@ -25,6 +27,7 @@
     "axios": "^1.6.8",
     "css-modules": "^0.3.0",
     "formik": "^2.4.6",
+    "isomorphic-fetch": "^3.0.0",
     "jest-environment-jsdom": "^29.7.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -40,6 +43,7 @@
     "@testing-library/react": "^15.0.6",
     "@types/babel__core": "^7.20.5",
     "@types/jest": "^29.5.12",
+    "@types/node-fetch": "^2.6.11",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
