@@ -1,16 +1,18 @@
-import { Button, Container, CssBaseline } from '@mui/material';
+import { Container, CssBaseline } from '@mui/material';
 import './App.scss';
 import Routing from './routes/Routing';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 function App() {
   return (
     <>
-      <CssBaseline />
-      <Container>
-        <h1>Plant shop</h1>
-        <Button variant="outlined">Contained</Button>
-        <Routing />
-      </Container>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <CssBaseline />
+        <Container>
+          <Routing />
+        </Container>
+      </LocalizationProvider>
     </>
   );
 }

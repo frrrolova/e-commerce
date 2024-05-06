@@ -1,7 +1,9 @@
+import RegistrationForm from '../../components/RegistrationForm/RegistrationForm';
+
 function Registration() {
   return (
     <>
-      <div>Registration</div>
+      <RegistrationForm />
     </>
   );
 }
