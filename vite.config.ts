@@ -9,4 +9,10 @@ export default defineConfig({
       localsConvention: 'camelCase',
     },
   },
+  define: { global: 'window' },
+  resolve: {
+    alias: {
+      'node-fetch': 'isomorphic-fetch',
+    },
+  },
 });
