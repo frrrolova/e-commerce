@@ -1,14 +1,17 @@
-import { Alert, Container, FormControl, FormHelperText, Input, InputLabel } from '@mui/material';
+import { Alert, Container, FormControl, FormHelperText, Input, InputLabel, Checkbox } from '@mui/material';
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import styles from './Login.module.scss';
 import { useFormik } from 'formik';
 import { LoadingButton } from '@mui/lab';
 import { useState } from 'react';
 
 type LoginFormData = { email: string; password: string };
+const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
 function Login() {
   const isLogoning = false;
-  const [error, setError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const validateForm = (values: LoginFormData): Partial<LoginFormData> => {
     const errors: Partial<LoginFormData> = {};
@@ -16,12 +19,10 @@ function Login() {
 
     if (!values.email) {
       errors.email = 'Username is required';
-      setError(errors.email);
     } else if (values.email.includes(' ')) {
       errors.email = 'Email address must not contain leading or trailing whitespace';
     } else if (!regEmail.test(values.email)) {
       errors.email = 'Email address must contain an "@" symbol separating local part and domain name.';
-      setError(errors.email);
     }
 
     if (!values.password) {
@@ -37,7 +38,6 @@ function Login() {
     } else if (values.password.includes(' ')) {
       errors.password = 'Password must not contain leading or trailing whitespace';
     }
-    console.log(errors);
     return errors;
   };
 
@@ -72,12 +72,20 @@ function Login() {
             <InputLabel htmlFor="password-input">Password</InputLabel>
             <Input
               name="password"
+              type={showPassword ? 'text' : 'password'}
               value={formik.values.password}
               id="password-input"
               aria-describedby="my-helper-text"
               onChange={formik.handleChange}
             />
             <FormHelperText id="my-helper-text">8 characters long</FormHelperText>
+            <Checkbox
+              {...label}
+              icon={<VisibilityOffIcon />}
+              checkedIcon={<RemoveRedEyeIcon />}
+              onClick={() => setShowPassword(!showPassword)}
+              checked={showPassword}
+            />
           </FormControl>
 
           <LoadingButton
@@ -90,7 +98,6 @@ function Login() {
             Submit
           </LoadingButton>
         </form>
-        <div>{error}</div>
 
         {isLogoning && <Alert severity="error">{isLogoning}</Alert>}
       </Container>
