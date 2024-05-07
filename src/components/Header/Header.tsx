@@ -24,7 +24,7 @@ function Header() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
-  const shopName = useAppSelector((state: RootState) => state.shop?.name?.en || 'Plant Shop');
+  const shopName = useAppSelector((state: RootState) => state.shop?.name?.['en-US'] || 'Plant Shop');
 
   const navigate = useNavigate();
 
@@ -63,6 +63,7 @@ function Header() {
           <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
             variant="h6"
+            data-testid="shop-name"
             noWrap
             sx={{
               mr: 2,

@@ -18,6 +18,8 @@ export type RootState = ReturnType<ReturnType<typeof initStore>['getState']>;
 
 export type AppDispatch = ReturnType<typeof initStore>['dispatch'];
 
+export type AppStore = ReturnType<typeof initStore>;
+
 export const useAppDispatch: () => AppDispatch = useDispatch;
 
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;

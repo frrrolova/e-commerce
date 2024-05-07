@@ -1,10 +1,10 @@
 import { ctpClient } from './buildClient';
 import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
 
-const { VITE_PROJECT_KEY } = import.meta.env;
+const { VITE_CTP_PROJECT_KEY } = import.meta.env;
 
 // Create apiRoot from the imported ClientBuilder and include your Project key
-export const apiRoot = createApiBuilderFromCtpClient(ctpClient).withProjectKey({ projectKey: VITE_PROJECT_KEY });
+export const apiRoot = createApiBuilderFromCtpClient(ctpClient).withProjectKey({ projectKey: VITE_CTP_PROJECT_KEY });
 
 // Example call to return Project information
 // This code has the same effect as sending a GET request to the commercetools Composable Commerce API without any endpoints.
