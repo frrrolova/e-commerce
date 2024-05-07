@@ -16,12 +16,15 @@ import AdbIcon from '@mui/icons-material/Adb';
 import { navLinksData, rightMenuData } from '../../routes/routeConstants';
 import { useNavigate } from 'react-router-dom';
 import styles from './Header.module.scss';
+import { RootState, useAppSelector } from '../../store/store';
 
 const pages = [navLinksData.home, navLinksData.catalog, navLinksData.about];
 
 function Header() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+
+  const shopName = useAppSelector((state: RootState) => state.shop?.name?.en || 'Plant Shop');
 
   const navigate = useNavigate();
 
@@ -69,7 +72,7 @@ function Header() {
               letterSpacing: '0.3rem',
             }}
           >
-            Plant Shop
+            {shopName}
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
