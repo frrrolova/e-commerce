@@ -63,6 +63,7 @@ function Header() {
           <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
             variant="h6"
+            data-testid="shop-name"
             noWrap
             sx={{
               mr: 2,
