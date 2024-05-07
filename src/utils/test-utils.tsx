@@ -29,7 +29,7 @@ const mockShop: Shop = {
   productSelections: [],
   supplyChannels: [],
   version: 2,
-  name: { en: 'My Test Shop' },
+  name: { en: 'Plant Shop' },
 };
 
 export function renderWithProviders(ui: React.ReactElement, extendedRenderOptions: ExtendedRenderOptions = {}) {

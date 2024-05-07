@@ -5,5 +5,5 @@ import { renderWithProviders } from '../../utils/test-utils';
 test('renders Header Title', () => {
   const { getByTestId } = renderWithProviders(<Header />);
   const shopNameEl = getByTestId('shop-name');
-  expect(shopNameEl.textContent?.trim()).toBe('My Test Shop');
+  expect(shopNameEl.textContent?.trim()).toBe('Plant Shop');
 });
