@@ -1,49 +1,19 @@
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { DatePicker } from '@mui/x-date-pickers';
-import { Box, FormControl, FormHelperText, IconButton, InputAdornment, TextField, Typography } from '@mui/material';
+import {
+  Box,
+  Container,
+  FormControl,
+  FormHelperText,
+  IconButton,
+  InputAdornment,
+  Paper,
+  TextField,
+  Typography,
+} from '@mui/material';
 import { useFormik } from 'formik';
 import { useState } from 'react';
-import * as Yup from 'yup';
-
-const SignupSchema = Yup.object().shape({
-  email: Yup.string().email('Invalid email').required('Email is required'),
-  password: Yup.string()
-    .required('Password is required')
-    .min(8, 'Should contain minimum 8 characters')
-    .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])$/, {
-      message: 'Should contain at least 1 uppercase letter, 1 lowercase letter, and 1 number',
-      excludeEmptyString: true,
-    }),
-  firstName: Yup.string()
-    .required('First name is equired')
-    .matches(/^[a-zA-Z-+]+$/, {
-      message: 'Should contain only English letters and the "-" symbol',
-      excludeEmptyString: true,
-    }),
-  lastName: Yup.string()
-    .required('Required')
-    .matches(/^[a-zA-Z-+]+$/, {
-      message: 'Should contain only English letters and the "-" symbol',
-      excludeEmptyString: true,
-    }),
-  dateOfBirth: Yup.date()
-    .typeError('Invalid date')
-    .required('Required')
-    .max(new Date())
-    .test('dateOfBirth', 'You must be 13 or older', function (birthdate?: Date) {
-      if (birthdate) {
-        const cutoff = new Date();
-        cutoff.setFullYear(cutoff.getFullYear() - 13);
-        return birthdate <= cutoff;
-      }
-      return true;
-    }),
-
-  // street: Yup.string().email('Invalid email').required('Required'),
-  // city: Yup.string().email('Invalid email').required('Required'),
-  // postalCode: Yup.string().email('Invalid email').required('Required'),
-  // country: Yup.string().email('Invalid email').required('Required'),
-});
+import SignupSchema from '../../core/authValidation';
 
 function RegistrationForm() {
   const formik = useFormik({
@@ -82,100 +52,180 @@ function RegistrationForm() {
   };
 
   return (
-    <Box
+    <Container
       sx={{
-        marginTop: 8,
+        position: 'relative',
         display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
+        justifyContent: 'center',
       }}
     >
-      <Typography component="h1" variant="h5">
-        Registration
-      </Typography>
       <Box
-        component="form"
+        component="img"
         sx={{
+          position: 'absolute',
+          width: 360,
+          zIndex: -1,
+          top: 60,
+          left: 0,
+        }}
+        alt="Ficus"
+        src="assets/reg-back.png"
+      />
+      <Paper
+        elevation={2}
+        sx={{
+          position: 'relative',
+          zIndex: 1,
+          marginTop: 8,
+          paddingY: 3,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          marginTop: 3,
-          maxWidth: 500,
-          width: 500,
+          opacity: 0.9,
+          width: {
+            xs: '90%',
+            md: '70%',
+          },
         }}
       >
-        <FormControl fullWidth margin="dense">
-          <TextField
-            label="Email"
-            name="email"
-            value={formik.values.email}
-            id="email-input"
-            placeholder="Email"
-            aria-describedby="my-helper-text"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={formik.touched.email && Boolean(formik.errors.email)}
-          />
-          <FormHelperText error>{formik.touched.email && formik.errors.email}</FormHelperText>
-        </FormControl>
+        <Box
+          component="img"
+          sx={{
+            position: 'absolute',
+            width: 170,
+            zIndex: 2,
+            top: -35,
+            right: -42,
+            // maxHeight: { xs: 233, md: 167 },
+            // maxWidth: { xs: 350, md: 250 },
+          }}
+          alt="Plant"
+          src="assets/plant.png"
+        />
+        <Typography component="h1" variant="h5">
+          Registration
+        </Typography>
+        <Box
+          component="form"
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            marginTop: 3,
+            width: '80%',
+          }}
+        >
+          <FormControl fullWidth margin="dense">
+            <TextField
+              sx={{
+                position: 'relative',
+                zIndex: 3,
+              }}
+              label="Email"
+              name="email"
+              value={formik.values.email}
+              id="email-input"
+              placeholder="Email"
+              aria-describedby="my-helper-text"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.email && Boolean(formik.errors.email)}
+            />
+            <FormHelperText error>{formik.touched.email && formik.errors.email}</FormHelperText>
+          </FormControl>
 
-        <FormControl fullWidth margin="dense">
-          <TextField
-            name="password"
-            label="Password"
-            type={showPassword ? 'text' : 'password'}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}
-                    edge="end"
-                  >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-            value={formik.values.password}
-            id="password-input"
-            placeholder="Password"
-            aria-describedby="my-helper-text"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={formik.touched.password && Boolean(formik.errors.password)}
-          />
-          <FormHelperText error>{formik.touched.password && formik.errors.password}</FormHelperText>
-        </FormControl>
+          <FormControl fullWidth margin="dense">
+            <TextField
+              sx={{
+                position: 'relative',
+                zIndex: 3,
+              }}
+              name="password"
+              label="Password"
+              type={showPassword ? 'text' : 'password'}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+              value={formik.values.password}
+              id="password-input"
+              placeholder="Password"
+              aria-describedby="my-helper-text"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.password && Boolean(formik.errors.password)}
+            />
+            <FormHelperText error>{formik.touched.password && formik.errors.password}</FormHelperText>
+          </FormControl>
 
-        <FormControl fullWidth margin="dense">
-          <DatePicker
-            disableFuture
-            name="dateOfBirth"
-            format="DD.MM.YYYY"
-            onChange={(val): void => {
-              formik.setFieldValue('dateOfBirth', val?.toDate());
-            }}
-            onClose={() => {
-              formik.setFieldTouched('dateOfBirth').then(() => {
-                formik.validateField('dateOfBirth');
-              });
-            }}
-            slotProps={{
-              textField: {
-                // name: 'dateOfBirth',
-                error: Boolean(formik.touched.dateOfBirth) && Boolean(formik.errors.dateOfBirth),
-                onBlur: formik.handleBlur,
-              },
-            }}
+          <FormControl fullWidth margin="dense">
+            <TextField
+              label="First name"
+              name="firstName"
+              value={formik.values.firstName}
+              id="firstName-input"
+              placeholder="First name"
+              aria-describedby="my-helper-text"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.firstName && Boolean(formik.errors.firstName)}
+            />
+            <FormHelperText error>{formik.touched.firstName && formik.errors.firstName}</FormHelperText>
+          </FormControl>
 
-            // error={formik.touched.dateOfBirth && Boolean(formik.errors.dateOfBirth)}
-          ></DatePicker>
-          <FormHelperText error>{formik.touched.dateOfBirth && formik.errors.dateOfBirth}</FormHelperText>
-        </FormControl>
-      </Box>
-    </Box>
+          <FormControl fullWidth margin="dense">
+            <TextField
+              label="Last Name"
+              name="lastName"
+              value={formik.values.lastName}
+              id="lastName-input"
+              placeholder="Last name"
+              aria-describedby="my-helper-text"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.lastName && Boolean(formik.errors.lastName)}
+            />
+            <FormHelperText error>{formik.touched.lastName && formik.errors.lastName}</FormHelperText>
+          </FormControl>
+
+          <FormControl fullWidth margin="dense">
+            <DatePicker
+              disableFuture
+              name="dateOfBirth"
+              format="DD.MM.YYYY"
+              onChange={(val): void => {
+                formik.setFieldValue('dateOfBirth', val?.toDate());
+              }}
+              onClose={() => {
+                formik.setFieldTouched('dateOfBirth').then(() => {
+                  formik.validateField('dateOfBirth');
+                });
+              }}
+              slotProps={{
+                textField: {
+                  // name: 'dateOfBirth',
+                  error: Boolean(formik.touched.dateOfBirth) && Boolean(formik.errors.dateOfBirth),
+                  onBlur: formik.handleBlur,
+                },
+              }}
+
+              // error={formik.touched.dateOfBirth && Boolean(formik.errors.dateOfBirth)}
+            ></DatePicker>
+            <FormHelperText error>{formik.touched.dateOfBirth && formik.errors.dateOfBirth}</FormHelperText>
+          </FormControl>
+        </Box>
+      </Paper>
+    </Container>
   );
 }
 

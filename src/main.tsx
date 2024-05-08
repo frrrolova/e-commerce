@@ -22,3 +22,10 @@ apiRoot
       </React.StrictMode>,
     );
   });
+
+apiRoot
+  .get()
+  .execute()
+  .then((resp) => {
+    console.log(resp);
+  });
