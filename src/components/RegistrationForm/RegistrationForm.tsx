@@ -5,43 +5,38 @@ import {
   Container,
   FormControl,
   FormHelperText,
+  Grid,
   IconButton,
   InputAdornment,
+  InputLabel,
+  MenuItem,
   Paper,
+  Select,
   TextField,
   Typography,
 } from '@mui/material';
 import { useFormik } from 'formik';
 import { useState } from 'react';
 import SignupSchema from '../../core/authValidation';
+import { useAppSelector } from '../../store/store';
+import { TCountryCode, getCountryData } from 'countries-list';
+import { LoadingButton } from '@mui/lab';
+import backPlantImg from '/images/registration/reg-back.png';
+import cornerPlantImg from '/images/registration/corner-plant.png';
+import { FieldNames, regInitialValues } from './constants';
 
+// TODO: autocomplete false
 function RegistrationForm() {
   const formik = useFormik({
-    initialValues: {
-      email: '',
-      password: '',
-      firstName: '',
-      lastName: '',
-      dateOfBirth: '',
-      street: '',
-      city: '',
-      postalCode: '',
-      country: '',
-    },
+    initialValues: regInitialValues,
     validateOnMount: true,
     validationSchema: SignupSchema,
     onSubmit: (values) => {
       console.log(values);
-      // dispatch(userLoginThunk(values))
-      //   .unwrap()
-      //   .then(() => {
-      //     navigate('/home');
-      //   })
-      //   .catch(() => {
-      //     console.log('BBBBBBBB fail');
-      //   });
     },
   });
+
+  const countryCodes: TCountryCode[] = useAppSelector((state) => (state.project?.countries as TCountryCode[]) || []);
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -69,14 +64,14 @@ function RegistrationForm() {
           left: 0,
         }}
         alt="Ficus"
-        src="assets/reg-back.png"
+        src={backPlantImg}
       />
       <Paper
         elevation={2}
         sx={{
           position: 'relative',
           zIndex: 1,
-          marginTop: 8,
+          marginTop: 5,
           paddingY: 3,
           display: 'flex',
           flexDirection: 'column',
@@ -96,11 +91,9 @@ function RegistrationForm() {
             zIndex: 2,
             top: -35,
             right: -42,
-            // maxHeight: { xs: 233, md: 167 },
-            // maxWidth: { xs: 350, md: 250 },
           }}
           alt="Plant"
-          src="assets/plant.png"
+          src={cornerPlantImg}
         />
         <Typography component="h1" variant="h5">
           Registration
@@ -117,12 +110,13 @@ function RegistrationForm() {
         >
           <FormControl fullWidth margin="dense">
             <TextField
+              size="small"
               sx={{
                 position: 'relative',
                 zIndex: 3,
               }}
               label="Email"
-              name="email"
+              name={FieldNames.EMAIL}
               value={formik.values.email}
               id="email-input"
               placeholder="Email"
@@ -136,11 +130,12 @@ function RegistrationForm() {
 
           <FormControl fullWidth margin="dense">
             <TextField
+              size="small"
               sx={{
                 position: 'relative',
                 zIndex: 3,
               }}
-              name="password"
+              name={FieldNames.PASSWORD}
               label="Password"
               type={showPassword ? 'text' : 'password'}
               InputProps={{
@@ -170,8 +165,9 @@ function RegistrationForm() {
 
           <FormControl fullWidth margin="dense">
             <TextField
+              size="small"
               label="First name"
-              name="firstName"
+              name={FieldNames.FIRST_NAME}
               value={formik.values.firstName}
               id="firstName-input"
               placeholder="First name"
@@ -185,8 +181,9 @@ function RegistrationForm() {
 
           <FormControl fullWidth margin="dense">
             <TextField
+              size="small"
               label="Last Name"
-              name="lastName"
+              name={FieldNames.LAST_NAME}
               value={formik.values.lastName}
               id="lastName-input"
               placeholder="Last name"
@@ -201,7 +198,7 @@ function RegistrationForm() {
           <FormControl fullWidth margin="dense">
             <DatePicker
               disableFuture
-              name="dateOfBirth"
+              name={FieldNames.DATE_OF_BIRTH}
               format="DD.MM.YYYY"
               onChange={(val): void => {
                 formik.setFieldValue('dateOfBirth', val?.toDate());
@@ -213,16 +210,109 @@ function RegistrationForm() {
               }}
               slotProps={{
                 textField: {
-                  // name: 'dateOfBirth',
+                  size: 'small',
                   error: Boolean(formik.touched.dateOfBirth) && Boolean(formik.errors.dateOfBirth),
                   onBlur: formik.handleBlur,
                 },
               }}
-
-              // error={formik.touched.dateOfBirth && Boolean(formik.errors.dateOfBirth)}
             ></DatePicker>
             <FormHelperText error>{formik.touched.dateOfBirth && formik.errors.dateOfBirth}</FormHelperText>
           </FormControl>
+
+          <Grid container spacing={1}>
+            <Grid item xs={12} md={6}>
+              <FormControl margin="dense" fullWidth>
+                <InputLabel
+                  id="country-label-id"
+                  error={formik.touched.country && Boolean(formik.errors.country)}
+                  size="small"
+                >
+                  Country
+                </InputLabel>
+                <Select
+                  size="small"
+                  labelId="country-label-id"
+                  id="country-input"
+                  name={FieldNames.COUNTRY}
+                  value={formik.values.country}
+                  label="Country"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  onClose={() => {
+                    formik.setFieldTouched('country').then(() => {
+                      formik.validateField('country');
+                    });
+                  }}
+                  error={formik.touched.country && Boolean(formik.errors.country)}
+                >
+                  {countryCodes.map((countryCode) => (
+                    <MenuItem value={countryCode} key={countryCode}>
+                      {getCountryData(countryCode).name}
+                    </MenuItem>
+                  ))}
+                </Select>
+                <FormHelperText error>{formik.touched.country && formik.errors.country}</FormHelperText>
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <FormControl fullWidth margin="dense">
+                <TextField
+                  size="small"
+                  label="City"
+                  name={FieldNames.CITY}
+                  value={formik.values.city}
+                  id="city-input"
+                  placeholder="City"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  error={formik.touched.city && Boolean(formik.errors.city)}
+                />
+                <FormHelperText error>{formik.touched.city && formik.errors.city}</FormHelperText>
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <FormControl fullWidth margin="dense">
+                <TextField
+                  size="small"
+                  label="Street"
+                  name={FieldNames.STREET}
+                  value={formik.values.street}
+                  id="street-input"
+                  placeholder="Street"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  error={formik.touched.street && Boolean(formik.errors.street)}
+                />
+                <FormHelperText error>{formik.touched.street && formik.errors.street}</FormHelperText>
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <FormControl fullWidth margin="dense">
+                <TextField
+                  size="small"
+                  label="Postal code"
+                  name={FieldNames.POSTAL_CODE}
+                  value={formik.values.postalCode}
+                  id="postal-code-input"
+                  placeholder="Postal code"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  error={formik.touched.postalCode && Boolean(formik.errors.postalCode)}
+                />
+                <FormHelperText error>{formik.touched.postalCode && formik.errors.postalCode}</FormHelperText>
+              </FormControl>
+            </Grid>
+          </Grid>
+          <LoadingButton
+            type="submit"
+            variant="contained"
+            disabled={!formik.isValid}
+            sx={{
+              marginTop: '8px',
+            }}
+          >
+            Register
+          </LoadingButton>
         </Box>
       </Paper>
     </Container>

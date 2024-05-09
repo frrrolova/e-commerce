@@ -9,9 +9,10 @@ enum ValidationErrors {
   EMAIL_INVALID = 'Invalid email',
   SHORT_PASSWORD = 'Should contain minimum 8 characters',
   PASSWORD_INVALID = 'Should contain at least 1 uppercase letter, 1 lowercase letter, and 1 number',
-  NAME_INVALID = 'Should contain only English letters',
+  VALUE_INVALID = 'Should contain only English letters',
   DATE_INVALID = 'Invalid date',
   TOO_YOUNG = 'You must be 14 years of age or older',
+  POSTAL_CODE_INVALID = 'Invalid for chosen country',
 }
 
 const SignupSchema = Yup.object().shape({
@@ -19,20 +20,20 @@ const SignupSchema = Yup.object().shape({
   password: Yup.string()
     .required(ValidationErrors.REQUIRED)
     .min(validationConstants.passwordMinLength, ValidationErrors.SHORT_PASSWORD)
-    .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])$/, {
+    .matches(/^(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
       message: ValidationErrors.PASSWORD_INVALID,
       excludeEmptyString: true,
     }),
   firstName: Yup.string()
     .required(ValidationErrors.REQUIRED)
     .matches(/^[a-zA-Z-+]+$/, {
-      message: ValidationErrors.NAME_INVALID,
+      message: ValidationErrors.VALUE_INVALID,
       excludeEmptyString: true,
     }),
   lastName: Yup.string()
     .required(ValidationErrors.REQUIRED)
     .matches(/^[a-zA-Z]+$/, {
-      message: ValidationErrors.NAME_INVALID,
+      message: ValidationErrors.VALUE_INVALID,
       excludeEmptyString: true,
     }),
   dateOfBirth: Yup.date()
@@ -47,10 +48,31 @@ const SignupSchema = Yup.object().shape({
       }
       return true;
     }),
-  // street: Yup.string().email('Invalid email').required('Required'),
-  // city: Yup.string().email('Invalid email').required('Required'),
-  // postalCode: Yup.string().email('Invalid email').required('Required'),
-  // country: Yup.string().email('Invalid email').required('Required'),
+  street: Yup.string()
+    .required(ValidationErrors.REQUIRED)
+    .matches(/^[a-zA-Z-+]+$/, {
+      message: ValidationErrors.VALUE_INVALID,
+      excludeEmptyString: true,
+    }),
+  city: Yup.string()
+    .required(ValidationErrors.REQUIRED)
+    .matches(/^[a-zA-Z-+]+$/, {
+      message: ValidationErrors.VALUE_INVALID,
+      excludeEmptyString: true,
+    }),
+  country: Yup.string().required(ValidationErrors.REQUIRED),
+  postalCode: Yup.string()
+    .required('Required')
+    .when('country', ([country], schema) => {
+      if (country === 'DE') {
+        return schema.matches(/^\d{5}$/, ValidationErrors.POSTAL_CODE_INVALID);
+      } else if (country === 'AT') {
+        return schema.matches(/^\d{4}$/, ValidationErrors.POSTAL_CODE_INVALID);
+      } else if (country === 'GB') {
+        return schema.matches(/^[A-Z]{1,2}[0-9][A-Z0-9]? ?[0-9][A-Z]{2}$/, ValidationErrors.POSTAL_CODE_INVALID);
+      }
+      return schema;
+    }),
 });
 
 export default SignupSchema;
