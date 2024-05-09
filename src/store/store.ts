@@ -1,15 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux';
-import shopSlice from './slices/shopSlice';
-import { Shop } from '../types';
+import projectSlice from './slices/projectSlice';
+import { Project } from '@commercetools/platform-sdk';
 
-const initStore = (shop: Shop) =>
+const initStore = (project: Project) =>
   configureStore({
     reducer: {
-      shop: shopSlice.reducer,
+      project: projectSlice.reducer,
     },
     preloadedState: {
-      shop: shop,
+      project: project,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware(), // here will be middleware for asynk side effects
   });
@@ -17,6 +17,7 @@ const initStore = (shop: Shop) =>
 export type RootState = ReturnType<ReturnType<typeof initStore>['getState']>;
 
 export type AppDispatch = ReturnType<typeof initStore>['dispatch'];
+
 export type AppStore = ReturnType<typeof initStore>;
 
 export const useAppDispatch: () => AppDispatch = useDispatch;
