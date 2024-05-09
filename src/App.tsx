@@ -6,12 +6,12 @@ import { Provider } from 'react-redux';
 import { CssBaseline } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { Shop } from './types.ts';
 import initStore from './store/store.ts';
-import { Project } from '@commercetools/platform-sdk';
 
-function App({ project }: { project: Project }) {
+function App({ shop }: { shop: Shop }) {
   return (
-    <Provider store={initStore(project)}>
+    <Provider store={initStore(shop)}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <ThemeProvider theme={theme}>
           <CssBaseline />

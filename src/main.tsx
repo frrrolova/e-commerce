@@ -11,21 +11,14 @@ root.setAttribute('id', 'root');
 document.body.insertAdjacentElement('afterbegin', root);
 
 apiRoot
-  // .stores()
-  // .withKey({ key: import.meta.env.VITE_STORE_KEY })
+  .stores()
+  .withKey({ key: import.meta.env.VITE_STORE_KEY })
   .get()
   .execute()
   .then((resp) => {
     ReactDOM.createRoot(root).render(
       <React.StrictMode>
-        <App project={resp.body} />
+        <App shop={resp.body} />
       </React.StrictMode>,
     );
-  });
-
-apiRoot
-  .get()
-  .execute()
-  .then((resp) => {
-    console.log('client!!!!', resp.body);
   });
