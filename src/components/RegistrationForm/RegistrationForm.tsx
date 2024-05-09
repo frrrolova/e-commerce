@@ -12,7 +12,6 @@ import {
   MenuItem,
   Paper,
   Select,
-  TextField,
   Typography,
 } from '@mui/material';
 import { useFormik } from 'formik';
@@ -23,12 +22,24 @@ import { TCountryCode, getCountryData } from 'countries-list';
 import { LoadingButton } from '@mui/lab';
 import backPlantImg from '/images/registration/reg-back.png';
 import cornerPlantImg from '/images/registration/corner-plant.png';
-import { FieldNames, regInitialValues } from './constants';
+import FormTextInput from '../FormTextInput/FormTextInput';
+import { FieldNames } from '../../enums/auth-form.enum';
+import { formFieldsConfig } from '../../shared/auth-form.constants';
 
 // TODO: autocomplete false
 function RegistrationForm() {
   const formik = useFormik({
-    initialValues: regInitialValues,
+    initialValues: {
+      [FieldNames.EMAIL]: '',
+      [FieldNames.PASSWORD]: '',
+      [FieldNames.FIRST_NAME]: '',
+      [FieldNames.LAST_NAME]: '',
+      [FieldNames.DATE_OF_BIRTH]: '',
+      [FieldNames.STREET]: '',
+      [FieldNames.CITY]: '',
+      [FieldNames.POSTAL_CODE]: '',
+      [FieldNames.COUNTRY]: '',
+    },
     validateOnMount: true,
     validationSchema: SignupSchema,
     onSubmit: (values) => {
@@ -108,92 +119,71 @@ function RegistrationForm() {
             width: '80%',
           }}
         >
-          <FormControl fullWidth margin="dense">
-            <TextField
-              size="small"
-              sx={{
-                position: 'relative',
-                zIndex: 3,
-              }}
-              label="Email"
-              name={FieldNames.EMAIL}
-              value={formik.values.email}
-              id="email-input"
-              placeholder="Email"
-              aria-describedby="my-helper-text"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={formik.touched.email && Boolean(formik.errors.email)}
-            />
-            <FormHelperText error>{formik.touched.email && formik.errors.email}</FormHelperText>
-          </FormControl>
+          <FormTextInput
+            name={FieldNames.EMAIL}
+            value={formik.values.email}
+            label={formFieldsConfig.email.label}
+            placeholder={formFieldsConfig.email.placeholder}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={Boolean(formik.touched.email) && Boolean(formik.errors.email)}
+            errorMsg={formik.errors.email}
+            sx={{
+              position: 'relative',
+              zIndex: 3,
+            }}
+          />
+          <FormTextInput
+            name={FieldNames.PASSWORD}
+            value={formik.values.password}
+            label={formFieldsConfig.password.label}
+            placeholder={formFieldsConfig.password.placeholder}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={Boolean(formik.touched.password) && Boolean(formik.errors.password)}
+            errorMsg={formik.errors.password}
+            sx={{
+              position: 'relative',
+              zIndex: 3,
+            }}
+            type={showPassword ? 'text' : 'password'}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
 
-          <FormControl fullWidth margin="dense">
-            <TextField
-              size="small"
-              sx={{
-                position: 'relative',
-                zIndex: 3,
-              }}
-              name={FieldNames.PASSWORD}
-              label="Password"
-              type={showPassword ? 'text' : 'password'}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
-                      edge="end"
-                    >
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-              value={formik.values.password}
-              id="password-input"
-              placeholder="Password"
-              aria-describedby="my-helper-text"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={formik.touched.password && Boolean(formik.errors.password)}
-            />
-            <FormHelperText error>{formik.touched.password && formik.errors.password}</FormHelperText>
-          </FormControl>
+          <FormTextInput
+            name={FieldNames.FIRST_NAME}
+            value={formik.values.firstName}
+            label={formFieldsConfig.firstName.label}
+            placeholder={formFieldsConfig.firstName.placeholder}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={Boolean(formik.touched.firstName) && Boolean(formik.errors.firstName)}
+            errorMsg={formik.errors.firstName}
+          />
 
-          <FormControl fullWidth margin="dense">
-            <TextField
-              size="small"
-              label="First name"
-              name={FieldNames.FIRST_NAME}
-              value={formik.values.firstName}
-              id="firstName-input"
-              placeholder="First name"
-              aria-describedby="my-helper-text"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={formik.touched.firstName && Boolean(formik.errors.firstName)}
-            />
-            <FormHelperText error>{formik.touched.firstName && formik.errors.firstName}</FormHelperText>
-          </FormControl>
-
-          <FormControl fullWidth margin="dense">
-            <TextField
-              size="small"
-              label="Last Name"
-              name={FieldNames.LAST_NAME}
-              value={formik.values.lastName}
-              id="lastName-input"
-              placeholder="Last name"
-              aria-describedby="my-helper-text"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={formik.touched.lastName && Boolean(formik.errors.lastName)}
-            />
-            <FormHelperText error>{formik.touched.lastName && formik.errors.lastName}</FormHelperText>
-          </FormControl>
+          <FormTextInput
+            name={FieldNames.LAST_NAME}
+            value={formik.values.lastName}
+            label={formFieldsConfig.lastName.label}
+            placeholder={formFieldsConfig.lastName.placeholder}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={Boolean(formik.touched.lastName) && Boolean(formik.errors.lastName)}
+            errorMsg={formik.errors.lastName}
+          />
 
           <FormControl fullWidth margin="dense">
             <DatePicker
@@ -201,11 +191,11 @@ function RegistrationForm() {
               name={FieldNames.DATE_OF_BIRTH}
               format="DD.MM.YYYY"
               onChange={(val): void => {
-                formik.setFieldValue('dateOfBirth', val?.toDate());
+                formik.setFieldValue(FieldNames.DATE_OF_BIRTH, val?.toDate());
               }}
               onClose={() => {
-                formik.setFieldTouched('dateOfBirth').then(() => {
-                  formik.validateField('dateOfBirth');
+                formik.setFieldTouched(FieldNames.DATE_OF_BIRTH).then(() => {
+                  formik.validateField(FieldNames.DATE_OF_BIRTH);
                 });
               }}
               slotProps={{
@@ -223,7 +213,7 @@ function RegistrationForm() {
             <Grid item xs={12} md={6}>
               <FormControl margin="dense" fullWidth>
                 <InputLabel
-                  id="country-label-id"
+                  id={formFieldsConfig.country.labelId}
                   error={formik.touched.country && Boolean(formik.errors.country)}
                   size="small"
                 >
@@ -231,16 +221,16 @@ function RegistrationForm() {
                 </InputLabel>
                 <Select
                   size="small"
-                  labelId="country-label-id"
-                  id="country-input"
+                  labelId={formFieldsConfig.country.labelId}
+                  id={formFieldsConfig.country.id}
                   name={FieldNames.COUNTRY}
                   value={formik.values.country}
-                  label="Country"
+                  label={formFieldsConfig.country.label}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   onClose={() => {
-                    formik.setFieldTouched('country').then(() => {
-                      formik.validateField('country');
+                    formik.setFieldTouched(FieldNames.COUNTRY).then(() => {
+                      formik.validateField(FieldNames.COUNTRY);
                     });
                   }}
                   error={formik.touched.country && Boolean(formik.errors.country)}
@@ -254,53 +244,43 @@ function RegistrationForm() {
                 <FormHelperText error>{formik.touched.country && formik.errors.country}</FormHelperText>
               </FormControl>
             </Grid>
+
             <Grid item xs={12} md={6}>
-              <FormControl fullWidth margin="dense">
-                <TextField
-                  size="small"
-                  label="City"
-                  name={FieldNames.CITY}
-                  value={formik.values.city}
-                  id="city-input"
-                  placeholder="City"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  error={formik.touched.city && Boolean(formik.errors.city)}
-                />
-                <FormHelperText error>{formik.touched.city && formik.errors.city}</FormHelperText>
-              </FormControl>
+              <FormTextInput
+                name={FieldNames.CITY}
+                value={formik.values.city}
+                label={formFieldsConfig.city.label}
+                placeholder={formFieldsConfig.city.placeholder}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={Boolean(formik.touched.city) && Boolean(formik.errors.city)}
+                errorMsg={formik.errors.city}
+              />
+            </Grid>
+
+            <Grid item xs={12} md={6}>
+              <FormTextInput
+                name={FieldNames.STREET}
+                value={formik.values.street}
+                label={formFieldsConfig.street.label}
+                placeholder={formFieldsConfig.street.placeholder}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={Boolean(formik.touched.street) && Boolean(formik.errors.street)}
+                errorMsg={formik.errors.street}
+              />
             </Grid>
             <Grid item xs={12} md={6}>
-              <FormControl fullWidth margin="dense">
-                <TextField
-                  size="small"
-                  label="Street"
-                  name={FieldNames.STREET}
-                  value={formik.values.street}
-                  id="street-input"
-                  placeholder="Street"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  error={formik.touched.street && Boolean(formik.errors.street)}
-                />
-                <FormHelperText error>{formik.touched.street && formik.errors.street}</FormHelperText>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <FormControl fullWidth margin="dense">
-                <TextField
-                  size="small"
-                  label="Postal code"
-                  name={FieldNames.POSTAL_CODE}
-                  value={formik.values.postalCode}
-                  id="postal-code-input"
-                  placeholder="Postal code"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  error={formik.touched.postalCode && Boolean(formik.errors.postalCode)}
-                />
-                <FormHelperText error>{formik.touched.postalCode && formik.errors.postalCode}</FormHelperText>
-              </FormControl>
+              <FormTextInput
+                name={FieldNames.POSTAL_CODE}
+                value={formik.values.postalCode}
+                label={formFieldsConfig.postalCode.label}
+                placeholder={formFieldsConfig.postalCode.placeholder}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={Boolean(formik.touched.postalCode) && Boolean(formik.errors.postalCode)}
+                errorMsg={formik.errors.postalCode}
+              />
             </Grid>
           </Grid>
           <LoadingButton

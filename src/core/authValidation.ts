@@ -11,7 +11,7 @@ enum ValidationErrors {
   PASSWORD_INVALID = 'Should contain at least 1 uppercase letter, 1 lowercase letter, and 1 number',
   VALUE_INVALID = 'Should contain only English letters',
   DATE_INVALID = 'Invalid date',
-  TOO_YOUNG = 'You must be 14 years of age or older',
+  TOO_YOUNG = 'You must be 14 years or older',
   POSTAL_CODE_INVALID = 'Invalid for chosen country',
 }
 
