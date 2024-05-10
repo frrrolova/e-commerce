@@ -1,30 +1,9 @@
 import * as Yup from 'yup';
+import { ValidationErrors } from '../enums/auth-form.enum';
 
 const validationConstants = {
   passwordMinLength: 8,
 };
-
-enum ValidationErrors {
-  REQUIRED = 'Field is Required',
-  EMAIL_INVALID = 'Invalid email',
-  SHORT_PASSWORD = 'Should contain minimum 8 characters',
-  PASSWORD_INVALID = 'Should contain at least 1 uppercase letter, 1 lowercase letter, and 1 number',
-  VALUE_INVALID = 'Should contain only English letters',
-  DATE_INVALID = 'Invalid date',
-  TOO_YOUNG = 'You must be 14 years of age or older',
-  POSTAL_CODE_INVALID = 'Invalid for chosen country',
-}
-
-export const SignupLoginSchema = Yup.object().shape({
-  email: Yup.string().email(ValidationErrors.EMAIL_INVALID).required(ValidationErrors.REQUIRED),
-  password: Yup.string()
-    .required(ValidationErrors.REQUIRED)
-    .min(validationConstants.passwordMinLength, ValidationErrors.SHORT_PASSWORD)
-    .matches(/^(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
-      message: ValidationErrors.PASSWORD_INVALID,
-      excludeEmptyString: true,
-    }),
-});
 
 const SignupSchema = Yup.object().shape({
   email: Yup.string().email(ValidationErrors.EMAIL_INVALID).required(ValidationErrors.REQUIRED),
@@ -87,3 +66,14 @@ const SignupSchema = Yup.object().shape({
 });
 
 export default SignupSchema;
+
+export const SignupLoginSchema = Yup.object().shape({
+  email: Yup.string().email(ValidationErrors.EMAIL_INVALID).required(ValidationErrors.REQUIRED),
+  password: Yup.string()
+    .required(ValidationErrors.REQUIRED)
+    .min(validationConstants.passwordMinLength, ValidationErrors.SHORT_PASSWORD)
+    .matches(/^(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
+      message: ValidationErrors.PASSWORD_INVALID,
+      excludeEmptyString: true,
+    }),
+});

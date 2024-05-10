@@ -1,14 +1,4 @@
-import {
-  Box,
-  Container,
-  FormControl,
-  FormHelperText,
-  IconButton,
-  InputAdornment,
-  Paper,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Box, Container, IconButton, InputAdornment, Paper, Typography } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useFormik } from 'formik';
 import { LoadingButton } from '@mui/lab';
@@ -17,6 +7,8 @@ import { useState } from 'react';
 import { FieldNames, loginInitialValues } from './constants';
 import backPlantImg from '/images/registration/reg-back.png';
 import cornerPlantImg from '/images/registration/corner-plant.png';
+import FormTextInput from '../FormTextInput/FormTextInput';
+import { formFieldsConfig } from '../../shared/auth-form.constants';
 
 function LoginForm() {
   const formik = useFormik({
@@ -99,60 +91,49 @@ function LoginForm() {
               width: '80%',
             }}
           >
-            <FormControl fullWidth margin="dense">
-              <TextField
-                size="small"
-                sx={{
-                  position: 'relative',
-                  zIndex: 3,
-                }}
-                label="Email"
-                name={FieldNames.EMAIL}
-                value={formik.values.email}
-                id="email-input"
-                placeholder="Email"
-                aria-describedby="my-helper-text"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={formik.touched.email && Boolean(formik.errors.email)}
-              />
-              <FormHelperText error>{formik.touched.email && formik.errors.email}</FormHelperText>
-            </FormControl>
-
-            <FormControl fullWidth margin="dense">
-              <TextField
-                size="small"
-                sx={{
-                  position: 'relative',
-                  zIndex: 3,
-                }}
-                name={FieldNames.PASSWORD}
-                label="Password"
-                type={showPassword ? 'text' : 'password'}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                        edge="end"
-                      >
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-                value={formik.values.password}
-                id="password-input"
-                placeholder="Password"
-                aria-describedby="my-helper-text"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={formik.touched.password && Boolean(formik.errors.password)}
-              />
-              <FormHelperText error>{formik.touched.password && formik.errors.password}</FormHelperText>
-            </FormControl>
+            <FormTextInput
+              name={FieldNames.EMAIL}
+              value={formik.values.email}
+              label={formFieldsConfig.email.label}
+              placeholder={formFieldsConfig.email.placeholder}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={Boolean(formik.touched.email) && Boolean(formik.errors.email)}
+              errorMsg={formik.errors.email}
+              sx={{
+                position: 'relative',
+                zIndex: 3,
+              }}
+            />
+            <FormTextInput
+              name={FieldNames.PASSWORD}
+              value={formik.values.password}
+              label={formFieldsConfig.password.label}
+              placeholder={formFieldsConfig.password.placeholder}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={Boolean(formik.touched.password) && Boolean(formik.errors.password)}
+              errorMsg={formik.errors.password}
+              sx={{
+                position: 'relative',
+                zIndex: 3,
+              }}
+              type={showPassword ? 'text' : 'password'}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
             <LoadingButton
               type="submit"
               variant="contained"
