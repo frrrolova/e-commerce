@@ -6,10 +6,10 @@ import { Provider } from 'react-redux';
 import type { AppStore, RootState } from '../store/store';
 // As a basic setup, import your same slice reducers
 import initStore from '../store/store';
-import { Shop } from '../types';
 import { MemoryRouter } from 'react-router-dom';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { Project } from '@commercetools/platform-sdk';
 
 // This type interface extends the default options for render from RTL, as well
 // as allows the user to specify other things such as initialState, store.
@@ -18,27 +18,28 @@ interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
   store?: AppStore;
 }
 
-const mockShop: Shop = {
-  id: '123456',
+const mockShop: Project = {
   countries: [],
   createdAt: new Date().toISOString(),
   languages: [],
-  lastModifiedAt: new Date().toISOString(),
-  distributionChannels: [],
   key: 'test-key',
-  productSelections: [],
-  supplyChannels: [],
   version: 2,
-  name: { en: 'Plant Shop' },
+  name: 'Plant Shop',
+  currencies: [],
+  messages: { enabled: false, deleteDaysAfterCreation: 15 },
+  carts: {
+    deleteDaysAfterLastModification: 90,
+    countryTaxRateFallbackEnabled: false,
+  },
 };
 
 export function renderWithProviders(ui: React.ReactElement, extendedRenderOptions: ExtendedRenderOptions = {}) {
   const {
     preloadedState = {
-      shop: mockShop,
+      project: mockShop,
     },
     // Automatically create a store instance if no store was passed in
-    store = initStore(preloadedState.shop as Shop),
+    store = initStore(preloadedState.project as Project),
     ...renderOptions
   } = extendedRenderOptions;
 
