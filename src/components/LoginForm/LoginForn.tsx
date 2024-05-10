@@ -2,7 +2,7 @@ import { Box, Container, IconButton, InputAdornment, Paper, Typography } from '@
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useFormik } from 'formik';
 import { LoadingButton } from '@mui/lab';
-import { SignupLoginSchema } from '../../core/authValidation';
+import SignupLoginSchema from '../../core/loginValidation';
 import { useState } from 'react';
 import { FieldNames, loginInitialValues } from './constants';
 import backPlantImg from '/images/registration/reg-back.png';
