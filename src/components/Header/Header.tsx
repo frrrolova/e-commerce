@@ -15,7 +15,7 @@ import MenuItem from '@mui/material/MenuItem';
 import { navLinksData, rightMenuData } from '../../routes/routeConstants';
 import { useNavigate } from 'react-router-dom';
 import styles from './Header.module.scss';
-import { RootState, useAppSelector } from '../../store/store';
+// import { RootState, useAppSelector } from '../../store/store';
 import { useEffect, useState } from 'react';
 import LogoImg from '/assets/logo.svg';
 
@@ -25,7 +25,7 @@ function Header() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
-  const shopName = useAppSelector((state: RootState) => state.shop?.name?.['en-US'] || 'Plant Shop');
+  // const shopName = useAppSelector((state: RootState) => state.shop?.name?.['en-US'] || 'Plant Shop');
 
   const navigate = useNavigate();
 
@@ -91,7 +91,7 @@ function Header() {
               letterSpacing: '0.3rem',
             }}
           >
-            {shopName}
+            Plant Shop
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
