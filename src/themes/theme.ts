@@ -1,4 +1,4 @@
-import { ThemeOptions, createTheme } from '@mui/material/styles';
+import { ThemeOptions, createTheme, responsiveFontSizes } from '@mui/material/styles';
 
 // header background will need to be styled separately!
 
@@ -17,8 +17,34 @@ export const themeOptions: ThemeOptions = {
       paper: '#262e22',
     },
   },
+
+  typography: {
+    h1: {
+      fontSize: '3.5rem',
+      letterSpacing: '0.1em',
+    },
+    h2: {
+      fontSize: '3rem',
+      letterSpacing: '0.07em',
+    },
+    h3: {
+      fontSize: '2.5rem',
+    },
+  },
+
+  components: {
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          backgroundColor: 'transparent',
+          backgroundImage: 'none',
+          boxShadow: 'none',
+        },
+      },
+    },
+  },
 };
 
-const theme = createTheme(themeOptions);
+const theme = responsiveFontSizes(createTheme(themeOptions));
 
 export default theme;

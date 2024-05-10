@@ -1,6 +1,17 @@
+@import '../../styles/variables.scss';
+
 .header {
+  .logo {
+    height: 2rem;
+  }
+
   .customIconButton {
     padding: 8px;
+  }
+
+  &[data-scrolled="true"] {
+    background-color: $paper-color;
+    opacity: 0.8;
   }
 }
 
