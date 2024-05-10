@@ -14,15 +14,20 @@ import {
 import { useFormik } from 'formik';
 import { useState } from 'react';
 import SignupSchema from '../../core/authValidation';
-import { useAppSelector } from '../../store/store';
+import { useAppDispatch, useAppSelector } from '../../store/store';
 import { TCountryCode, getCountryData } from 'countries-list';
 import { LoadingButton } from '@mui/lab';
 import FormTextInput from '../FormTextInput/FormTextInput';
 import { FieldNames } from '../../enums/auth-form.enum';
 import { formFieldsConfig } from '../../shared/auth-form.constants';
+import { CustomerDraft } from '@commercetools/platform-sdk';
+import { userRegistrationThunk } from '../../store/slices/user/thunk';
 
 // TODO: autocomplete false
 function RegistrationForm() {
+  const dispatch = useAppDispatch();
+  const isPending = useAppSelector((state) => state.user.isPending);
+
   const formik = useFormik({
     initialValues: {
       [FieldNames.EMAIL]: '',
@@ -38,7 +43,30 @@ function RegistrationForm() {
     validateOnMount: true,
     validationSchema: SignupSchema,
     onSubmit: (values) => {
-      console.log(values);
+      const dateValue: string = new Date(values[FieldNames.DATE_OF_BIRTH]).toISOString().substring(0, 10);
+      const newCustomerData: CustomerDraft = {
+        email: values[FieldNames.EMAIL],
+        password: values[FieldNames.PASSWORD],
+        firstName: values[FieldNames.FIRST_NAME],
+        lastName: values[FieldNames.LAST_NAME],
+        dateOfBirth: dateValue,
+        addresses: [
+          {
+            country: values[FieldNames.COUNTRY],
+            city: values[FieldNames.CITY],
+            streetName: values[FieldNames.STREET],
+            postalCode: values[FieldNames.POSTAL_CODE],
+          },
+        ],
+      };
+      dispatch(userRegistrationThunk(newCustomerData))
+        .unwrap()
+        .then(() => {
+          console.log(`Success! You're registered`);
+        })
+        .catch(() => {
+          console.log('OOPS! Registration failed:');
+        });
     },
   });
 
@@ -61,6 +89,10 @@ function RegistrationForm() {
         alignItems: 'center',
         marginTop: 3,
         width: '80%',
+      }}
+      onSubmit={(e) => {
+        e.preventDefault();
+        formik.handleSubmit(e);
       }}
     >
       <FormTextInput
@@ -231,6 +263,7 @@ function RegistrationForm() {
         type="submit"
         variant="contained"
         disabled={!formik.isValid}
+        loading={isPending}
         sx={{
           marginTop: '8px',
         }}
