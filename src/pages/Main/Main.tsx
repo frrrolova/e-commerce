@@ -39,7 +39,7 @@ const products: Product[] = [
   },
   {
     label: 'Philodendron',
-    imgPath: '/assets/home/philodendron_1.png',
+    imgPath: '/images/home/philodendron_1.png',
     description: 'A relatively fast-growing ornamental plant frequently used for indoor landscaping.',
   },
 ];
