@@ -17,7 +17,7 @@ import { useNavigate } from 'react-router-dom';
 import styles from './Header.module.scss';
 // import { RootState, useAppSelector } from '../../store/store';
 import { useEffect, useState } from 'react';
-import LogoImg from '/assets/logo.svg';
+import LogoImg from '/images/logo.svg';
 
 const pages = [navLinksData.home, navLinksData.catalog, navLinksData.about];
 

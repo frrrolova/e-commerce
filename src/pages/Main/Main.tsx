@@ -5,7 +5,7 @@ import ProductCard from '../../components/ProductCard/ProductCard';
 import { Product } from '../../types';
 import { ButtonLabels, InfoCardData, PageData } from './constants';
 import Title from '../../components/Title/Title';
-import ImageBg from '/assets/home/home-bg.png';
+import ImageBg from '/images/home/home-bg.png';
 import InfoCard from '../../components/InfoCard/InfoCard';
 import { Paths } from '../../routes/routeConstants';
 import { useNavigate } from 'react-router-dom';
@@ -14,27 +14,27 @@ import { useNavigate } from 'react-router-dom';
 const products: Product[] = [
   {
     label: 'Philodendron',
-    imgPath: '/assets/home/philodendron_1.png',
+    imgPath: '/images/home/philodendron_1.png',
     description: 'A relatively fast-growing ornamental plant frequently used for indoor landscaping.',
   },
   {
     label: 'Philodendron',
-    imgPath: '/assets/home/philodendron_1.png',
+    imgPath: '/images/home/philodendron_1.png',
     description: 'A relatively fast-growing ornamental plant frequently used for indoor landscaping.',
   },
   {
     label: 'Philodendron',
-    imgPath: '/assets/home/philodendron_1.png',
+    imgPath: '/images/home/philodendron_1.png',
     description: 'A relatively fast-growing ornamental plant frequently used for indoor landscaping.',
   },
   {
     label: 'Philodendron',
-    imgPath: '/assets/home/philodendron_1.png',
+    imgPath: '/images/home/philodendron_1.png',
     description: 'A relatively fast-growing ornamental plant frequently used for indoor landscaping.',
   },
   {
     label: 'Philodendron',
-    imgPath: '/assets/home/philodendron_1.png',
+    imgPath: '/images/home/philodendron_1.png',
     description: 'A relatively fast-growing ornamental plant frequently used for indoor landscaping.',
   },
   {

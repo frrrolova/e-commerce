@@ -12,7 +12,7 @@ export enum ButtonLabels {
 
 export enum InfoCardData {
   heading = 'Summer time',
-  imgPath = '/assets/home/promo.png',
+  imgPath = '/images/home/promo.png',
   description = 'Take advantage of an additional discount during the summer using the promotional code:',
   subHeading = 'SUMMER2024',
 }
