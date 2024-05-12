@@ -13,15 +13,15 @@ import {
 } from '@mui/material';
 import { useFormik } from 'formik';
 import { useState } from 'react';
-import SignupSchema from '../../core/authValidation';
-import { useAppDispatch, useAppSelector } from '../../store/store';
+import SignupSchema from '@core/authValidation';
+import { useAppDispatch, useAppSelector } from '@store/store';
 import { TCountryCode, getCountryData } from 'countries-list';
 import { LoadingButton } from '@mui/lab';
 import FormTextInput from '../FormTextInput/FormTextInput';
-import { FieldNames, RegistrationResultMessages, RegistrationResults } from '../../enums/auth-form.enum';
-import { formFieldsConfig } from '../../shared/auth-form.constants';
+import { FieldNames, RegistrationResultMessages, RegistrationResults } from '@enums/auth-form.enum';
+import { formFieldsConfig } from '@shared/auth-form.constants';
 import { MyCustomerDraft } from '@commercetools/platform-sdk';
-import { userRegistrationThunk } from '../../store/slices/user/thunk';
+import { userRegistrationThunk } from '@store/slices/user/thunk';
 import useSnackBar from '../SnackBar/useSnackBar';
 
 // TODO: autocomplete false

@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { MyCustomerDraft } from '@commercetools/platform-sdk';
-import { apiRoot } from '../../../client/client';
+import { apiRoot } from '@client/client';
 import { setUser } from './userSlice';
 
 export const userRegistrationThunk = createAsyncThunk('user/login', (regData: MyCustomerDraft, thunkAPI) => {
