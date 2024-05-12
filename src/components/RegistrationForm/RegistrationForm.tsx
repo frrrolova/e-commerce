@@ -18,15 +18,20 @@ import { useAppDispatch, useAppSelector } from '../../store/store';
 import { TCountryCode, getCountryData } from 'countries-list';
 import { LoadingButton } from '@mui/lab';
 import FormTextInput from '../FormTextInput/FormTextInput';
-import { FieldNames } from '../../enums/auth-form.enum';
+import { FieldNames, RegistrationResultMessages, RegistrationResults } from '../../enums/auth-form.enum';
 import { formFieldsConfig } from '../../shared/auth-form.constants';
-import { CustomerDraft } from '@commercetools/platform-sdk';
+import { MyCustomerDraft } from '@commercetools/platform-sdk';
 import { userRegistrationThunk } from '../../store/slices/user/thunk';
+import useSnackBar from '../SnackBar/useSnackBar';
 
 // TODO: autocomplete false
 function RegistrationForm() {
   const dispatch = useAppDispatch();
   const isPending = useAppSelector((state) => state.user.isPending);
+  const snackBar = useSnackBar();
+
+  // const [snackBarOpen, setSnackBarOpen] = useState(true);
+  // const [registrationResult, setRegistrationResult] = useState<RegistrationResults>();
 
   const formik = useFormik({
     initialValues: {
@@ -44,7 +49,7 @@ function RegistrationForm() {
     validationSchema: SignupSchema,
     onSubmit: (values) => {
       const dateValue: string = new Date(values[FieldNames.DATE_OF_BIRTH]).toISOString().substring(0, 10);
-      const newCustomerData: CustomerDraft = {
+      const newCustomerData: MyCustomerDraft = {
         email: values[FieldNames.EMAIL],
         password: values[FieldNames.PASSWORD],
         firstName: values[FieldNames.FIRST_NAME],
@@ -62,7 +67,7 @@ function RegistrationForm() {
       dispatch(userRegistrationThunk(newCustomerData))
         .unwrap()
         .then(() => {
-          console.log(`Success! You're registered`);
+          snackBar.open(RegistrationResultMessages.SUCCESS, RegistrationResults.SUCCESS);
         })
         .catch(() => {
           console.log('OOPS! Registration failed:');

@@ -1,11 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { CustomerDraft } from '@commercetools/platform-sdk';
+import { MyCustomerDraft } from '@commercetools/platform-sdk';
 import { apiRoot } from '../../../client/client';
 import { setUser } from './userSlice';
 
-export const userRegistrationThunk = createAsyncThunk('user/login', (regData: CustomerDraft, thunkAPI) => {
+export const userRegistrationThunk = createAsyncThunk('user/login', (regData: MyCustomerDraft, thunkAPI) => {
   return apiRoot
-    .customers()
+    .me()
+    .signup()
     .post({ body: regData })
     .execute()
     .then((resp) => {

@@ -22,8 +22,13 @@
     "noFallthroughCasesInSwitch": true,
 
     "paths": {
-      "@/*": ["./src/*"],
-      "@components/*": ["./src/components/*"]
+      "@/*": ["./src/*"]
+      // "@components/*": ["./src/components/*"],
+      // "@shared/*": ["./src/shared/*"],
+      // "@client/*": ["./src/client/*"],
+      // "@core/*": ["./src/core/*"],
+      // "@store/*": ["./src/store/*"],
+      // "@enums/*": ["./src/enums/*"]
     }
   },
   "include": ["src", "./jest.config.js", "jest.setup.ts"],
