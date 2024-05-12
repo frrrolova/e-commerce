@@ -12,11 +12,12 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
 import { navLinksData, rightMenuData } from '../../routes/routeConstants';
 import { useNavigate } from 'react-router-dom';
 import styles from './Header.module.scss';
 // import { RootState, useAppSelector } from '../../store/store';
+import { useEffect, useState } from 'react';
+import LogoImg from '/images/logo.svg';
 
 const pages = [navLinksData.home, navLinksData.catalog, navLinksData.about];
 
@@ -56,11 +57,28 @@ function Header() {
     setAnchorElUser(null);
   };
 
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      setIsScrolled(scrollTop > 0);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
-    <AppBar position="static" className={styles.header}>
+    <AppBar position="fixed" className={styles.header} data-scrolled={isScrolled}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          <Box sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}>
+            <img src={LogoImg} className={styles.logo} alt="Logo" loading="lazy" />
+          </Box>
           <Typography
             variant="h6"
             data-testid="shop-name"
@@ -112,7 +130,9 @@ function Header() {
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          <Box sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }}>
+            <img src={LogoImg} className={styles.logo} alt="Logo" loading="lazy" />
+          </Box>
           <Typography
             variant="h5"
             noWrap

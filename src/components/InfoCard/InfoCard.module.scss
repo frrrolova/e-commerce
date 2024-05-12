@@ -1,0 +1,52 @@
+@import '../../styles/variables.scss';
+
+.container {
+  position: relative;
+  padding-top: $offset-product-top;
+
+  .card {
+    border-radius: $border-radius-card;
+    opacity: $opacity-item;
+    height: $height-product-card;
+    display: flow-root;
+    background-color: lighten($color: $paper-color, $amount: 15%);
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: $offset-product-top;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: $border-radius-card;
+      border: 2px solid transparent;
+      background: linear-gradient(45deg, $border-dark-color, $border-light-color, $border-dark-color) border-box;
+      -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: destination-out;
+      mask-composite: exclude;
+    }
+
+    .content {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+
+      p {
+        margin-top: 3rem;
+        @media (max-width: 599px) {
+          margin-top: 1rem;
+        }
+      }
+    }
+
+    .image {
+      height: $height-promo-image;
+      filter: drop-shadow(5px 10px 15px $shadow-color);
+      @media (max-width: 599px) {
+        height: $height-promo-image-xs;
+      }
+    }
+  }
+}
