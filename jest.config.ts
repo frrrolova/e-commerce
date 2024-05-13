@@ -7,7 +7,7 @@ export default {
   moduleNameMapper: {
     '\\.(css|less|sass|scss|png|jpg|svg)$': 'identity-obj-proxy',
     '^.+\\.svg$': 'jest-transformer-svg',
-    '^@/(.*)$': './src/$1',
+    '^@/(.*)$': '<rootDir>/src/$1',
     '^@components/(.*)$': '<rootDir>/src/components/$1',
     '^@shared/(.*)$': '<rootDir>/src/shared/$1',
     '^@client/(.*)$': '<rootDir>/src/client/$1',
