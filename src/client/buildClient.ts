@@ -1,11 +1,11 @@
 import fetch from 'node-fetch';
 import {
   ClientBuilder,
-
   // Import middlewares
   type AuthMiddlewareOptions, // Required for auth
   type HttpMiddlewareOptions, // Required for sending HTTP requests
 } from '@commercetools/sdk-client-v2';
+import { tokenCache } from './tokenCache';
 
 const {
   VITE_CTP_PROJECT_KEY,
@@ -29,6 +29,7 @@ const authMiddlewareOptions: AuthMiddlewareOptions = {
   },
   scopes,
   fetch,
+  tokenCache: tokenCache,
 };
 
 // Configure httpMiddlewareOptions
