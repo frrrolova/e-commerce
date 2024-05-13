@@ -20,3 +20,11 @@ export enum ValidationErrors {
   TOO_YOUNG = 'You must be 14 years or older',
   POSTAL_CODE_INVALID = 'Invalid for chosen country',
 }
+
+export enum RegistrationResults {
+  SUCCESS = 'success',
+  ERROR = 'error',
+}
+export enum RegistrationResultMessages {
+  SUCCESS = 'Successful Registration!',
+}

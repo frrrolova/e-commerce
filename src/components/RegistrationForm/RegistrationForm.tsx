@@ -12,17 +12,30 @@ import {
   Select,
 } from '@mui/material';
 import { useFormik } from 'formik';
-import { useState } from 'react';
-import SignupSchema from '../../core/authValidation';
-import { useAppSelector } from '../../store/store';
+import { useEffect, useState } from 'react';
+import SignupSchema from '@core/authValidation';
+import { useAppDispatch, useAppSelector } from '@store/store';
 import { TCountryCode, getCountryData } from 'countries-list';
 import { LoadingButton } from '@mui/lab';
 import FormTextInput from '../FormTextInput/FormTextInput';
-import { FieldNames } from '../../enums/auth-form.enum';
-import { formFieldsConfig } from '../../shared/auth-form.constants';
+import { FieldNames, RegistrationResultMessages, RegistrationResults } from '@enums/auth-form.enum';
+import { formFieldsConfig } from '@shared/auth-form.constants';
+import { MyCustomerDraft } from '@commercetools/platform-sdk';
+import { userRegistrationThunk } from '@store/slices/user/thunks';
+import useSnackBar from '../SnackBar/useSnackBar';
+import { clearError } from '@/store/slices/user/userSlice';
 
 // TODO: autocomplete false
 function RegistrationForm() {
+  const dispatch = useAppDispatch();
+  const isPending = useAppSelector((state) => state.user.isPending);
+  const snackBar = useSnackBar();
+
+  useEffect(() => {
+    dispatch(clearError());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const formik = useFormik({
     initialValues: {
       [FieldNames.EMAIL]: '',
@@ -38,7 +51,30 @@ function RegistrationForm() {
     validateOnMount: true,
     validationSchema: SignupSchema,
     onSubmit: (values) => {
-      console.log(values);
+      const dateValue: string = new Date(values[FieldNames.DATE_OF_BIRTH]).toISOString().substring(0, 10);
+      const newCustomerData: MyCustomerDraft = {
+        email: values[FieldNames.EMAIL],
+        password: values[FieldNames.PASSWORD],
+        firstName: values[FieldNames.FIRST_NAME],
+        lastName: values[FieldNames.LAST_NAME],
+        dateOfBirth: dateValue,
+        addresses: [
+          {
+            country: values[FieldNames.COUNTRY],
+            city: values[FieldNames.CITY],
+            streetName: values[FieldNames.STREET],
+            postalCode: values[FieldNames.POSTAL_CODE],
+          },
+        ],
+      };
+      dispatch(userRegistrationThunk(newCustomerData))
+        .unwrap()
+        .then(() => {
+          snackBar.open(RegistrationResultMessages.SUCCESS, RegistrationResults.SUCCESS);
+        })
+        .catch(() => {
+          console.log('OOPS! Registration failed:');
+        });
     },
   });
 
@@ -61,6 +97,10 @@ function RegistrationForm() {
         alignItems: 'center',
         marginTop: 3,
         width: '80%',
+      }}
+      onSubmit={(e) => {
+        e.preventDefault();
+        formik.handleSubmit(e);
       }}
     >
       <FormTextInput
@@ -231,6 +271,7 @@ function RegistrationForm() {
         type="submit"
         variant="contained"
         disabled={!formik.isValid}
+        loading={isPending}
         sx={{
           marginTop: '8px',
         }}
