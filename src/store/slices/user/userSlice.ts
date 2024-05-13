@@ -1,16 +1,16 @@
 import { Customer } from '@commercetools/platform-sdk';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { userRegistrationThunk } from './thunk';
+import { userRegistrationThunk } from './thunks';
 
 interface UserState {
   user: Customer | null;
-  registrationError: string;
+  error: string;
   isPending: boolean;
 }
 
 const initialState: UserState = {
   user: null,
-  registrationError: '',
+  error: '',
   isPending: false,
 };
 
@@ -21,11 +21,14 @@ export const userSlice = createSlice({
     setUser: (state, action: PayloadAction<Customer>) => {
       state.user = action.payload;
     },
+    clearError: (state) => {
+      state.error = '';
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(userRegistrationThunk.pending, (state) => {
-        state.registrationError = '';
+        state.error = '';
         state.isPending = true;
       })
       .addCase(userRegistrationThunk.fulfilled, (state) => {
@@ -34,11 +37,11 @@ export const userSlice = createSlice({
       })
       .addCase(userRegistrationThunk.rejected, (state, action) => {
         state.isPending = false;
-        state.registrationError = action.error.message ?? '';
+        state.error = action.error.message ?? '';
       });
   },
 });
 
-export const { setUser } = userSlice.actions;
+export const { setUser, clearError } = userSlice.actions;
 
 export default userSlice;

@@ -12,7 +12,7 @@ import {
   Select,
 } from '@mui/material';
 import { useFormik } from 'formik';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import SignupSchema from '@core/authValidation';
 import { useAppDispatch, useAppSelector } from '@store/store';
 import { TCountryCode, getCountryData } from 'countries-list';
@@ -21,8 +21,9 @@ import FormTextInput from '../FormTextInput/FormTextInput';
 import { FieldNames, RegistrationResultMessages, RegistrationResults } from '@enums/auth-form.enum';
 import { formFieldsConfig } from '@shared/auth-form.constants';
 import { MyCustomerDraft } from '@commercetools/platform-sdk';
-import { userRegistrationThunk } from '@store/slices/user/thunk';
+import { userRegistrationThunk } from '@store/slices/user/thunks';
 import useSnackBar from '../SnackBar/useSnackBar';
+import { clearError } from '@/store/slices/user/userSlice';
 
 // TODO: autocomplete false
 function RegistrationForm() {
@@ -30,8 +31,10 @@ function RegistrationForm() {
   const isPending = useAppSelector((state) => state.user.isPending);
   const snackBar = useSnackBar();
 
-  // const [snackBarOpen, setSnackBarOpen] = useState(true);
-  // const [registrationResult, setRegistrationResult] = useState<RegistrationResults>();
+  useEffect(() => {
+    dispatch(clearError());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const formik = useFormik({
     initialValues: {
