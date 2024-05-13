@@ -36,7 +36,6 @@ export const userSlice = createSlice({
         // update state with user or credentials
       })
       .addCase(userRegistrationThunk.rejected, (state, action) => {
-        console.log('YYYYYYYYYYYYYYYYYYYYYYYYYY', action);
         state.isPending = false;
         const payload = action.payload as ErrorResponse;
         const err: ErrorObject | null = payload.errors?.[0] || null;

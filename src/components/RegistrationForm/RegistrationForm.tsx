@@ -24,16 +24,17 @@ import { FieldNames, RegistrationErrors, RegistrationResultMessages, Registratio
 import { formFieldsConfig } from '@shared/auth-form.constants';
 import { ErrorObject, MyCustomerDraft } from '@commercetools/platform-sdk';
 import { userRegistrationThunk } from '@store/slices/user/thunks';
-import useSnackBar from '../SnackBar/useSnackBar';
 import { clearError } from '@/store/slices/user/userSlice';
 import { Link as RouterLink } from 'react-router-dom';
 import { Paths } from '@/routes/routeConstants';
+import { useSnackbar } from 'notistack';
+import { snackbarBasicParams } from './constants';
 
 // TODO: autocomplete false
 function RegistrationForm() {
   const dispatch = useAppDispatch();
   const isPending = useAppSelector((state) => state.user.isPending);
-  const snackBar = useSnackBar();
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     dispatch(clearError());
@@ -74,18 +75,25 @@ function RegistrationForm() {
       dispatch(userRegistrationThunk(newCustomerData))
         .unwrap()
         .then(() => {
-          snackBar.open(RegistrationResultMessages.SUCCESS, RegistrationResults.SUCCESS);
+          enqueueSnackbar(RegistrationResultMessages.SUCCESS, {
+            variant: RegistrationResults.SUCCESS,
+            ...snackbarBasicParams,
+          });
         })
         .catch((e) => {
           console.log('OOPS! Registration failed:', e);
           const errors: ErrorObject[] = e.body?.errors;
           if (errors) {
-            const error: ErrorObject = errors[0];
-            if (error.code === RegistrationErrors.ALREADY_EXIST) {
-              const msg = `${error.message} ${RegistrationResultMessages.ERR_ALREADY_EXIST}`;
-              formik.setFieldError(FieldNames.EMAIL, msg);
-            }
-            snackBar.open(error.message, RegistrationResults.ERROR);
+            errors.forEach((error: ErrorObject) => {
+              if (error.code === RegistrationErrors.ALREADY_EXIST) {
+                const msg = `${error.message} ${RegistrationResultMessages.ERR_ALREADY_EXIST}`;
+                formik.setFieldError(FieldNames.EMAIL, msg);
+              }
+              enqueueSnackbar(error.message, {
+                variant: RegistrationResults.ERROR,
+                ...snackbarBasicParams,
+              });
+            });
           }
         });
     },
@@ -109,7 +117,10 @@ function RegistrationForm() {
         flexDirection: 'column',
         alignItems: 'center',
         marginTop: 3,
-        width: '80%',
+        width: {
+          xs: '97%',
+          sm: '80%',
+        },
       }}
       onSubmit={(e) => {
         e.preventDefault();
@@ -169,6 +180,10 @@ function RegistrationForm() {
         onBlur={formik.handleBlur}
         error={Boolean(formik.touched.firstName) && Boolean(formik.errors.firstName)}
         errorMsg={formik.errors.firstName}
+        sx={{
+          position: 'relative',
+          zIndex: 3,
+        }}
       />
 
       <FormTextInput
