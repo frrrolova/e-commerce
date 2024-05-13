@@ -27,4 +27,9 @@ export enum RegistrationResults {
 }
 export enum RegistrationResultMessages {
   SUCCESS = 'Successful Registration!',
+  ERR_ALREADY_EXIST = 'Please, log in or use another email address',
+}
+
+export enum RegistrationErrors {
+  ALREADY_EXIST = 'DuplicateField',
 }

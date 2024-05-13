@@ -8,8 +8,10 @@ import {
   IconButton,
   InputAdornment,
   InputLabel,
+  Link,
   MenuItem,
   Select,
+  Typography,
 } from '@mui/material';
 import { useFormik } from 'formik';
 import { useEffect, useState } from 'react';
@@ -18,12 +20,14 @@ import { useAppDispatch, useAppSelector } from '@store/store';
 import { TCountryCode, getCountryData } from 'countries-list';
 import { LoadingButton } from '@mui/lab';
 import FormTextInput from '../FormTextInput/FormTextInput';
-import { FieldNames, RegistrationResultMessages, RegistrationResults } from '@enums/auth-form.enum';
+import { FieldNames, RegistrationErrors, RegistrationResultMessages, RegistrationResults } from '@enums/auth-form.enum';
 import { formFieldsConfig } from '@shared/auth-form.constants';
-import { MyCustomerDraft } from '@commercetools/platform-sdk';
+import { ErrorObject, MyCustomerDraft } from '@commercetools/platform-sdk';
 import { userRegistrationThunk } from '@store/slices/user/thunks';
 import useSnackBar from '../SnackBar/useSnackBar';
 import { clearError } from '@/store/slices/user/userSlice';
+import { Link as RouterLink } from 'react-router-dom';
+import { Paths } from '@/routes/routeConstants';
 
 // TODO: autocomplete false
 function RegistrationForm() {
@@ -72,8 +76,17 @@ function RegistrationForm() {
         .then(() => {
           snackBar.open(RegistrationResultMessages.SUCCESS, RegistrationResults.SUCCESS);
         })
-        .catch(() => {
-          console.log('OOPS! Registration failed:');
+        .catch((e) => {
+          console.log('OOPS! Registration failed:', e);
+          const errors: ErrorObject[] = e.body?.errors;
+          if (errors) {
+            const error: ErrorObject = errors[0];
+            if (error.code === RegistrationErrors.ALREADY_EXIST) {
+              const msg = `${error.message} ${RegistrationResultMessages.ERR_ALREADY_EXIST}`;
+              formik.setFieldError(FieldNames.EMAIL, msg);
+            }
+            snackBar.open(error.message, RegistrationResults.ERROR);
+          }
         });
     },
   });
@@ -278,6 +291,17 @@ function RegistrationForm() {
       >
         Register
       </LoadingButton>
+      <Typography
+        component="p"
+        sx={{
+          marginTop: 1.5,
+        }}
+      >
+        Already have an account?{' '}
+        <Link component={RouterLink} to={Paths.AUTH}>
+          Log in
+        </Link>
+      </Typography>
     </Box>
   );
 }
