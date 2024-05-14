@@ -1,6 +1,8 @@
 import fetch from 'node-fetch';
 import {
   ClientBuilder,
+  // PasswordAuthMiddlewareOptions,
+  
   // Import middlewares
   type AuthMiddlewareOptions, // Required for auth
   type HttpMiddlewareOptions, // Required for sending HTTP requests
@@ -39,9 +41,9 @@ const httpMiddlewareOptions: HttpMiddlewareOptions = {
 };
 
 // Export the ClientBuilder
-export const ctpClient = new ClientBuilder()
+export const anonymousFlowCLient = new ClientBuilder()
   .withProjectKey(projectKey) // .withProjectKey() is not required if the projectKey is included in authMiddlewareOptions
-  .withClientCredentialsFlow(authMiddlewareOptions)
+  .withAnonymousSessionFlow(authMiddlewareOptions)
   .withHttpMiddleware(httpMiddlewareOptions)
   .withLoggerMiddleware() // Include middleware for logging
   .build();

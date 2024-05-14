@@ -1,3 +1,17 @@
-.btn {
-  margin-top: 1rem;
+@import '../../styles/variables.scss';
+
+.container {
+  position: relative;
+
+  .image-bg {
+    position: absolute;
+    top: 0;
+    z-index: -999;
+    width: 100%;
+  }
+  
+  .section-title {
+    margin-top: 3rem;
+    text-align: center;    
+  }
 }

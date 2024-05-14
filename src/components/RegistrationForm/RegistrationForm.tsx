@@ -8,21 +8,39 @@ import {
   IconButton,
   InputAdornment,
   InputLabel,
+  Link,
   MenuItem,
   Select,
+  Typography,
 } from '@mui/material';
 import { useFormik } from 'formik';
-import { useState } from 'react';
-import SignupSchema from '../../core/authValidation';
-import { useAppSelector } from '../../store/store';
+import { useEffect, useState } from 'react';
+import SignupSchema from '@core/authValidation';
+import { useAppDispatch, useAppSelector } from '@store/store';
 import { TCountryCode, getCountryData } from 'countries-list';
 import { LoadingButton } from '@mui/lab';
 import FormTextInput from '../FormTextInput/FormTextInput';
-import { FieldNames } from '../../enums/auth-form.enum';
-import { formFieldsConfig } from '../../shared/auth-form.constants';
+import { FieldNames, RegistrationErrors, RegistrationResultMessages, RegistrationResults } from '@enums/auth-form.enum';
+import { formFieldsConfig } from '@shared/auth-form.constants';
+import { ErrorObject, MyCustomerDraft } from '@commercetools/platform-sdk';
+import { userRegistrationThunk } from '@store/slices/user/thunks';
+import { clearError } from '@/store/slices/user/userSlice';
+import { Link as RouterLink } from 'react-router-dom';
+import { Paths } from '@/routes/routeConstants';
+import { useSnackbar } from 'notistack';
+import { snackbarBasicParams } from './constants';
 
 // TODO: autocomplete false
 function RegistrationForm() {
+  const dispatch = useAppDispatch();
+  const isPending = useAppSelector((state) => state.user.isPending);
+  const { enqueueSnackbar } = useSnackbar();
+
+  useEffect(() => {
+    dispatch(clearError());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const formik = useFormik({
     initialValues: {
       [FieldNames.EMAIL]: '',
@@ -38,7 +56,46 @@ function RegistrationForm() {
     validateOnMount: true,
     validationSchema: SignupSchema,
     onSubmit: (values) => {
-      console.log(values);
+      const dateValue: string = new Date(values[FieldNames.DATE_OF_BIRTH]).toISOString().substring(0, 10);
+      const newCustomerData: MyCustomerDraft = {
+        email: values[FieldNames.EMAIL],
+        password: values[FieldNames.PASSWORD],
+        firstName: values[FieldNames.FIRST_NAME],
+        lastName: values[FieldNames.LAST_NAME],
+        dateOfBirth: dateValue,
+        addresses: [
+          {
+            country: values[FieldNames.COUNTRY],
+            city: values[FieldNames.CITY],
+            streetName: values[FieldNames.STREET],
+            postalCode: values[FieldNames.POSTAL_CODE],
+          },
+        ],
+      };
+      dispatch(userRegistrationThunk(newCustomerData))
+        .unwrap()
+        .then(() => {
+          enqueueSnackbar(RegistrationResultMessages.SUCCESS, {
+            variant: RegistrationResults.SUCCESS,
+            ...snackbarBasicParams,
+          });
+        })
+        .catch((e) => {
+          console.log('OOPS! Registration failed:', e);
+          const errors: ErrorObject[] = e.body?.errors;
+          if (errors) {
+            errors.forEach((error: ErrorObject) => {
+              if (error.code === RegistrationErrors.ALREADY_EXIST) {
+                const msg = `${error.message} ${RegistrationResultMessages.ERR_ALREADY_EXIST}`;
+                formik.setFieldError(FieldNames.EMAIL, msg);
+              }
+              enqueueSnackbar(error.message, {
+                variant: RegistrationResults.ERROR,
+                ...snackbarBasicParams,
+              });
+            });
+          }
+        });
     },
   });
 
@@ -60,7 +117,14 @@ function RegistrationForm() {
         flexDirection: 'column',
         alignItems: 'center',
         marginTop: 3,
-        width: '80%',
+        width: {
+          xs: '97%',
+          sm: '80%',
+        },
+      }}
+      onSubmit={(e) => {
+        e.preventDefault();
+        formik.handleSubmit(e);
       }}
     >
       <FormTextInput
@@ -116,6 +180,10 @@ function RegistrationForm() {
         onBlur={formik.handleBlur}
         error={Boolean(formik.touched.firstName) && Boolean(formik.errors.firstName)}
         errorMsg={formik.errors.firstName}
+        sx={{
+          position: 'relative',
+          zIndex: 3,
+        }}
       />
 
       <FormTextInput
@@ -231,12 +299,24 @@ function RegistrationForm() {
         type="submit"
         variant="contained"
         disabled={!formik.isValid}
+        loading={isPending}
         sx={{
           marginTop: '8px',
         }}
       >
         Register
       </LoadingButton>
+      <Typography
+        component="p"
+        sx={{
+          marginTop: 1.5,
+        }}
+      >
+        Already have an account?{' '}
+        <Link component={RouterLink} to={Paths.AUTH}>
+          Log in
+        </Link>
+      </Typography>
     </Box>
   );
 }

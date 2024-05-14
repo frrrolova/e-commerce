@@ -1,18 +1,14 @@
-import { Customer } from '@commercetools/platform-sdk';
+import { Customer, ErrorObject, ErrorResponse } from '@commercetools/platform-sdk';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { userRegistrationThunk, userLoginThunk } from './thunk';
+import { userRegistrationThunk, userLoginThunk } from './thunks';
 
 interface UserState {
-  accessToken: string;
-  refreshToken: string;
   user: Customer | null;
   error: string;
   isPending: boolean;
 }
 
 const initialState: UserState = {
-  accessToken: '',
-  refreshToken: '',
   user: null,
   error: '',
   isPending: false,
@@ -24,6 +20,9 @@ export const userSlice = createSlice({
   reducers: {
     setUser: (state, action: PayloadAction<Customer>) => {
       state.user = action.payload;
+    },
+    clearError: (state) => {
+      state.error = '';
     },
   },
   extraReducers: (builder) => {
@@ -38,7 +37,11 @@ export const userSlice = createSlice({
       })
       .addCase(userRegistrationThunk.rejected, (state, action) => {
         state.isPending = false;
-        state.error = action.error.message ?? '';
+        const payload = action.payload as ErrorResponse;
+        const err: ErrorObject | null = payload.errors?.[0] || null;
+        if (err) {
+          state.error = err.message ?? '';
+        }
       })
       .addCase(userLoginThunk.pending, (state) => {
         state.error = '';
@@ -54,6 +57,6 @@ export const userSlice = createSlice({
   },
 });
 
-export const { setUser } = userSlice.actions;
+export const { setUser, clearError } = userSlice.actions;
 
 export default userSlice;
