@@ -1,4 +1,4 @@
-import { Customer } from '@commercetools/platform-sdk';
+import { Customer, ErrorObject, ErrorResponse } from '@commercetools/platform-sdk';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { userRegistrationThunk } from './thunks';
 
@@ -37,7 +37,11 @@ export const userSlice = createSlice({
       })
       .addCase(userRegistrationThunk.rejected, (state, action) => {
         state.isPending = false;
-        state.error = action.error.message ?? '';
+        const payload = action.payload as ErrorResponse;
+        const err: ErrorObject | null = payload.errors?.[0] || null;
+        if (err) {
+          state.error = err.message ?? '';
+        }
       });
   },
 });
