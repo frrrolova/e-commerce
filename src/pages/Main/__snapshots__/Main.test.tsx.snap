@@ -1,0 +1,803 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Main component rendering performs snapshot testing 1`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="MuiBox-root css-0"
+      >
+        <img
+          alt="Plant"
+          class="MuiBox-root css-0"
+          src="default"
+        />
+        <div
+          class="MuiContainer-root MuiContainer-maxWidthMd css-xdmu94-MuiContainer-root"
+        >
+          <div
+            class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-1pi8xg4-MuiGrid2-root"
+          >
+            <div
+              class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-md-8 css-4jx1gz-MuiGrid2-root"
+            >
+              <h1
+                class="MuiTypography-root MuiTypography-h1 css-1bvf1x2-MuiTypography-root"
+              >
+                Bringing Nature Indoors
+              </h1>
+              <p
+                class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+              >
+                Step into a lush oasis of tranquility with our exquisite collection of indoor plants, where every leaf tells a story of beauty and natural elegance.
+              </p>
+              <button
+                class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeSmall MuiButton-textSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeSmall MuiButton-textSizeSmall MuiButton-colorPrimary css-i42hlh-MuiButtonBase-root-MuiButton-root"
+                tabindex="0"
+                type="button"
+              >
+                Login
+                <span
+                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                />
+              </button>
+              <button
+                class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeSmall MuiButton-textSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeSmall MuiButton-textSizeSmall MuiButton-colorPrimary css-1a3n7un-MuiButtonBase-root-MuiButton-root"
+                tabindex="0"
+                type="button"
+              >
+                Registration
+                <span
+                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                />
+              </button>
+            </div>
+            <div
+              class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-md-4 css-1d6tzcd-MuiGrid2-root"
+            >
+              <div
+                class="MuiBox-root css-0"
+              >
+                <div
+                  class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3 css-3su884-MuiPaper-root"
+                >
+                  <div
+                    class="MuiBox-root css-0"
+                  >
+                    <img
+                      alt="Plant"
+                      class="MuiBox-root css-0"
+                      src="/images/home/philodendron_1.png"
+                    />
+                    <div
+                      class="MuiBox-root css-0"
+                    >
+                      <div
+                        class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom css-ix1vfo-MuiTypography-root"
+                      >
+                        Philodendron
+                      </div>
+                      <p
+                        class="MuiTypography-root MuiTypography-body2 css-r40f8v-MuiTypography-root"
+                      >
+                        A relatively fast-growing ornamental plant frequently used for indoor landscaping.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-16fnxy3-MuiGrid2-root"
+            >
+              <h4
+                class="MuiTypography-root MuiTypography-h4 css-5lbw0b-MuiTypography-root"
+              >
+                Promotions
+              </h4>
+            </div>
+            <div
+              class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-8e9h1c-MuiGrid2-root"
+            >
+              <div
+                class="MuiBox-root css-0"
+              >
+                <div
+                  class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3 css-3su884-MuiPaper-root"
+                >
+                  <div
+                    class="MuiBox-root css-1nnw2ij"
+                  >
+                    <img
+                      alt="Plant"
+                      class="MuiBox-root css-0"
+                      src="/images/home/promo.png"
+                    />
+                    <div
+                      class="MuiBox-root css-0"
+                    >
+                      <div
+                        class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom css-1r10n4f-MuiTypography-root"
+                      >
+                        Summer time
+                      </div>
+                      <p
+                        class="MuiTypography-root MuiTypography-body2 css-r40f8v-MuiTypography-root"
+                      >
+                        Take advantage of an additional discount during the summer using the promotional code:
+                      </p>
+                      <h6
+                        class="MuiTypography-root MuiTypography-h6 css-2ulfj5-MuiTypography-root"
+                      >
+                        SUMMER2024
+                      </h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-16fnxy3-MuiGrid2-root"
+            >
+              <h4
+                class="MuiTypography-root MuiTypography-h4 css-5lbw0b-MuiTypography-root"
+              >
+                Our special offers
+              </h4>
+            </div>
+            <div
+              class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-8e9h1c-MuiGrid2-root"
+            >
+              <div
+                class="MuiBox-root css-i9gxme"
+              >
+                <div
+                  class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiGrid2-spacing-xs-2 MuiGrid2-spacing-md-3 css-phooid-MuiGrid2-root"
+                >
+                  <div
+                    class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-4 MuiGrid2-grid-sm-4 MuiGrid2-grid-md-4 css-rxdc07-MuiGrid2-root"
+                  >
+                    <div
+                      class="MuiBox-root css-0"
+                    >
+                      <div
+                        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3 css-3su884-MuiPaper-root"
+                      >
+                        <div
+                          class="MuiBox-root css-0"
+                        >
+                          <img
+                            alt="Plant"
+                            class="MuiBox-root css-0"
+                            src="/images/home/philodendron_1.png"
+                          />
+                          <div
+                            class="MuiBox-root css-0"
+                          >
+                            <div
+                              class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom css-ix1vfo-MuiTypography-root"
+                            >
+                              Philodendron
+                            </div>
+                            <p
+                              class="MuiTypography-root MuiTypography-body2 css-r40f8v-MuiTypography-root"
+                            >
+                              A relatively fast-growing ornamental plant frequently used for indoor landscaping.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-4 MuiGrid2-grid-sm-4 MuiGrid2-grid-md-4 css-rxdc07-MuiGrid2-root"
+                  >
+                    <div
+                      class="MuiBox-root css-0"
+                    >
+                      <div
+                        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3 css-3su884-MuiPaper-root"
+                      >
+                        <div
+                          class="MuiBox-root css-0"
+                        >
+                          <img
+                            alt="Plant"
+                            class="MuiBox-root css-0"
+                            src="/images/home/philodendron_1.png"
+                          />
+                          <div
+                            class="MuiBox-root css-0"
+                          >
+                            <div
+                              class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom css-ix1vfo-MuiTypography-root"
+                            >
+                              Philodendron
+                            </div>
+                            <p
+                              class="MuiTypography-root MuiTypography-body2 css-r40f8v-MuiTypography-root"
+                            >
+                              A relatively fast-growing ornamental plant frequently used for indoor landscaping.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-4 MuiGrid2-grid-sm-4 MuiGrid2-grid-md-4 css-rxdc07-MuiGrid2-root"
+                  >
+                    <div
+                      class="MuiBox-root css-0"
+                    >
+                      <div
+                        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3 css-3su884-MuiPaper-root"
+                      >
+                        <div
+                          class="MuiBox-root css-0"
+                        >
+                          <img
+                            alt="Plant"
+                            class="MuiBox-root css-0"
+                            src="/images/home/philodendron_1.png"
+                          />
+                          <div
+                            class="MuiBox-root css-0"
+                          >
+                            <div
+                              class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom css-ix1vfo-MuiTypography-root"
+                            >
+                              Philodendron
+                            </div>
+                            <p
+                              class="MuiTypography-root MuiTypography-body2 css-r40f8v-MuiTypography-root"
+                            >
+                              A relatively fast-growing ornamental plant frequently used for indoor landscaping.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-4 MuiGrid2-grid-sm-4 MuiGrid2-grid-md-4 css-rxdc07-MuiGrid2-root"
+                  >
+                    <div
+                      class="MuiBox-root css-0"
+                    >
+                      <div
+                        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3 css-3su884-MuiPaper-root"
+                      >
+                        <div
+                          class="MuiBox-root css-0"
+                        >
+                          <img
+                            alt="Plant"
+                            class="MuiBox-root css-0"
+                            src="/images/home/philodendron_1.png"
+                          />
+                          <div
+                            class="MuiBox-root css-0"
+                          >
+                            <div
+                              class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom css-ix1vfo-MuiTypography-root"
+                            >
+                              Philodendron
+                            </div>
+                            <p
+                              class="MuiTypography-root MuiTypography-body2 css-r40f8v-MuiTypography-root"
+                            >
+                              A relatively fast-growing ornamental plant frequently used for indoor landscaping.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-4 MuiGrid2-grid-sm-4 MuiGrid2-grid-md-4 css-rxdc07-MuiGrid2-root"
+                  >
+                    <div
+                      class="MuiBox-root css-0"
+                    >
+                      <div
+                        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3 css-3su884-MuiPaper-root"
+                      >
+                        <div
+                          class="MuiBox-root css-0"
+                        >
+                          <img
+                            alt="Plant"
+                            class="MuiBox-root css-0"
+                            src="/images/home/philodendron_1.png"
+                          />
+                          <div
+                            class="MuiBox-root css-0"
+                          >
+                            <div
+                              class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom css-ix1vfo-MuiTypography-root"
+                            >
+                              Philodendron
+                            </div>
+                            <p
+                              class="MuiTypography-root MuiTypography-body2 css-r40f8v-MuiTypography-root"
+                            >
+                              A relatively fast-growing ornamental plant frequently used for indoor landscaping.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-4 MuiGrid2-grid-sm-4 MuiGrid2-grid-md-4 css-rxdc07-MuiGrid2-root"
+                  >
+                    <div
+                      class="MuiBox-root css-0"
+                    >
+                      <div
+                        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3 css-3su884-MuiPaper-root"
+                      >
+                        <div
+                          class="MuiBox-root css-0"
+                        >
+                          <img
+                            alt="Plant"
+                            class="MuiBox-root css-0"
+                            src="/images/home/philodendron_1.png"
+                          />
+                          <div
+                            class="MuiBox-root css-0"
+                          >
+                            <div
+                              class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom css-ix1vfo-MuiTypography-root"
+                            >
+                              Philodendron
+                            </div>
+                            <p
+                              class="MuiTypography-root MuiTypography-body2 css-r40f8v-MuiTypography-root"
+                            >
+                              A relatively fast-growing ornamental plant frequently used for indoor landscaping.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="MuiBox-root css-0"
+    >
+      <img
+        alt="Plant"
+        class="MuiBox-root css-0"
+        src="default"
+      />
+      <div
+        class="MuiContainer-root MuiContainer-maxWidthMd css-xdmu94-MuiContainer-root"
+      >
+        <div
+          class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-1pi8xg4-MuiGrid2-root"
+        >
+          <div
+            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-md-8 css-4jx1gz-MuiGrid2-root"
+          >
+            <h1
+              class="MuiTypography-root MuiTypography-h1 css-1bvf1x2-MuiTypography-root"
+            >
+              Bringing Nature Indoors
+            </h1>
+            <p
+              class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+            >
+              Step into a lush oasis of tranquility with our exquisite collection of indoor plants, where every leaf tells a story of beauty and natural elegance.
+            </p>
+            <button
+              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeSmall MuiButton-textSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeSmall MuiButton-textSizeSmall MuiButton-colorPrimary css-i42hlh-MuiButtonBase-root-MuiButton-root"
+              tabindex="0"
+              type="button"
+            >
+              Login
+              <span
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              />
+            </button>
+            <button
+              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeSmall MuiButton-textSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeSmall MuiButton-textSizeSmall MuiButton-colorPrimary css-1a3n7un-MuiButtonBase-root-MuiButton-root"
+              tabindex="0"
+              type="button"
+            >
+              Registration
+              <span
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              />
+            </button>
+          </div>
+          <div
+            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-md-4 css-1d6tzcd-MuiGrid2-root"
+          >
+            <div
+              class="MuiBox-root css-0"
+            >
+              <div
+                class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3 css-3su884-MuiPaper-root"
+              >
+                <div
+                  class="MuiBox-root css-0"
+                >
+                  <img
+                    alt="Plant"
+                    class="MuiBox-root css-0"
+                    src="/images/home/philodendron_1.png"
+                  />
+                  <div
+                    class="MuiBox-root css-0"
+                  >
+                    <div
+                      class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom css-ix1vfo-MuiTypography-root"
+                    >
+                      Philodendron
+                    </div>
+                    <p
+                      class="MuiTypography-root MuiTypography-body2 css-r40f8v-MuiTypography-root"
+                    >
+                      A relatively fast-growing ornamental plant frequently used for indoor landscaping.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-16fnxy3-MuiGrid2-root"
+          >
+            <h4
+              class="MuiTypography-root MuiTypography-h4 css-5lbw0b-MuiTypography-root"
+            >
+              Promotions
+            </h4>
+          </div>
+          <div
+            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-8e9h1c-MuiGrid2-root"
+          >
+            <div
+              class="MuiBox-root css-0"
+            >
+              <div
+                class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3 css-3su884-MuiPaper-root"
+              >
+                <div
+                  class="MuiBox-root css-1nnw2ij"
+                >
+                  <img
+                    alt="Plant"
+                    class="MuiBox-root css-0"
+                    src="/images/home/promo.png"
+                  />
+                  <div
+                    class="MuiBox-root css-0"
+                  >
+                    <div
+                      class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom css-1r10n4f-MuiTypography-root"
+                    >
+                      Summer time
+                    </div>
+                    <p
+                      class="MuiTypography-root MuiTypography-body2 css-r40f8v-MuiTypography-root"
+                    >
+                      Take advantage of an additional discount during the summer using the promotional code:
+                    </p>
+                    <h6
+                      class="MuiTypography-root MuiTypography-h6 css-2ulfj5-MuiTypography-root"
+                    >
+                      SUMMER2024
+                    </h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-16fnxy3-MuiGrid2-root"
+          >
+            <h4
+              class="MuiTypography-root MuiTypography-h4 css-5lbw0b-MuiTypography-root"
+            >
+              Our special offers
+            </h4>
+          </div>
+          <div
+            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-8e9h1c-MuiGrid2-root"
+          >
+            <div
+              class="MuiBox-root css-i9gxme"
+            >
+              <div
+                class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiGrid2-spacing-xs-2 MuiGrid2-spacing-md-3 css-phooid-MuiGrid2-root"
+              >
+                <div
+                  class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-4 MuiGrid2-grid-sm-4 MuiGrid2-grid-md-4 css-rxdc07-MuiGrid2-root"
+                >
+                  <div
+                    class="MuiBox-root css-0"
+                  >
+                    <div
+                      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3 css-3su884-MuiPaper-root"
+                    >
+                      <div
+                        class="MuiBox-root css-0"
+                      >
+                        <img
+                          alt="Plant"
+                          class="MuiBox-root css-0"
+                          src="/images/home/philodendron_1.png"
+                        />
+                        <div
+                          class="MuiBox-root css-0"
+                        >
+                          <div
+                            class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom css-ix1vfo-MuiTypography-root"
+                          >
+                            Philodendron
+                          </div>
+                          <p
+                            class="MuiTypography-root MuiTypography-body2 css-r40f8v-MuiTypography-root"
+                          >
+                            A relatively fast-growing ornamental plant frequently used for indoor landscaping.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-4 MuiGrid2-grid-sm-4 MuiGrid2-grid-md-4 css-rxdc07-MuiGrid2-root"
+                >
+                  <div
+                    class="MuiBox-root css-0"
+                  >
+                    <div
+                      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3 css-3su884-MuiPaper-root"
+                    >
+                      <div
+                        class="MuiBox-root css-0"
+                      >
+                        <img
+                          alt="Plant"
+                          class="MuiBox-root css-0"
+                          src="/images/home/philodendron_1.png"
+                        />
+                        <div
+                          class="MuiBox-root css-0"
+                        >
+                          <div
+                            class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom css-ix1vfo-MuiTypography-root"
+                          >
+                            Philodendron
+                          </div>
+                          <p
+                            class="MuiTypography-root MuiTypography-body2 css-r40f8v-MuiTypography-root"
+                          >
+                            A relatively fast-growing ornamental plant frequently used for indoor landscaping.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-4 MuiGrid2-grid-sm-4 MuiGrid2-grid-md-4 css-rxdc07-MuiGrid2-root"
+                >
+                  <div
+                    class="MuiBox-root css-0"
+                  >
+                    <div
+                      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3 css-3su884-MuiPaper-root"
+                    >
+                      <div
+                        class="MuiBox-root css-0"
+                      >
+                        <img
+                          alt="Plant"
+                          class="MuiBox-root css-0"
+                          src="/images/home/philodendron_1.png"
+                        />
+                        <div
+                          class="MuiBox-root css-0"
+                        >
+                          <div
+                            class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom css-ix1vfo-MuiTypography-root"
+                          >
+                            Philodendron
+                          </div>
+                          <p
+                            class="MuiTypography-root MuiTypography-body2 css-r40f8v-MuiTypography-root"
+                          >
+                            A relatively fast-growing ornamental plant frequently used for indoor landscaping.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-4 MuiGrid2-grid-sm-4 MuiGrid2-grid-md-4 css-rxdc07-MuiGrid2-root"
+                >
+                  <div
+                    class="MuiBox-root css-0"
+                  >
+                    <div
+                      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3 css-3su884-MuiPaper-root"
+                    >
+                      <div
+                        class="MuiBox-root css-0"
+                      >
+                        <img
+                          alt="Plant"
+                          class="MuiBox-root css-0"
+                          src="/images/home/philodendron_1.png"
+                        />
+                        <div
+                          class="MuiBox-root css-0"
+                        >
+                          <div
+                            class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom css-ix1vfo-MuiTypography-root"
+                          >
+                            Philodendron
+                          </div>
+                          <p
+                            class="MuiTypography-root MuiTypography-body2 css-r40f8v-MuiTypography-root"
+                          >
+                            A relatively fast-growing ornamental plant frequently used for indoor landscaping.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-4 MuiGrid2-grid-sm-4 MuiGrid2-grid-md-4 css-rxdc07-MuiGrid2-root"
+                >
+                  <div
+                    class="MuiBox-root css-0"
+                  >
+                    <div
+                      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3 css-3su884-MuiPaper-root"
+                    >
+                      <div
+                        class="MuiBox-root css-0"
+                      >
+                        <img
+                          alt="Plant"
+                          class="MuiBox-root css-0"
+                          src="/images/home/philodendron_1.png"
+                        />
+                        <div
+                          class="MuiBox-root css-0"
+                        >
+                          <div
+                            class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom css-ix1vfo-MuiTypography-root"
+                          >
+                            Philodendron
+                          </div>
+                          <p
+                            class="MuiTypography-root MuiTypography-body2 css-r40f8v-MuiTypography-root"
+                          >
+                            A relatively fast-growing ornamental plant frequently used for indoor landscaping.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-4 MuiGrid2-grid-sm-4 MuiGrid2-grid-md-4 css-rxdc07-MuiGrid2-root"
+                >
+                  <div
+                    class="MuiBox-root css-0"
+                  >
+                    <div
+                      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3 css-3su884-MuiPaper-root"
+                    >
+                      <div
+                        class="MuiBox-root css-0"
+                      >
+                        <img
+                          alt="Plant"
+                          class="MuiBox-root css-0"
+                          src="/images/home/philodendron_1.png"
+                        />
+                        <div
+                          class="MuiBox-root css-0"
+                        >
+                          <div
+                            class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom css-ix1vfo-MuiTypography-root"
+                          >
+                            Philodendron
+                          </div>
+                          <p
+                            class="MuiTypography-root MuiTypography-body2 css-r40f8v-MuiTypography-root"
+                          >
+                            A relatively fast-growing ornamental plant frequently used for indoor landscaping.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "store": {
+    "@@observable": [Function],
+    "dispatch": [Function],
+    "getState": [Function],
+    "replaceReducer": [Function],
+    "subscribe": [Function],
+  },
+  "unmount": [Function],
+}
+`;
