@@ -14,6 +14,7 @@ import { clearError } from '@/store/slices/user/userSlice';
 import { useSnackbar } from 'notistack';
 import { Link as RouterLink } from 'react-router-dom';
 import { Paths } from '@/routes/routeConstants';
+import { useNavigate } from 'react-router-dom';
 
 const snackbarBasicParams = {
   style: { width: '300px' },
@@ -24,6 +25,7 @@ function LoginForm() {
   const dispatch = useAppDispatch();
   const isPending = useAppSelector((state) => state.user.isPending);
   const { enqueueSnackbar } = useSnackbar();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(clearError());
@@ -50,6 +52,9 @@ function LoginForm() {
             variant: LoginResults.SUCCESS,
             ...snackbarBasicParams,
           });
+          setTimeout(() => {
+            navigate(Paths.HOME);
+          }, 1000);
         })
         .catch((e) => {
           console.log('OOPS! Authentication failed:', e);
