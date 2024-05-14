@@ -3,17 +3,30 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useFormik } from 'formik';
 import { LoadingButton } from '@mui/lab';
 import SignupLoginSchema from '../../core/loginValidation';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import FormTextInput from '../FormTextInput/FormTextInput';
 import { formFieldsConfig } from '../../shared/auth-form.constants';
-import { FieldNames } from '../../enums/auth-form.enum';
-import { MyCustomerDraft } from '@commercetools/platform-sdk';
-import { userLoginThunk } from '@/store/slices/user/thunk';
+import { FieldNames, LoginErrors, LoginResultMessages, LoginResults } from '@enums/auth-form.enum';
+import { MyCustomerDraft, ErrorObject } from '@commercetools/platform-sdk';
+import { userLoginThunk } from '@/store/slices/user/thunks';
 import { useAppSelector, useAppDispatch } from '@/store/store';
+import { clearError } from '@/store/slices/user/userSlice';
+import { useSnackbar } from 'notistack';
+
+const snackbarBasicParams = {
+  style: { width: '300px' },
+  anchorOrigin: { vertical: 'top' as const, horizontal: 'center' as const },
+};
 
 function LoginForm() {
   const dispatch = useAppDispatch();
   const isPending = useAppSelector((state) => state.user.isPending);
+  const { enqueueSnackbar } = useSnackbar();
+
+  useEffect(() => {
+    dispatch(clearError());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const formik = useFormik({
     initialValues: {
@@ -31,9 +44,27 @@ function LoginForm() {
         .unwrap()
         .then(() => {
           console.log(localStorage.getItem('CREDENTIALS'));
+          enqueueSnackbar(LoginResultMessages.SUCCESS, {
+            variant: LoginResults.SUCCESS,
+            ...snackbarBasicParams,
+          });
         })
         .catch((e) => {
-          console.log(e.message);
+          console.log('OOPS! Authentication failed:', e);
+          const errors: ErrorObject[] = e.body?.errors;
+          if (errors) {
+            errors.forEach((error: ErrorObject) => {
+              console.log(error.code);
+              if (error.code === LoginErrors.NOT_FOUND) {
+                const msg = `${error.message} ${LoginResultMessages.NOT_FOUND}`;
+                formik.setFieldError(FieldNames.EMAIL, msg);
+              }
+              enqueueSnackbar(error.message, {
+                variant: LoginResults.ERROR,
+                ...snackbarBasicParams,
+              });
+            });
+          }
         });
     },
   });
@@ -59,7 +90,10 @@ function LoginForm() {
           flexDirection: 'column',
           alignItems: 'center',
           marginTop: 3,
-          width: '80%',
+          width: {
+            xs: '95%',
+            sm: '80%',
+          },
         }}
       >
         <FormTextInput

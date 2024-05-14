@@ -52,7 +52,11 @@ export const userSlice = createSlice({
       })
       .addCase(userLoginThunk.rejected, (state, action) => {
         state.isPending = false;
-        state.error = action.error.message ?? '';
+        const payload = action.payload as ErrorResponse;
+        const err: ErrorObject | null = payload.errors?.[0] || null;
+        if (err) {
+          state.error = err.message ?? '';
+        }
       });
   },
 });

@@ -11,6 +11,11 @@ function Login() {
           position: 'relative',
           display: 'flex',
           justifyContent: 'center',
+          paddingX: '3px',
+          paddingY: {
+            xs: '30px',
+            sm: '68px',
+          },
         }}
       >
         <Box
@@ -55,7 +60,7 @@ function Login() {
             src={cornerPlantImg}
           />
           <Typography component="h1" variant="h5">
-            Log IN
+            Login
           </Typography>
           <LoginForm />
         </Paper>
