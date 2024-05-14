@@ -1,4 +1,4 @@
-import { Box, IconButton, InputAdornment } from '@mui/material';
+import { Box, IconButton, InputAdornment, Link, Typography } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useFormik } from 'formik';
 import { LoadingButton } from '@mui/lab';
@@ -12,6 +12,8 @@ import { userLoginThunk } from '@/store/slices/user/thunks';
 import { useAppSelector, useAppDispatch } from '@/store/store';
 import { clearError } from '@/store/slices/user/userSlice';
 import { useSnackbar } from 'notistack';
+import { Link as RouterLink } from 'react-router-dom';
+import { Paths } from '@/routes/routeConstants';
 
 const snackbarBasicParams = {
   style: { width: '300px' },
@@ -150,6 +152,17 @@ function LoginForm() {
         >
           Login
         </LoadingButton>
+        <Typography
+          component="p"
+          sx={{
+            marginTop: 1.5,
+          }}
+        >
+          Already have an account?{' '}
+          <Link component={RouterLink} to={Paths.REGISTER}>
+            Register
+          </Link>
+        </Typography>
       </Box>
     </>
   );
