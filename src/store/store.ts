@@ -13,7 +13,10 @@ const initStore = (project: Project) =>
     preloadedState: {
       project: project,
     },
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware(), // here will be middleware for asynk side effects
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware({
+        serializableCheck: false,
+      }), // here will be middleware for asynk side effects
   });
 
 export type RootState = ReturnType<ReturnType<typeof initStore>['getState']>;

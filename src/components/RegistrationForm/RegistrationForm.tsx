@@ -82,7 +82,7 @@ function RegistrationForm() {
         })
         .catch((e) => {
           console.log('OOPS! Registration failed:', e);
-          const errors: ErrorObject[] = e.body?.errors;
+          const errors: ErrorObject[] = e.errors;
           if (errors) {
             errors.forEach((error: ErrorObject) => {
               if (error.code === RegistrationErrors.ALREADY_EXIST) {
@@ -317,6 +317,15 @@ function RegistrationForm() {
           Log in
         </Link>
       </Typography>
+      {/* <Button
+        type="button"
+        variant="contained"
+        onClick={() => {
+          dispatch(logout());
+        }}
+      >
+        Logout
+      </Button> */}
     </Box>
   );
 }
