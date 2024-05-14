@@ -1,7 +1,7 @@
 import { Box, Container, Paper, Typography } from '@mui/material';
 import backPlantImg from '/images/registration/reg-back.png';
 import cornerPlantImg from '/images/registration/corner-plant.png';
-import LoginForm from '../../components/LoginForm/LoginForn';
+import LoginForm from '../../components/LoginForm/LoginForm';
 
 function Login() {
   return (

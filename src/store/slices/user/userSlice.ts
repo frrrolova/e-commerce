@@ -1,7 +1,6 @@
 import { Customer } from '@commercetools/platform-sdk';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { userRegistrationThunk, userLoginThunk } from './thunk';
-import { LoginResponseData } from '@/types';
 
 interface UserState {
   accessToken: string;
@@ -25,10 +24,6 @@ export const userSlice = createSlice({
   reducers: {
     setUser: (state, action: PayloadAction<Customer>) => {
       state.user = action.payload;
-    },
-    setCredentials: (state, action: PayloadAction<LoginResponseData>) => {
-      state.accessToken = action.payload.accessToken;
-      state.refreshToken = action.payload.refreshToken;
     },
   },
   extraReducers: (builder) => {
@@ -59,6 +54,6 @@ export const userSlice = createSlice({
   },
 });
 
-export const { setUser, setCredentials } = userSlice.actions;
+export const { setUser } = userSlice.actions;
 
 export default userSlice;

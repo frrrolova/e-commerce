@@ -7,7 +7,6 @@ import { useState } from 'react';
 import FormTextInput from '../FormTextInput/FormTextInput';
 import { formFieldsConfig } from '../../shared/auth-form.constants';
 import { FieldNames } from '../../enums/auth-form.enum';
-import CircularProgress from '@mui/material/CircularProgress';
 import { MyCustomerDraft } from '@commercetools/platform-sdk';
 import { userLoginThunk } from '@/store/slices/user/thunk';
 import { useAppSelector, useAppDispatch } from '@/store/store';
@@ -110,6 +109,7 @@ function LoginForm() {
           type="submit"
           variant="contained"
           disabled={!formik.isValid}
+          loading={isPending}
           sx={{
             marginTop: '8px',
           }}
@@ -117,16 +117,6 @@ function LoginForm() {
           Login
         </LoadingButton>
       </Box>
-      {isPending && (
-        <CircularProgress
-          size={96}
-          sx={{
-            position: 'absolute',
-            top: '40%',
-            left: '50%',
-          }}
-        />
-      )}
     </>
   );
 }
