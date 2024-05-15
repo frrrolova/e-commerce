@@ -1,7 +1,8 @@
 import { Customer, ErrorObject, ErrorResponse } from '@commercetools/platform-sdk';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { userRegistrationThunk } from './thunks';
-import client, { LSTokenPrefixes } from '@/client/client';
+import client from '@/client/client';
+import { LSTokenPrefixes } from '@/enums/ls.enums';
 
 interface UserState {
   user: Customer | null;
