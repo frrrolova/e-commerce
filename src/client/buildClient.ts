@@ -2,7 +2,7 @@ import fetch from 'node-fetch';
 import {
   ClientBuilder,
   // PasswordAuthMiddlewareOptions,
-  
+
   // Import middlewares
   type AuthMiddlewareOptions, // Required for auth
   type HttpMiddlewareOptions, // Required for sending HTTP requests

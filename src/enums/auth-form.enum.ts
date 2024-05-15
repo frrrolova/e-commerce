@@ -33,3 +33,16 @@ export enum RegistrationResultMessages {
 export enum RegistrationErrors {
   ALREADY_EXIST = 'DuplicateField',
 }
+
+export enum LoginResults {
+  SUCCESS = 'success',
+  ERROR = 'error',
+}
+export enum LoginResultMessages {
+  SUCCESS = 'Successful Authentication!',
+  NOT_FOUND = 'Account with the given credentials not found',
+}
+
+export enum LoginErrors {
+  NOT_FOUND = 'InvalidCredentials',
+}
