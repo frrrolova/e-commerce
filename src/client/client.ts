@@ -37,7 +37,7 @@ export enum LSTokenPrefixes {
 let currentClient: ByProjectKeyRequestBuilder | null = null;
 
 // Configure authMiddlewareOptions
-function getMiddlewareOptions(prefix: string): AuthMiddlewareOptions {
+function getMiddlewareOptions(prefix: LSTokenPrefixes): AuthMiddlewareOptions {
   const authMiddlewareOptions: AuthMiddlewareOptions = {
     host: VITE_CTP_AUTH_URL,
     projectKey: projectKey,
@@ -50,18 +50,24 @@ function getMiddlewareOptions(prefix: string): AuthMiddlewareOptions {
     tokenCache: {
       set(cache) {
         localStorage.setItem(`${prefix}_token`, JSON.stringify(cache));
+        if (cache.refreshToken) {
+          localStorage.setItem('refresh_token', cache.refreshToken);
+        }
       },
       get() {
         const defaultStore = {
           token: '',
           refreshToken: '',
-          expirationTime: null,
+          expirationTime: -1,
         };
 
         try {
-          const tokenObjFromLs = localStorage.getItem(`${prefix}_token`);
-          if (tokenObjFromLs) {
-            return JSON.parse(tokenObjFromLs);
+          const tokenObjStrFromLs = localStorage.getItem(`${prefix}_token`);
+          if (tokenObjStrFromLs) {
+            const tokenObj = JSON.parse(tokenObjStrFromLs) as TokenStore;
+
+            tokenObj.refreshToken = tokenObj.refreshToken || getRefreshTokenFromLocalStorage(prefix);
+            return tokenObj;
           }
         } catch {
           // do nothing
@@ -143,6 +149,22 @@ function initNewClient({
   }
 }
 
+function getRefreshTokenFromLocalStorage(keyPrefix: LSTokenPrefixes): string | undefined {
+  const tokenObjStr = localStorage.getItem(`${keyPrefix}_token`);
+
+  if (tokenObjStr) {
+    try {
+      const refreshTokenFromTokenObj = (JSON.parse(tokenObjStr) as TokenStore).refreshToken;
+
+      return refreshTokenFromTokenObj ?? localStorage.getItem('refresh_token') ?? undefined;
+    } catch (e) {
+      // do nothing
+    }
+  }
+
+  return;
+}
+
 function getClient(): ByProjectKeyRequestBuilder {
   if (currentClient) {
     return currentClient;
@@ -160,7 +182,7 @@ function getClient(): ByProjectKeyRequestBuilder {
 
   if (lsToken) {
     const tokenObj: TokenStore = JSON.parse(lsToken);
-    initNewClient({ accessToken: tokenObj.token, refreshToken: tokenObj.refreshToken, tokenType });
+    initNewClient({ accessToken: tokenObj.token, refreshToken: getRefreshTokenFromLocalStorage(tokenType), tokenType });
     console.log('existing', tokenType);
     return currentClient as unknown as ByProjectKeyRequestBuilder;
   }
