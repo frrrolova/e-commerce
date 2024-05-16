@@ -1,5 +1,8 @@
 import { Customer, ErrorObject, ErrorResponse } from '@commercetools/platform-sdk';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+// import { userRegistrationThunk } from './thunks';
+import client from '@/client/client';
+import { LSTokenPrefixes } from '@/enums/ls.enums';
 import { userRegistrationThunk, userLoginThunk } from './thunks';
 
 interface UserState {
@@ -24,6 +27,11 @@ export const userSlice = createSlice({
     clearError: (state) => {
       state.error = '';
     },
+    logout: (state) => {
+      state.user = null;
+      localStorage.removeItem(`${LSTokenPrefixes.LOGGED_IN}_token`);
+      client.clearCurrentClient();
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -37,10 +45,15 @@ export const userSlice = createSlice({
       })
       .addCase(userRegistrationThunk.rejected, (state, action) => {
         state.isPending = false;
-        const payload = action.payload as ErrorResponse;
-        const err: ErrorObject | null = payload.errors?.[0] || null;
-        if (err) {
-          state.error = err.message ?? '';
+
+        if (action.error) {
+          state.error = action.error.message || '';
+        } else {
+          const payload = action.payload as ErrorResponse;
+          const err: ErrorObject | null = payload.errors?.[0] || null;
+          if (err) {
+            state.error = err.message ?? '';
+          }
         }
       })
       .addCase(userLoginThunk.pending, (state) => {
@@ -61,6 +74,6 @@ export const userSlice = createSlice({
   },
 });
 
-export const { setUser, clearError } = userSlice.actions;
+export const { setUser, clearError, logout } = userSlice.actions;
 
 export default userSlice;

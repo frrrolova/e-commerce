@@ -163,7 +163,7 @@ function LoginForm() {
             marginTop: 1.5,
           }}
         >
-          Already have an account?{' '}
+          Don't have an account?{' '}
           <Link component={RouterLink} to={Paths.REGISTER}>
             Register
           </Link>

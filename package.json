@@ -16,7 +16,7 @@
     "test:coverage": "jest --coverage"
   },
   "dependencies": {
-    "@commercetools/platform-sdk": "^7.8.0",
+    "@commercetools/platform-sdk": "7.8.0",
     "@commercetools/sdk-client-v2": "^2.5.0",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
@@ -24,7 +24,7 @@
     "@mui/lab": "^5.0.0-alpha.170",
     "@mui/material": "^5.15.16",
     "@mui/x-date-pickers": "^7.3.2",
-    "@reduxjs/toolkit": "^2.2.3",
+    "@reduxjs/toolkit": "^2.2.1",
     "axios": "^1.6.8",
     "countries-list": "^3.1.0",
     "css-modules": "^0.3.0",

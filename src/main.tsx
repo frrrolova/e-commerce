@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
 import './styles/styles.scss';
-import { apiRoot } from './client/client.ts';
+import client from './client/client.ts';
 
 const root: HTMLElement = document.createElement('div');
 root.setAttribute('id', 'root');
@@ -10,9 +10,8 @@ root.setAttribute('id', 'root');
 // TODO: add nice page loader
 document.body.insertAdjacentElement('afterbegin', root);
 
-apiRoot
-  // .stores()
-  // .withKey({ key: import.meta.env.VITE_STORE_KEY })
+client
+  .getClient()
   .get()
   .execute()
   .then((resp) => {
@@ -21,11 +20,4 @@ apiRoot
         <App project={resp.body} />
       </React.StrictMode>,
     );
-  });
-
-apiRoot
-  .get()
-  .execute()
-  .then((resp) => {
-    console.log('client!!!!', resp.body);
   });
