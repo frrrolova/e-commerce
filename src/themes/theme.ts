@@ -20,7 +20,7 @@ export const themeOptions: ThemeOptions = {
   breakpoints: {
     values: {
       // xxs: 0, // small phone
-      xs: 300, // phone
+      xs: 0, // phone
       sm: 600, // tablets
       md: 900, // small laptop
       lg: 1200, // desktop

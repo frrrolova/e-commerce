@@ -13,5 +13,38 @@
     background-color: $paper-color;
     opacity: 0.8;
   }
+
+  .toolbar {
+    justify-content: space-between;
+  }
+
+  .navMd {
+    button {
+      position: relative;
+      margin-top: 21px;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background-color: $border-green-color;
+        transition: all 0.3s ease;
+      }
+    }
+  }
+
+  .activeMenuItem {
+    color: $border-green-color;
+  }
+  
+  .activeMenuItem::after {
+    width: 100%!important;
+  }
 }
 
+.activeMenuItem {
+  color: $border-green-color;
+}

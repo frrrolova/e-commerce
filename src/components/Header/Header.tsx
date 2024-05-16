@@ -24,6 +24,7 @@ const pages = [navLinksData.home, navLinksData.catalog, navLinksData.about];
 function Header() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+  const [activePage, setActivePage] = useState('');
 
   // const shopName = useAppSelector((state: RootState) => state.shop?.name?.['en-US'] || 'Plant Shop');
 
@@ -46,6 +47,7 @@ function Header() {
   const handleCloseNavMenu = (_e: React.MouseEvent<HTMLLIElement | HTMLButtonElement, MouseEvent>, toUrl: string) => {
     if (toUrl !== 'backdropClick') {
       navigate(toUrl);
+      setActivePage(toUrl);
     }
     setAnchorElNav(null);
   };
@@ -53,6 +55,7 @@ function Header() {
   const handleCloseUserMenu = (_e: React.MouseEvent<HTMLLIElement, MouseEvent>, toUrl: string) => {
     if (toUrl !== 'backdropClick') {
       navigate(toUrl);
+      setActivePage(toUrl);
     }
     setAnchorElUser(null);
   };
@@ -67,6 +70,9 @@ function Header() {
 
     window.addEventListener('scroll', handleScroll);
 
+    const currentPath = window.location.pathname;
+    setActivePage(currentPath);
+
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
@@ -75,25 +81,27 @@ function Header() {
   return (
     <AppBar position="fixed" className={styles.header} data-scrolled={isScrolled}>
       <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          <Box sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}>
+        <Toolbar disableGutters className={styles.toolbar}>
+          {/* Logo on md-screen */}
+          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             <img src={LogoImg} className={styles.logo} alt="Logo" loading="lazy" />
+            <Typography
+              variant="h6"
+              data-testid="shop-name"
+              noWrap
+              sx={{
+                mr: 2,
+                display: { xs: 'none', md: 'flex' },
+                fontFamily: 'monospace',
+                fontWeight: 700,
+                letterSpacing: '0.3rem',
+              }}
+            >
+              Plant Shop
+            </Typography>
           </Box>
-          <Typography
-            variant="h6"
-            data-testid="shop-name"
-            noWrap
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '0.3rem',
-            }}
-          >
-            Plant Shop
-          </Typography>
 
+          {/* Left Dropdown-Menu on small screen */}
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
@@ -126,13 +134,19 @@ function Header() {
             >
               {pages.map((page) => (
                 <MenuItem key={page.title} onClick={(e) => handleCloseNavMenu(e, page.url)}>
-                  <Typography data-testid={`menu-item-${page.title}`} textAlign="center">
+                  <Typography
+                    data-testid={`menu-item-${page.title}`}
+                    textAlign="center"
+                    className={activePage === page.url ? styles.activeMenuItem : ''}
+                  >
                     {page.title}
                   </Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
+
+          {/*Logo on small screen */}
           <Box sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }}>
             <img src={LogoImg} className={styles.logo} alt="Logo" loading="lazy" />
           </Box>
@@ -150,18 +164,26 @@ function Header() {
           >
             Plant
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+
+          {/* Navigation Buttons on md-screen */}
+          <Box sx={{ display: { xs: 'none', md: 'flex' } }} className={styles.navMd}>
             {pages.map((page) => (
               <Button
                 key={page.title}
                 onClick={(e) => handleCloseNavMenu(e, page.url)}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                sx={{
+                  my: 2,
+                  color: 'white',
+                  display: 'block',
+                }}
+                className={activePage === page.url ? styles.activeMenuItem : styles.menuItem}
               >
                 {page.title}
               </Button>
             ))}
           </Box>
 
+          {/* Right Dropdown-Menu on small screen */}
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title={menuData.tooltipTitle}>
               <IconButton
@@ -192,7 +214,9 @@ function Header() {
             >
               {menuData.links.map((link) => (
                 <MenuItem key={link.title} onClick={(e) => handleCloseUserMenu(e, link.url)}>
-                  <Typography textAlign="center">{link.title}</Typography>
+                  <Typography textAlign="center" className={activePage === link.url ? styles.activeMenuItem : ''}>
+                    {link.title}
+                  </Typography>
                 </MenuItem>
               ))}
             </Menu>
