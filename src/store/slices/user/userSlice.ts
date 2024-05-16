@@ -1,8 +1,9 @@
 import { Customer, ErrorObject, ErrorResponse } from '@commercetools/platform-sdk';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { userRegistrationThunk } from './thunks';
+// import { userRegistrationThunk } from './thunks';
 import client from '@/client/client';
 import { LSTokenPrefixes } from '@/enums/ls.enums';
+import { userRegistrationThunk, userLoginThunk } from './thunks';
 
 interface UserState {
   user: Customer | null;
@@ -53,6 +54,21 @@ export const userSlice = createSlice({
           if (err) {
             state.error = err.message ?? '';
           }
+        }
+      })
+      .addCase(userLoginThunk.pending, (state) => {
+        state.error = '';
+        state.isPending = true;
+      })
+      .addCase(userLoginThunk.fulfilled, (state) => {
+        state.isPending = false;
+      })
+      .addCase(userLoginThunk.rejected, (state, action) => {
+        state.isPending = false;
+        const payload = action.payload as ErrorResponse;
+        const err: ErrorObject | null = payload.errors?.[0] || null;
+        if (err) {
+          state.error = err.message ?? '';
         }
       });
   },

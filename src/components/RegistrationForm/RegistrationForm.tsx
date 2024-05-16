@@ -25,7 +25,7 @@ import { formFieldsConfig } from '@shared/auth-form.constants';
 import { ErrorObject, MyCustomerDraft } from '@commercetools/platform-sdk';
 import { userRegistrationThunk } from '@store/slices/user/thunks';
 import { clearError } from '@/store/slices/user/userSlice';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { Paths } from '@/routes/routeConstants';
 import { useSnackbar } from 'notistack';
 import { snackbarBasicParams } from './constants';
@@ -35,6 +35,7 @@ function RegistrationForm() {
   const dispatch = useAppDispatch();
   const isPending = useAppSelector((state) => state.user.isPending);
   const { enqueueSnackbar } = useSnackbar();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(clearError());
@@ -79,6 +80,9 @@ function RegistrationForm() {
             variant: RegistrationResults.SUCCESS,
             ...snackbarBasicParams,
           });
+        })
+        .then(() => {
+          navigate(Paths.HOME);
         })
         .catch((e) => {
           console.log('OOPS! Registration failed:', e);
