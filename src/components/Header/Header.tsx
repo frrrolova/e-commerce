@@ -107,6 +107,7 @@ function Header() {
             </IconButton>
             <Menu
               id="menu-appbar"
+              data-testid="menu-left"
               anchorEl={anchorElNav}
               anchorOrigin={{
                 vertical: 'bottom',
@@ -125,7 +126,9 @@ function Header() {
             >
               {pages.map((page) => (
                 <MenuItem key={page.title} onClick={(e) => handleCloseNavMenu(e, page.url)}>
-                  <Typography textAlign="center">{page.title}</Typography>
+                  <Typography data-testid={`menu-item-${page.title}`} textAlign="center">
+                    {page.title}
+                  </Typography>
                 </MenuItem>
               ))}
             </Menu>
