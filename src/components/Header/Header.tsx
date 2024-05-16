@@ -176,7 +176,7 @@ function Header() {
                   color: 'white',
                   display: 'block',
                 }}
-                className={activePage === page.url ? styles.activeMenuItem : styles.menuItem}
+                className={activePage === page.url ? styles.activeMenuItem : ''}
               >
                 {page.title}
               </Button>

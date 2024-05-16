@@ -16,20 +16,20 @@ exports[`Header component rendering performs snapshot testing 1`] = `
             class="MuiToolbar-root MuiToolbar-regular css-r6ewbb-MuiToolbar-root"
           >
             <div
-              class="MuiBox-root css-18pcpt2"
+              class="MuiBox-root css-1guk29"
             >
               <img
                 alt="Logo"
                 loading="lazy"
                 src="default"
               />
+              <h6
+                class="MuiTypography-root MuiTypography-h6 MuiTypography-noWrap css-6qa9vu-MuiTypography-root"
+                data-testid="shop-name"
+              >
+                Plant Shop
+              </h6>
             </div>
-            <h6
-              class="MuiTypography-root MuiTypography-h6 MuiTypography-noWrap css-6qa9vu-MuiTypography-root"
-              data-testid="shop-name"
-            >
-              Plant Shop
-            </h6>
             <div
               class="MuiBox-root css-1lvtzne"
             >
@@ -72,7 +72,7 @@ exports[`Header component rendering performs snapshot testing 1`] = `
               Plant
             </h5>
             <div
-              class="MuiBox-root css-1t6c9ts"
+              class="MuiBox-root css-1guk29"
             >
               <button
                 class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1q39md6-MuiButtonBase-root-MuiButton-root"
@@ -286,20 +286,20 @@ exports[`Header component rendering performs snapshot testing 1`] = `
           class="MuiToolbar-root MuiToolbar-regular css-r6ewbb-MuiToolbar-root"
         >
           <div
-            class="MuiBox-root css-18pcpt2"
+            class="MuiBox-root css-1guk29"
           >
             <img
               alt="Logo"
               loading="lazy"
               src="default"
             />
+            <h6
+              class="MuiTypography-root MuiTypography-h6 MuiTypography-noWrap css-6qa9vu-MuiTypography-root"
+              data-testid="shop-name"
+            >
+              Plant Shop
+            </h6>
           </div>
-          <h6
-            class="MuiTypography-root MuiTypography-h6 MuiTypography-noWrap css-6qa9vu-MuiTypography-root"
-            data-testid="shop-name"
-          >
-            Plant Shop
-          </h6>
           <div
             class="MuiBox-root css-1lvtzne"
           >
@@ -342,7 +342,7 @@ exports[`Header component rendering performs snapshot testing 1`] = `
             Plant
           </h5>
           <div
-            class="MuiBox-root css-1t6c9ts"
+            class="MuiBox-root css-1guk29"
           >
             <button
               class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1q39md6-MuiButtonBase-root-MuiButton-root"
