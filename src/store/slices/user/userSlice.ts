@@ -5,7 +5,7 @@ import client from '@/client/client';
 import { LSTokenPrefixes } from '@/enums/ls.enums';
 import { userRegistrationThunk, userLoginThunk } from './thunks';
 
-interface UserState {
+export interface UserState {
   user: Customer | null;
   error: string;
   isPending: boolean;
@@ -30,6 +30,7 @@ export const userSlice = createSlice({
     logout: (state) => {
       state.user = null;
       localStorage.removeItem(`${LSTokenPrefixes.LOGGED_IN}_token`);
+      localStorage.removeItem('user');
       client.clearCurrentClient();
     },
   },

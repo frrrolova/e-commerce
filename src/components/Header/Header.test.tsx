@@ -1,8 +1,7 @@
 import '@testing-library/jest-dom';
 import Header from './Header';
 import { renderWithProviders } from '../../utils/test-utils';
-import { fireEvent, render, waitFor } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import { fireEvent, waitFor } from '@testing-library/react';
 
 jest.mock('../../client/client', () => {
   return null;
@@ -32,11 +31,7 @@ describe('Header component behavior', () => {
   let homeMenuItem: Node | Window;
 
   test('opens and closes navigation left-menu when clicking on menu icon', async () => {
-    const { getByLabelText, getByTestId } = render(
-      <MemoryRouter>
-        <Header />
-      </MemoryRouter>,
-    );
+    const { getByLabelText, getByTestId } = renderWithProviders(<Header />);
 
     const menuIcon = getByLabelText('account of current user');
     fireEvent.click(menuIcon);

@@ -12,26 +12,28 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import { navLinksData, rightMenuData } from '../../routes/routeConstants';
-import { useNavigate } from 'react-router-dom';
+import { Paths, navLinksData, rightMenuData } from '../../routes/routeConstants';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styles from './Header.module.scss';
-// import { RootState, useAppSelector } from '../../store/store';
+import { RootState, useAppDispatch, useAppSelector } from '../../store/store';
 import { useEffect, useState } from 'react';
 import LogoImg from '/images/logo.svg';
+import { logout } from '@/store/slices/user/userSlice';
 
 const pages = [navLinksData.home, navLinksData.catalog, navLinksData.about];
 
 function Header() {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
-  const [activePage, setActivePage] = useState('');
+  const [activePage, setActivePage] = useState(location.pathname);
 
-  // const shopName = useAppSelector((state: RootState) => state.shop?.name?.['en-US'] || 'Plant Shop');
+  const user = useAppSelector((state: RootState) => state.user.user);
 
-  const navigate = useNavigate();
-
-  // TODO take @isLogged from store and update @menuData and @currentIcon
-  const isLogged = false;
+  const isLogged = !!user;
 
   const menuData = isLogged ? rightMenuData.isAuth : rightMenuData.notAuth;
 
@@ -47,15 +49,17 @@ function Header() {
   const handleCloseNavMenu = (_e: React.MouseEvent<HTMLLIElement | HTMLButtonElement, MouseEvent>, toUrl: string) => {
     if (toUrl !== 'backdropClick') {
       navigate(toUrl);
-      setActivePage(toUrl);
     }
     setAnchorElNav(null);
   };
 
   const handleCloseUserMenu = (_e: React.MouseEvent<HTMLLIElement, MouseEvent>, toUrl: string) => {
     if (toUrl !== 'backdropClick') {
+      if (toUrl === Paths.AUTH) {
+        dispatch(logout());
+      }
+
       navigate(toUrl);
-      setActivePage(toUrl);
     }
     setAnchorElUser(null);
   };
@@ -70,13 +74,14 @@ function Header() {
 
     window.addEventListener('scroll', handleScroll);
 
-    const currentPath = window.location.pathname;
-    setActivePage(currentPath);
-
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
+
+  useEffect(() => {
+    setActivePage(location.pathname);
+  }, [location.pathname]);
 
   return (
     <AppBar position="fixed" className={styles.header} data-scrolled={isScrolled}>
