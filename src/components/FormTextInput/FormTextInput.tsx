@@ -20,12 +20,19 @@ interface FormTextInputProps {
   sx?: SxProps;
   type?: string;
   InputProps?: Partial<FilledInputProps> | Partial<OutlinedInputProps> | Partial<InputProps>;
+  disabled?: boolean;
 }
 
-function FormTextInput({ errorMsg, ...muiInputProps }: FormTextInputProps) {
+function FormTextInput({ errorMsg, disabled, ...muiInputProps }: FormTextInputProps) {
   return (
     <FormControl fullWidth margin="dense">
-      <TextField {...muiInputProps} size="small" aria-describedby="my-helper-text" id={`${muiInputProps.name}-input`} />
+      <TextField
+        {...muiInputProps}
+        disabled={disabled}
+        size="small"
+        aria-describedby="my-helper-text"
+        id={`${muiInputProps.name}-input`}
+      />
       {muiInputProps.error && Boolean(errorMsg) && <FormHelperText error>{errorMsg}</FormHelperText>}
     </FormControl>
   );
