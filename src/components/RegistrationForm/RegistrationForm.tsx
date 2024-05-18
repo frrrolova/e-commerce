@@ -54,6 +54,36 @@ function RegistrationForm() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    if (billingAsShipping === true) {
+      formik.setFieldValue(
+        `${[AddressTypes.BILLING]}.${[FieldNames.COUNTRY]}`,
+        formik.values[AddressTypes.SHIPPING][FieldNames.COUNTRY],
+      );
+      formik.setFieldValue(
+        `${[AddressTypes.BILLING]}.${[FieldNames.CITY]}`,
+        formik.values[AddressTypes.SHIPPING][FieldNames.CITY],
+      );
+      formik.setFieldValue(
+        `${[AddressTypes.BILLING]}.${[FieldNames.STREET]}`,
+        formik.values[AddressTypes.SHIPPING][FieldNames.STREET],
+      );
+      formik.setFieldValue(
+        `${[AddressTypes.BILLING]}.${[FieldNames.POSTAL_CODE]}`,
+        formik.values[AddressTypes.SHIPPING][FieldNames.POSTAL_CODE],
+      );
+      formik.setFieldValue(
+        `${[AddressTypes.BILLING]}.${[FieldNames.BUILDING]}`,
+        formik.values[AddressTypes.SHIPPING][FieldNames.BUILDING],
+      );
+      formik.setFieldValue(
+        `${[AddressTypes.BILLING]}.${[FieldNames.APARTMENT]}`,
+        formik.values[AddressTypes.SHIPPING][FieldNames.APARTMENT],
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [billingAsShipping]);
+
   const formik = useFormik({
     initialValues: {
       [FieldNames.EMAIL]: '',
@@ -304,7 +334,7 @@ function RegistrationForm() {
         <FormControlLabel
           control={
             <Checkbox
-              checked={billingAsShipping}
+              defaultChecked
               onChange={() => {
                 setBillingAsShipping(!billingAsShipping);
               }}
