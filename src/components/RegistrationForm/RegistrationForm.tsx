@@ -2,33 +2,41 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { DatePicker } from '@mui/x-date-pickers';
 import {
   Box,
+  Checkbox,
+  Container,
+  Divider,
   FormControl,
+  FormControlLabel,
   FormHelperText,
-  Grid,
   IconButton,
   InputAdornment,
-  InputLabel,
   Link,
-  MenuItem,
-  Select,
+  Switch,
   Typography,
 } from '@mui/material';
 import { useFormik } from 'formik';
 import { useEffect, useState } from 'react';
-import SignupSchema from '@core/authValidation';
+import SignupSchema from '@/core/registrationValidation';
 import { useAppDispatch, useAppSelector } from '@store/store';
-import { TCountryCode, getCountryData } from 'countries-list';
+import { TCountryCode } from 'countries-list';
 import { LoadingButton } from '@mui/lab';
 import FormTextInput from '../FormTextInput/FormTextInput';
-import { FieldNames, RegistrationErrors, RegistrationResultMessages, RegistrationResults } from '@enums/auth-form.enum';
+import {
+  AddressTypes,
+  FieldNames,
+  RegistrationErrors,
+  RegistrationResultMessages,
+  RegistrationResults,
+} from '@enums/auth-form.enum';
 import { formFieldsConfig } from '@shared/auth-form.constants';
-import { ErrorObject, MyCustomerDraft } from '@commercetools/platform-sdk';
+import { CustomerDraft, ErrorObject } from '@commercetools/platform-sdk';
 import { userRegistrationThunk } from '@store/slices/user/thunks';
 import { clearError } from '@/store/slices/user/userSlice';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { Paths } from '@/routes/routeConstants';
 import { useSnackbar } from 'notistack';
-import { snackbarBasicParams } from './constants';
+import { countriesList, snackbarBasicParams } from './constants';
+import AddressForm from '../AdrdessForm/AddressForm';
 
 // TODO: autocomplete false
 function RegistrationForm() {
@@ -36,6 +44,10 @@ function RegistrationForm() {
   const isPending = useAppSelector((state) => state.user.isPending);
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
+
+  const [isShippingDefault, setIsShippingDefault] = useState(true);
+  const [isBillingDefault, setIsBillingDefault] = useState(true);
+  const [billingAsShipping, setBillingAsShipping] = useState(true);
 
   useEffect(() => {
     dispatch(clearError());
@@ -49,16 +61,28 @@ function RegistrationForm() {
       [FieldNames.FIRST_NAME]: '',
       [FieldNames.LAST_NAME]: '',
       [FieldNames.DATE_OF_BIRTH]: '',
-      [FieldNames.STREET]: '',
-      [FieldNames.CITY]: '',
-      [FieldNames.POSTAL_CODE]: '',
-      [FieldNames.COUNTRY]: '',
+      [AddressTypes.SHIPPING]: {
+        [FieldNames.COUNTRY]: '',
+        [FieldNames.CITY]: '',
+        [FieldNames.STREET]: '',
+        [FieldNames.POSTAL_CODE]: '',
+        [FieldNames.BUILDING]: '',
+        [FieldNames.APARTMENT]: '',
+      },
+      [AddressTypes.BILLING]: {
+        [FieldNames.COUNTRY]: '',
+        [FieldNames.CITY]: '',
+        [FieldNames.STREET]: '',
+        [FieldNames.POSTAL_CODE]: '',
+        [FieldNames.BUILDING]: '',
+        [FieldNames.APARTMENT]: '',
+      },
     },
     validateOnMount: true,
     validationSchema: SignupSchema,
     onSubmit: (values) => {
       const dateValue: string = new Date(values[FieldNames.DATE_OF_BIRTH]).toISOString().substring(0, 10);
-      const newCustomerData: MyCustomerDraft = {
+      const newCustomerData: CustomerDraft = {
         email: values[FieldNames.EMAIL],
         password: values[FieldNames.PASSWORD],
         firstName: values[FieldNames.FIRST_NAME],
@@ -66,12 +90,26 @@ function RegistrationForm() {
         dateOfBirth: dateValue,
         addresses: [
           {
-            country: values[FieldNames.COUNTRY],
-            city: values[FieldNames.CITY],
-            streetName: values[FieldNames.STREET],
-            postalCode: values[FieldNames.POSTAL_CODE],
+            country: values[AddressTypes.SHIPPING][FieldNames.COUNTRY],
+            city: values[AddressTypes.SHIPPING][FieldNames.CITY],
+            streetName: values[AddressTypes.SHIPPING][FieldNames.STREET],
+            postalCode: values[AddressTypes.SHIPPING][FieldNames.POSTAL_CODE],
+            building: values[AddressTypes.SHIPPING][FieldNames.BUILDING],
+            apartment: values[AddressTypes.SHIPPING][FieldNames.APARTMENT],
+          },
+          {
+            country: values[AddressTypes.BILLING][FieldNames.COUNTRY],
+            city: values[AddressTypes.BILLING][FieldNames.CITY],
+            streetName: values[AddressTypes.BILLING][FieldNames.STREET],
+            postalCode: values[AddressTypes.BILLING][FieldNames.POSTAL_CODE],
+            building: values[AddressTypes.BILLING][FieldNames.BUILDING],
+            apartment: values[AddressTypes.BILLING][FieldNames.APARTMENT],
           },
         ],
+        shippingAddresses: [0],
+        billingAddresses: [1],
+        defaultShippingAddress: isShippingDefault ? 0 : undefined,
+        defaultBillingAddress: isBillingDefault ? 1 : undefined,
       };
       dispatch(userRegistrationThunk(newCustomerData))
         .unwrap()
@@ -103,7 +141,7 @@ function RegistrationForm() {
     },
   });
 
-  const countryCodes: TCountryCode[] = useAppSelector((state) => (state.project?.countries as TCountryCode[]) || []);
+  const countryCodes: TCountryCode[] = countriesList;
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -117,9 +155,6 @@ function RegistrationForm() {
     <Box
       component="form"
       sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
         marginTop: 3,
         width: {
           xs: '97%',
@@ -131,6 +166,7 @@ function RegistrationForm() {
         formik.handleSubmit(e);
       }}
     >
+      <Divider>Credentials</Divider>
       <FormTextInput
         name={FieldNames.EMAIL}
         value={formik.values.email}
@@ -174,7 +210,7 @@ function RegistrationForm() {
           ),
         }}
       />
-
+      <Divider sx={{ marginTop: 1 }}>Personal data</Divider>
       <FormTextInput
         name={FieldNames.FIRST_NAME}
         value={formik.values.firstName}
@@ -224,112 +260,127 @@ function RegistrationForm() {
         ></DatePicker>
         <FormHelperText error>{formik.touched.dateOfBirth && formik.errors.dateOfBirth}</FormHelperText>
       </FormControl>
+      <Divider sx={{ marginTop: 1 }}>Shipping Address</Divider>
+      <AddressForm
+        prefix={AddressTypes.SHIPPING}
+        touched={formik.touched[AddressTypes.SHIPPING] || {}}
+        setFieldTouched={formik.setFieldTouched}
+        errors={formik.errors[AddressTypes.SHIPPING] || {}}
+        handleBlur={formik.handleBlur}
+        handleChange={formik.handleChange}
+        validateField={formik.validateField}
+        values={formik.values[AddressTypes.SHIPPING]}
+        countryCodes={countryCodes}
+        onFieldChange={(fieldName, fieldValue) => {
+          if (billingAsShipping) {
+            const targetFieldName = `${AddressTypes.BILLING}.${fieldName.split('.')[1]}`;
+            formik.setFieldValue(targetFieldName, fieldValue);
+          }
+        }}
+      />
 
-      <Grid container spacing={1}>
-        <Grid item xs={12} md={6}>
-          <FormControl margin="dense" fullWidth>
-            <InputLabel
-              id={formFieldsConfig.country.labelId}
-              error={formik.touched.country && Boolean(formik.errors.country)}
+      <Container
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          flexWrap: {
+            xs: 'wrap',
+            sm: 'nowrap',
+          },
+        }}
+      >
+        <FormControlLabel
+          control={
+            <Switch
               size="small"
-            >
-              Country
-            </InputLabel>
-            <Select
-              size="small"
-              labelId={formFieldsConfig.country.labelId}
-              id={formFieldsConfig.country.id}
-              name={FieldNames.COUNTRY}
-              value={formik.values.country}
-              label={formFieldsConfig.country.label}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              onClose={() => {
-                formik.setFieldTouched(FieldNames.COUNTRY).then(() => {
-                  formik.validateField(FieldNames.COUNTRY);
-                });
+              checked={isShippingDefault}
+              onChange={() => {
+                setIsShippingDefault(!isShippingDefault);
               }}
-              error={formik.touched.country && Boolean(formik.errors.country)}
-            >
-              {countryCodes.map((countryCode) => (
-                <MenuItem value={countryCode} key={countryCode}>
-                  {getCountryData(countryCode).name}
-                </MenuItem>
-              ))}
-            </Select>
-            <FormHelperText error>{formik.touched.country && formik.errors.country}</FormHelperText>
-          </FormControl>
-        </Grid>
+            />
+          }
+          label="Set as default shipping address"
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={billingAsShipping}
+              onChange={() => {
+                setBillingAsShipping(!billingAsShipping);
+              }}
+            />
+          }
+          label="Also use as billing address"
+        />
+      </Container>
 
-        <Grid item xs={12} md={6}>
-          <FormTextInput
-            name={FieldNames.CITY}
-            value={formik.values.city}
-            label={formFieldsConfig.city.label}
-            placeholder={formFieldsConfig.city.placeholder}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={Boolean(formik.touched.city) && Boolean(formik.errors.city)}
-            errorMsg={formik.errors.city}
-          />
-        </Grid>
+      <Divider sx={{ marginTop: 1 }}>Billing Address</Divider>
+      <AddressForm
+        prefix={AddressTypes.BILLING}
+        touched={formik.touched[AddressTypes.BILLING] || {}}
+        setFieldTouched={formik.setFieldTouched}
+        errors={formik.errors[AddressTypes.BILLING] || {}}
+        handleBlur={formik.handleBlur}
+        handleChange={formik.handleChange}
+        validateField={formik.validateField}
+        values={formik.values[AddressTypes.BILLING]}
+        countryCodes={countryCodes}
+        disabled={billingAsShipping}
+      />
+      <Container
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          flexWrap: {
+            xs: 'wrap',
+            sm: 'nowrap',
+          },
+        }}
+      >
+        <FormControlLabel
+          control={
+            <Switch
+              size="small"
+              checked={isBillingDefault}
+              onChange={() => {
+                setIsBillingDefault(!isBillingDefault);
+              }}
+            />
+          }
+          label="Set as default billing address"
+        />
+      </Container>
 
-        <Grid item xs={12} md={6}>
-          <FormTextInput
-            name={FieldNames.STREET}
-            value={formik.values.street}
-            label={formFieldsConfig.street.label}
-            placeholder={formFieldsConfig.street.placeholder}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={Boolean(formik.touched.street) && Boolean(formik.errors.street)}
-            errorMsg={formik.errors.street}
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <FormTextInput
-            name={FieldNames.POSTAL_CODE}
-            value={formik.values.postalCode}
-            label={formFieldsConfig.postalCode.label}
-            placeholder={formFieldsConfig.postalCode.placeholder}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={Boolean(formik.touched.postalCode) && Boolean(formik.errors.postalCode)}
-            errorMsg={formik.errors.postalCode}
-          />
-        </Grid>
-      </Grid>
-      <LoadingButton
-        type="submit"
-        variant="contained"
-        disabled={!formik.isValid}
-        loading={isPending}
+      <Container
         sx={{
-          marginTop: '8px',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
         }}
       >
-        Register
-      </LoadingButton>
-      <Typography
-        component="p"
-        sx={{
-          marginTop: 1.5,
-        }}
-      >
-        Already have an account?{' '}
-        <Link component={RouterLink} to={Paths.AUTH}>
-          Log in
-        </Link>
-      </Typography>
-      {/* <Button
-        type="button"
-        variant="contained"
-        onClick={() => {
-          dispatch(logout());
-        }}
-      >
-        Logout
-      </Button> */}
+        <LoadingButton
+          type="submit"
+          variant="contained"
+          disabled={!formik.isValid}
+          loading={isPending}
+          sx={{
+            marginTop: '8px',
+          }}
+        >
+          Register
+        </LoadingButton>
+        <Typography
+          component="p"
+          sx={{
+            marginTop: 1.5,
+          }}
+        >
+          Already have an account?{' '}
+          <Link component={RouterLink} to={Paths.AUTH}>
+            Log in
+          </Link>
+        </Typography>
+      </Container>
     </Box>
   );
 }

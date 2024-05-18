@@ -2,36 +2,44 @@ import { FieldNames } from '../enums/auth-form.enum';
 
 export const formFieldsConfig = {
   [FieldNames.EMAIL]: {
-    label: 'Email',
+    label: '*Email',
     placeholder: 'Email',
   },
   [FieldNames.PASSWORD]: {
-    label: 'Password',
+    label: '*Password',
     placeholder: 'Password',
   },
   [FieldNames.FIRST_NAME]: {
-    label: 'First name',
+    label: '*First name',
     placeholder: 'First name',
   },
   [FieldNames.LAST_NAME]: {
-    label: 'Last name',
+    label: '*Last name',
     placeholder: 'Last name',
   },
   [FieldNames.STREET]: {
-    label: 'Street',
+    label: '*Street',
     placeholder: 'Street',
   },
   [FieldNames.CITY]: {
-    label: 'City',
+    label: '*City',
     placeholder: 'City',
   },
   [FieldNames.POSTAL_CODE]: {
-    label: 'Postal code',
+    label: '*Postal code',
     placeholder: 'Postal code',
   },
   [FieldNames.COUNTRY]: {
-    label: 'Country',
+    label: '*Country',
     id: 'country-input',
     labelId: 'country-label-id',
+  },
+  [FieldNames.BUILDING]: {
+    label: 'Building',
+    placeholder: 'Building',
+  },
+  [FieldNames.APARTMENT]: {
+    label: 'Apartment',
+    placeholder: 'Apartment',
   },
 };
