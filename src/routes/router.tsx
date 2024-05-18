@@ -29,7 +29,11 @@ export const routes: RouteObject[] = [
       },
       {
         path: Paths.REGISTER,
-        element: <Registration />,
+        element: (
+          <LoginProtectedRoute>
+            <Registration />
+          </LoginProtectedRoute>
+        ),
       },
       {
         path: Paths.CATALOG,
