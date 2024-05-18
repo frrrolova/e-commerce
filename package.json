@@ -13,7 +13,8 @@
     "prettier:check": "npx prettier ./src",
     "prettier:write": "prettier --write --ignore-unknown",
     "test": "jest",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@commercetools/platform-sdk": "7.8.0",
@@ -33,6 +34,7 @@
     "isomorphic-fetch": "^3.0.0",
     "jest-environment-jsdom": "^29.7.0",
     "notistack": "^3.0.1",
+    "patch-package": "^8.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^9.1.2",
