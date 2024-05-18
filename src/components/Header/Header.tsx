@@ -12,25 +12,28 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import { navLinksData, rightMenuData } from '../../routes/routeConstants';
-import { useNavigate } from 'react-router-dom';
+import { Paths, navLinksData, rightMenuData } from '../../routes/routeConstants';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styles from './Header.module.scss';
-// import { RootState, useAppSelector } from '../../store/store';
+import { RootState, useAppDispatch, useAppSelector } from '../../store/store';
 import { useEffect, useState } from 'react';
 import LogoImg from '/images/logo.svg';
+import { logout } from '@/store/slices/user/userSlice';
 
 const pages = [navLinksData.home, navLinksData.catalog, navLinksData.about];
 
 function Header() {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+  const [activePage, setActivePage] = useState(location.pathname);
 
-  // const shopName = useAppSelector((state: RootState) => state.shop?.name?.['en-US'] || 'Plant Shop');
+  const user = useAppSelector((state: RootState) => state.user.user);
 
-  const navigate = useNavigate();
-
-  // TODO take @isLogged from store and update @menuData and @currentIcon
-  const isLogged = false;
+  const isLogged = !!user;
 
   const menuData = isLogged ? rightMenuData.isAuth : rightMenuData.notAuth;
 
@@ -52,6 +55,10 @@ function Header() {
 
   const handleCloseUserMenu = (_e: React.MouseEvent<HTMLLIElement, MouseEvent>, toUrl: string) => {
     if (toUrl !== 'backdropClick') {
+      if (toUrl === Paths.AUTH) {
+        dispatch(logout());
+      }
+
       navigate(toUrl);
     }
     setAnchorElUser(null);
@@ -72,28 +79,34 @@ function Header() {
     };
   }, []);
 
+  useEffect(() => {
+    setActivePage(location.pathname);
+  }, [location.pathname]);
+
   return (
     <AppBar position="fixed" className={styles.header} data-scrolled={isScrolled}>
       <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          <Box sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}>
+        <Toolbar disableGutters className={styles.toolbar}>
+          {/* Logo on md-screen */}
+          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             <img src={LogoImg} className={styles.logo} alt="Logo" loading="lazy" />
+            <Typography
+              variant="h6"
+              data-testid="shop-name"
+              noWrap
+              sx={{
+                mr: 2,
+                display: { xs: 'none', md: 'flex' },
+                fontFamily: 'monospace',
+                fontWeight: 700,
+                letterSpacing: '0.3rem',
+              }}
+            >
+              Plant Shop
+            </Typography>
           </Box>
-          <Typography
-            variant="h6"
-            data-testid="shop-name"
-            noWrap
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '0.3rem',
-            }}
-          >
-            Plant Shop
-          </Typography>
 
+          {/* Left Dropdown-Menu on small screen */}
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
@@ -126,13 +139,19 @@ function Header() {
             >
               {pages.map((page) => (
                 <MenuItem key={page.title} onClick={(e) => handleCloseNavMenu(e, page.url)}>
-                  <Typography data-testid={`menu-item-${page.title}`} textAlign="center">
+                  <Typography
+                    data-testid={`menu-item-${page.title}`}
+                    textAlign="center"
+                    className={activePage === page.url ? styles.activeMenuItem : ''}
+                  >
                     {page.title}
                   </Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
+
+          {/*Logo on small screen */}
           <Box sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }}>
             <img src={LogoImg} className={styles.logo} alt="Logo" loading="lazy" />
           </Box>
@@ -150,18 +169,26 @@ function Header() {
           >
             Plant
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+
+          {/* Navigation Buttons on md-screen */}
+          <Box sx={{ display: { xs: 'none', md: 'flex' } }} className={styles.navMd}>
             {pages.map((page) => (
               <Button
                 key={page.title}
                 onClick={(e) => handleCloseNavMenu(e, page.url)}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                sx={{
+                  my: 2,
+                  color: 'white',
+                  display: 'block',
+                }}
+                className={activePage === page.url ? styles.activeMenuItem : ''}
               >
                 {page.title}
               </Button>
             ))}
           </Box>
 
+          {/* Right Dropdown-Menu on small screen */}
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title={menuData.tooltipTitle}>
               <IconButton
@@ -192,7 +219,9 @@ function Header() {
             >
               {menuData.links.map((link) => (
                 <MenuItem key={link.title} onClick={(e) => handleCloseUserMenu(e, link.url)}>
-                  <Typography textAlign="center">{link.title}</Typography>
+                  <Typography textAlign="center" className={activePage === link.url ? styles.activeMenuItem : ''}>
+                    {link.title}
+                  </Typography>
                 </MenuItem>
               ))}
             </Menu>

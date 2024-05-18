@@ -52,9 +52,9 @@ function LoginForm() {
             variant: LoginResults.SUCCESS,
             ...snackbarBasicParams,
           });
-          setTimeout(() => {
-            navigate(Paths.HOME);
-          }, 1000);
+        })
+        .then(() => {
+          navigate(Paths.HOME);
         })
         .catch((e) => {
           console.log('OOPS! Authentication failed:', e);
