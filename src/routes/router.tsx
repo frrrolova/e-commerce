@@ -9,6 +9,7 @@ import Catalog from '../pages/Catalog/Catalog';
 import Basket from '../pages/Basket/Basket';
 import UserProfile from '../pages/UserProfile/UserProfile';
 import About from '../pages/About/About';
+import { LoginProtectedRoute } from './LoginProtectedRoute';
 
 export const routes: RouteObject[] = [
   {
@@ -20,7 +21,11 @@ export const routes: RouteObject[] = [
       },
       {
         path: Paths.AUTH,
-        element: <Login />,
+        element: (
+          <LoginProtectedRoute>
+            <Login />
+          </LoginProtectedRoute>
+        ),
       },
       {
         path: Paths.REGISTER,
