@@ -3,8 +3,8 @@ import { Paths } from './routeConstants';
 import { PropsWithChildren } from '../types';
 
 export function AuthProtectedRoute({ children }: PropsWithChildren) {
-  const isLogged = true;
+  const IsUser = !!localStorage.getItem('user');
   const location = useLocation();
 
-  return isLogged ? children : <Navigate to={Paths.AUTH} replace state={{ path: location.pathname }} />;
+  return !IsUser ? children : <Navigate to={Paths.HOME} replace state={{ path: location.pathname }} />;
 }

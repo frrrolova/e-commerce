@@ -20,11 +20,19 @@ export const routes: RouteObject[] = [
       },
       {
         path: Paths.AUTH,
-        element: <Login />,
+        element: (
+          <AuthProtectedRoute>
+            <Login />
+          </AuthProtectedRoute>
+        ),
       },
       {
         path: Paths.REGISTER,
-        element: <Registration />,
+        element: (
+          <AuthProtectedRoute>
+            <Registration />
+          </AuthProtectedRoute>
+        ),
       },
       {
         path: Paths.CATALOG,
