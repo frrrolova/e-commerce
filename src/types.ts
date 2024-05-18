@@ -13,6 +13,6 @@ export interface Product {
 export interface InfoDataCard {
   heading: string;
   imgPath: string;
-  description: string;
   subHeading: string;
+  description?: string;
 }

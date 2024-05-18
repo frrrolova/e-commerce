@@ -47,6 +47,9 @@
       @media (max-width: 599px) {
         height: $height-promo-image-xs;
       }
+      @media (min-width: 600px) {
+        margin-right: 1.5rem;
+      }
     }
   }
 }

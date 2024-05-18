@@ -1,12 +1,8 @@
 import styles from './InfoCard.module.scss';
 import { Paper, Typography, Box } from '@mui/material';
-import { InfoDataCard } from '../../types';
+import { InfoCardProps } from './types';
 
-interface InfoCardProps {
-  data: InfoDataCard;
-}
-
-function InfoCard({ data }: InfoCardProps) {
+function InfoCard({ data, button }: InfoCardProps) {
   return (
     <Box className={styles.container}>
       <Paper elevation={3} className={styles.card}>
@@ -19,14 +15,13 @@ function InfoCard({ data }: InfoCardProps) {
             <Typography gutterBottom variant="h5" component="div" mt={4}>
               {data.heading}
             </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {data.description}
-            </Typography>
+            {data.description && (
+              <Typography variant="body2" color="text.secondary">
+                {data.description}
+              </Typography>
+            )}
             <Typography variant="h6">{data.subHeading}</Typography>
-            {/* TODO Add redirect to Catalog page*/}
-            {/* <Button size="small" sx={{ mt: 1 }}>
-              Catalog
-            </Button> */}
+            {button && <Box sx={{ mt: 1 }}>{button}</Box>}
           </Box>
         </Box>
       </Paper>
