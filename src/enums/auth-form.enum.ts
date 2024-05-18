@@ -40,7 +40,7 @@ export enum LoginResults {
 }
 export enum LoginResultMessages {
   SUCCESS = 'Successful Authentication!',
-  NOT_FOUND = 'Account with the given credentials not found',
+  NOT_FOUND = 'Please, check the entered data.',
 }
 
 export enum LoginErrors {
