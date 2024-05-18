@@ -9,7 +9,6 @@ import Catalog from '../pages/Catalog/Catalog';
 import Basket from '../pages/Basket/Basket';
 import UserProfile from '../pages/UserProfile/UserProfile';
 import About from '../pages/About/About';
-import { LoginProtectedRoute } from './LoginProtectedRoute';
 
 export const routes: RouteObject[] = [
   {
@@ -22,17 +21,17 @@ export const routes: RouteObject[] = [
       {
         path: Paths.AUTH,
         element: (
-          <LoginProtectedRoute>
+          <AuthProtectedRoute>
             <Login />
-          </LoginProtectedRoute>
+          </AuthProtectedRoute>
         ),
       },
       {
         path: Paths.REGISTER,
         element: (
-          <LoginProtectedRoute>
+          <AuthProtectedRoute>
             <Registration />
-          </LoginProtectedRoute>
+          </AuthProtectedRoute>
         ),
       },
       {
