@@ -1,6 +1,6 @@
 import styles from './ProductCard.module.scss';
 import { Box, Paper, Typography } from '@mui/material';
-import { Product } from '../../types';
+import { Product } from '@/types';
 
 interface ProductCardProps {
   product: Product;

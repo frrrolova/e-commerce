@@ -1,13 +1,13 @@
 import styles from './Main.module.scss';
 import { Container, Typography, Box, Button } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
-import ProductCard from '../../components/ProductCard/ProductCard';
-import { Product } from '../../types';
+import ProductCard from '@/components/ProductCard/ProductCard';
+import { Product } from '@/types';
 import { ButtonLabels, InfoCardData, PageData } from './constants';
-import Title from '../../components/Title/Title';
+import Title from '@/components/Title/Title';
 import ImageBg from '/images/home/home-bg.png';
-import InfoCard from '../../components/InfoCard/InfoCard';
-import { Paths } from '../../routes/routeConstants';
+import InfoCard from '@/components/InfoCard/InfoCard';
+import { Paths } from '@/routes/routeConstants';
 import { useNavigate } from 'react-router-dom';
 
 // TODO set products data from CommerceTools and remove const products
@@ -53,7 +53,13 @@ function Main() {
 
   return (
     <Box className={styles.container}>
-      <Box component="img" className={styles.imageBg} alt="Plant" src={ImageBg} />
+      <Box
+        component="img"
+        className={styles.imageBg}
+        sx={{ display: { xs: 'none', md: 'flex' } }}
+        alt="Plant"
+        src={ImageBg}
+      />
 
       <Container maxWidth="md" className={styles.containerInner}>
         <Grid container>

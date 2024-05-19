@@ -11,8 +11,10 @@ export interface UserState {
   isPending: boolean;
 }
 
+const userFromLS = localStorage.getItem('user');
+
 const initialState: UserState = {
-  user: null,
+  user: userFromLS ? JSON.parse(userFromLS) : null,
   error: '',
   isPending: false,
 };
