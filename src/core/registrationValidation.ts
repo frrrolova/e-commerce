@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { ValidationErrors } from '../enums/auth-form.enum';
+import { FieldNames, ValidationErrors } from '../enums/auth-form.enum';
 import { passwordRegexp } from './commonValidation';
 
 const validationConstants = {
@@ -66,7 +66,7 @@ const SignupSchema = Yup.object().shape({
   dateOfBirth: Yup.date()
     .typeError(ValidationErrors.DATE_INVALID)
     .required(ValidationErrors.REQUIRED)
-    .test('dateOfBirth', ValidationErrors.TOO_YOUNG, function (birthdate?: Date) {
+    .test(FieldNames.DATE_OF_BIRTH, ValidationErrors.TOO_YOUNG, function (birthdate?: Date) {
       if (birthdate) {
         const cutoff = new Date();
         cutoff.setFullYear(cutoff.getFullYear() - 13);

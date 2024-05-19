@@ -1,4 +1,3 @@
-// import { AsyncThunkConfig, GetThunkAPI } from '@reduxjs/toolkit/dist/createAsyncThunk';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ErrorResponse, MyCustomerDraft, ClientResponse, Customer, CustomerDraft } from '@commercetools/platform-sdk';
 import client from '@client/client';
@@ -8,34 +7,28 @@ import { loginService } from '@/services/loginService';
 import { AsyncThunkApi } from '@/store/store';
 
 export const userRegistrationThunk = createAsyncThunk('user/registration', (regData: CustomerDraft, thunkAPI) => {
-  console.log(client.getClient() === client.getClient());
+  return client
+    .getClient()
+    .customers()
+    .post({ body: regData })
+    .execute()
+    .then((resp) => {
+      localStorage.setItem('user', JSON.stringify(resp.body.customer));
+      thunkAPI.dispatch(setUser(resp.body.customer));
 
-  return (
-    client
-      .getClient()
-      // .me()
-      // .signup()
-      .customers()
-      .post({ body: regData })
-      .execute()
-      .then((resp) => {
-        localStorage.setItem('user', JSON.stringify(resp.body.customer));
-        thunkAPI.dispatch(setUser(resp.body.customer));
+      client.initNewClient({
+        login: regData.email,
+        password: regData.password,
+        tokenType: LSTokenPrefixes.LOGGED_IN,
+      });
 
-        client.initNewClient({
-          login: regData.email,
-          password: regData.password,
-          tokenType: LSTokenPrefixes.LOGGED_IN,
-        });
-
-        return loginService(regData.email, regData.password as string).then(() => {
-          return handleSuccessfulLoginResponse(regData.email, regData.password as string, resp.body.customer, thunkAPI);
-        });
-      })
-      .catch((err: ClientResponse<ErrorResponse>) => {
-        return thunkAPI.rejectWithValue(err.body ?? err);
-      })
-  );
+      return loginService(regData.email, regData.password as string).then(() => {
+        return handleSuccessfulLoginResponse(regData.email, regData.password as string, resp.body.customer, thunkAPI);
+      });
+    })
+    .catch((err: ClientResponse<ErrorResponse>) => {
+      return thunkAPI.rejectWithValue(err.body ?? err);
+    });
 });
 
 export const userLoginThunk = createAsyncThunk('user/login', (regData: MyCustomerDraft, thunkAPI) => {

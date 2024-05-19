@@ -108,7 +108,6 @@ class Client {
         refreshToken: this.getRefreshTokenFromLocalStorage(tokenType),
         tokenType,
       });
-      console.log('existing', tokenType);
       return this.currentClient as unknown as ByProjectKeyRequestBuilder;
     }
     const clientBuilder = new ClientBuilder()
@@ -120,7 +119,6 @@ class Client {
     this.currentClient = createApiBuilderFromCtpClient(clientBuilder).withProjectKey({
       projectKey: VITE_CTP_PROJECT_KEY,
     });
-    console.log('anon');
     return this.currentClient;
   }
 

@@ -20,7 +20,7 @@ import SignupSchema from '@/core/registrationValidation';
 import { useAppDispatch, useAppSelector } from '@store/store';
 import { TCountryCode } from 'countries-list';
 import { LoadingButton } from '@mui/lab';
-import FormTextInput from '../FormTextInput/FormTextInput';
+import FormTextInput from '@components/FormTextInput/FormTextInput';
 import {
   AddressTypes,
   FieldNames,
@@ -36,7 +36,7 @@ import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { Paths } from '@/routes/routeConstants';
 import { useSnackbar } from 'notistack';
 import { countriesList, snackbarBasicParams } from './constants';
-import AddressForm from '../AdrdessForm/AddressForm';
+import AddressForm from '@components/AddressForm/AddressForm';
 
 // TODO: autocomplete false
 function RegistrationForm() {
@@ -48,41 +48,6 @@ function RegistrationForm() {
   const [isShippingDefault, setIsShippingDefault] = useState(true);
   const [isBillingDefault, setIsBillingDefault] = useState(true);
   const [billingAsShipping, setBillingAsShipping] = useState(true);
-
-  useEffect(() => {
-    dispatch(clearError());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    if (billingAsShipping === true) {
-      formik.setFieldValue(
-        `${[AddressTypes.BILLING]}.${[FieldNames.COUNTRY]}`,
-        formik.values[AddressTypes.SHIPPING][FieldNames.COUNTRY],
-      );
-      formik.setFieldValue(
-        `${[AddressTypes.BILLING]}.${[FieldNames.CITY]}`,
-        formik.values[AddressTypes.SHIPPING][FieldNames.CITY],
-      );
-      formik.setFieldValue(
-        `${[AddressTypes.BILLING]}.${[FieldNames.STREET]}`,
-        formik.values[AddressTypes.SHIPPING][FieldNames.STREET],
-      );
-      formik.setFieldValue(
-        `${[AddressTypes.BILLING]}.${[FieldNames.POSTAL_CODE]}`,
-        formik.values[AddressTypes.SHIPPING][FieldNames.POSTAL_CODE],
-      );
-      formik.setFieldValue(
-        `${[AddressTypes.BILLING]}.${[FieldNames.BUILDING]}`,
-        formik.values[AddressTypes.SHIPPING][FieldNames.BUILDING],
-      );
-      formik.setFieldValue(
-        `${[AddressTypes.BILLING]}.${[FieldNames.APARTMENT]}`,
-        formik.values[AddressTypes.SHIPPING][FieldNames.APARTMENT],
-      );
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [billingAsShipping]);
 
   const formik = useFormik({
     initialValues: {
@@ -153,7 +118,6 @@ function RegistrationForm() {
           navigate(Paths.HOME);
         })
         .catch((e) => {
-          console.log('OOPS! Registration failed:', e);
           const errors: ErrorObject[] = e.errors;
           if (errors) {
             errors.forEach((error: ErrorObject) => {
@@ -171,6 +135,41 @@ function RegistrationForm() {
     },
   });
 
+  useEffect(() => {
+    dispatch(clearError());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (billingAsShipping === true) {
+      formik.setFieldValue(
+        `${[AddressTypes.BILLING]}.${[FieldNames.COUNTRY]}`,
+        formik.values[AddressTypes.SHIPPING][FieldNames.COUNTRY],
+      );
+      formik.setFieldValue(
+        `${[AddressTypes.BILLING]}.${[FieldNames.CITY]}`,
+        formik.values[AddressTypes.SHIPPING][FieldNames.CITY],
+      );
+      formik.setFieldValue(
+        `${[AddressTypes.BILLING]}.${[FieldNames.STREET]}`,
+        formik.values[AddressTypes.SHIPPING][FieldNames.STREET],
+      );
+      formik.setFieldValue(
+        `${[AddressTypes.BILLING]}.${[FieldNames.POSTAL_CODE]}`,
+        formik.values[AddressTypes.SHIPPING][FieldNames.POSTAL_CODE],
+      );
+      formik.setFieldValue(
+        `${[AddressTypes.BILLING]}.${[FieldNames.BUILDING]}`,
+        formik.values[AddressTypes.SHIPPING][FieldNames.BUILDING],
+      );
+      formik.setFieldValue(
+        `${[AddressTypes.BILLING]}.${[FieldNames.APARTMENT]}`,
+        formik.values[AddressTypes.SHIPPING][FieldNames.APARTMENT],
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [billingAsShipping]);
+
   const countryCodes: TCountryCode[] = countriesList;
 
   const [showPassword, setShowPassword] = useState(false);
@@ -185,6 +184,7 @@ function RegistrationForm() {
     <Box
       component="form"
       sx={{
+        zIndex: 5,
         marginTop: 3,
         width: {
           xs: '97%',
