@@ -272,6 +272,7 @@ function RegistrationForm() {
           disableFuture
           name={FieldNames.DATE_OF_BIRTH}
           format="DD.MM.YYYY"
+          label={formFieldsConfig.dateOfBirth.label}
           onChange={(val): void => {
             formik.setFieldValue(FieldNames.DATE_OF_BIRTH, val?.toDate());
           }}

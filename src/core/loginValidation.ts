@@ -1,13 +1,18 @@
 import * as Yup from 'yup';
 import { ValidationErrors } from '../enums/auth-form.enum';
-import { passwordRegexp } from './commonValidation';
+import { emailRegexp, passwordRegexp } from './commonValidation';
 
 const validationConstants = {
   passwordMinLength: 8,
 };
 
 const SignupLoginSchema = Yup.object().shape({
-  email: Yup.string().email(ValidationErrors.EMAIL_INVALID).required(ValidationErrors.REQUIRED),
+  email: Yup.string()
+    .matches(emailRegexp, {
+      message: ValidationErrors.EMAIL_INVALID,
+      excludeEmptyString: true,
+    })
+    .required(ValidationErrors.REQUIRED),
   password: Yup.string()
     .required(ValidationErrors.REQUIRED)
     .min(validationConstants.passwordMinLength, ValidationErrors.SHORT_PASSWORD)
