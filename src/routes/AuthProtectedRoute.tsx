@@ -1,6 +1,6 @@
 import { Navigate, useLocation } from 'react-router-dom';
 import { Paths } from './routeConstants';
-import { PropsWithChildren } from '../types';
+import { PropsWithChildren } from '@/types';
 
 export function AuthProtectedRoute({ children }: PropsWithChildren) {
   const location = useLocation();
