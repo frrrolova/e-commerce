@@ -22,10 +22,18 @@ function Login() {
           component="img"
           sx={{
             position: 'absolute',
-            width: 360,
+
             zIndex: -1,
-            top: 60,
+
+            top: {
+              xs: '20%',
+              sm: 85,
+            },
             left: 0,
+            maxWidth: {
+              xs: '90%',
+              sm: 360,
+            },
           }}
           alt="Ficus"
           src={backPlantImg}
@@ -51,10 +59,14 @@ function Login() {
             component="img"
             sx={{
               position: 'absolute',
-              width: 170,
+              width: 155,
               zIndex: 2,
               top: -35,
-              right: -42,
+              right: -47,
+              display: {
+                xs: 'none',
+                sm: 'block',
+              },
             }}
             alt="Plant"
             src={cornerPlantImg}
