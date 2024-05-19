@@ -2,7 +2,6 @@ import { Box, Container, Paper, Typography } from '@mui/material';
 import RegistrationForm from '@components/RegistrationForm/RegistrationForm';
 import backPlantImg from '/images/registration/reg-back.png';
 import cornerPlantImg from '/images/registration/bottom-plant.png';
-import texture from '/images/texture-dark.png';
 
 function Registration() {
   return (
@@ -19,16 +18,6 @@ function Registration() {
           },
         }}
       >
-        <Box
-          component="img"
-          alt="Texture"
-          src={texture}
-          sx={{
-            position: 'absolute',
-            width: '100%',
-            height: '100%',
-          }}
-        ></Box>
         <Box
           component="img"
           sx={{
