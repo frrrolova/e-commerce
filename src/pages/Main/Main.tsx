@@ -53,7 +53,13 @@ function Main() {
 
   return (
     <Box className={styles.container}>
-      <Box component="img" className={styles.imageBg} alt="Plant" src={ImageBg} />
+      <Box
+        component="img"
+        className={styles.imageBg}
+        sx={{ display: { xs: 'none', md: 'flex' } }}
+        alt="Plant"
+        src={ImageBg}
+      />
 
       <Container maxWidth="md" className={styles.containerInner}>
         <Grid container>

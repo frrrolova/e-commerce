@@ -83,31 +83,38 @@ function Header() {
     setActivePage(location.pathname);
   }, [location.pathname]);
 
+  const handleLogoClick = () => {
+    navigate(Paths.HOME);
+  };
+
   return (
     <AppBar position="fixed" className={styles.header} data-scrolled={isScrolled}>
       <Container maxWidth="xl">
         <Toolbar disableGutters className={styles.toolbar}>
           {/* Logo on md-screen */}
-          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+          <Box
+            className={styles.logoBox}
+            sx={{ display: { xs: 'none', md: 'flex', flex: '1 1 0' } }}
+            onClick={handleLogoClick}
+          >
             <img src={LogoImg} className={styles.logo} alt="Logo" loading="lazy" />
             <Typography
               variant="h6"
               data-testid="shop-name"
               noWrap
               sx={{
-                mr: 2,
                 display: { xs: 'none', md: 'flex' },
                 fontFamily: 'monospace',
                 fontWeight: 700,
                 letterSpacing: '0.3rem',
               }}
             >
-              Plant Shop
+              Plantastic
             </Typography>
           </Box>
 
           {/* Left Dropdown-Menu on small screen */}
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none', flex: '1 1 0' } }}>
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -152,23 +159,23 @@ function Header() {
           </Box>
 
           {/*Logo on small screen */}
-          <Box sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }}>
+          <Box className={styles.logoBox} sx={{ display: { xs: 'flex', md: 'none' } }} onClick={handleLogoClick}>
             <img src={LogoImg} className={styles.logo} alt="Logo" loading="lazy" />
+            <Typography
+              className={styles.logoText}
+              variant="h5"
+              noWrap
+              sx={{
+                display: { xs: 'flex', md: 'none' },
+                flexGrow: 1,
+                fontFamily: 'monospace',
+                fontWeight: 700,
+                letterSpacing: '0.3rem',
+              }}
+            >
+              Plantastic
+            </Typography>
           </Box>
-          <Typography
-            variant="h5"
-            noWrap
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '0.3rem',
-            }}
-          >
-            Plant
-          </Typography>
 
           {/* Navigation Buttons on md-screen */}
           <Box sx={{ display: { xs: 'none', md: 'flex' } }} className={styles.navMd}>
@@ -188,8 +195,8 @@ function Header() {
             ))}
           </Box>
 
-          {/* Right Dropdown-Menu on small screen */}
-          <Box sx={{ flexGrow: 0 }}>
+          {/* Right Dropdown-Menu */}
+          <Box sx={{ display: 'flex', flex: '1 1 0', justifyContent: 'flex-end' }}>
             <Tooltip title={menuData.tooltipTitle}>
               <IconButton
                 onClick={handleOpenUserMenu}

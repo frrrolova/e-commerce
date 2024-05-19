@@ -18,7 +18,7 @@ describe('Header component rendering', () => {
   test('renders Header Title', () => {
     const { getByTestId } = renderWithProviders(<Header />);
     const shopNameEl = getByTestId('shop-name');
-    expect(shopNameEl.textContent?.trim()).toBe('Plant Shop');
+    expect(shopNameEl.textContent?.trim()).toBe('Plantastic');
   });
 
   test('performs snapshot testing', () => {
