@@ -28,7 +28,7 @@ function Login() {
             top: 80,
             left: {
               xs: -135,
-              sm: 0,
+              sm: 40,
             },
             opacity: {
               xs: 0.7,
@@ -43,8 +43,6 @@ function Login() {
           sx={{
             position: 'relative',
             zIndex: 1,
-            // top: 100,
-            // marginTop: 5,
             paddingY: 3,
             display: 'flex',
             flexDirection: 'column',
