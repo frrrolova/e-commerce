@@ -155,7 +155,9 @@ function RegistrationForm() {
   }, [formik]);
 
   useEffect(() => {
-    copyAddress();
+    if (billingAsShipping) {
+      copyAddress();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formik.values.shippingAddress]);
 
