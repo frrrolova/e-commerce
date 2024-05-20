@@ -47,7 +47,6 @@ function LoginForm() {
       dispatch(userLoginThunk(newCustomerData))
         .unwrap()
         .then(() => {
-          console.log(localStorage.getItem('CREDENTIALS'));
           enqueueSnackbar(LoginResultMessages.SUCCESS, {
             variant: LoginResults.SUCCESS,
             ...snackbarBasicParams,
@@ -57,7 +56,6 @@ function LoginForm() {
           navigate(Paths.HOME);
         })
         .catch((e) => {
-          console.log('OOPS! Authentication failed:', e);
           const errors: ErrorObject[] = e.body?.errors;
           if (errors) {
             errors.forEach((error: ErrorObject) => {
@@ -75,6 +73,13 @@ function LoginForm() {
         });
     },
   });
+
+  const handleChange = (e: React.ChangeEvent, fieldName: string) => {
+    formik.handleChange(e);
+    formik.setFieldTouched(fieldName).then(() => {
+      formik.validateField(fieldName);
+    });
+  };
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -108,9 +113,9 @@ function LoginForm() {
           value={formik.values.email}
           label={formFieldsConfig.email.label}
           placeholder={formFieldsConfig.email.placeholder}
-          onChange={formik.handleChange}
+          onChange={(e) => handleChange(e, FieldNames.EMAIL)}
           onBlur={formik.handleBlur}
-          error={Boolean(formik.touched.email) && Boolean(formik.errors.email)}
+          error={formik.touched[FieldNames.EMAIL] && Boolean(formik.errors.email)}
           errorMsg={formik.errors.email}
           sx={{
             position: 'relative',
@@ -122,9 +127,9 @@ function LoginForm() {
           value={formik.values.password}
           label={formFieldsConfig.password.label}
           placeholder={formFieldsConfig.password.placeholder}
-          onChange={formik.handleChange}
+          onChange={(e) => handleChange(e, FieldNames.PASSWORD)}
           onBlur={formik.handleBlur}
-          error={Boolean(formik.touched.password) && Boolean(formik.errors.password)}
+          error={formik.touched[FieldNames.PASSWORD] && Boolean(formik.errors.password)}
           errorMsg={formik.errors.password}
           sx={{
             position: 'relative',

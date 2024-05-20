@@ -73,7 +73,7 @@ function RegistrationForm() {
         [FieldNames.APARTMENT]: '',
       },
     },
-    validateOnMount: true,
+    isInitialValid: false,
     validationSchema: SignupSchema,
     onSubmit: (values) => {
       const dateValue: string = new Date(values[FieldNames.DATE_OF_BIRTH]).toISOString().substring(0, 10);
@@ -180,6 +180,13 @@ function RegistrationForm() {
     event.preventDefault();
   };
 
+  const handleChange = (e: React.ChangeEvent, fieldName: string) => {
+    formik.handleChange(e);
+    formik.setFieldTouched(fieldName).then(() => {
+      formik.validateField(fieldName);
+    });
+  };
+
   return (
     <Box
       component="form"
@@ -202,9 +209,9 @@ function RegistrationForm() {
         value={formik.values.email}
         label={formFieldsConfig.email.label}
         placeholder={formFieldsConfig.email.placeholder}
-        onChange={formik.handleChange}
+        onChange={(e) => handleChange(e, FieldNames.EMAIL)}
         onBlur={formik.handleBlur}
-        error={Boolean(formik.touched.email) && Boolean(formik.errors.email)}
+        error={formik.touched[FieldNames.EMAIL] && Boolean(formik.errors.email)}
         errorMsg={formik.errors.email}
         sx={{
           position: 'relative',
@@ -216,9 +223,9 @@ function RegistrationForm() {
         value={formik.values.password}
         label={formFieldsConfig.password.label}
         placeholder={formFieldsConfig.password.placeholder}
-        onChange={formik.handleChange}
+        onChange={(e) => handleChange(e, FieldNames.PASSWORD)}
         onBlur={formik.handleBlur}
-        error={Boolean(formik.touched.password) && Boolean(formik.errors.password)}
+        error={formik.touched[FieldNames.PASSWORD] && Boolean(formik.errors.password)}
         errorMsg={formik.errors.password}
         sx={{
           position: 'relative',
@@ -246,9 +253,9 @@ function RegistrationForm() {
         value={formik.values.firstName}
         label={formFieldsConfig.firstName.label}
         placeholder={formFieldsConfig.firstName.placeholder}
-        onChange={formik.handleChange}
+        onChange={(e) => handleChange(e, FieldNames.FIRST_NAME)}
         onBlur={formik.handleBlur}
-        error={Boolean(formik.touched.firstName) && Boolean(formik.errors.firstName)}
+        error={formik.touched[FieldNames.FIRST_NAME] && Boolean(formik.errors.firstName)}
         errorMsg={formik.errors.firstName}
         sx={{
           position: 'relative',
@@ -261,9 +268,9 @@ function RegistrationForm() {
         value={formik.values.lastName}
         label={formFieldsConfig.lastName.label}
         placeholder={formFieldsConfig.lastName.placeholder}
-        onChange={formik.handleChange}
+        onChange={(e) => handleChange(e, FieldNames.LAST_NAME)}
         onBlur={formik.handleBlur}
-        error={Boolean(formik.touched.lastName) && Boolean(formik.errors.lastName)}
+        error={formik.touched[FieldNames.LAST_NAME] && Boolean(formik.errors.lastName)}
         errorMsg={formik.errors.lastName}
       />
 
@@ -275,6 +282,9 @@ function RegistrationForm() {
           label={formFieldsConfig.dateOfBirth.label}
           onChange={(val): void => {
             formik.setFieldValue(FieldNames.DATE_OF_BIRTH, val?.toDate());
+            formik.setFieldTouched(FieldNames.DATE_OF_BIRTH).then(() => {
+              formik.validateField(FieldNames.DATE_OF_BIRTH);
+            });
           }}
           onClose={() => {
             formik.setFieldTouched(FieldNames.DATE_OF_BIRTH).then(() => {
@@ -289,7 +299,7 @@ function RegistrationForm() {
             },
           }}
         ></DatePicker>
-        <FormHelperText error>{formik.touched.dateOfBirth && formik.errors.dateOfBirth}</FormHelperText>
+        <FormHelperText error>{formik.touched[FieldNames.DATE_OF_BIRTH] && formik.errors.dateOfBirth}</FormHelperText>
       </FormControl>
       <Divider sx={{ marginTop: 1 }}>Shipping Address</Divider>
       <AddressForm

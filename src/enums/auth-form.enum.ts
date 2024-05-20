@@ -20,8 +20,7 @@ export enum AddressTypes {
 export enum ValidationErrors {
   REQUIRED = 'Field is Required',
   EMAIL_INVALID = 'Invalid email',
-  SHORT_PASSWORD = 'Should contain minimum 8 characters',
-  PASSWORD_INVALID = 'Should contain only English letters at least 1 uppercase, 1 lowercase and 1 number',
+  PASSWORD_INVALID = 'Must contain at least 8 characters, at least 1 uppercase and 1 lowercase Latin letters, 1 number and must not contain whitespaces',
   ONLY_LETTERS = 'Should not contain numbers or special characters',
   DATE_INVALID = 'Invalid date',
   TOO_YOUNG = 'You must be 14 years or older',

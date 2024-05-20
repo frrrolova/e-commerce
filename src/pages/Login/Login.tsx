@@ -1,6 +1,5 @@
 import { Box, Container, Paper, Typography } from '@mui/material';
 import backPlantImg from '/images/registration/reg-back.png';
-import cornerPlantImg from '/images/registration/corner-plant.png';
 import LoginForm from '../../components/LoginForm/LoginForm';
 
 function Login() {
@@ -11,6 +10,8 @@ function Login() {
           position: 'relative',
           display: 'flex',
           justifyContent: 'center',
+          alignItems: 'center',
+          minHeight: '100vh',
           paddingX: '3px',
           paddingY: {
             xs: '30px',
@@ -22,17 +23,16 @@ function Login() {
           component="img"
           sx={{
             position: 'absolute',
-
+            width: 360,
             zIndex: -1,
-
-            top: {
-              xs: '20%',
-              sm: 85,
+            top: 80,
+            left: {
+              xs: -135,
+              sm: 40,
             },
-            left: 0,
-            maxWidth: {
-              xs: '90%',
-              sm: 360,
+            opacity: {
+              xs: 0.7,
+              md: 1,
             },
           }}
           alt="Ficus"
@@ -43,7 +43,6 @@ function Login() {
           sx={{
             position: 'relative',
             zIndex: 1,
-            marginTop: 5,
             paddingY: 3,
             display: 'flex',
             flexDirection: 'column',
@@ -51,26 +50,11 @@ function Login() {
             opacity: 0.9,
             width: {
               xs: '90%',
-              md: '70%',
+              sm: '75%',
+              md: '50%',
             },
           }}
         >
-          <Box
-            component="img"
-            sx={{
-              position: 'absolute',
-              width: 155,
-              zIndex: 2,
-              top: -35,
-              right: -47,
-              display: {
-                xs: 'none',
-                sm: 'block',
-              },
-            }}
-            alt="Plant"
-            src={cornerPlantImg}
-          />
           <Typography component="h1" variant="h5">
             Login
           </Typography>
