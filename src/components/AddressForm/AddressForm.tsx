@@ -1,5 +1,5 @@
 import { FormControl, FormHelperText, Grid, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
-import FormTextInput from '../FormTextInput/FormTextInput';
+import FormTextInput from '@components/FormTextInput/FormTextInput';
 import { FormikValues, useFormik } from 'formik';
 import { AddressTypes, FieldNames } from '@/enums/auth-form.enum';
 import { formFieldsConfig } from '@/shared/auth-form.constants';
@@ -41,7 +41,7 @@ const AddressForm = ({
             error={touched.country && Boolean(errors.country)}
             size="small"
           >
-            *Country
+            {formFieldsConfig.country.label}
           </InputLabel>
           <Select
             size="small"

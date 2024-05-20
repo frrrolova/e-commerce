@@ -17,6 +17,9 @@ export const formFieldsConfig = {
     label: '*Last name',
     placeholder: 'Last name',
   },
+  [FieldNames.DATE_OF_BIRTH]: {
+    label: '*Date of birth',
+  },
   [FieldNames.STREET]: {
     label: '*Street',
     placeholder: 'Street',

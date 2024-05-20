@@ -1,21 +1,16 @@
 import * as Yup from 'yup';
-import { ValidationErrors } from '../enums/auth-form.enum';
-import { passwordRegexp } from './commonValidation';
+import { FieldNames, ValidationErrors } from '../enums/auth-form.enum';
+import { emailRegexp, passwordRegexp } from './commonValidation';
 
 const validationConstants = {
   passwordMinLength: 8,
 };
 
 const addressScheme = Yup.object().shape({
-  street: Yup.string()
-    .required(ValidationErrors.REQUIRED)
-    .matches(/^[a-zA-Z-+ ]+$/, {
-      message: ValidationErrors.ONLY_LETTERS,
-      excludeEmptyString: true,
-    }),
+  street: Yup.string().required(ValidationErrors.REQUIRED),
   city: Yup.string()
     .required(ValidationErrors.REQUIRED)
-    .matches(/^[a-zA-Z-+ ]+$/, {
+    .matches(/^[a-zA-Z ]+$/, {
       message: ValidationErrors.ONLY_LETTERS,
       excludeEmptyString: true,
     }),
@@ -43,7 +38,12 @@ const addressScheme = Yup.object().shape({
 });
 
 const SignupSchema = Yup.object().shape({
-  email: Yup.string().email(ValidationErrors.EMAIL_INVALID).required(ValidationErrors.REQUIRED),
+  email: Yup.string()
+    .matches(emailRegexp, {
+      message: ValidationErrors.EMAIL_INVALID,
+      excludeEmptyString: true,
+    })
+    .required(ValidationErrors.REQUIRED),
   password: Yup.string()
     .required(ValidationErrors.REQUIRED)
     .min(validationConstants.passwordMinLength, ValidationErrors.SHORT_PASSWORD)
@@ -53,7 +53,7 @@ const SignupSchema = Yup.object().shape({
     }),
   firstName: Yup.string()
     .required(ValidationErrors.REQUIRED)
-    .matches(/^[a-zA-Z-+]+$/, {
+    .matches(/^[a-zA-Z]+$/, {
       message: ValidationErrors.ONLY_LETTERS,
       excludeEmptyString: true,
     }),
@@ -66,10 +66,10 @@ const SignupSchema = Yup.object().shape({
   dateOfBirth: Yup.date()
     .typeError(ValidationErrors.DATE_INVALID)
     .required(ValidationErrors.REQUIRED)
-    .test('dateOfBirth', ValidationErrors.TOO_YOUNG, function (birthdate?: Date) {
+    .test(FieldNames.DATE_OF_BIRTH, ValidationErrors.TOO_YOUNG, function (birthdate?: Date) {
       if (birthdate) {
         const cutoff = new Date();
-        cutoff.setFullYear(cutoff.getFullYear() - 13);
+        cutoff.setFullYear(cutoff.getFullYear() - 14);
         return birthdate <= cutoff;
       }
       return true;

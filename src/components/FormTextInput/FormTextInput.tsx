@@ -32,6 +32,11 @@ function FormTextInput({ errorMsg, disabled, ...muiInputProps }: FormTextInputPr
         size="small"
         aria-describedby="my-helper-text"
         id={`${muiInputProps.name}-input`}
+        sx={{
+          '& input:-webkit-autofill': {
+            WebkitBoxShadow: '0 0 0 100px #262e22e6 inset',
+          },
+        }}
       />
       {muiInputProps.error && Boolean(errorMsg) && <FormHelperText error>{errorMsg}</FormHelperText>}
     </FormControl>

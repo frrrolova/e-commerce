@@ -1,7 +1,7 @@
 import { Box, Container, Paper, Typography } from '@mui/material';
-import RegistrationForm from '../../components/RegistrationForm/RegistrationForm';
+import RegistrationForm from '@components/RegistrationForm/RegistrationForm';
 import backPlantImg from '/images/registration/reg-back.png';
-import cornerPlantImg from '/images/registration/corner-plant1.png';
+import cornerPlantImg from '/images/registration/bottom-plant.png';
 
 function Registration() {
   return (
@@ -27,12 +27,12 @@ function Registration() {
 
             top: {
               xs: '20%',
-              sm: 85,
+              sm: 100,
             },
             left: 0,
             maxWidth: {
               xs: '90%',
-              sm: 360,
+              sm: 440,
             },
           }}
           alt="Ficus"
@@ -61,7 +61,7 @@ function Registration() {
               position: 'absolute',
               width: 155,
               zIndex: 2,
-              top: -35,
+              bottom: 0,
               right: -47,
               display: {
                 xs: 'none',
