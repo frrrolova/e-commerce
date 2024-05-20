@@ -38,7 +38,7 @@ const AddressForm = ({
         <FormControl margin="dense" fullWidth disabled={disabled}>
           <InputLabel
             id={formFieldsConfig.country.labelId}
-            error={touched.country && Boolean(errors.country)}
+            error={!disabled && touched.country && Boolean(errors.country)}
             size="small"
           >
             {formFieldsConfig.country.label}
@@ -60,7 +60,7 @@ const AddressForm = ({
                 validateField(`${prefix}.${FieldNames.COUNTRY}`);
               });
             }}
-            error={touched.country && Boolean(errors.country)}
+            error={!disabled && touched.country && Boolean(errors.country)}
           >
             {countryCodes.map((countryCode) => (
               <MenuItem value={countryCode} key={countryCode}>
@@ -68,7 +68,9 @@ const AddressForm = ({
               </MenuItem>
             ))}
           </Select>
-          {touched.country && errors.country && <FormHelperText error>{errors.country as string}</FormHelperText>}
+          {!disabled && touched.country && errors.country && (
+            <FormHelperText error>{errors.country as string}</FormHelperText>
+          )}
         </FormControl>
       </Grid>
 
@@ -87,8 +89,8 @@ const AddressForm = ({
             });
           }}
           onBlur={handleBlur}
-          error={Boolean(touched.city) && Boolean(errors.city)}
-          errorMsg={errors.city as string}
+          error={!disabled && Boolean(touched.city) && Boolean(errors.city)}
+          errorMsg={!disabled ? (errors.city as string) : ''}
         />
       </Grid>
 
@@ -107,8 +109,8 @@ const AddressForm = ({
             });
           }}
           onBlur={handleBlur}
-          error={Boolean(touched.street) && Boolean(errors.street)}
-          errorMsg={errors.street as string}
+          error={!disabled && Boolean(touched.street) && Boolean(errors.street)}
+          errorMsg={!disabled ? (errors.street as string) : ''}
         />
       </Grid>
       <Grid item xs={12} md={6}>
@@ -126,8 +128,8 @@ const AddressForm = ({
             });
           }}
           onBlur={handleBlur}
-          error={Boolean(touched.postalCode) && Boolean(errors.postalCode)}
-          errorMsg={errors.postalCode as string}
+          error={!disabled && Boolean(touched.postalCode) && Boolean(errors.postalCode)}
+          errorMsg={!disabled ? (errors.postalCode as string) : ''}
         />
       </Grid>
       <Grid item xs={12} md={6}>
@@ -145,8 +147,8 @@ const AddressForm = ({
             });
           }}
           onBlur={handleBlur}
-          error={Boolean(touched.building) && Boolean(errors.building)}
-          errorMsg={errors.building as string}
+          error={!disabled && Boolean(touched.building) && Boolean(errors.building)}
+          errorMsg={!disabled ? (errors.building as string) : ''}
         />
       </Grid>
       <Grid item xs={12} md={6}>
@@ -164,8 +166,8 @@ const AddressForm = ({
             });
           }}
           onBlur={handleBlur}
-          error={Boolean(touched.apartment) && Boolean(errors.apartment)}
-          errorMsg={errors.apartment as string}
+          error={!disabled && Boolean(touched.apartment) && Boolean(errors.apartment)}
+          errorMsg={!disabled ? (errors.apartment as string) : ''}
         />
       </Grid>
     </Grid>

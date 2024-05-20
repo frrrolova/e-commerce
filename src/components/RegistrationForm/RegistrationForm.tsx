@@ -15,7 +15,7 @@ import {
   Typography,
 } from '@mui/material';
 import { useFormik } from 'formik';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import SignupSchema from '@/core/registrationValidation';
 import { useAppDispatch, useAppSelector } from '@store/store';
 import { TCountryCode } from 'countries-list';
@@ -38,7 +38,6 @@ import { useSnackbar } from 'notistack';
 import { countriesList, snackbarBasicParams } from './constants';
 import AddressForm from '@components/AddressForm/AddressForm';
 
-// TODO: autocomplete false
 function RegistrationForm() {
   const dispatch = useAppDispatch();
   const isPending = useAppSelector((state) => state.user.isPending);
@@ -140,36 +139,6 @@ function RegistrationForm() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    if (billingAsShipping === true) {
-      formik.setFieldValue(
-        `${[AddressTypes.BILLING]}.${[FieldNames.COUNTRY]}`,
-        formik.values[AddressTypes.SHIPPING][FieldNames.COUNTRY],
-      );
-      formik.setFieldValue(
-        `${[AddressTypes.BILLING]}.${[FieldNames.CITY]}`,
-        formik.values[AddressTypes.SHIPPING][FieldNames.CITY],
-      );
-      formik.setFieldValue(
-        `${[AddressTypes.BILLING]}.${[FieldNames.STREET]}`,
-        formik.values[AddressTypes.SHIPPING][FieldNames.STREET],
-      );
-      formik.setFieldValue(
-        `${[AddressTypes.BILLING]}.${[FieldNames.POSTAL_CODE]}`,
-        formik.values[AddressTypes.SHIPPING][FieldNames.POSTAL_CODE],
-      );
-      formik.setFieldValue(
-        `${[AddressTypes.BILLING]}.${[FieldNames.BUILDING]}`,
-        formik.values[AddressTypes.SHIPPING][FieldNames.BUILDING],
-      );
-      formik.setFieldValue(
-        `${[AddressTypes.BILLING]}.${[FieldNames.APARTMENT]}`,
-        formik.values[AddressTypes.SHIPPING][FieldNames.APARTMENT],
-      );
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [billingAsShipping]);
-
   const countryCodes: TCountryCode[] = countriesList;
 
   const [showPassword, setShowPassword] = useState(false);
@@ -179,6 +148,16 @@ function RegistrationForm() {
   const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
   };
+
+  const copyAddress = useCallback(async () => {
+    await formik.setValues({ ...formik.values, billingAddress: { ...formik.values.shippingAddress } });
+    await formik.setTouched({ ...formik.touched, billingAddress: { ...formik.touched.shippingAddress } });
+  }, [formik]);
+
+  useEffect(() => {
+    copyAddress();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formik.values.shippingAddress]);
 
   const handleChange = (e: React.ChangeEvent, fieldName: string) => {
     formik.handleChange(e);
@@ -312,10 +291,9 @@ function RegistrationForm() {
         validateField={formik.validateField}
         values={formik.values[AddressTypes.SHIPPING]}
         countryCodes={countryCodes}
-        onFieldChange={(fieldName, fieldValue) => {
+        onFieldChange={async () => {
           if (billingAsShipping) {
-            const targetFieldName = `${AddressTypes.BILLING}.${fieldName.split('.')[1]}`;
-            formik.setFieldValue(targetFieldName, fieldValue);
+            // await copyAddress();
           }
         }}
       />
@@ -346,8 +324,11 @@ function RegistrationForm() {
           control={
             <Checkbox
               defaultChecked
-              onChange={() => {
-                setBillingAsShipping(!billingAsShipping);
+              onChange={async (_, checked) => {
+                setBillingAsShipping(checked);
+                if (checked) {
+                  await copyAddress();
+                }
               }}
             />
           }
