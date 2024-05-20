@@ -82,6 +82,9 @@ const AddressForm = ({
           onChange={(e: SelectChangeEvent) => {
             handleChange(e);
             onFieldChange?.(e.target.name, e.target.value);
+            setFieldTouched(`${prefix}.${FieldNames.CITY}`).then(() => {
+              validateField(`${prefix}.${FieldNames.CITY}`);
+            });
           }}
           onBlur={handleBlur}
           error={Boolean(touched.city) && Boolean(errors.city)}
@@ -99,6 +102,9 @@ const AddressForm = ({
           onChange={(e: SelectChangeEvent) => {
             handleChange(e);
             onFieldChange?.(e.target.name, e.target.value);
+            setFieldTouched(`${prefix}.${FieldNames.STREET}`).then(() => {
+              validateField(`${prefix}.${FieldNames.STREET}`);
+            });
           }}
           onBlur={handleBlur}
           error={Boolean(touched.street) && Boolean(errors.street)}
@@ -115,6 +121,9 @@ const AddressForm = ({
           onChange={(e: SelectChangeEvent) => {
             handleChange(e);
             onFieldChange?.(e.target.name, e.target.value);
+            setFieldTouched(`${prefix}.${FieldNames.POSTAL_CODE}`).then(() => {
+              validateField(`${prefix}.${FieldNames.POSTAL_CODE}`);
+            });
           }}
           onBlur={handleBlur}
           error={Boolean(touched.postalCode) && Boolean(errors.postalCode)}
@@ -131,6 +140,9 @@ const AddressForm = ({
           onChange={(e: SelectChangeEvent) => {
             handleChange(e);
             onFieldChange?.(e.target.name, e.target.value);
+            setFieldTouched(`${prefix}.${FieldNames.BUILDING}`).then(() => {
+              validateField(`${prefix}.${FieldNames.BUILDING}`);
+            });
           }}
           onBlur={handleBlur}
           error={Boolean(touched.building) && Boolean(errors.building)}
@@ -147,6 +159,9 @@ const AddressForm = ({
           onChange={(e: SelectChangeEvent) => {
             handleChange(e);
             onFieldChange?.(e.target.name, e.target.value);
+            setFieldTouched(`${prefix}.${FieldNames.APARTMENT}`).then(() => {
+              validateField(`${prefix}.${FieldNames.APARTMENT}`);
+            });
           }}
           onBlur={handleBlur}
           error={Boolean(touched.apartment) && Boolean(errors.apartment)}

@@ -15,7 +15,7 @@ const SignupLoginSchema = Yup.object().shape({
     .required(ValidationErrors.REQUIRED),
   password: Yup.string()
     .required(ValidationErrors.REQUIRED)
-    .min(validationConstants.passwordMinLength, ValidationErrors.SHORT_PASSWORD)
+    .min(validationConstants.passwordMinLength, ValidationErrors.PASSWORD_INVALID)
     .matches(passwordRegexp, {
       message: ValidationErrors.PASSWORD_INVALID,
       excludeEmptyString: true,

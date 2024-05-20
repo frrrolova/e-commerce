@@ -1,6 +1,5 @@
 import { Box, Container, Paper, Typography } from '@mui/material';
 import backPlantImg from '/images/registration/reg-back.png';
-import cornerPlantImg from '/images/registration/corner-plant.png';
 import LoginForm from '../../components/LoginForm/LoginForm';
 
 function Login() {
@@ -11,6 +10,8 @@ function Login() {
           position: 'relative',
           display: 'flex',
           justifyContent: 'center',
+          alignItems: 'center',
+          minHeight: '100vh',
           paddingX: '3px',
           paddingY: {
             xs: '30px',
@@ -24,8 +25,15 @@ function Login() {
             position: 'absolute',
             width: 360,
             zIndex: -1,
-            top: 60,
-            left: 0,
+            top: 80,
+            left: {
+              xs: -135,
+              sm: 0,
+            },
+            opacity: {
+              xs: 0.7,
+              md: 1,
+            },
           }}
           alt="Ficus"
           src={backPlantImg}
@@ -35,7 +43,8 @@ function Login() {
           sx={{
             position: 'relative',
             zIndex: 1,
-            marginTop: 5,
+            // top: 100,
+            // marginTop: 5,
             paddingY: 3,
             display: 'flex',
             flexDirection: 'column',
@@ -43,22 +52,11 @@ function Login() {
             opacity: 0.9,
             width: {
               xs: '90%',
-              md: '70%',
+              sm: '75%',
+              md: '50%',
             },
           }}
         >
-          <Box
-            component="img"
-            sx={{
-              position: 'absolute',
-              width: 170,
-              zIndex: 2,
-              top: -35,
-              right: -42,
-            }}
-            alt="Plant"
-            src={cornerPlantImg}
-          />
           <Typography component="h1" variant="h5">
             Login
           </Typography>

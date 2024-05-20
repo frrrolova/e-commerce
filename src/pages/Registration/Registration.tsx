@@ -22,17 +22,16 @@ function Registration() {
           component="img"
           sx={{
             position: 'absolute',
-
+            width: 360,
             zIndex: -1,
-
-            top: {
-              xs: '20%',
-              sm: 100,
+            top: 80,
+            left: {
+              xs: -135,
+              sm: 0,
             },
-            left: 0,
-            maxWidth: {
-              xs: '90%',
-              sm: 440,
+            opacity: {
+              xs: 0.7,
+              md: 1,
             },
           }}
           alt="Ficus"
