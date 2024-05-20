@@ -91,20 +91,23 @@ function RegistrationForm() {
             building: values[AddressTypes.SHIPPING][FieldNames.BUILDING],
             apartment: values[AddressTypes.SHIPPING][FieldNames.APARTMENT],
           },
-          {
-            country: values[AddressTypes.BILLING][FieldNames.COUNTRY],
-            city: values[AddressTypes.BILLING][FieldNames.CITY],
-            streetName: values[AddressTypes.BILLING][FieldNames.STREET],
-            postalCode: values[AddressTypes.BILLING][FieldNames.POSTAL_CODE],
-            building: values[AddressTypes.BILLING][FieldNames.BUILDING],
-            apartment: values[AddressTypes.BILLING][FieldNames.APARTMENT],
-          },
         ],
         shippingAddresses: [0],
-        billingAddresses: [1],
+        billingAddresses: [],
         defaultShippingAddress: isShippingDefault ? 0 : undefined,
-        defaultBillingAddress: isBillingDefault ? 1 : undefined,
+        defaultBillingAddress: isBillingDefault ? (billingAsShipping ? 0 : 1) : undefined,
       };
+      billingAsShipping ? newCustomerData.billingAddresses?.push(0) : newCustomerData.billingAddresses?.push(1);
+      if (!billingAsShipping) {
+        newCustomerData.addresses?.push({
+          country: values[AddressTypes.BILLING][FieldNames.COUNTRY],
+          city: values[AddressTypes.BILLING][FieldNames.CITY],
+          streetName: values[AddressTypes.BILLING][FieldNames.STREET],
+          postalCode: values[AddressTypes.BILLING][FieldNames.POSTAL_CODE],
+          building: values[AddressTypes.BILLING][FieldNames.BUILDING],
+          apartment: values[AddressTypes.BILLING][FieldNames.APARTMENT],
+        });
+      }
       dispatch(userRegistrationThunk(newCustomerData))
         .unwrap()
         .then(() => {
