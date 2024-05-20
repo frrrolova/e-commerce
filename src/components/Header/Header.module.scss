@@ -1,0 +1,70 @@
+@import '../../styles/variables.scss';
+
+.header {
+  .logoBox {
+    &:hover {
+      cursor: pointer;
+    }
+
+    @media only screen and (max-width: 320px) {
+      .logoText {
+        font-size: 1rem;
+        line-height: 32px;
+      }
+    }
+
+    @media only screen and (max-width: 300px) {
+      .logoText {
+        display: none;
+      }
+    }
+  }
+
+  .logo {
+    height: 2rem;
+    margin-right: 0.5rem;
+  }
+
+  .customIconButton {
+    padding: 8px;
+  }
+
+  &[data-scrolled="true"] {
+    background-color: $paper-color;
+    opacity: 0.8;
+  }
+
+  .toolbar {
+    justify-content: space-between;
+  }
+
+  .navMd {
+    button {
+      position: relative;
+      margin-top: 21px;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background-color: $border-green-color;
+        transition: all 0.3s ease;
+      }
+    }
+  }
+
+  .activeMenuItem {
+    color: $border-green-color;
+  }
+  
+  .activeMenuItem::after {
+    width: 100%!important;
+  }
+}
+
+.activeMenuItem {
+  color: $border-green-color;
+}

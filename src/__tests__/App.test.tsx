@@ -1,9 +1,16 @@
 import '@testing-library/jest-dom';
 import { render } from '@testing-library/react';
 import App from '../App';
+import { Project } from '@commercetools/platform-sdk';
+
+jest.mock('../client/client', () => {
+  return null;
+});
 
 test('renders App component', () => {
-  const { getByText } = render(<App />);
-  const headerElement = getByText('Plant shop');
-  expect(headerElement).toBeInTheDocument();
+  const { getByTestId } = render(<App project={{ name: 'test' } as unknown as Project} />);
+  const menuIcon = getByTestId('MenuIcon');
+  const shopNameEl = getByTestId('shop-name');
+  expect(menuIcon).toBeInTheDocument();
+  expect(shopNameEl).toBeInTheDocument();
 });

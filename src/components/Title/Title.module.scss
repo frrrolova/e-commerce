@@ -1,0 +1,32 @@
+@import '../../styles/variables.scss';
+
+.title {
+  padding: 1rem;
+  position: relative;
+  display: inline;
+
+  &:before,
+  &:after {
+    content: " ";
+    position: absolute;
+    width: 2.5rem;
+    height: 2.5rem;
+    content: " ";
+  }
+
+  &:before {
+    bottom: 0px;
+    left: -8px;
+    border-left: 3px solid $border-green-color;
+    border-bottom: 3px solid $border-green-color;
+    border-bottom-left-radius: 15px;
+  }
+
+  &:after {
+    top: 0px;
+    right: -8px;
+    border-top: 3px solid $border-green-color;
+    border-right: 3px solid $border-green-color;
+    border-top-right-radius: 15px;
+  }
+}

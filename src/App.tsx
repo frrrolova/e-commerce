@@ -1,32 +1,40 @@
-import { useState } from 'react';
-import reactLogo from '/images/react.svg';
-import viteLogo from '/images/vite.svg';
-import '@/App.scss';
-import Header from '@components/Header/Header';
+import { ThemeProvider } from '@mui/material/styles';
+import Routing from './routes/Routing';
+import theme from './themes/theme';
+import { Provider } from 'react-redux';
+import { Box, CssBaseline } from '@mui/material';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import initStore from './store/store.ts';
+import { Project } from '@commercetools/platform-sdk';
+import { SnackbarProvider } from 'notistack';
+import styles from '@/App.module.scss';
+import texture from '/images/texture.png';
 
-function App() {
-  const [count, setCount] = useState(0);
-
+function App({ project }: { project: Project }) {
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Plant shop</h1>
-      <Header />
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
-    </>
+    <Provider store={initStore(project)}>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <ThemeProvider theme={theme}>
+          <SnackbarProvider maxSnack={3} classes={{ containerRoot: styles.test }}>
+            <Box
+              component="img"
+              sx={{
+                position: 'absolute',
+                zIndex: -10000,
+                width: '100%',
+                height: '100%',
+                minHeight: '100vh',
+              }}
+              alt="Ficus"
+              src={texture}
+            />
+            <CssBaseline />
+            <Routing />
+          </SnackbarProvider>
+        </ThemeProvider>
+      </LocalizationProvider>
+    </Provider>
   );
 }
 

@@ -1,0 +1,39 @@
+diff --git a/node_modules/@commercetools/sdk-client-v2/dist/commercetools-sdk-client-v2.browser.cjs.js b/node_modules/@commercetools/sdk-client-v2/dist/commercetools-sdk-client-v2.browser.cjs.js
+index 33b0588..27c4cf9 100644
+--- a/node_modules/@commercetools/sdk-client-v2/dist/commercetools-sdk-client-v2.browser.cjs.js
++++ b/node_modules/@commercetools/sdk-client-v2/dist/commercetools-sdk-client-v2.browser.cjs.js
+@@ -651,7 +651,7 @@ function createAuthMiddlewareForRefreshTokenFlow$1(options) {
+       tokenCache,
+       fetch: options.fetch
+     };
+-    authMiddlewareBase(params, next);
++    authMiddlewareBase(params, next, options);
+   };
+ }
+ 
+diff --git a/node_modules/@commercetools/sdk-client-v2/dist/commercetools-sdk-client-v2.browser.esm.js b/node_modules/@commercetools/sdk-client-v2/dist/commercetools-sdk-client-v2.browser.esm.js
+index d228be9..58c5ffc 100644
+--- a/node_modules/@commercetools/sdk-client-v2/dist/commercetools-sdk-client-v2.browser.esm.js
++++ b/node_modules/@commercetools/sdk-client-v2/dist/commercetools-sdk-client-v2.browser.esm.js
+@@ -643,7 +643,7 @@ function createAuthMiddlewareForRefreshTokenFlow$1(options) {
+       tokenCache,
+       fetch: options.fetch
+     };
+-    authMiddlewareBase(params, next);
++    authMiddlewareBase(params, next, options);
+   };
+ }
+ 
+diff --git a/node_modules/@commercetools/sdk-client-v2/dist/commercetools-sdk-client-v2.esm.js b/node_modules/@commercetools/sdk-client-v2/dist/commercetools-sdk-client-v2.esm.js
+index 5a830c9..93d897e 100644
+--- a/node_modules/@commercetools/sdk-client-v2/dist/commercetools-sdk-client-v2.esm.js
++++ b/node_modules/@commercetools/sdk-client-v2/dist/commercetools-sdk-client-v2.esm.js
+@@ -643,7 +643,7 @@ function createAuthMiddlewareForRefreshTokenFlow$1(options) {
+       tokenCache,
+       fetch: options.fetch
+     };
+-    authMiddlewareBase(params, next);
++    authMiddlewareBase(params, next, options);
+   };
+ }
+ 
