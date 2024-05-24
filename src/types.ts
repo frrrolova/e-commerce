@@ -1,14 +1,15 @@
+import { Image } from '@commercetools/platform-sdk';
+
 export type PropsWithChildren = {
   children: JSX.Element;
 };
 
-//TODO correct Product according to CommerceTools fields
 export interface Product {
-  label: string;
-  imgPath: string;
+  id: string;
+  name: string;
   description: string;
+  images: Image[] | undefined;
 }
-//TODO END
 
 export interface InfoDataCard {
   heading: string;

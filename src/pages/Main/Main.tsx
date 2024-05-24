@@ -13,33 +13,39 @@ import { useNavigate } from 'react-router-dom';
 // TODO set products data from CommerceTools and remove const products
 const products: Product[] = [
   {
-    label: 'Philodendron',
-    imgPath: '/images/home/philodendron_1.png',
+    id: '1',
+    name: 'Philodendron',
+    images: undefined,
     description: 'A relatively fast-growing ornamental plant frequently used for indoor landscaping.',
   },
   {
-    label: 'Philodendron',
-    imgPath: '/images/home/philodendron_1.png',
+    id: '2',
+    name: 'Philodendron',
+    images: undefined,
     description: 'A relatively fast-growing ornamental plant frequently used for indoor landscaping.',
   },
   {
-    label: 'Philodendron',
-    imgPath: '/images/home/philodendron_1.png',
+    id: '3',
+    name: 'Philodendron',
+    images: undefined,
     description: 'A relatively fast-growing ornamental plant frequently used for indoor landscaping.',
   },
   {
-    label: 'Philodendron',
-    imgPath: '/images/home/philodendron_1.png',
+    id: '4',
+    name: 'Philodendron',
+    images: undefined,
     description: 'A relatively fast-growing ornamental plant frequently used for indoor landscaping.',
   },
   {
-    label: 'Philodendron',
-    imgPath: '/images/home/philodendron_1.png',
+    id: '5',
+    name: 'Philodendron',
+    images: undefined,
     description: 'A relatively fast-growing ornamental plant frequently used for indoor landscaping.',
   },
   {
-    label: 'Philodendron',
-    imgPath: '/images/home/philodendron_1.png',
+    id: '6',
+    name: 'Philodendron',
+    images: undefined,
     description: 'A relatively fast-growing ornamental plant frequently used for indoor landscaping.',
   },
 ];
