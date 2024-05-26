@@ -7,32 +7,27 @@ interface ProductCardProps {
 }
 
 function ProductCard({ product }: ProductCardProps) {
-  if (product.images) {
-    return (
-      <Box className={styles.container}>
-        <Paper elevation={3} className={styles.card}>
-          <Box className={styles.content}>
-            <Typography gutterBottom variant="h2" component="h2" mt={1}>
-              {product.name}
+  return (
+    <Box className={styles.container}>
+      <Paper elevation={3} className={styles.card}>
+        <Box className={styles.content}>
+          <Box component="img" className={styles.image} alt="Plant" src={product.imgPath} />
+          <Box className={styles.description}>
+            <Typography gutterBottom variant="h5" component="div" mt={1}>
+              {product.label}
             </Typography>
-            <Box component="img" className={styles.image} alt="Plant" src={product.images[0].url} />
-            <Box className={styles.description}>
-              <Typography gutterBottom variant="h5" component="div" mt={1}>
-                {product.images[0].label}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {product.description}
-              </Typography>
-              {/* TODO Add redirect to Product page*/}
-              {/* <Button size="small" sx={{ mt: 1 }}>
-                Buy Now
-              </Button> */}
-            </Box>
+            <Typography variant="body2" color="text.secondary">
+              {product.description}
+            </Typography>
+            {/* TODO Add redirect to Product page*/}
+            {/* <Button size="small" sx={{ mt: 1 }}>
+              Buy Now
+            </Button> */}
           </Box>
-        </Paper>
-      </Box>
-    );
-  }
+        </Box>
+      </Paper>
+    </Box>
+  );
 }
 
 export default ProductCard;
