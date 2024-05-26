@@ -5,9 +5,10 @@ export type PropsWithChildren = {
 };
 
 export interface Product {
-  label: string;
-  imgPath: string;
+  id: string;
+  name: string;
   description: string;
+  images: Image[] | undefined;
 }
 
 export interface InfoDataCard {
