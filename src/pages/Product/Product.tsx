@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Product as ProductType } from '@/types';
+import { ProductCard } from '@/types';
 import { productService } from '@/services/productService';
 import { Box, Typography, Button, Link, Container, CardActionArea } from '@mui/material';
 import CardMedia from '@mui/material/CardMedia';
@@ -10,7 +10,7 @@ import { Paths } from '@/routes/routeConstants';
 import CardActions from '@mui/material/CardActions';
 
 function Product() {
-  const [product, setProduct] = useState<ProductType | null>(null);
+  const [product, setProduct] = useState<ProductCard | null>(null);
 
   const loadProduct = async (productID: string) => {
     try {

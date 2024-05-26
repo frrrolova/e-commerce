@@ -1,11 +1,11 @@
 import client from '@/client/client';
-import { Product } from '@/types';
+import { ProductCard } from '@/types';
 
 class ProductService {
-  async fetchProduct(productID: string): Promise<Product> {
+  async fetchProduct(productID: string): Promise<ProductCard> {
     try {
       const response = await client.getClient().products().withId({ ID: productID }).get().execute();
-      const product: Product = {
+      const product: ProductCard = {
         id: response.body.id,
         name: response.body.masterData.current.name[`en-GB`],
         description: response.body.masterData.current.description?.[`en-GB`] || 'Product has no description',
