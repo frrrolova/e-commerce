@@ -1,0 +1,50 @@
+.container {
+  position: relative;
+  padding-top: 60px;
+}
+.container .card {
+  border-radius: 50px;
+  opacity: 0.9;
+  height: 280px;
+  display: flow-root;
+}
+.container .card::before {
+  content: "";
+  position: absolute;
+  top: 60px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 50px;
+  border: 2px solid transparent;
+  background: linear-gradient(45deg, rgba(38, 46, 34, 0.8), rgba(255, 255, 255, 0.5), rgba(38, 46, 34, 0.8)) border-box;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+}
+.container .card .content {
+  position: absolute;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+.container .card .content p {
+  max-height: 3em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+.container .card .image {
+  height: 200px;
+  transition: transform 500ms ease-in-out;
+  filter: drop-shadow(5px 10px 15px rgba(8, 9, 13, 0.4));
+}
+.container .card:hover .image {
+  transform: scale(1.05);
+}/*# sourceMappingURL=ProductCard.module.css.map */
