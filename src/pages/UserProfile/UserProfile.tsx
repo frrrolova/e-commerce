@@ -1,7 +1,29 @@
+import UserProfileData from '@/components/UserProfileData/UserProfileData';
+import { userGetInfoThunk } from '@/store/slices/user/thunks';
+import { useAppDispatch, useAppSelector } from '@/store/store';
+import { useEffect } from 'react';
+
 function UserProfile() {
+  const isPageLoading = useAppSelector((state) => state.user.isUserDataLoading);
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.user.user);
+
+  useEffect(() => {
+    dispatch(userGetInfoThunk())
+      .unwrap()
+      .then((resp) => {
+        console.log(resp);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <>
-      <div>User Profile</div>
+      {isPageLoading && <h3>Loading...</h3>}
+      {user && <UserProfileData user={user} />}
     </>
   );
 }

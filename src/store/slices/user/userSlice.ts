@@ -1,22 +1,24 @@
-import { Customer, ErrorObject, ErrorResponse } from '@commercetools/platform-sdk';
+import { ClientResponse, Customer, ErrorObject, ErrorResponse } from '@commercetools/platform-sdk';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 // import { userRegistrationThunk } from './thunks';
 import client from '@/client/client';
 import { LSTokenPrefixes } from '@/enums/ls.enums';
-import { userRegistrationThunk, userLoginThunk } from './thunks';
+import { userRegistrationThunk, userLoginThunk, userGetInfoThunk } from './thunks';
 
 export interface UserState {
   user: Customer | null;
-  error: string;
-  isPending: boolean;
+  authError: string;
+  isAuthPending: boolean;
+  isUserDataLoading: boolean;
 }
 
 const userFromLS = localStorage.getItem('user');
 
 const initialState: UserState = {
   user: userFromLS ? JSON.parse(userFromLS) : null,
-  error: '',
-  isPending: false,
+  authError: '',
+  isAuthPending: false,
+  isUserDataLoading: false,
 };
 
 export const userSlice = createSlice({
@@ -27,7 +29,7 @@ export const userSlice = createSlice({
       state.user = action.payload;
     },
     clearError: (state) => {
-      state.error = '';
+      state.authError = '';
     },
     logout: (state) => {
       state.user = null;
@@ -38,41 +40,53 @@ export const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      // registration
       .addCase(userRegistrationThunk.pending, (state) => {
-        state.error = '';
-        state.isPending = true;
+        state.authError = '';
+        state.isAuthPending = true;
       })
       .addCase(userRegistrationThunk.fulfilled, (state) => {
-        state.isPending = false;
+        state.isAuthPending = false;
         // update state with user or credentials
       })
       .addCase(userRegistrationThunk.rejected, (state, action) => {
-        state.isPending = false;
+        state.isAuthPending = false;
 
         if (action.error) {
-          state.error = action.error.message || '';
+          state.authError = action.error.message || '';
         } else {
           const payload = action.payload as ErrorResponse;
           const err: ErrorObject | null = payload.errors?.[0] || null;
           if (err) {
-            state.error = err.message ?? '';
+            state.authError = err.message ?? '';
           }
         }
       })
+      // login
       .addCase(userLoginThunk.pending, (state) => {
-        state.error = '';
-        state.isPending = true;
+        state.authError = '';
+        state.isAuthPending = true;
       })
       .addCase(userLoginThunk.fulfilled, (state) => {
-        state.isPending = false;
+        state.isAuthPending = false;
       })
       .addCase(userLoginThunk.rejected, (state, action) => {
-        state.isPending = false;
+        state.isAuthPending = false;
         const payload = action.payload as ErrorResponse;
         const err: ErrorObject | null = payload.errors?.[0] || null;
         if (err) {
-          state.error = err.message ?? '';
+          state.authError = err.message ?? '';
         }
+      })
+      .addCase(userGetInfoThunk.pending, (state) => {
+        state.isUserDataLoading = true;
+      })
+      .addCase(userGetInfoThunk.fulfilled, (state, action: PayloadAction<ClientResponse<Customer>>) => {
+        state.isUserDataLoading = false;
+        state.user = action.payload.body;
+      })
+      .addCase(userGetInfoThunk.rejected, (state) => {
+        state.isUserDataLoading = false;
       });
   },
 });

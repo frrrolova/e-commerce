@@ -40,7 +40,7 @@ import AddressForm from '@components/AddressForm/AddressForm';
 
 function RegistrationForm() {
   const dispatch = useAppDispatch();
-  const isPending = useAppSelector((state) => state.user.isPending);
+  const isPending = useAppSelector((state) => state.user.isAuthPending);
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
 

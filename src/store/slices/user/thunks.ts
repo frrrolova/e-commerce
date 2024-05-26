@@ -5,6 +5,7 @@ import { setUser } from './userSlice';
 import { LSTokenPrefixes } from '@/enums/ls.enums';
 import { loginService } from '@/services/loginService';
 import { AsyncThunkApi } from '@/store/store';
+import { getUser } from '@/services/userService';
 
 export const userRegistrationThunk = createAsyncThunk('user/registration', (regData: CustomerDraft, thunkAPI) => {
   return client
@@ -47,3 +48,13 @@ function handleSuccessfulLoginResponse(email: string, password: string, customer
   thunkAPI.dispatch(setUser(customer));
   return client.getClient().me().get().execute(); // doing this for login-token request
 }
+
+export const userGetInfoThunk = createAsyncThunk('user/get-info', () => {
+  return getUser().then((resp) => {
+    console.log(resp);
+    return resp;
+  });
+  // .catch((err: ErrorResponse) => {
+  //   console.log(err);
+  // });
+});
