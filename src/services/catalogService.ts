@@ -5,7 +5,11 @@ import { Product as ProductCT } from '@commercetools/platform-sdk';
 class CatalogService {
   async fetchProducts(): Promise<Product[]> {
     try {
-      const response = await client.getClient().products().get().execute();
+      const response = await client
+        .getClient()
+        .products()
+        .get({ queryArgs: { limit: 25 } })
+        .execute();
 
       // Map the commercetools products to UI-product type
       const products: Product[] = response.body.results.map((product: ProductCT) => {
@@ -14,6 +18,7 @@ class CatalogService {
           name: product.masterData.current.name[`en-GB`],
           description: product.masterData.current.description?.[`en-GB`] || 'Product has no description',
           images: product.masterData.current.masterVariant.images,
+          prices: product.masterData.current.masterVariant.prices,
         };
       });
       return products;
