@@ -3,11 +3,12 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 // import { userRegistrationThunk } from './thunks';
 import client from '@/client/client';
 import { LSTokenPrefixes } from '@/enums/ls.enums';
-import { userRegistrationThunk, userLoginThunk, userGetInfoThunk } from './thunks';
+import { userRegistrationThunk, userLoginThunk, userGetInfoThunk, userUpdateThunk } from './thunks';
 
 export interface UserState {
   user: Customer | null;
   authError: string;
+  userUpdateError: string;
   isAuthPending: boolean;
   isUserDataLoading: boolean;
 }
@@ -17,6 +18,7 @@ const userFromLS = localStorage.getItem('user');
 const initialState: UserState = {
   user: userFromLS ? JSON.parse(userFromLS) : null,
   authError: '',
+  userUpdateError: '',
   isAuthPending: false,
   isUserDataLoading: false,
 };
@@ -30,6 +32,7 @@ export const userSlice = createSlice({
     },
     clearError: (state) => {
       state.authError = '';
+      state.userUpdateError = '';
     },
     logout: (state) => {
       state.user = null;
@@ -78,6 +81,7 @@ export const userSlice = createSlice({
           state.authError = err.message ?? '';
         }
       })
+      // get User info
       .addCase(userGetInfoThunk.pending, (state) => {
         state.isUserDataLoading = true;
       })
@@ -87,6 +91,14 @@ export const userSlice = createSlice({
       })
       .addCase(userGetInfoThunk.rejected, (state) => {
         state.isUserDataLoading = false;
+      })
+      // upd User
+      .addCase(userUpdateThunk.rejected, (state, action) => {
+        const payload = action.payload as ErrorResponse;
+        const err: ErrorObject | null = payload.errors?.[0] || null;
+        if (err) {
+          state.userUpdateError = err.message ?? '';
+        }
       });
   },
 });

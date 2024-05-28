@@ -1,3 +1,5 @@
+import { MyCustomerUpdateAction } from '@commercetools/platform-sdk';
+
 export type PropsWithChildren = {
   children: JSX.Element;
 };
@@ -15,4 +17,9 @@ export interface InfoDataCard {
   imgPath: string;
   subHeading: string;
   description?: string;
+}
+
+export interface UserUpdateData {
+  updAction: MyCustomerUpdateAction;
+  version: number;
 }

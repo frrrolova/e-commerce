@@ -1,4 +1,4 @@
-import UserProfileData from '@/components/UserProfileData/UserProfileData';
+import UserProfileForm from '@/components/UserProfileForm/UserProfileForm';
 import { userGetInfoThunk } from '@/store/slices/user/thunks';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 import { useEffect } from 'react';
@@ -23,7 +23,7 @@ function UserProfile() {
   return (
     <>
       {isPageLoading && <h3>Loading...</h3>}
-      {user && <UserProfileData user={user} />}
+      {user && <UserProfileForm userData={user} />}
     </>
   );
 }

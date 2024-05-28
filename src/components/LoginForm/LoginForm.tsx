@@ -15,11 +15,7 @@ import { useSnackbar } from 'notistack';
 import { Link as RouterLink } from 'react-router-dom';
 import { Paths } from '@/routes/routeConstants';
 import { useNavigate } from 'react-router-dom';
-
-const snackbarBasicParams = {
-  style: { width: '300px' },
-  anchorOrigin: { vertical: 'top' as const, horizontal: 'center' as const },
-};
+import { snackbarBasicParams } from '@/shared/snackbarConstans';
 
 function LoginForm() {
   const dispatch = useAppDispatch();

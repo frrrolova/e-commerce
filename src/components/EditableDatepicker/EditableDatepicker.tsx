@@ -1,24 +1,29 @@
-import { TextField, FormHelperText } from '@mui/material';
+import { FormHelperText, InputProps, SxProps } from '@mui/material';
+import { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import EditableField from '../Editable/EditableField';
-import { useState } from 'react';
+import dayjs from 'dayjs';
+import { DateField } from '@mui/x-date-pickers';
 
-interface EditableInputProps {
+interface EditableDatePickerProps {
   name: string;
   initialValue: string;
-  placeholder: string;
   label: string;
-  schema: Yup.AnySchema;
+  placeholder?: string;
+  error?: boolean;
+  sx?: SxProps;
+  InputProps?: Partial<InputProps>;
+  schema: Yup.StringSchema | Yup.DateSchema;
   onSave: (value: string) => void;
 }
 
-function EditableInput({ name, initialValue, placeholder, label, schema, onSave }: EditableInputProps) {
+function EditableDatePicker({ name, initialValue, schema, label, onSave }: EditableDatePickerProps) {
   const formik = useFormik({
     initialValues: {
       [name]: initialValue,
     },
-    enableReinitialize: true,
+    // validateOnMount: false,
     validationSchema: Yup.object().shape({
       [name]: schema,
     }),
@@ -31,7 +36,6 @@ function EditableInput({ name, initialValue, placeholder, label, schema, onSave 
 
   return (
     <EditableField
-      placeholder={placeholder}
       label={label}
       isSaveDisabled={!formik.isValid}
       onEditClick={() => {
@@ -47,24 +51,27 @@ function EditableInput({ name, initialValue, placeholder, label, schema, onSave 
       }}
     >
       <>
-        <TextField
+        <DateField
           InputProps={{ readOnly: !isEditMode, disableUnderline: !isEditMode }}
-          name={name}
+          value={dayjs(formik.values[name])}
           variant="standard"
           fullWidth
-          value={formik.values[name]}
-          aria-describedby="my-helper-text"
           id={`${name}-input`}
-          onChange={(e) => {
-            formik.handleChange(e);
+          format="DD.MM.YYYY"
+          name={name}
+          onChange={(val): void => {
+            formik.setFieldValue(name, val?.toDate());
             formik.setFieldTouched(name).then(() => {
               formik.validateField(name);
             });
           }}
           onBlur={formik.handleBlur}
-          error={formik.touched[name] && Boolean(formik.errors[name])}
-          sx={{
-            '& input': { padding: 0 },
+          slotProps={{
+            textField: {
+              size: 'small',
+              error: Boolean(formik.touched.dateOfBirth) && Boolean(formik.errors.dateOfBirth),
+              onBlur: formik.handleBlur,
+            },
           }}
         />
         {Boolean(formik.errors[name]) && <FormHelperText error>{formik.errors[name]}</FormHelperText>}
@@ -73,4 +80,4 @@ function EditableInput({ name, initialValue, placeholder, label, schema, onSave 
   );
 }
 
-export default EditableInput;
+export default EditableDatePicker;
