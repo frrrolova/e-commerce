@@ -8,24 +8,50 @@ import CardContent from '@mui/material/CardContent';
 import { Link as RouterLink } from 'react-router-dom';
 import { Paths } from '@/routes/routeConstants';
 import CardActions from '@mui/material/CardActions';
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import { Carousel } from 'react-responsive-carousel';
 
 function Product() {
   const [product, setProduct] = useState<ProductCard | null>(null);
+  // const [price, setPrice] = useState(0);
+  // const [discount, setDiscount] = useState(0);
 
   const loadProduct = async (productID: string) => {
     try {
       const productData = await productService.fetchProduct(productID);
       setProduct(productData);
+      // if (product) {
+      //   setPrice(product.prices![0].value.centAmount / 100);
+      //   if (product.prices![0].discounted) {
+      //     setDiscount(product.prices![0].discounted.value.centAmount / 100);
+      //   }
+      // }
       console.log(productData);
     } catch (err) {
       console.log(err);
     }
   };
+  // const loadProduct = useCallback(
+  //   async (productID: string) => {
+  //     try {
+  //       const productData = await productService.fetchProduct(productID);
+  //       setProduct(productData);
+  //       if (product) {
+  //         setPrice(product.prices![0].value.centAmount / 100);
+  //         if (product.prices![0].discounted) {
+  //           setDiscount(product.prices![0].discounted.value.centAmount / 100);
+  //         }
+  //       }
+  //       console.log(productData);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   },
+  //   [product],
+  // );
 
   useEffect(() => {
-    loadProduct('8087c1a9-c10d-46b7-9b65-36ca70248e86');
+    loadProduct('69ca9376-354e-4a8e-890c-a9e37ae95a59');
   }, []);
 
   if (product) {
@@ -65,30 +91,61 @@ function Product() {
                   },
                 }}
               >
-                <Box
-                  sx={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}
-                >
-                  <ArrowBackIosNewIcon color="primary" onClick={() => alert('Back')} />
-                  {product.images && (
+                <Carousel autoPlay showThumbs={false}>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}
+                  >
                     <CardMedia
                       component="img"
-                      sx={{
-                        width: '80%',
-                        height: '80%',
-                        objectFit: 'cover',
-                      }}
-                      image={product.images[0].url}
-                      alt={product.images[0].label}
+                      style={{ width: '70%', height: '70%', objectFit: 'cover' }}
+                      image={product.images![0].url}
+                      alt={product.images![0].label}
                     />
-                  )}
-                  <ArrowForwardIosIcon color="primary" onClick={() => alert('Forward!')} />
-                </Box>
+                    {/* <Typography color="text.primary" className="legend" component="p">
+                      {product.images![0].label}
+                    </Typography> */}
+                  </Box>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <CardMedia
+                      component="img"
+                      style={{ width: '70%', height: '70%', objectFit: 'cover' }}
+                      image={product.images![1].url}
+                      alt={product.images![1].label}
+                    />
+                    {/* <Typography component="p" className="legend">
+                      {product.images![1].label}
+                    </Typography> */}
+                  </Box>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <CardMedia
+                      component="img"
+                      style={{ width: '70%', height: '70%', objectFit: 'cover' }}
+                      image={product.images![2].url}
+                      alt={product.images![2].label}
+                    />
+                    {/* <Typography component="p" className="legend">
+                      {product.images![2].label}
+                    </Typography> */}
+                  </Box>
+                </Carousel>
                 <CardContent>
-                  <Typography gutterBottom variant="h2" component="div">
+                  <Typography gutterBottom variant="h3" component="div">
                     {product.name}
                   </Typography>
                   <Box
@@ -99,7 +156,7 @@ function Product() {
                     }}
                   >
                     <Typography gutterBottom variant="h4" component="div">
-                      200$
+                      {product.prices![0].value.centAmount / 100} &euro;
                     </Typography>
                     <Typography
                       gutterBottom
@@ -111,7 +168,7 @@ function Product() {
                         textDecoration: 'line-through',
                       }}
                     >
-                      300$
+                      {product.prices![0].discounted && product.prices![0].discounted.value.centAmount / 100} &euro;
                     </Typography>
                   </Box>
                   <CardActions>

@@ -1,4 +1,4 @@
-import { Image } from '@commercetools/platform-sdk';
+import { Image, Price } from '@commercetools/platform-sdk';
 
 export type PropsWithChildren = {
   children: JSX.Element;
@@ -23,4 +23,5 @@ export interface ProductCard {
   name: string;
   description: string;
   images: Image[] | undefined;
+  prices: Price[] | undefined;
 }
