@@ -52,7 +52,8 @@ function EditableDatePicker({ name, initialValue, schema, label, onSave }: Edita
     >
       <>
         <DateField
-          InputProps={{ readOnly: !isEditMode, disableUnderline: !isEditMode }}
+          InputProps={{ disableUnderline: !isEditMode }}
+          readOnly={!isEditMode}
           value={dayjs(formik.values[name])}
           variant="standard"
           fullWidth
