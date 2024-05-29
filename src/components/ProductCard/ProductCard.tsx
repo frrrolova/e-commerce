@@ -3,6 +3,7 @@ import styles from './ProductCard.module.scss';
 import { Box, Paper, Typography } from '@mui/material';
 import { Product } from '@/types';
 import Placeholder from '/images/catalog/placeholder_plant.png';
+import { centsInEuro } from './constants';
 
 interface ProductCardProps {
   product: Product;
@@ -12,8 +13,8 @@ function ProductCard({ product }: ProductCardProps) {
   let price;
   let discountedPrice;
   if (product.prices) {
-    price = product.prices[0].value.centAmount / 100;
-    discountedPrice = product.prices[0].discounted && product.prices[0].discounted.value.centAmount / 100;
+    price = product.prices[0].value.centAmount / centsInEuro;
+    discountedPrice = product.prices[0].discounted && product.prices[0].discounted.value.centAmount / centsInEuro;
   }
   return (
     <Box className={styles.container}>

@@ -25,3 +25,14 @@ export interface ProductCard {
   description: string;
   images: Image[] | undefined;
 }
+
+export interface FilterAttributes {
+  key: string;
+  label: string;
+}
+
+export interface Filter {
+  name: string;
+  label: string;
+  options: FilterAttributes[];
+}
