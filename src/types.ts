@@ -1,16 +1,17 @@
-import { MyCustomerUpdateAction } from '@commercetools/platform-sdk';
+// import { MyCustomerUpdateAction } from '@commercetools/platform-sdk';
+import { Image, Price, MyCustomerUpdateAction } from '@commercetools/platform-sdk';
 
 export type PropsWithChildren = {
   children: JSX.Element;
 };
 
-//TODO correct Product according to CommerceTools fields
 export interface Product {
-  label: string;
-  imgPath: string;
+  id: string;
+  name: string;
   description: string;
+  images: Image[] | undefined;
+  prices: Price[] | undefined;
 }
-//TODO END
 
 export interface InfoDataCard {
   heading: string;
@@ -19,6 +20,12 @@ export interface InfoDataCard {
   description?: string;
 }
 
+export interface ProductCard {
+  id: string;
+  name: string;
+  description: string;
+  images: Image[] | undefined;
+}
 export interface UserUpdateData {
   updAction: MyCustomerUpdateAction;
   version: number;

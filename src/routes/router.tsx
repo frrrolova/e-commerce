@@ -9,6 +9,7 @@ import Catalog from '@/pages/Catalog/Catalog';
 import Basket from '@/pages/Basket/Basket';
 import UserProfile from '@/pages/UserProfile/UserProfile';
 import About from '@/pages/About/About';
+import Product from '@/pages/Product/Product';
 import PageNotFound from '@/pages/PageNotFound/PageNotFound';
 
 export const routes: RouteObject[] = [
@@ -46,6 +47,10 @@ export const routes: RouteObject[] = [
       {
         path: Paths.ABOUT,
         element: <About />,
+      },
+      {
+        path: Paths.PRODUCT,
+        element: <Product />,
       },
       {
         path: Paths.PROFILE,

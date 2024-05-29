@@ -9,47 +9,39 @@ import ImageBg from '/images/home/home-bg.png';
 import InfoCard from '@/components/InfoCard/InfoCard';
 import { Paths } from '@/routes/routeConstants';
 import { useNavigate } from 'react-router-dom';
-
-// TODO set products data from CommerceTools and remove const products
-const products: Product[] = [
-  {
-    label: 'Philodendron',
-    imgPath: '/images/home/philodendron_1.png',
-    description: 'A relatively fast-growing ornamental plant frequently used for indoor landscaping.',
-  },
-  {
-    label: 'Philodendron',
-    imgPath: '/images/home/philodendron_1.png',
-    description: 'A relatively fast-growing ornamental plant frequently used for indoor landscaping.',
-  },
-  {
-    label: 'Philodendron',
-    imgPath: '/images/home/philodendron_1.png',
-    description: 'A relatively fast-growing ornamental plant frequently used for indoor landscaping.',
-  },
-  {
-    label: 'Philodendron',
-    imgPath: '/images/home/philodendron_1.png',
-    description: 'A relatively fast-growing ornamental plant frequently used for indoor landscaping.',
-  },
-  {
-    label: 'Philodendron',
-    imgPath: '/images/home/philodendron_1.png',
-    description: 'A relatively fast-growing ornamental plant frequently used for indoor landscaping.',
-  },
-  {
-    label: 'Philodendron',
-    imgPath: '/images/home/philodendron_1.png',
-    description: 'A relatively fast-growing ornamental plant frequently used for indoor landscaping.',
-  },
-];
+import { useState, useEffect } from 'react';
+import { catalogService } from '@/services/catalogService';
 
 function Main() {
   const navigate = useNavigate();
+  const [productTop, setProductTop] = useState<Product | null>(null);
+  const [productsOffer, setProductsOffer] = useState<Product[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   const onRedirect = (url: string) => () => {
     navigate(url);
   };
+
+  useEffect(() => {
+    const loadProducts = async () => {
+      try {
+        const productData = await catalogService.fetchProductById(PageData.TOP_PLANT_ID);
+        setProductTop(productData);
+
+        const productsData = await catalogService.fetchProductsByCategory(PageData.CATEGORY_ID);
+        setProductsOffer(productsData);
+      } catch (err) {
+        setError('Failed to fetch products');
+        console.log('Failed to fetch products');
+      } finally {
+        console.log('Data is fetched');
+      }
+    };
+
+    loadProducts();
+  }, []);
+
+  if (error || !productTop) return <Typography color="error">{error}</Typography>;
 
   return (
     <Box className={styles.container}>
@@ -76,7 +68,7 @@ function Main() {
             </Button>
           </Grid>
           <Grid xs={12} md={4} mt={3}>
-            <ProductCard product={products[0]} />
+            <ProductCard product={productTop} />
           </Grid>
 
           {/* PROMO Section */}
@@ -94,9 +86,9 @@ function Main() {
           <Grid xs={12} mt={3}>
             <Box sx={{ flexGrow: 1 }}>
               <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
-                {Array.from(Array(6)).map((_, index) => (
-                  <Grid xs={4} sm={4} md={4} key={index}>
-                    <ProductCard product={products[index]} />
+                {productsOffer.map((product) => (
+                  <Grid xs={4} sm={4} md={4} key={product.id}>
+                    <ProductCard product={product} />
                   </Grid>
                 ))}
               </Grid>
