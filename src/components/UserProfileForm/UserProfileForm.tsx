@@ -13,9 +13,15 @@ import { useEffect, useState } from 'react';
 import { snackbarBasicParams } from '@/shared/snackbarConstans';
 import { getFormattedDateValue } from '@/utils/getFormattedDateValue';
 import TabPanel from '../TabPanel/TabPanel';
-// import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined';
-// import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import AddressesList from '../AddressesList/AddressesList';
+import { AddressActions } from '@/enums/addressActions.enum';
+
+function valueIsBaseAddress(value: unknown): value is BaseAddress {
+  if ((value as BaseAddress).country) {
+    return true;
+  }
+  return false;
+}
 
 function UserProfileForm({ userData }: { userData: Customer }) {
   const dispatch = useAppDispatch();
@@ -45,7 +51,14 @@ function UserProfileForm({ userData }: { userData: Customer }) {
   }, [userData]);
 
   function saveHandler(updAction: MyCustomerUpdateAction, fieldName: keyof typeof user, value: string | BaseAddress) {
-    setUser({ ...user, [fieldName]: value });
+    if (valueIsBaseAddress(value)) {
+      const userAddresses = [...user.addresses];
+      const ind = userAddresses.findIndex((address) => value.id === address.id);
+      userAddresses[ind] = value;
+      setUser({ ...user, addresses: userAddresses });
+    } else {
+      setUser({ ...user, [fieldName]: value });
+    }
     dispatch(
       userUpdateThunk({
         updAction,
@@ -53,6 +66,12 @@ function UserProfileForm({ userData }: { userData: Customer }) {
       }),
     )
       .unwrap()
+      .then(() => {
+        enqueueSnackbar('Updated successfully', {
+          variant: 'success',
+          ...snackbarBasicParams,
+        });
+      })
       .catch((e) => {
         setUser(userData);
         const errors: ErrorObject[] = e.body.errors;
@@ -67,13 +86,7 @@ function UserProfileForm({ userData }: { userData: Customer }) {
       });
   }
 
-  function saveAddressHandler(
-    // fieldName: keyof typeof user,
-    value: BaseAddress,
-    isDefault: boolean,
-    useAsBoth: boolean,
-    addressType: AddressTypes,
-  ) {
+  function saveAddressHandler(value: BaseAddress, isDefault: boolean, useAsBoth: boolean, addressType: AddressTypes) {
     // setUser({ ...user, [fieldName]: value });
     dispatch(userAddressUpdateThunk({ value, version: user.version, addressType, isDefault, useAsBoth }))
       .unwrap()
@@ -106,17 +119,11 @@ function UserProfileForm({ userData }: { userData: Customer }) {
 
   const billingAddresses: Address[] = filterAddresses(user.billingAddressIds);
 
-  // function getAddressString(address: BaseAddress) {
-  //   const { apartment, building, streetName, city, country, postalCode } = address;
-  //   const addressStr = `${streetName} st., ${building}, apt. ${apartment}, ${city}, ${country}, ${postalCode}`;
-  //   return addressStr;
-  // }
-
   return (
     <Box
       sx={{
         width: {
-          md: '70%',
+          md: '75%',
           xs: '90%',
         },
 
@@ -225,53 +232,34 @@ function UserProfileForm({ userData }: { userData: Customer }) {
               addresses={shippingAddresses}
               type={AddressTypes.SHIPPING}
               title="New shipping address"
-              onSubmit={(values, isDefault, useAsBoth) => {
-                saveAddressHandler(values, isDefault, useAsBoth, AddressTypes.SHIPPING);
+              onSubmit={(values, isDefault, useAsBoth, addressAction, id) => {
+                addressAction === AddressActions.CREATE
+                  ? saveAddressHandler(values, isDefault, useAsBoth, AddressTypes.SHIPPING)
+                  : saveHandler({ action: 'changeAddress', addressId: id, address: values }, 'addresses', values);
               }}
+              onDefaultClick={(id) => {
+                saveHandler({ action: 'setDefaultShippingAddress', addressId: id }, 'defaultShippingAddressId', id);
+              }}
+              defaultId={user.defaultShippingAddressId}
             ></AddressesList>
-            {/* <Button
-              variant="contained"
-              size="small"
-              sx={{
-                alignSelf: 'center',
-                // width: '100%',
-              }}
-              startIcon={<AddCircleOutlineOutlinedIcon />}
-            >
-              Add new address
-            </Button>
-            <List>
-              {shippingAddresses.map((address, id) => (
-                <ListItem key={`shipping-${id}`}>
-                  <PlaceOutlinedIcon sx={{ mr: 1 }} />
-                  {getAddressString(address)}
-                </ListItem>
-              ))}
-            </List> */}
           </TabPanel>
           <TabPanel value={addressTab} index={1} orientation="vertical">
             <AddressesList
               addresses={billingAddresses}
               type={AddressTypes.BILLING}
               title="New billing address"
-              onSubmit={(values, isDefault, useAsBoth) => {
-                saveAddressHandler(values, isDefault, useAsBoth, AddressTypes.BILLING);
+              onSubmit={(values, isDefault, useAsBoth, addressAction, id) => {
+                addressAction === AddressActions.CREATE
+                  ? saveAddressHandler(values, isDefault, useAsBoth, AddressTypes.BILLING)
+                  : saveHandler({ action: 'changeAddress', addressId: id, address: values }, 'addresses', values);
               }}
+              onDefaultClick={(id) => {
+                saveHandler({ action: 'setDefaultBillingAddress', addressId: id }, 'defaultBillingAddressId', id);
+              }}
+              defaultId={user.defaultBillingAddressId}
             ></AddressesList>
-            {/* <Button>Add new address</Button>
-            <List>
-              {billingAddresses.map((address, id) => (
-                <ListItem key={`billing-${id}`}>
-                  <PlaceOutlinedIcon sx={{ mr: 1 }} />
-                  {getAddressString(address)}
-                </ListItem>
-              ))}
-            </List> */}
           </TabPanel>
         </Box>
-        {/* <LabelBox label="Addresses">
-          <div>aaaaa</div>
-        </LabelBox> */}
       </TabPanel>
     </Box>
     // </Box>
