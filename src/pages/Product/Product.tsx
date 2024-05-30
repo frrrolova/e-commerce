@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ProductCard } from '@/types';
 import { productService } from '@/services/productService';
-import { Box, Typography, Button, Container, CardActionArea } from '@mui/material';
+import { Box, Typography, Button, Container } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import { Link as RouterLink } from 'react-router-dom';
@@ -59,7 +59,7 @@ function Product() {
                 paddingY: '15px',
               }}
             >
-              <CardActionArea
+              <Box
                 sx={{
                   display: 'flex',
                   alignItems: 'center',
@@ -111,7 +111,7 @@ function Product() {
                     {product.description}
                   </Typography>
                 </CardContent>
-              </CardActionArea>
+              </Box>
             </Card>
           </Container>
         </Box>

@@ -23,7 +23,7 @@ function Slider({ product }: ProductCardProp) {
           >
             <CardMedia
               component="img"
-              style={{ width: '60%', height: '60%', objectFit: 'cover' }}
+              style={{ width: '60%', height: '60%', objectFit: 'cover', padding: '30px' }}
               image={slide.url}
               alt={slide.label}
             />
