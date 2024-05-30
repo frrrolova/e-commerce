@@ -10,3 +10,5 @@ export enum PageData {
   NO_PRODUCTS = 'There are no products matching your filters.',
   PRICE_RANGE = 'Price Range',
 }
+
+export const defaultPriceRange = [0, 200];

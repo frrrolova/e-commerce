@@ -1,6 +1,7 @@
 import client from '@/client/client';
 import { Filter, Product } from '@/types';
 import { mapProductProjections } from '@/utils/mapProductProjections';
+import { AttributeEnumType } from '@commercetools/platform-sdk';
 
 interface FilterData {
   size: string;
@@ -78,12 +79,11 @@ class CatalogService {
           return;
         }
 
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        type.attributes.forEach((attr: any) => {
+        type.attributes.forEach((attr) => {
           const filter: Filter = {
             name: attr.name,
             label: attr.label[`en-US`],
-            options: attr.type.values,
+            options: (attr.type as AttributeEnumType).values,
           };
           filtersData.push(filter);
         });
