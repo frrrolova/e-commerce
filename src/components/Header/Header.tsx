@@ -104,9 +104,9 @@ function Header() {
               noWrap
               sx={{
                 display: { xs: 'none', md: 'flex' },
-                fontFamily: 'monospace',
-                fontWeight: 700,
-                letterSpacing: '0.3rem',
+                // fontFamily: 'monospace',
+                fontWeight: 600,
+                letterSpacing: '0.1rem',
               }}
             >
               Plantastic
@@ -168,9 +168,9 @@ function Header() {
               sx={{
                 display: { xs: 'flex', md: 'none' },
                 flexGrow: 1,
-                fontFamily: 'monospace',
+                // fontFamily: 'monospace',
                 fontWeight: 700,
-                letterSpacing: '0.3rem',
+                letterSpacing: '0.2rem',
               }}
             >
               Plantastic

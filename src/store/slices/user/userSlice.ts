@@ -3,7 +3,13 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 // import { userRegistrationThunk } from './thunks';
 import client from '@/client/client';
 import { LSTokenPrefixes } from '@/enums/ls.enums';
-import { userRegistrationThunk, userLoginThunk, userGetInfoThunk, userUpdateThunk } from './thunks';
+import {
+  userRegistrationThunk,
+  userLoginThunk,
+  userGetInfoThunk,
+  userUpdateThunk,
+  userAddressUpdateThunk,
+} from './thunks';
 
 export interface UserState {
   user: Customer | null;
@@ -94,6 +100,13 @@ export const userSlice = createSlice({
       })
       // upd User
       .addCase(userUpdateThunk.rejected, (state, action) => {
+        const payload = action.payload as ErrorResponse;
+        const err: ErrorObject | null = payload.errors?.[0] || null;
+        if (err) {
+          state.userUpdateError = err.message ?? '';
+        }
+      })
+      .addCase(userAddressUpdateThunk.rejected, (state, action) => {
         const payload = action.payload as ErrorResponse;
         const err: ErrorObject | null = payload.errors?.[0] || null;
         if (err) {

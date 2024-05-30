@@ -1,12 +1,20 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { ErrorResponse, MyCustomerDraft, ClientResponse, Customer, CustomerDraft } from '@commercetools/platform-sdk';
+import {
+  ErrorResponse,
+  MyCustomerDraft,
+  ClientResponse,
+  Customer,
+  CustomerDraft,
+  BaseAddress,
+} from '@commercetools/platform-sdk';
 import client from '@client/client';
 import { setUser } from './userSlice';
 import { LSTokenPrefixes } from '@/enums/ls.enums';
 import { loginService } from '@/services/loginService';
 import { AsyncThunkApi } from '@/store/store';
-import { getUser, updateUser } from '@/services/userService';
+import { addAddress, getUser, updateUser } from '@/services/userService';
 import { UserUpdateData } from '@/types';
+import { AddressTypes } from '@/enums/auth-form.enum';
 
 export const userRegistrationThunk = createAsyncThunk('user/registration', (regData: CustomerDraft, thunkAPI) => {
   return client
@@ -71,3 +79,26 @@ export const userUpdateThunk = createAsyncThunk('user/update', (updData: UserUpd
       return thunkAPI.rejectWithValue(err);
     });
 });
+
+export const userAddressUpdateThunk = createAsyncThunk(
+  'user/address-update',
+  (
+    {
+      value,
+      version,
+      addressType,
+      isDefault,
+      useAsBoth,
+    }: { value: BaseAddress; version: number; addressType: AddressTypes; isDefault: boolean; useAsBoth: boolean },
+    thunkAPI: AsyncThunkApi,
+  ) => {
+    return addAddress(value, version, addressType, isDefault, useAsBoth)
+      .then((resp) => {
+        localStorage.setItem('user', JSON.stringify(resp.body));
+        thunkAPI.dispatch(setUser(resp.body));
+      })
+      .catch((err: ErrorResponse) => {
+        return thunkAPI.rejectWithValue(err);
+      });
+  },
+);

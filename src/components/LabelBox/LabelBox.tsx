@@ -1,6 +1,5 @@
 import { PropsWithChildren } from '@/types';
-import { Box, Chip } from '@mui/material';
-import Person2Icon from '@mui/icons-material/Person2';
+import { Box } from '@mui/material';
 import theme from '@/themes/theme';
 
 type LabelBoxProps = PropsWithChildren & {
@@ -19,9 +18,9 @@ function LabelBox(props: LabelBoxProps) {
         padding: 1.5,
       }}
     >
-      <legend>
+      {/* <legend>
         <Chip variant="outlined" label={props.label} icon={<Person2Icon />} />
-      </legend>
+      </legend> */}
       {props.children}
     </Box>
   );

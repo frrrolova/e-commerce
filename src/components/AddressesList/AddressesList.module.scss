@@ -1,0 +1,21 @@
+.scrollable-list {
+  &::-webkit-scrollbar {
+    width: 4px;
+    color: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    width: 3px;
+    border-radius: 9999px;
+    background-color: #9e9e9e5e;
+  }
+
+  /* hiding arrows */
+  &::-webkit-scrollbar-button:vertical:start:decrement {
+    display: none;
+  }
+
+  &::-webkit-scrollbar-button:vertical:end:increment {
+    display: none;
+  }
+}

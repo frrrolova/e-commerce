@@ -51,7 +51,7 @@ export const dateOfBirthSchema = Yup.date()
   });
 
 export const addressSchema = Yup.object().shape({
-  street: Yup.string().required(ValidationErrors.REQUIRED),
+  streetName: Yup.string().required(ValidationErrors.REQUIRED),
   city: Yup.string()
     .required(ValidationErrors.REQUIRED)
     .matches(/^[a-zA-Z ]+$/, {

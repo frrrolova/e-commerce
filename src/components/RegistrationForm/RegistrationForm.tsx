@@ -36,7 +36,7 @@ import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { Paths } from '@/routes/routeConstants';
 import { useSnackbar } from 'notistack';
 import { countriesList } from './constants';
-import AddressForm from '@components/AddressForm/AddressForm';
+import AddressGroup from '@components/AddressGroup/AddressGroup';
 import { snackbarBasicParams } from '@/shared/snackbarConstans';
 import { getFormattedDateValue } from '@/utils/getFormattedDateValue';
 
@@ -288,7 +288,7 @@ function RegistrationForm() {
         <FormHelperText error>{formik.touched[FieldNames.DATE_OF_BIRTH] && formik.errors.dateOfBirth}</FormHelperText>
       </FormControl>
       <Divider sx={{ marginTop: 1 }}>Shipping Address</Divider>
-      <AddressForm
+      <AddressGroup
         prefix={AddressTypes.SHIPPING}
         touched={formik.touched[AddressTypes.SHIPPING] || {}}
         setFieldTouched={formik.setFieldTouched}
@@ -344,7 +344,7 @@ function RegistrationForm() {
       </Container>
 
       <Divider sx={{ marginTop: 1 }}>Billing Address</Divider>
-      <AddressForm
+      <AddressGroup
         prefix={AddressTypes.BILLING}
         touched={formik.touched[AddressTypes.BILLING] || {}}
         setFieldTouched={formik.setFieldTouched}
