@@ -35,12 +35,14 @@ import { clearError } from '@/store/slices/user/userSlice';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { Paths } from '@/routes/routeConstants';
 import { useSnackbar } from 'notistack';
-import { countriesList, snackbarBasicParams } from './constants';
+import { countriesList } from './constants';
 import AddressForm from '@components/AddressForm/AddressForm';
+import { snackbarBasicParams } from '@/shared/snackbarConstans';
+import { getFormattedDateValue } from '@/utils/getFormattedDateValue';
 
 function RegistrationForm() {
   const dispatch = useAppDispatch();
-  const isPending = useAppSelector((state) => state.user.isPending);
+  const isPending = useAppSelector((state) => state.user.isAuthPending);
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
 
@@ -75,7 +77,7 @@ function RegistrationForm() {
     isInitialValid: false,
     validationSchema: SignupSchema,
     onSubmit: (values) => {
-      const dateValue: string = new Date(values[FieldNames.DATE_OF_BIRTH]).toISOString().substring(0, 10);
+      const dateValue = getFormattedDateValue(values[FieldNames.DATE_OF_BIRTH]);
       const newCustomerData: CustomerDraft = {
         email: values[FieldNames.EMAIL],
         password: values[FieldNames.PASSWORD],
