@@ -1,6 +1,5 @@
 import { Address, BaseAddress, Customer, ErrorObject, MyCustomerUpdateAction } from '@commercetools/platform-sdk';
 import { Box, Tab, Tabs, TabsOwnProps } from '@mui/material';
-// import LabelBox from '../LabelBox/LabelBox';
 import EditableInput from '../EditableInput/EditableInput';
 import { AddressTypes, FieldNames } from '@/enums/auth-form.enum';
 import { formFieldsConfig } from '@/shared/auth-form.constants';
@@ -15,13 +14,7 @@ import { getFormattedDateValue } from '@/utils/getFormattedDateValue';
 import TabPanel from '../TabPanel/TabPanel';
 import AddressesList from '../AddressesList/AddressesList';
 import { AddressActions } from '@/enums/addressActions.enum';
-
-function valueIsBaseAddress(value: unknown): value is BaseAddress {
-  if ((value as BaseAddress).country) {
-    return true;
-  }
-  return false;
-}
+import { SnackBarMsgs } from './constants';
 
 function UserProfileForm({ userData }: { userData: Customer }) {
   const dispatch = useAppDispatch();
@@ -50,16 +43,8 @@ function UserProfileForm({ userData }: { userData: Customer }) {
     setUser(userData);
   }, [userData]);
 
-  function saveHandler(updAction: MyCustomerUpdateAction, fieldName: keyof typeof user, value: string | BaseAddress) {
-    if (valueIsBaseAddress(value)) {
-      const userAddresses = [...user.addresses];
-      const ind = userAddresses.findIndex((address) => value.id === address.id);
-      userAddresses[ind] = value;
-      setUser({ ...user, addresses: userAddresses });
-    } else {
-      setUser({ ...user, [fieldName]: value });
-    }
-    dispatch(
+  function actionHandler(updAction: MyCustomerUpdateAction, successMsg: SnackBarMsgs = SnackBarMsgs.SUCCESS) {
+    return dispatch(
       userUpdateThunk({
         updAction,
         version: user.version,
@@ -67,7 +52,7 @@ function UserProfileForm({ userData }: { userData: Customer }) {
     )
       .unwrap()
       .then(() => {
-        enqueueSnackbar('Updated successfully', {
+        enqueueSnackbar(successMsg, {
           variant: 'success',
           ...snackbarBasicParams,
         });
@@ -86,12 +71,26 @@ function UserProfileForm({ userData }: { userData: Customer }) {
       });
   }
 
-  function saveAddressHandler(value: BaseAddress, isDefault: boolean, useAsBoth: boolean, addressType: AddressTypes) {
-    // setUser({ ...user, [fieldName]: value });
+  function saveHandler(
+    updAction: MyCustomerUpdateAction,
+    fieldName: keyof typeof user,
+    value: string,
+    successMsg?: SnackBarMsgs,
+  ) {
+    setUser({ ...user, [fieldName]: value });
+    actionHandler(updAction, successMsg);
+  }
+
+  function addAddressHandler(value: BaseAddress, isDefault: boolean, useAsBoth: boolean, addressType: AddressTypes) {
     dispatch(userAddressUpdateThunk({ value, version: user.version, addressType, isDefault, useAsBoth }))
       .unwrap()
+      .then(() => {
+        enqueueSnackbar(SnackBarMsgs.ADDRESS_ADDED, {
+          variant: 'success',
+          ...snackbarBasicParams,
+        });
+      })
       .catch((e) => {
-        // setUser(userData);
         const errors: ErrorObject[] = e.body.errors;
         if (errors) {
           errors.forEach((err) => {
@@ -140,7 +139,6 @@ function UserProfileForm({ userData }: { userData: Customer }) {
         </Tabs>
       </Box>
       <TabPanel value={tabValue} index={0}>
-        {/* <LabelBox label="Personal Info"> */}
         <Box>
           <EditableInput
             name={FieldNames.EMAIL}
@@ -156,6 +154,7 @@ function UserProfileForm({ userData }: { userData: Customer }) {
                 },
                 FieldNames.EMAIL,
                 value,
+                SnackBarMsgs.EMAIL_SUCCESS,
               );
             }}
           />
@@ -173,6 +172,7 @@ function UserProfileForm({ userData }: { userData: Customer }) {
                 },
                 FieldNames.FIRST_NAME,
                 value,
+                SnackBarMsgs.FIRST_NAME_SUCCESS,
               );
             }}
           />
@@ -190,6 +190,7 @@ function UserProfileForm({ userData }: { userData: Customer }) {
                 },
                 FieldNames.LAST_NAME,
                 value,
+                SnackBarMsgs.LAST_NAME_SUCCESS,
               );
             }}
           />
@@ -207,11 +208,11 @@ function UserProfileForm({ userData }: { userData: Customer }) {
                 },
                 FieldNames.DATE_OF_BIRTH,
                 dateValue,
+                SnackBarMsgs.DOB_SUCCESS,
               );
             }}
           />
         </Box>
-        {/* </LabelBox> */}
       </TabPanel>
 
       <TabPanel value={tabValue} index={1}>
@@ -221,7 +222,7 @@ function UserProfileForm({ userData }: { userData: Customer }) {
             variant="scrollable"
             value={addressTab}
             onChange={handleAddressTabChange}
-            aria-label="Vertical tabs example"
+            aria-label="addresses-tabs"
             sx={{ borderRight: 1, borderColor: 'divider', minWidth: '110px' }}
           >
             <Tab label="Shipping" {...a11yProps(0, 'vertical')} />
@@ -231,38 +232,61 @@ function UserProfileForm({ userData }: { userData: Customer }) {
             <AddressesList
               addresses={shippingAddresses}
               type={AddressTypes.SHIPPING}
-              title="New shipping address"
-              onSubmit={(values, isDefault, useAsBoth, addressAction, id) => {
+              onSubmit={(address, isDefault, useAsBoth, addressAction, id) => {
                 addressAction === AddressActions.CREATE
-                  ? saveAddressHandler(values, isDefault, useAsBoth, AddressTypes.SHIPPING)
-                  : saveHandler({ action: 'changeAddress', addressId: id, address: values }, 'addresses', values);
+                  ? addAddressHandler(address, isDefault, useAsBoth, AddressTypes.SHIPPING)
+                  : actionHandler(
+                      { action: 'changeAddress', addressId: id, address: address },
+                      SnackBarMsgs.ADDRESS_UPDATED,
+                    );
               }}
               onDefaultClick={(id) => {
-                saveHandler({ action: 'setDefaultShippingAddress', addressId: id }, 'defaultShippingAddressId', id);
+                actionHandler({ action: 'setDefaultShippingAddress', addressId: id }, SnackBarMsgs.SUCCESS);
               }}
               defaultId={user.defaultShippingAddressId}
+              onRemoveClick={(address) => {
+                if (!billingAddresses.some((addr) => addr.id === address.id)) {
+                  actionHandler({ action: 'removeAddress', addressId: address.id }, SnackBarMsgs.ADDRESS_REMOVED);
+                } else {
+                  actionHandler(
+                    { action: 'removeShippingAddressId', addressId: address.id },
+                    SnackBarMsgs.SHIPPING_REMOVED,
+                  );
+                }
+              }}
             ></AddressesList>
           </TabPanel>
           <TabPanel value={addressTab} index={1} orientation="vertical">
             <AddressesList
               addresses={billingAddresses}
               type={AddressTypes.BILLING}
-              title="New billing address"
-              onSubmit={(values, isDefault, useAsBoth, addressAction, id) => {
+              onSubmit={(address, isDefault, useAsBoth, addressAction, id) => {
                 addressAction === AddressActions.CREATE
-                  ? saveAddressHandler(values, isDefault, useAsBoth, AddressTypes.BILLING)
-                  : saveHandler({ action: 'changeAddress', addressId: id, address: values }, 'addresses', values);
+                  ? addAddressHandler(address, isDefault, useAsBoth, AddressTypes.BILLING)
+                  : actionHandler(
+                      { action: 'changeAddress', addressId: id, address: address },
+                      SnackBarMsgs.ADDRESS_UPDATED,
+                    );
               }}
               onDefaultClick={(id) => {
-                saveHandler({ action: 'setDefaultBillingAddress', addressId: id }, 'defaultBillingAddressId', id);
+                actionHandler({ action: 'setDefaultBillingAddress', addressId: id }, SnackBarMsgs.SUCCESS);
               }}
               defaultId={user.defaultBillingAddressId}
+              onRemoveClick={(address) => {
+                if (!shippingAddresses.some((addr) => addr.id === address.id)) {
+                  actionHandler({ action: 'removeAddress', addressId: address.id }, SnackBarMsgs.ADDRESS_REMOVED);
+                } else {
+                  actionHandler(
+                    { action: 'removeBillingAddressId', addressId: address.id },
+                    SnackBarMsgs.BILLING_REMOVED,
+                  );
+                }
+              }}
             ></AddressesList>
           </TabPanel>
         </Box>
       </TabPanel>
     </Box>
-    // </Box>
   );
 }
 

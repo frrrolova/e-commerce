@@ -23,12 +23,11 @@ function EditableDatePicker({ name, initialValue, schema, label, onSave }: Edita
     initialValues: {
       [name]: initialValue,
     },
-    // validateOnMount: false,
     validationSchema: Yup.object().shape({
       [name]: schema,
     }),
-    onSubmit: (value) => {
-      console.log(value);
+    onSubmit: () => {
+      // do nothing
     },
   });
 

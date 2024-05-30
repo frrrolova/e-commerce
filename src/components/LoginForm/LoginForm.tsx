@@ -55,7 +55,6 @@ function LoginForm() {
           const errors: ErrorObject[] = e.body?.errors;
           if (errors) {
             errors.forEach((error: ErrorObject) => {
-              console.log(error.code);
               if (error.code === LoginErrors.NOT_FOUND) {
                 const msg = `${error.message} ${LoginResultMessages.NOT_FOUND}`;
                 formik.setFieldError(FieldNames.EMAIL, msg);

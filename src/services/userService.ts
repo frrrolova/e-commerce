@@ -97,5 +97,3 @@ function setBillingDefault(id: string, version: number) {
 function setShippingDefault(id: string, version: number) {
   return updateUser({ action: 'setDefaultShippingAddress', addressId: id }, version);
 }
-
-// function updateAddress();

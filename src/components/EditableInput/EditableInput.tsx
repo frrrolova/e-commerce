@@ -22,8 +22,8 @@ function EditableInput({ name, initialValue, placeholder, label, schema, onSave 
     validationSchema: Yup.object().shape({
       [name]: schema,
     }),
-    onSubmit: (value) => {
-      console.log(value);
+    onSubmit: () => {
+      // do nothing
     },
   });
 

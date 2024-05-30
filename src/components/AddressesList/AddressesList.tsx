@@ -1,4 +1,15 @@
-import { Button, Chip, IconButton, List, ListItem, Typography } from '@mui/material';
+import {
+  Button,
+  Chip,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  List,
+  ListItem,
+  Typography,
+} from '@mui/material';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined';
 import { Address, BaseAddress } from '@commercetools/platform-sdk';
@@ -11,14 +22,12 @@ import ModeEditOutlineIcon from '@mui/icons-material/ModeEditOutline';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import theme from '@/themes/theme';
 import { AddressActions } from '@/enums/addressActions.enum';
-
-// import AddressGroup from '../AddressGroup/AddressGroup';
-// import { countriesList } from '../RegistrationForm/constants';
+import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
+import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 
 interface AddressesListProps {
   addresses: Address[];
   type: AddressTypes;
-  title: string;
   onSubmit: (
     values: BaseAddress,
     isDefault: boolean,
@@ -28,9 +37,10 @@ interface AddressesListProps {
   ) => void;
   defaultId?: string;
   onDefaultClick: (id: string) => void;
+  onRemoveClick: (address: BaseAddress) => void;
 }
 
-function AddressesList({ addresses, type, title, onSubmit, defaultId, onDefaultClick }: AddressesListProps) {
+function AddressesList({ addresses, type, onSubmit, defaultId, onDefaultClick, onRemoveClick }: AddressesListProps) {
   function getAddressString(address: Address) {
     const { apartment, building, streetName, city, country, postalCode } = address;
     const countryValue = getCountryData(country as TCountryCode).name;
@@ -39,10 +49,16 @@ function AddressesList({ addresses, type, title, onSubmit, defaultId, onDefaultC
   }
 
   const [formOpen, setFormOpen] = useState(false);
-  const handleOpen = () => setFormOpen(true);
-  const handleClose = () => setFormOpen(false);
+  const handleFormOpen = () => setFormOpen(true);
+  const handleFormClose = () => setFormOpen(false);
+
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const handleDialogOpen = () => setDialogOpen(true);
+  const handleDialogClose = () => setDialogOpen(false);
 
   const [editingAddress, setEditingAddress] = useState<Address | null>(null);
+
+  const [removingAddress, setRemovingAddress] = useState<Address | null>(null);
 
   return (
     <>
@@ -53,7 +69,7 @@ function AddressesList({ addresses, type, title, onSubmit, defaultId, onDefaultC
           alignSelf: 'center',
         }}
         startIcon={<AddCircleOutlineOutlinedIcon />}
-        onClick={handleOpen}
+        onClick={handleFormOpen}
       >
         Add new address
       </Button>
@@ -74,18 +90,27 @@ function AddressesList({ addresses, type, title, onSubmit, defaultId, onDefaultC
               {getAddressString(address)}
             </Typography>
             {address.id === defaultId ? (
-              <Chip label="default" size="small" color="primary" />
+              <Chip
+                label="default"
+                size="small"
+                color="primary"
+                sx={{
+                  mr: 1,
+                }}
+              />
             ) : (
               <Chip
                 clickable={true}
                 variant="outlined"
                 size="small"
                 label="set as default"
+                sx={{
+                  mr: 1,
+                }}
                 onClick={() => {
                   if (address.id) {
                     onDefaultClick(address.id);
                   }
-                  console.log('click!!!');
                 }}
               />
             )}
@@ -94,12 +119,19 @@ function AddressesList({ addresses, type, title, onSubmit, defaultId, onDefaultC
               size="small"
               onClick={() => {
                 setEditingAddress(address);
-                handleOpen();
+                handleFormOpen();
               }}
             >
               <ModeEditOutlineIcon />
             </IconButton>
-            <IconButton color="primary" size="small">
+            <IconButton
+              color="error"
+              size="small"
+              onClick={() => {
+                setRemovingAddress(address);
+                handleDialogOpen();
+              }}
+            >
               <DeleteOutlinedIcon />
             </IconButton>
           </ListItem>
@@ -108,14 +140,44 @@ function AddressesList({ addresses, type, title, onSubmit, defaultId, onDefaultC
       <AddressModalForm
         open={formOpen}
         type={type}
-        title={title}
         onClose={() => {
           setEditingAddress(null);
-          handleClose();
+          handleFormClose();
         }}
         onSubmit={onSubmit}
         address={editingAddress}
       />
+      <Dialog onClose={handleDialogClose} open={dialogOpen}>
+        <DialogTitle color={theme.palette.primary.main} fontWeight={600}>
+          {'Are you sure you want to remove this address?'}
+        </DialogTitle>
+        <DialogContent sx={{ letterSpacing: '0.05em' }}>
+          {removingAddress ? getAddressString(removingAddress) : ''}
+        </DialogContent>
+        <DialogActions>
+          <IconButton
+            color="error"
+            size="small"
+            onClick={() => {
+              if (removingAddress) {
+                onRemoveClick(removingAddress);
+                handleDialogClose();
+              }
+            }}
+          >
+            <CheckCircleOutlineOutlinedIcon />
+          </IconButton>
+          <IconButton
+            size="small"
+            onClick={() => {
+              setRemovingAddress(null);
+              handleDialogClose();
+            }}
+          >
+            <CancelOutlinedIcon />
+          </IconButton>{' '}
+        </DialogActions>
+      </Dialog>
     </>
   );
 }

@@ -60,13 +60,9 @@ function handleSuccessfulLoginResponse(email: string, password: string, customer
 
 export const userGetInfoThunk = createAsyncThunk('user/get-info', () => {
   return getUser().then((resp) => {
-    console.log(resp);
     localStorage.setItem('user', JSON.stringify(resp.body));
     return resp;
   });
-  // .catch((err: ErrorResponse) => {
-  //   console.log(err);
-  // });
 });
 
 export const userUpdateThunk = createAsyncThunk('user/update', (updData: UserUpdateData, thunkAPI: AsyncThunkApi) => {

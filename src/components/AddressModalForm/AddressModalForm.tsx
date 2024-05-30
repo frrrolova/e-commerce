@@ -5,19 +5,18 @@ import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import CloseIcon from '@mui/icons-material/Close';
 import { AddressTypes, FieldNames } from '@/enums/auth-form.enum';
 import { useFormik } from 'formik';
-import * as Yup from 'yup';
 import { addressSchema } from '@/core/commonValidation';
 import { useState } from 'react';
 import { countriesList } from '../RegistrationForm/constants';
 import { TCountryCode } from 'countries-list';
 import { Address, BaseAddress } from '@commercetools/platform-sdk';
 import { AddressActions } from '@/enums/addressActions.enum';
+import { ControlLabels, FormTitles } from './constants';
 
 interface AddressFormProps {
   open: boolean;
   address: Address | null;
   type: AddressTypes;
-  title: string;
   onSubmit: (
     values: BaseAddress,
     isDefault: boolean,
@@ -28,26 +27,29 @@ interface AddressFormProps {
   onClose: () => void;
 }
 
-function AddressModalForm({ open, type, title, address, onSubmit, onClose }: AddressFormProps) {
+function AddressModalForm({ open, type, address, onSubmit, onClose }: AddressFormProps) {
+  function getTitle() {
+    if (!address) {
+      return type === AddressTypes.SHIPPING ? FormTitles.SHIPPING : FormTitles.BILLING;
+    }
+    return FormTitles.NEW;
+  }
+
   const formik = useFormik({
     initialValues: {
-      [type]: {
-        [FieldNames.COUNTRY]: address?.country || '',
-        [FieldNames.CITY]: address?.city || '',
-        [FieldNames.STREET]: address?.streetName || '',
-        [FieldNames.POSTAL_CODE]: address?.postalCode || '',
-        [FieldNames.BUILDING]: address?.building || '',
-        [FieldNames.APARTMENT]: address?.apartment || '',
-      },
+      [FieldNames.COUNTRY]: address?.country || '',
+      [FieldNames.CITY]: address?.city || '',
+      [FieldNames.STREET]: address?.streetName || '',
+      [FieldNames.POSTAL_CODE]: address?.postalCode || '',
+      [FieldNames.BUILDING]: address?.building || '',
+      [FieldNames.APARTMENT]: address?.apartment || '',
     },
     enableReinitialize: true,
-    validationSchema: Yup.object().shape({
-      [type]: addressSchema,
-    }),
+    validationSchema: addressSchema,
     onSubmit: (values) => {
+      onClose();
       const action = address ? AddressActions.UPDATE : AddressActions.CREATE;
-      onSubmit(values[type], isDefault, useAsBoth, action, address?.id);
-      console.log(values);
+      onSubmit(values, isDefault, useAsBoth, action, address?.id);
     },
   });
 
@@ -71,18 +73,17 @@ function AddressModalForm({ open, type, title, address, onSubmit, onClose }: Add
           formik.handleSubmit(e);
         }}
       >
-        <Typography component={'h2'} fontSize={'1.3em'}>
-          {title}
+        <Typography component={'h2'} fontSize={'1.3em'} mb={1}>
+          {getTitle()}
         </Typography>
         <AddressGroup
-          prefix={type}
-          touched={formik.touched[type] || {}}
+          touched={formik.touched || {}}
           setFieldTouched={formik.setFieldTouched}
-          errors={formik.errors[type] || {}}
+          errors={formik.errors || {}}
           handleBlur={formik.handleBlur}
           handleChange={formik.handleChange}
           validateField={formik.validateField}
-          values={formik.values[type]}
+          values={formik.values}
           countryCodes={countryCodes}
         />
         {!address && (
@@ -97,7 +98,7 @@ function AddressModalForm({ open, type, title, address, onSubmit, onClose }: Add
                   }}
                 />
               }
-              label="Set as default address"
+              label={ControlLabels.SET_DEFAULT}
             />
             <FormControlLabel
               control={
@@ -107,7 +108,7 @@ function AddressModalForm({ open, type, title, address, onSubmit, onClose }: Add
                   }}
                 />
               }
-              label={`Also use as ${type === AddressTypes.SHIPPING ? 'billing' : 'shipping'} address`}
+              label={type === AddressTypes.SHIPPING ? ControlLabels.ALSO_BILLING : ControlLabels.ALSO_BILLING}
             />
           </Box>
         )}

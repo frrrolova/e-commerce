@@ -1,6 +1,5 @@
 import { ClientResponse, Customer, ErrorObject, ErrorResponse } from '@commercetools/platform-sdk';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-// import { userRegistrationThunk } from './thunks';
 import client from '@/client/client';
 import { LSTokenPrefixes } from '@/enums/ls.enums';
 import {

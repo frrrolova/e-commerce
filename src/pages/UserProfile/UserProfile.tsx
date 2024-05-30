@@ -11,6 +11,7 @@ function UserProfile() {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user.user);
 
+  // TODO: add err handling
   useEffect(() => {
     dispatch(userGetInfoThunk())
       .unwrap()
@@ -43,7 +44,6 @@ function UserProfile() {
         component="img"
         sx={{
           position: 'fixed',
-          // maxHeight: ,
           height: '89%',
           zIndex: -1,
           top: 80,
