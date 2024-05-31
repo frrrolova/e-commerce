@@ -42,17 +42,17 @@ export function addAddress(
       const { addresses, version } = resp.body;
       const id = addresses[addresses.length - 1].id;
       if (id && addressType === AddressTypes.SHIPPING) {
-        return addShipping(id, version).then((r) => {
+        return updateUser({ action: 'addShippingAddressId', addressId: id }, version).then((r) => {
           if (isDefault) {
-            return setShippingDefault(id, r.body.version);
+            return updateUser({ action: 'setDefaultShippingAddress', addressId: id }, r.body.version);
           }
           return r;
         });
       }
       if (id && addressType === AddressTypes.BILLING) {
-        return addBilling(id, version).then((r) => {
+        return updateUser({ action: 'addBillingAddressId', addressId: id }, version).then((r) => {
           if (isDefault) {
-            return setBillingDefault(id, r.body.version);
+            return updateUser({ action: 'setDefaultBillingAddress', addressId: id }, r.body.version);
           }
           return r;
         });
@@ -63,17 +63,17 @@ export function addAddress(
       const { addresses, version } = response.body;
       const id = addresses[addresses.length - 1].id;
       if (id && addressType === AddressTypes.SHIPPING && useAsBoth) {
-        return addBilling(id, version).then((r) => {
+        return updateUser({ action: 'addBillingAddressId', addressId: id }, version).then((r) => {
           if (isDefault) {
-            return setBillingDefault(id, r.body.version);
+            return updateUser({ action: 'setDefaultBillingAddress', addressId: id }, r.body.version);
           }
           return r;
         });
       }
       if (id && addressType === AddressTypes.BILLING && useAsBoth) {
-        return addShipping(id, version).then((r) => {
+        return updateUser({ action: 'addShippingAddressId', addressId: id }, version).then((r) => {
           if (isDefault) {
-            return setShippingDefault(id, r.body.version);
+            return updateUser({ action: 'setDefaultShippingAddress', addressId: id }, r.body.version);
           }
           return r;
         });
@@ -82,18 +82,22 @@ export function addAddress(
     });
 }
 
-function addBilling(id: string, version: number) {
-  return updateUser({ action: 'addBillingAddressId', addressId: id }, version);
-}
+// function addBilling(id: string, version: number) {
+//   return updateUser({ action: 'addBillingAddressId', addressId: id }, version);
+// }
 
-function addShipping(id: string, version: number) {
-  return updateUser({ action: 'addShippingAddressId', addressId: id }, version);
-}
+// function addShipping(id: string, version: number) {
+//   return updateUser({ action: 'addShippingAddressId', addressId: id }, version);
+// }
 
-function setBillingDefault(id: string, version: number) {
-  return updateUser({ action: 'setDefaultBillingAddress', addressId: id }, version);
-}
+// function setBillingDefault(id: string, version: number) {
+//   return updateUser({ action: 'setDefaultBillingAddress', addressId: id }, version);
+// }
 
-function setShippingDefault(id: string, version: number) {
-  return updateUser({ action: 'setDefaultShippingAddress', addressId: id }, version);
-}
+// function setShippingDefault(id: string, version: number) {
+//   return updateUser({ action: 'setDefaultShippingAddress', addressId: id }, version);
+// }
+
+// function setAddress(id: string, version: number, action) {
+//   return updateUser({})
+// }

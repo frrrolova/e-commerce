@@ -108,7 +108,7 @@ function AddressModalForm({ open, type, address, onSubmit, onClose }: AddressFor
                   }}
                 />
               }
-              label={type === AddressTypes.SHIPPING ? ControlLabels.ALSO_BILLING : ControlLabels.ALSO_BILLING}
+              label={type === AddressTypes.SHIPPING ? ControlLabels.ALSO_BILLING : ControlLabels.ALSO_SHIPPING}
             />
           </Box>
         )}
