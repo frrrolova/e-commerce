@@ -2,12 +2,12 @@ import styles from './Catalog.module.scss';
 import { catalogService } from '@/services/catalogService';
 import { useEffect, useState } from 'react';
 import Grid from '@mui/material/Unstable_Grid2';
-import { Typography, Box, Button, Drawer, Slider } from '@mui/material';
+import { Typography, Box, Button, Drawer, Slider, Divider } from '@mui/material';
 import ProductCard from '@/components/ProductCard/ProductCard';
 import { Filter, Product } from '@/types';
 import FormSelect from '@/components/FormSelect/FormSelect';
 import { SelectChangeEvent } from '@mui/material/Select';
-import { ButtonLabels, PageData, defaultPriceRange } from './constants';
+import { ButtonLabels, PageData, SortOptions, defaultPriceRange } from './constants';
 import useQuery from '@/utils/useQuery';
 import { useNavigate } from 'react-router-dom';
 
@@ -19,6 +19,7 @@ function Catalog() {
   const [selectedSize, setSelectedSize] = useState<string>('');
   const [selectedColor, setSelectedColor] = useState<string>('');
   const [selectedPriceRange, setSelectedPriceRange] = useState<number[]>(defaultPriceRange);
+  const [sorting, setSorting] = useState<string>(SortOptions[0].key);
 
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
@@ -26,9 +27,9 @@ function Catalog() {
   const query = useQuery();
   const navigate = useNavigate();
 
-  const loadAllProducts = async () => {
+  const loadAllProducts = async (sort = sorting) => {
     try {
-      const productData = await catalogService.fetchProducts();
+      const productData = await catalogService.fetchProducts({ sort });
       setProducts(productData);
     } catch (err) {
       setError('Failed to fetch products');
@@ -38,11 +39,15 @@ function Catalog() {
     }
   };
 
-  const loadFilteredProducts = async (filters: { size: string; color: string; price: number[] }) => {
+  const loadFilteredProducts = async (
+    filters: { size: string; color: string; price: number[] },
+    sort = SortOptions[0].key,
+  ) => {
     try {
       setIsLoading(true);
       const filteredProducts = await catalogService.fetchProducts({
         filters,
+        sort,
       });
       setProducts(filteredProducts);
     } catch (err) {
@@ -67,15 +72,18 @@ function Catalog() {
     let size: string = '';
     let color: string = '';
     let price: number[] = defaultPriceRange;
+    let sort: string = SortOptions[0].key;
 
     const setFiltersFromUrl = () => {
       size = query.get('size') || '';
       color = query.get('color') || '';
       price = query.get('price')?.split(',').map(Number) || defaultPriceRange;
+      sort = query.get('sort') || SortOptions[0].key;
 
       if (size) setSelectedSize(size);
       if (color) setSelectedColor(color);
       if (price) setSelectedPriceRange(price);
+      if (sort) setSorting(sort);
     };
 
     loadFilters();
@@ -83,12 +91,29 @@ function Catalog() {
     // Load filter values from URL
     setFiltersFromUrl();
     if (size || color || (price && (price[0] != selectedPriceRange[0] || price[1] != selectedPriceRange[1]))) {
-      loadFilteredProducts({ size, color, price });
+      loadFilteredProducts({ size, color, price }, sort);
     } else {
-      loadAllProducts();
+      loadAllProducts(sort);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const updateUrlWithFilters = (filters: { size: string; color: string; price: number[]; sort: string }) => {
+    const queryParams = [];
+    if (filters.size) queryParams.push(`size=${filters.size}`);
+    if (filters.color) queryParams.push(`color=${filters.color}`);
+    if (filters.price[0] != defaultPriceRange[0] || filters.price[1] != defaultPriceRange[1])
+      queryParams.push(`price=${filters.price[0]},${filters.price[1]}`);
+    if (filters.sort) queryParams.push(`sort=${filters.sort}`);
+    navigate('?' + queryParams.join('&'));
+  };
+
+  const handleSorting = (event: SelectChangeEvent) => {
+    const newSort = event.target.value;
+    setSorting(newSort);
+    loadFilteredProducts({ size: selectedSize, color: selectedColor, price: selectedPriceRange }, newSort);
+    updateUrlWithFilters({ size: selectedSize, color: selectedColor, price: selectedPriceRange, sort: newSort });
+  };
 
   const handleSize = (event: SelectChangeEvent) => {
     setSelectedSize(event.target.value as string);
@@ -103,15 +128,9 @@ function Catalog() {
   };
 
   const applyFilters = async () => {
-    loadFilteredProducts({ size: selectedSize, color: selectedColor, price: selectedPriceRange });
+    loadFilteredProducts({ size: selectedSize, color: selectedColor, price: selectedPriceRange }, sorting);
 
-    // Update URL with filters
-    const queryParams = [];
-    if (selectedSize) queryParams.push(`size=${selectedSize}`);
-    if (selectedColor) queryParams.push(`color=${selectedColor}`);
-    if (selectedPriceRange[0] != defaultPriceRange[0] || selectedPriceRange[1] != defaultPriceRange[1])
-      queryParams.push(`price=${selectedPriceRange[0]},${selectedPriceRange[1]}`);
-    navigate('?' + queryParams.join('&'));
+    updateUrlWithFilters({ size: selectedSize, color: selectedColor, price: selectedPriceRange, sort: sorting });
   };
 
   if (error) return <Typography color="error">{error}</Typography>;
@@ -141,6 +160,17 @@ function Catalog() {
 
   const drawer = (
     <Box className={styles.containerFilters} sx={{ overflow: 'auto' }}>
+      <FormSelect
+        label={PageData.SORT_LABEL as string}
+        value={sorting}
+        options={SortOptions}
+        onChange={handleSorting}
+      />
+
+      <Divider sx={{ mt: 2, mb: 2 }} />
+
+      {/* Filters */}
+      <Typography variant="body2">Filters:</Typography>
       {filters && (
         <>
           <FormSelect

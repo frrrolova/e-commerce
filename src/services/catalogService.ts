@@ -2,6 +2,7 @@ import client from '@/client/client';
 import { Filter, Product } from '@/types';
 import { mapProductProjections } from '@/utils/mapProductProjections';
 import { AttributeEnumType } from '@commercetools/platform-sdk';
+import sortMapping from './constants';
 
 interface FilterData {
   size: string;
@@ -10,7 +11,7 @@ interface FilterData {
 }
 
 class CatalogService {
-  async fetchProducts(params?: { filters: FilterData }): Promise<Product[]> {
+  async fetchProducts(params?: { filters?: FilterData; sort?: string }): Promise<Product[]> {
     try {
       const filterStr = params?.filters ? this.buildFilterString(params?.filters) : [];
 
@@ -24,6 +25,7 @@ class CatalogService {
             offset: 0,
             filter: filterStr,
             markMatchingVariants: true,
+            sort: params?.sort ? [sortMapping[params.sort]] : [],
           },
         })
         .execute();
