@@ -53,7 +53,7 @@ function Product() {
             <Card
               sx={{
                 paddingX: {
-                  xs: '40px',
+                  xs: '30px',
                   sm: '20px',
                 },
                 paddingY: '15px',

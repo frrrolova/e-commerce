@@ -19,11 +19,19 @@ function Slider({ product }: ProductCardProp) {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
+              background: 'rgb(22, 35, 20)',
+              border: '1px solid gray',
+              backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08))',
             }}
           >
             <CardMedia
               component="img"
-              style={{ width: '60%', height: '60%', objectFit: 'cover', padding: '30px' }}
+              style={{
+                width: '80%',
+                height: '80%',
+                objectFit: 'cover',
+                padding: '30px',
+              }}
               image={slide.url}
               alt={slide.label}
             />
@@ -33,10 +41,13 @@ function Slider({ product }: ProductCardProp) {
       return (
         <Box
           sx={{
-            maxWidth: '60%',
+            maxWidth: {
+              xs: '90%',
+              sm: '60%',
+            },
           }}
         >
-          <Carousel autoPlay showThumbs={false}>
+          <Carousel autoPlay showThumbs={false} showStatus={false}>
             {slides}
           </Carousel>
         </Box>
@@ -48,11 +59,18 @@ function Slider({ product }: ProductCardProp) {
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
+          background: 'rgb(22, 35, 20)',
+          border: '1px solid gray',
+          backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08))',
         }}
       >
         <CardMedia
           component="img"
-          style={{ width: '60%', height: '60%', objectFit: 'cover' }}
+          style={{
+            width: '80%',
+            height: '80%',
+            objectFit: 'cover',
+          }}
           image={product.images[0].url}
           alt={product.images[0].label}
         />
