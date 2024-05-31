@@ -1,13 +1,13 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
 .scrollable-list {
   &::-webkit-scrollbar {
-    width: 4px;
-    color: transparent;
+    @include scrollbar;
   }
 
   &::-webkit-scrollbar-thumb {
-    width: 3px;
-    border-radius: 9999px;
-    background-color: #9e9e9e5e;
+    @include scrollbarThumb;
   }
 
   /* hiding arrows */

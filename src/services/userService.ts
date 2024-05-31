@@ -20,7 +20,7 @@ export function updateUser(updAction: MyCustomerUpdateAction, version: number): 
     })
     .execute()
     .catch((e) => {
-      if (e.name === ResponseErrorCodes.NETWORK_ERR) {
+      if (e.name === ResponseErrorCodes.NETWORK_ERR || e.statusCode === 0) {
         throw new NetworkError();
       }
       if (e.name === ResponseErrorCodes.CONCURRENT_MODIFICATION) {
@@ -81,23 +81,3 @@ export function addAddress(
       return response;
     });
 }
-
-// function addBilling(id: string, version: number) {
-//   return updateUser({ action: 'addBillingAddressId', addressId: id }, version);
-// }
-
-// function addShipping(id: string, version: number) {
-//   return updateUser({ action: 'addShippingAddressId', addressId: id }, version);
-// }
-
-// function setBillingDefault(id: string, version: number) {
-//   return updateUser({ action: 'setDefaultBillingAddress', addressId: id }, version);
-// }
-
-// function setShippingDefault(id: string, version: number) {
-//   return updateUser({ action: 'setDefaultShippingAddress', addressId: id }, version);
-// }
-
-// function setAddress(id: string, version: number, action) {
-//   return updateUser({})
-// }
