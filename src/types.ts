@@ -30,3 +30,14 @@ export interface UserUpdateData {
   updAction: MyCustomerUpdateAction;
   version: number;
 }
+
+export interface FilterAttributes {
+  key: string;
+  label: string;
+}
+
+export interface Filter {
+  name: string;
+  label: string;
+  options: FilterAttributes[];
+}
