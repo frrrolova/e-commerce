@@ -27,7 +27,7 @@ function Product() {
   };
 
   useEffect(() => {
-    loadProduct('1e72e7c5-c166-4082-a342-33e35f11c5c0');
+    loadProduct('69ca9376-354e-4a8e-890c-a9e37ae95a59');
   }, []);
 
   if (product) {

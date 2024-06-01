@@ -12,7 +12,7 @@ function Slider({ product }: ProductCardProp) {
   if (product.images) {
     if (product.images.length > 1) {
       const slides = product.images.map((slide, index) => {
-        return <SliderItem product={product} index={index} url={slide.url} label={slide.label} />;
+        return <SliderItem isSlider={true} product={product} index={index} url={slide.url} label={slide.label} />;
       });
       return (
         <Box
@@ -29,7 +29,7 @@ function Slider({ product }: ProductCardProp) {
         </Box>
       );
     }
-    return <SliderItem product={product} url={product.images[0].url} label={product.images[0].label} />;
+    return <SliderItem isSlider={true} product={product} url={product.images[0].url} label={product.images[0].label} />;
   }
 }
 

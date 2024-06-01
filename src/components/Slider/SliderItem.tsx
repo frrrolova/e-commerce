@@ -8,10 +8,11 @@ interface SliderItemProp {
   product: Product;
   url: string;
   label: string | undefined;
+  isSlider: boolean;
   index?: number;
 }
 
-function SliderItem({ index, url, label, product }: SliderItemProp) {
+function SliderItem({ index, url, label, product, isSlider }: SliderItemProp) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
     if (open) return;
@@ -31,7 +32,7 @@ function SliderItem({ index, url, label, product }: SliderItemProp) {
         backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08))',
       }}
     >
-      <SliderModal open={open} handleClose={handleClose} product={product} />
+      {isSlider && <SliderModal open={open} handleClose={handleClose} product={product} />}
       <CardMedia
         component="img"
         style={{
