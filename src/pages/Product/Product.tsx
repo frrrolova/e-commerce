@@ -9,6 +9,10 @@ import { Paths } from '@/routes/routeConstants';
 import CardActions from '@mui/material/CardActions';
 import Slider from '@/components/Slider/Slider';
 
+//69ca9376-354e-4a8e-890c-a9e37ae95a59
+//c28e093c-32e3-4e4f-9f93-527ed519ba20
+//1e72e7c5-c166-4082-a342-33e35f11c5c0
+
 function Product() {
   const [product, setProduct] = useState<ProductType | null>(null);
 
@@ -23,7 +27,7 @@ function Product() {
   };
 
   useEffect(() => {
-    loadProduct('69ca9376-354e-4a8e-890c-a9e37ae95a59');
+    loadProduct('c28e093c-32e3-4e4f-9f93-527ed519ba20');
   }, []);
 
   if (product) {
@@ -75,24 +79,39 @@ function Product() {
                       gap: '20px',
                     }}
                   >
-                    <Typography gutterBottom variant="h4" component="div">
-                      {product.prices![0].value.centAmount / 100} &euro;
-                    </Typography>
-                    <Typography
-                      gutterBottom
-                      variant="h5"
-                      component="span"
-                      color="text.secondary"
-                      sx={{
-                        display: 'inline',
-                        textDecoration: 'line-through',
-                      }}
-                    >
-                      {product.prices![0].discounted
-                        ? product.prices![0].discounted.value.centAmount / 100
-                        : product.prices![0].value.centAmount / 100}{' '}
-                      &euro;
-                    </Typography>
+                    {product.prices![0].discounted ? (
+                      <Typography
+                        gutterBottom
+                        variant="h4"
+                        component="div"
+                        sx={{
+                          fontWeight: 'bold',
+                          color: '#447A14',
+                        }}
+                      >
+                        {product.prices![0].discounted.value.centAmount / 100}
+                        &euro;
+                      </Typography>
+                    ) : (
+                      <Typography gutterBottom variant="h4" component="div">
+                        {product.prices![0].value.centAmount / 100}
+                        &euro;
+                      </Typography>
+                    )}
+                    {product.prices![0].discounted && (
+                      <Typography
+                        gutterBottom
+                        variant="h5"
+                        component="span"
+                        color="text.secondary"
+                        sx={{
+                          display: 'inline',
+                          textDecoration: 'line-through',
+                        }}
+                      >
+                        {product.prices![0].value.centAmount / 100} &euro;
+                      </Typography>
+                    )}
                   </Box>
                   <CardActions>
                     <Button variant="outlined" size="small">
