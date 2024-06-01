@@ -10,6 +10,7 @@ import {
   List,
   ListItem,
   Typography,
+  useMediaQuery,
 } from '@mui/material';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined';
@@ -61,6 +62,8 @@ function AddressesList({ addresses, type, onSubmit, defaultId, onDefaultClick, o
 
   const [removingAddress, setRemovingAddress] = useState<Address | null>(null);
 
+  const matches = useMediaQuery('(min-width:600px)');
+
   return (
     <>
       <Button
@@ -107,7 +110,12 @@ function AddressesList({ addresses, type, onSubmit, defaultId, onDefaultClick, o
                   xs: '0.9rem',
                   md: '1rem',
                 },
+                overflow: 'hidden',
+                display: '-webkit-box',
+                WebkitBoxOrient: 'vertical',
+                WebkitLineClamp: '2',
               }}
+              title={matches ? '' : getAddressString(address)}
             >
               {getAddressString(address)}
             </Typography>

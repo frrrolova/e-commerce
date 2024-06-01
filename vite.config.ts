@@ -12,6 +12,9 @@ export default defineConfig({
       localsConvention: 'camelCase',
     },
   },
+  server: {
+    host: '0.0.0.0',
+  },
   define: { global: 'window' },
   build: {
     sourcemap: isDev ? true : false,

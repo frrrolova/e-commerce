@@ -27,17 +27,14 @@ function TabPanel(props: TabPanelProps) {
                   p: 1,
                   display: 'flex',
                   flexDirection: 'column',
-                  // justifyContent: 'center',
-                  // alignItems: 'center',
                   width: '100%',
                   marginLeft: {
-                    xs: 1,
+                    xs: 0,
                     md: 2,
                   },
                 }
               : {
                   p: 1,
-                  // display: 'flex', justifyContent: 'center', width: '100%', marginLeft: 2
                 }
           }
         >

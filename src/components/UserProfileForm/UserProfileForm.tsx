@@ -1,5 +1,5 @@
 import { Address, BaseAddress, Customer, ErrorObject, MyCustomerUpdateAction } from '@commercetools/platform-sdk';
-import { Box, SxProps, Tab, Tabs, TabsOwnProps } from '@mui/material';
+import { Box, SxProps, Tab, Tabs, TabsOwnProps, useMediaQuery } from '@mui/material';
 import EditableInput from '../EditableInput/EditableInput';
 import { AddressTypes, FieldNames } from '@/enums/auth-form.enum';
 import { formFieldsConfig } from '@/shared/auth-form.constants';
@@ -14,11 +14,14 @@ import { getFormattedDateValue } from '@/utils/getFormattedDateValue';
 import TabPanel from '../TabPanel/TabPanel';
 import AddressesList from '../AddressesList/AddressesList';
 import { AddressActions } from '@/enums/addressActions.enum';
-import { SnackBarMsgs, verticalTabsPadding } from './constants';
+import { SnackBarMsgs, addressesTabsStyles } from './constants';
+import theme from '@/themes/theme';
 
 function UserProfileForm({ userData, sxProps }: { userData: Customer; sxProps?: SxProps }) {
   const dispatch = useAppDispatch();
   const { enqueueSnackbar } = useSnackbar();
+
+  const matches = useMediaQuery('(min-width:600px)');
 
   const [user, setUser] = useState<Customer>(userData);
 
@@ -132,7 +135,16 @@ function UserProfileForm({ userData, sxProps }: { userData: Customer; sxProps?: 
         ...sxProps,
       }}
     >
-      <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 2 }}>
+      <Box
+        sx={{
+          borderBottom: 1,
+          borderColor: 'divider',
+          mb: {
+            xs: 0,
+            sm: 2,
+          },
+        }}
+      >
         <Tabs orientation="horizontal" value={tabValue} onChange={handleTabChange} aria-label="tabs">
           <Tab label="Personal Info" {...a11yProps(0)} />
           <Tab label="Addresses" {...a11yProps(1)} />
@@ -216,26 +228,42 @@ function UserProfileForm({ userData, sxProps }: { userData: Customer; sxProps?: 
       </TabPanel>
 
       <TabPanel value={tabValue} index={1}>
-        <Box sx={{ flexGrow: 1, display: 'flex', height: '100%' }}>
+        <Box
+          sx={{
+            flexGrow: 1,
+            display: 'flex',
+            height: '100%',
+            flexDirection: {
+              xs: 'column',
+              sm: 'row',
+            },
+          }}
+        >
           <Tabs
-            orientation="vertical"
+            orientation={matches ? 'vertical' : 'horizontal'}
             variant="scrollable"
             value={addressTab}
             onChange={handleAddressTabChange}
             aria-label="addresses-tabs"
             sx={{
-              borderRight: 1,
-              borderColor: 'divider',
+              borderRight: {
+                xs: 0,
+                sm: `1px solid ${theme.palette.divider}`,
+              },
+              borderBottom: {
+                xs: `1px solid ${theme.palette.divider}`,
+                sm: 0,
+              },
               minWidth: {
                 xs: '90px',
                 md: '110px',
               },
             }}
           >
-            <Tab label="Shipping" {...a11yProps(0, 'vertical')} sx={{ ...verticalTabsPadding }} />
-            <Tab label="Billing" {...a11yProps(1, 'vertical')} sx={{ ...verticalTabsPadding }} />
+            <Tab label="Shipping" {...a11yProps(0, 'vertical')} sx={{ ...addressesTabsStyles }} />
+            <Tab label="Billing" {...a11yProps(1, 'vertical')} sx={{ ...addressesTabsStyles }} />
           </Tabs>
-          <TabPanel value={addressTab} index={0} orientation="vertical">
+          <TabPanel value={addressTab} index={0} orientation={matches ? 'vertical' : 'horizontal'}>
             <AddressesList
               addresses={shippingAddresses}
               type={AddressTypes.SHIPPING}

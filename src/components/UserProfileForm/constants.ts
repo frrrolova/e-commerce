@@ -1,3 +1,5 @@
+import { SxProps } from '@mui/material';
+
 export enum SnackBarMsgs {
   SUCCESS = 'Updated successfully',
   ADDRESS_ADDED = 'Address added successfully',
@@ -11,9 +13,13 @@ export enum SnackBarMsgs {
   DOB_SUCCESS = 'Date of birth updated successfully',
 }
 
-export const verticalTabsPadding = {
+export const addressesTabsStyles: SxProps = {
   paddingX: {
     xs: 1,
     md: 2,
+  },
+  fontSize: {
+    xs: '0.8rem',
+    sm: '0.9rem',
   },
 };
