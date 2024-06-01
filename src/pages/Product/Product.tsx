@@ -1,21 +1,29 @@
 import { useEffect, useState } from 'react';
 import { ProductCard } from '@/types';
 import { productService } from '@/services/productService';
-import { Box, Typography, Button, Link, Container, CardActionArea } from '@mui/material';
-import CardMedia from '@mui/material/CardMedia';
+import { Box, Typography, Button, Container } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import { Link as RouterLink } from 'react-router-dom';
 import { Paths } from '@/routes/routeConstants';
 import CardActions from '@mui/material/CardActions';
+import Slider from '@/components/Slider/Slider';
 
 function Product() {
   const [product, setProduct] = useState<ProductCard | null>(null);
+  // const [price, setPrice] = useState(0);
+  // const [discount, setDiscount] = useState(0);
 
   const loadProduct = async (productID: string) => {
     try {
       const productData = await productService.fetchProduct(productID);
       setProduct(productData);
+      // if (product) {
+      //   setPrice(product.prices![0].value.centAmount / 100);
+      //   if (product.prices![0].discounted) {
+      //     setDiscount(product.prices![0].discounted.value.centAmount / 100);
+      //   }
+      // }
       console.log(productData);
     } catch (err) {
       console.log(err);
@@ -23,7 +31,7 @@ function Product() {
   };
 
   useEffect(() => {
-    loadProduct('013f2c11-a4ec-47a6-93d6-a72f52776cd2');
+    loadProduct('69ca9376-354e-4a8e-890c-a9e37ae95a59');
   }, []);
 
   if (product) {
@@ -38,44 +46,72 @@ function Product() {
               paddingX: '5px',
               paddingY: {
                 xs: '30px',
-                sm: '65px',
+                sm: '50px',
               },
             }}
           >
             <Card
               sx={{
-                paddingX: '40px',
+                paddingX: {
+                  xs: '30px',
+                  sm: '20px',
+                },
                 paddingY: '15px',
               }}
             >
-              <CardActionArea>
-                {product.images && (
-                  <CardMedia
-                    component="img"
-                    sx={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover',
-                    }}
-                    image={product.images[0].url}
-                    alt={product.images[0].label}
-                  />
-                )}
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  gap: '10px',
+                  flexDirection: {
+                    xs: 'column',
+                    sm: 'row',
+                  },
+                }}
+              >
+                <Slider product={product} />
                 <CardContent>
-                  <Typography gutterBottom variant="h5" component="div">
+                  <Typography gutterBottom variant="h3" component="div">
                     {product.name}
                   </Typography>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '20px',
+                    }}
+                  >
+                    <Typography gutterBottom variant="h4" component="div">
+                      {product.prices![0].value.centAmount / 100} &euro;
+                    </Typography>
+                    <Typography
+                      gutterBottom
+                      variant="h5"
+                      component="span"
+                      color="text.secondary"
+                      sx={{
+                        display: 'inline',
+                        textDecoration: 'line-through',
+                      }}
+                    >
+                      100 &euro;
+                    </Typography>
+                  </Box>
+                  <CardActions>
+                    <Button variant="outlined" size="small">
+                      Buy now
+                    </Button>
+                    <Button variant="outlined" size="small" component={RouterLink} to={Paths.CATALOG}>
+                      Go back
+                    </Button>
+                  </CardActions>
                   <Typography variant="body2" color="text.secondary">
                     {product.description}
                   </Typography>
                 </CardContent>
-              </CardActionArea>
-              <CardActions>
-                <Button size="small">Buy now</Button>
-                <Link component={RouterLink} to={Paths.CATALOG}>
-                  Go back
-                </Link>
-              </CardActions>
+              </Box>
             </Card>
           </Container>
         </Box>

@@ -25,6 +25,7 @@ export interface ProductCard {
   name: string;
   description: string;
   images: Image[] | undefined;
+  prices: Price[] | undefined;
 }
 export interface UserUpdateData {
   updAction: MyCustomerUpdateAction;
