@@ -11,6 +11,7 @@ export enum SnackBarMsgs {
   FIRST_NAME_SUCCESS = 'First name updated successfully',
   LAST_NAME_SUCCESS = 'Last name updated successfully',
   DOB_SUCCESS = 'Date of birth updated successfully',
+  PASSWORD_CHANGED = 'Password changed successfully',
 }
 
 export const addressesTabsStyles: SxProps = {

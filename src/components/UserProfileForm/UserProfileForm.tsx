@@ -1,12 +1,12 @@
 import { Address, BaseAddress, Customer, ErrorObject, MyCustomerUpdateAction } from '@commercetools/platform-sdk';
-import { Box, SxProps, Tab, Tabs, TabsOwnProps, useMediaQuery } from '@mui/material';
+import { Box, Button, Dialog, Divider, SxProps, Tab, Tabs, TabsOwnProps, useMediaQuery } from '@mui/material';
 import EditableInput from '../EditableInput/EditableInput';
 import { AddressTypes, FieldNames } from '@/enums/auth-form.enum';
 import { formFieldsConfig } from '@/shared/auth-form.constants';
 import { dateOfBirthSchema, emailSchema, firstNameSchema, lastNameSchema } from '@/core/commonValidation';
 import EditableDatePicker from '../EditableDatepicker/EditableDatepicker';
 import { useAppDispatch } from '@/store/store';
-import { userAddressUpdateThunk, userUpdateThunk } from '@/store/slices/user/thunks';
+import { changePasswordThunk, userAddressUpdateThunk, userUpdateThunk } from '@/store/slices/user/thunks';
 import { useSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
 import { snackbarBasicParams } from '@/shared/snackbarConstans';
@@ -16,6 +16,7 @@ import AddressesList from '../AddressesList/AddressesList';
 import { AddressActions } from '@/enums/addressActions.enum';
 import { SnackBarMsgs, addressesTabsStyles } from './constants';
 import theme from '@/themes/theme';
+import ChangePasswordForm from '../ChangePasswordForm/ChangePasswordForm';
 
 function UserProfileForm({ userData, sxProps }: { userData: Customer; sxProps?: SxProps }) {
   const dispatch = useAppDispatch();
@@ -41,6 +42,10 @@ function UserProfileForm({ userData, sxProps }: { userData: Customer; sxProps?: 
       'aria-controls': `${orientation}-tabpanel-${index}`,
     };
   }
+
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const handleDialogOpen = () => setDialogOpen(true);
+  const handleDialogClose = () => setDialogOpen(false);
 
   useEffect(() => {
     setUser(userData);
@@ -106,6 +111,29 @@ function UserProfileForm({ userData, sxProps }: { userData: Customer; sxProps?: 
       });
   }
 
+  function changePasswordHandler(currentPassword: string, newPassword: string) {
+    return dispatch(changePasswordThunk({ version: user.version, currentPassword, newPassword }))
+      .unwrap()
+      .then(() => {
+        enqueueSnackbar(SnackBarMsgs.PASSWORD_CHANGED, {
+          variant: 'success',
+          ...snackbarBasicParams,
+        });
+      })
+      .catch((e) => {
+        setUser(userData);
+        const errors: ErrorObject[] = e.body.errors;
+        if (errors) {
+          errors.forEach((err) => {
+            enqueueSnackbar(err.message, {
+              variant: 'error',
+              ...snackbarBasicParams,
+            });
+          });
+        }
+      });
+  }
+
   function filterAddresses(addressIds: string[] = []) {
     const res: Address[] = [];
     addressIds.forEach((id) => {
@@ -151,7 +179,8 @@ function UserProfileForm({ userData, sxProps }: { userData: Customer; sxProps?: 
         </Tabs>
       </Box>
       <TabPanel value={tabValue} index={0}>
-        <Box>
+        <>
+          <Divider>Info</Divider>
           <EditableInput
             name={FieldNames.EMAIL}
             initialValue={user?.email || ''}
@@ -224,7 +253,20 @@ function UserProfileForm({ userData, sxProps }: { userData: Customer; sxProps?: 
               );
             }}
           />
-        </Box>
+          <Divider>Password</Divider>
+          <Button variant="outlined" onClick={handleDialogOpen}>
+            Change Password
+          </Button>
+          <Dialog onClose={handleDialogClose} open={dialogOpen}>
+            <ChangePasswordForm
+              onClose={handleDialogClose}
+              onSubmit={(currentPass, newPass) => {
+                // console.log(currentPass, newPass);
+                changePasswordHandler(currentPass, newPass);
+              }}
+            />
+          </Dialog>
+        </>
       </TabPanel>
 
       <TabPanel value={tabValue} index={1}>
