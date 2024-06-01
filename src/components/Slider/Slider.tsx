@@ -2,41 +2,51 @@ import { Box } from '@mui/material';
 import CardMedia from '@mui/material/CardMedia';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { Carousel } from 'react-responsive-carousel';
-import { ProductCard } from '@/types';
+import { Product } from '@/types';
 
 interface ProductCardProp {
-  product: ProductCard;
+  product: Product;
+}
+
+interface SlideItemProp {
+  url: string;
+  label: string | undefined;
+  index?: number;
+}
+
+function SlideItem({ index, url, label }: SlideItemProp) {
+  return (
+    <Box
+      key={index}
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        background: 'rgb(22, 35, 20)',
+        border: '1px solid gray',
+        backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08))',
+      }}
+    >
+      <CardMedia
+        component="img"
+        style={{
+          width: '80%',
+          height: '80%',
+          objectFit: 'cover',
+          padding: '30px',
+        }}
+        image={url}
+        alt={label}
+      />
+    </Box>
+  );
 }
 
 function Slider({ product }: ProductCardProp) {
   if (product.images) {
     if (product.images.length > 1) {
       const slides = product.images.map((slide, index) => {
-        return (
-          <Box
-            key={index}
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              background: 'rgb(22, 35, 20)',
-              border: '1px solid gray',
-              backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08))',
-            }}
-          >
-            <CardMedia
-              component="img"
-              style={{
-                width: '80%',
-                height: '80%',
-                objectFit: 'cover',
-                padding: '30px',
-              }}
-              image={slide.url}
-              alt={slide.label}
-            />
-          </Box>
-        );
+        return <SlideItem index={index} url={slide.url} label={slide.label} />;
       });
       return (
         <Box
@@ -53,29 +63,7 @@ function Slider({ product }: ProductCardProp) {
         </Box>
       );
     }
-    return (
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          background: 'rgb(22, 35, 20)',
-          border: '1px solid gray',
-          backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08))',
-        }}
-      >
-        <CardMedia
-          component="img"
-          style={{
-            width: '80%',
-            height: '80%',
-            objectFit: 'cover',
-          }}
-          image={product.images[0].url}
-          alt={product.images[0].label}
-        />
-      </Box>
-    );
+    return <SlideItem url={product.images[0].url} label={product.images[0].label} />;
   }
 }
 

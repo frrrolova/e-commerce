@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ProductCard } from '@/types';
+import { Product as ProductType } from '@/types';
 import { productService } from '@/services/productService';
 import { Box, Typography, Button, Container } from '@mui/material';
 import Card from '@mui/material/Card';
@@ -10,20 +10,12 @@ import CardActions from '@mui/material/CardActions';
 import Slider from '@/components/Slider/Slider';
 
 function Product() {
-  const [product, setProduct] = useState<ProductCard | null>(null);
-  // const [price, setPrice] = useState(0);
-  // const [discount, setDiscount] = useState(0);
+  const [product, setProduct] = useState<ProductType | null>(null);
 
   const loadProduct = async (productID: string) => {
     try {
       const productData = await productService.fetchProduct(productID);
       setProduct(productData);
-      // if (product) {
-      //   setPrice(product.prices![0].value.centAmount / 100);
-      //   if (product.prices![0].discounted) {
-      //     setDiscount(product.prices![0].discounted.value.centAmount / 100);
-      //   }
-      // }
       console.log(productData);
     } catch (err) {
       console.log(err);
@@ -96,7 +88,10 @@ function Product() {
                         textDecoration: 'line-through',
                       }}
                     >
-                      100 &euro;
+                      {product.prices![0].discounted
+                        ? product.prices![0].discounted.value.centAmount / 100
+                        : product.prices![0].value.centAmount / 100}{' '}
+                      &euro;
                     </Typography>
                   </Box>
                   <CardActions>
