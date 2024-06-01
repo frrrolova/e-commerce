@@ -4,35 +4,33 @@ import { productService } from '@/services/productService';
 import { Box, Typography, Button, Container } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useParams } from 'react-router-dom';
 import { Paths } from '@/routes/routeConstants';
 import CardActions from '@mui/material/CardActions';
 import Slider from '@/components/Slider/Slider';
 
 function Product() {
+  const { productId } = useParams();
   const [product, setProduct] = useState<ProductCard | null>(null);
-  // const [price, setPrice] = useState(0);
-  // const [discount, setDiscount] = useState(0);
+  const [error, setError] = useState<string | null>(null);
 
-  const loadProduct = async (productID: string) => {
+  const loadProduct = async () => {
     try {
-      const productData = await productService.fetchProduct(productID);
-      setProduct(productData);
-      // if (product) {
-      //   setPrice(product.prices![0].value.centAmount / 100);
-      //   if (product.prices![0].discounted) {
-      //     setDiscount(product.prices![0].discounted.value.centAmount / 100);
-      //   }
-      // }
-      console.log(productData);
+      if (productId) {
+        const productData = await productService.fetchProduct(productId);
+        setProduct(productData);
+      }
     } catch (err) {
-      console.log(err);
+      setError('Failed to fetch product details');
     }
   };
 
   useEffect(() => {
-    loadProduct('69ca9376-354e-4a8e-890c-a9e37ae95a59');
+    loadProduct();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  if (error) return <div>{error}</div>;
 
   if (product) {
     return (

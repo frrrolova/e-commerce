@@ -49,7 +49,7 @@ export const routes: RouteObject[] = [
         element: <About />,
       },
       {
-        path: Paths.PRODUCT,
+        path: Paths.PRODUCTS,
         element: <Product />,
       },
       {
