@@ -6,7 +6,7 @@ export enum FieldNames {
   DATE_OF_BIRTH = 'dateOfBirth',
   COUNTRY = 'country',
   CITY = 'city',
-  STREET = 'street',
+  STREET = 'streetName',
   BUILDING = 'building',
   APARTMENT = 'apartment',
   POSTAL_CODE = 'postalCode',

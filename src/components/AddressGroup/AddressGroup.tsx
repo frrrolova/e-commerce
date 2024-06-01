@@ -7,7 +7,16 @@ import { TCountryCode, getCountryData } from 'countries-list';
 
 type AddressFormFormik = ReturnType<typeof useFormik<FormikValues>>;
 
-const AddressForm = ({
+function getFieldName(name: FieldNames, prefix?: string): string {
+  const nameArr: string[] = [name];
+  if (prefix) {
+    nameArr.unshift(prefix);
+  }
+
+  return nameArr.join('.');
+}
+
+const AddressGroup = ({
   prefix,
   touched,
   errors,
@@ -20,7 +29,7 @@ const AddressForm = ({
   disabled,
   onFieldChange,
 }: {
-  prefix: AddressTypes;
+  prefix?: AddressTypes;
   touched: AddressFormFormik['touched'];
   errors: AddressFormFormik['errors'];
   values: AddressFormFormik['values'];
@@ -47,7 +56,7 @@ const AddressForm = ({
             size="small"
             labelId={formFieldsConfig.country.labelId}
             id={formFieldsConfig.country.id}
-            name={`${prefix}.${FieldNames.COUNTRY}`}
+            name={getFieldName(FieldNames.COUNTRY, prefix)}
             value={values.country}
             label={formFieldsConfig.country.label}
             onChange={(e: SelectChangeEvent) => {
@@ -56,8 +65,8 @@ const AddressForm = ({
             }}
             onBlur={handleBlur}
             onClose={() => {
-              setFieldTouched(`${prefix}.${FieldNames.COUNTRY}`).then(() => {
-                validateField(`${prefix}.${FieldNames.COUNTRY}`);
+              setFieldTouched(getFieldName(FieldNames.COUNTRY, prefix)).then(() => {
+                validateField(getFieldName(FieldNames.COUNTRY, prefix));
               });
             }}
             error={!disabled && touched.country && Boolean(errors.country)}
@@ -77,15 +86,15 @@ const AddressForm = ({
       <Grid item xs={12} md={6}>
         <FormTextInput
           disabled={disabled}
-          name={`${prefix}.${FieldNames.CITY}`}
+          name={getFieldName(FieldNames.CITY, prefix)}
           value={values.city}
           label={formFieldsConfig.city.label}
           placeholder={formFieldsConfig.city.placeholder}
           onChange={(e: SelectChangeEvent) => {
             handleChange(e);
             onFieldChange?.(e.target.name, e.target.value);
-            setFieldTouched(`${prefix}.${FieldNames.CITY}`).then(() => {
-              validateField(`${prefix}.${FieldNames.CITY}`);
+            setFieldTouched(getFieldName(FieldNames.CITY, prefix)).then(() => {
+              validateField(getFieldName(FieldNames.CITY, prefix));
             });
           }}
           onBlur={handleBlur}
@@ -97,15 +106,15 @@ const AddressForm = ({
       <Grid item xs={12} md={6}>
         <FormTextInput
           disabled={disabled}
-          name={`${prefix}.${FieldNames.STREET}`}
+          name={getFieldName(FieldNames.STREET, prefix)}
           value={values.street}
-          label={formFieldsConfig.street.label}
-          placeholder={formFieldsConfig.street.placeholder}
+          label={formFieldsConfig.streetName.label}
+          placeholder={formFieldsConfig.streetName.placeholder}
           onChange={(e: SelectChangeEvent) => {
             handleChange(e);
             onFieldChange?.(e.target.name, e.target.value);
-            setFieldTouched(`${prefix}.${FieldNames.STREET}`).then(() => {
-              validateField(`${prefix}.${FieldNames.STREET}`);
+            setFieldTouched(getFieldName(FieldNames.STREET, prefix)).then(() => {
+              validateField(getFieldName(FieldNames.STREET, prefix));
             });
           }}
           onBlur={handleBlur}
@@ -116,15 +125,15 @@ const AddressForm = ({
       <Grid item xs={12} md={6}>
         <FormTextInput
           disabled={disabled}
-          name={`${prefix}.${FieldNames.POSTAL_CODE}`}
+          name={getFieldName(FieldNames.POSTAL_CODE, prefix)}
           value={values.postalCode}
           label={formFieldsConfig.postalCode.label}
           placeholder={formFieldsConfig.postalCode.placeholder}
           onChange={(e: SelectChangeEvent) => {
             handleChange(e);
             onFieldChange?.(e.target.name, e.target.value);
-            setFieldTouched(`${prefix}.${FieldNames.POSTAL_CODE}`).then(() => {
-              validateField(`${prefix}.${FieldNames.POSTAL_CODE}`);
+            setFieldTouched(getFieldName(FieldNames.POSTAL_CODE, prefix)).then(() => {
+              validateField(getFieldName(FieldNames.POSTAL_CODE, prefix));
             });
           }}
           onBlur={handleBlur}
@@ -135,15 +144,15 @@ const AddressForm = ({
       <Grid item xs={12} md={6}>
         <FormTextInput
           disabled={disabled}
-          name={`${prefix}.${FieldNames.BUILDING}`}
+          name={getFieldName(FieldNames.BUILDING, prefix)}
           value={values.building}
           label={formFieldsConfig.building.label}
           placeholder={formFieldsConfig.building.placeholder}
           onChange={(e: SelectChangeEvent) => {
             handleChange(e);
             onFieldChange?.(e.target.name, e.target.value);
-            setFieldTouched(`${prefix}.${FieldNames.BUILDING}`).then(() => {
-              validateField(`${prefix}.${FieldNames.BUILDING}`);
+            setFieldTouched(getFieldName(FieldNames.BUILDING, prefix)).then(() => {
+              validateField(getFieldName(FieldNames.BUILDING, prefix));
             });
           }}
           onBlur={handleBlur}
@@ -154,15 +163,15 @@ const AddressForm = ({
       <Grid item xs={12} md={6}>
         <FormTextInput
           disabled={disabled}
-          name={`${prefix}.${FieldNames.APARTMENT}`}
+          name={getFieldName(FieldNames.APARTMENT, prefix)}
           value={values.apartment}
           label={formFieldsConfig.apartment.label}
           placeholder={formFieldsConfig.apartment.placeholder}
           onChange={(e: SelectChangeEvent) => {
             handleChange(e);
             onFieldChange?.(e.target.name, e.target.value);
-            setFieldTouched(`${prefix}.${FieldNames.APARTMENT}`).then(() => {
-              validateField(`${prefix}.${FieldNames.APARTMENT}`);
+            setFieldTouched(getFieldName(FieldNames.APARTMENT, prefix)).then(() => {
+              validateField(getFieldName(FieldNames.APARTMENT, prefix));
             });
           }}
           onBlur={handleBlur}
@@ -174,4 +183,4 @@ const AddressForm = ({
   );
 };
 
-export default AddressForm;
+export default AddressGroup;

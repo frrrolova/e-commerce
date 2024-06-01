@@ -1,4 +1,4 @@
-import { TextField, FormHelperText } from '@mui/material';
+import { TextField, FormHelperText, useMediaQuery } from '@mui/material';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import EditableField from '../Editable/EditableField';
@@ -22,12 +22,14 @@ function EditableInput({ name, initialValue, placeholder, label, schema, onSave 
     validationSchema: Yup.object().shape({
       [name]: schema,
     }),
-    onSubmit: (value) => {
-      console.log(value);
+    onSubmit: () => {
+      // do nothing
     },
   });
 
   const [isEditMode, setIsEditMode] = useState(false);
+
+  const matches = useMediaQuery('(min-width:600px)');
 
   return (
     <EditableField
@@ -48,11 +50,12 @@ function EditableInput({ name, initialValue, placeholder, label, schema, onSave 
     >
       <>
         <TextField
-          InputProps={{ readOnly: !isEditMode, disableUnderline: !isEditMode }}
+          InputProps={{ readOnly: !isEditMode, disableUnderline: !isEditMode, autoComplete: 'off' }}
           name={name}
           variant="standard"
           fullWidth
           value={formik.values[name]}
+          title={matches ? '' : formik.values[name]}
           aria-describedby="my-helper-text"
           id={`${name}-input`}
           onChange={(e) => {
@@ -64,7 +67,7 @@ function EditableInput({ name, initialValue, placeholder, label, schema, onSave 
           onBlur={formik.handleBlur}
           error={formik.touched[name] && Boolean(formik.errors[name])}
           sx={{
-            '& input': { padding: 0 },
+            '& input': { padding: 0, textOverflow: 'ellipsis' },
           }}
         />
         {Boolean(formik.errors[name]) && <FormHelperText error>{formik.errors[name]}</FormHelperText>}

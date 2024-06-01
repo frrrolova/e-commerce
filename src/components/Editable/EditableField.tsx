@@ -2,7 +2,6 @@ import { IconButton, Typography, Box } from '@mui/material';
 import ModeEditOutlineIcon from '@mui/icons-material/ModeEditOutline';
 import CloseIcon from '@mui/icons-material/Close';
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
-import theme from '@/themes/theme';
 import { useState } from 'react';
 
 interface EditableFieldProps {
@@ -28,7 +27,7 @@ function EditableField({
   return (
     <Box
       display={'flex'}
-      gap={'12px'}
+      // gap={'12px'}
       alignItems={'baseline'}
       sx={{
         mb: 1,
@@ -40,6 +39,7 @@ function EditableField({
           textWrap: 'nowrap',
           minWidth: '100px',
           textAlign: 'end',
+          mr: '12px',
         }}
       >{`${label}:`}</Typography>
       <Box
@@ -53,13 +53,7 @@ function EditableField({
       <Box sx={{ minWidth: '55px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         {!isEditMode && (
           <IconButton
-            sx={{
-              border: '1px solid',
-              borderRadius: '7px',
-              padding: '3px',
-              borderColor: theme.palette.primary.light,
-              fontSize: 'small',
-            }}
+            color="primary"
             onClick={() => {
               setIsEditMode(!isEditMode);
               onEditClick();
@@ -77,13 +71,7 @@ function EditableField({
           >
             <IconButton
               disabled={isSaveDisabled}
-              sx={{
-                border: '1px solid',
-                borderRadius: '7px',
-                padding: '3px',
-                borderColor: theme.palette.primary.light,
-                fontSize: 'small',
-              }}
+              color="primary"
               onClick={() => {
                 setIsEditMode(false);
                 onSaveClick();
@@ -92,13 +80,7 @@ function EditableField({
               <SaveOutlinedIcon />
             </IconButton>
             <IconButton
-              sx={{
-                border: '1px solid',
-                borderRadius: '7px',
-                padding: '3px',
-                borderColor: theme.palette.primary.light,
-                fontSize: 'small',
-              }}
+              color="primary"
               onClick={() => {
                 setIsEditMode(false);
                 onCancelClick();
