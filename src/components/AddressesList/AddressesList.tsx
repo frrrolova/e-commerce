@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Chip,
   Dialog,
@@ -71,7 +72,7 @@ function AddressesList({ addresses, type, onSubmit, defaultId, onDefaultClick, o
         startIcon={<AddCircleOutlineOutlinedIcon />}
         onClick={handleFormOpen}
       >
-        Add new address
+        Add address
       </Button>
       <List
         className={styles.scrollableList}
@@ -83,37 +84,57 @@ function AddressesList({ addresses, type, onSubmit, defaultId, onDefaultClick, o
         {addresses.map((address, ind) => (
           <ListItem
             key={`${type}-${ind}`}
-            sx={{ borderBottom: '1px dotted', borderColor: theme.palette.primary.light }}
+            sx={{
+              borderBottom: '1px dotted',
+              borderColor: theme.palette.primary.light,
+              paddingX: {
+                xs: 0,
+                md: 1,
+              },
+            }}
           >
-            <PlaceOutlinedIcon sx={{ mr: 1 }} color="primary" />
-            <Typography width="100%" mr={1}>
+            <PlaceOutlinedIcon
+              sx={{
+                mr: 1,
+              }}
+              color="primary"
+            />
+            <Typography
+              sx={{
+                width: '100%',
+                mr: 1,
+                fontSize: {
+                  xs: '0.9rem',
+                  md: '1rem',
+                },
+              }}
+            >
               {getAddressString(address)}
             </Typography>
-            {address.id === defaultId ? (
-              <Chip
-                label="default"
-                size="small"
-                color="primary"
-                sx={{
-                  mr: 1,
-                }}
-              />
-            ) : (
-              <Chip
-                clickable={true}
-                variant="outlined"
-                size="small"
-                label="set as default"
-                sx={{
-                  mr: 1,
-                }}
-                onClick={() => {
-                  if (address.id) {
-                    onDefaultClick(address.id);
-                  }
-                }}
-              />
-            )}
+            <Box
+              sx={{
+                minWidth: '97px',
+                display: 'flex',
+                justifyContent: 'flex-end',
+                mr: 1,
+              }}
+            >
+              {address.id === defaultId ? (
+                <Chip label="default" size="small" color="primary" />
+              ) : (
+                <Chip
+                  clickable={true}
+                  variant="outlined"
+                  size="small"
+                  label="set default"
+                  onClick={() => {
+                    if (address.id) {
+                      onDefaultClick(address.id);
+                    }
+                  }}
+                />
+              )}
+            </Box>
             <IconButton
               color="primary"
               size="small"

@@ -5,6 +5,7 @@ import theme from '@/themes/theme';
 import { Box, Container, Typography } from '@mui/material';
 import { useEffect } from 'react';
 import backImg from '/images/prof.png';
+import { formWidth } from './constants';
 
 function UserProfile() {
   const isPageLoading = useAppSelector((state) => state.user.isUserDataLoading);
@@ -36,7 +37,7 @@ function UserProfile() {
         flexDirection: 'column',
         alignItems: {
           xs: 'center',
-          md: 'flex-start',
+          // md: 'flex-start',
         },
       }}
     >
@@ -49,11 +50,12 @@ function UserProfile() {
           top: 80,
           right: {
             xs: -135,
-            md: 0,
+            lg: 0,
           },
           opacity: {
             xs: 0.5,
-            md: 1,
+            md: 0.8,
+            lg: 1,
           },
         }}
         alt="Ficus"
@@ -62,17 +64,26 @@ function UserProfile() {
       <Typography
         component="h1"
         variant="h4"
-        paddingX={2}
-        marginY={'20px'}
-        color={theme.palette.primary.main}
-        letterSpacing={1.5}
+        sx={{
+          paddingX: 2,
+          marginY: '20px',
+          textAlign: 'start',
+          color: theme.palette.primary.main,
+          letterSpacing: 1.5,
+          ...formWidth,
+        }}
       >
         Profile
       </Typography>
       {isPageLoading && <h3>Loading...</h3>}
-      {user && <UserProfileForm userData={user} />}
+      {user && <UserProfileForm userData={user} sxProps={formWidth} />}
     </Container>
   );
 }
 
 export default UserProfile;
+
+// width: {
+//   md: '75%',
+//   xs: '90%',
+// },

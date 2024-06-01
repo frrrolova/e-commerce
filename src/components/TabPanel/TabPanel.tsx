@@ -30,7 +30,10 @@ function TabPanel(props: TabPanelProps) {
                   // justifyContent: 'center',
                   // alignItems: 'center',
                   width: '100%',
-                  marginLeft: 2,
+                  marginLeft: {
+                    xs: 1,
+                    md: 2,
+                  },
                 }
               : {
                   p: 1,

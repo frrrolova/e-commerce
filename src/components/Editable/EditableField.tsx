@@ -27,7 +27,7 @@ function EditableField({
   return (
     <Box
       display={'flex'}
-      gap={'12px'}
+      // gap={'12px'}
       alignItems={'baseline'}
       sx={{
         mb: 1,
@@ -39,6 +39,7 @@ function EditableField({
           textWrap: 'nowrap',
           minWidth: '100px',
           textAlign: 'end',
+          mr: '12px',
         }}
       >{`${label}:`}</Typography>
       <Box

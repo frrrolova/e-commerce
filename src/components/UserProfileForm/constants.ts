@@ -10,3 +10,10 @@ export enum SnackBarMsgs {
   LAST_NAME_SUCCESS = 'Last name updated successfully',
   DOB_SUCCESS = 'Date of birth updated successfully',
 }
+
+export const verticalTabsPadding = {
+  paddingX: {
+    xs: 1,
+    md: 2,
+  },
+};

@@ -1,5 +1,5 @@
 import { Address, BaseAddress, Customer, ErrorObject, MyCustomerUpdateAction } from '@commercetools/platform-sdk';
-import { Box, Tab, Tabs, TabsOwnProps } from '@mui/material';
+import { Box, SxProps, Tab, Tabs, TabsOwnProps } from '@mui/material';
 import EditableInput from '../EditableInput/EditableInput';
 import { AddressTypes, FieldNames } from '@/enums/auth-form.enum';
 import { formFieldsConfig } from '@/shared/auth-form.constants';
@@ -14,9 +14,9 @@ import { getFormattedDateValue } from '@/utils/getFormattedDateValue';
 import TabPanel from '../TabPanel/TabPanel';
 import AddressesList from '../AddressesList/AddressesList';
 import { AddressActions } from '@/enums/addressActions.enum';
-import { SnackBarMsgs } from './constants';
+import { SnackBarMsgs, verticalTabsPadding } from './constants';
 
-function UserProfileForm({ userData }: { userData: Customer }) {
+function UserProfileForm({ userData, sxProps }: { userData: Customer; sxProps?: SxProps }) {
   const dispatch = useAppDispatch();
   const { enqueueSnackbar } = useSnackbar();
 
@@ -121,15 +121,15 @@ function UserProfileForm({ userData }: { userData: Customer }) {
   return (
     <Box
       sx={{
-        width: {
-          md: '75%',
-          xs: '90%',
+        padding: {
+          xs: 1,
+          md: 3,
         },
-
-        padding: 3,
         border: '2px solid',
         borderColor: 'divider',
+        backgroundColor: '#dedbdb0d',
         borderRadius: '7px',
+        ...sxProps,
       }}
     >
       <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 2 }}>
@@ -223,10 +223,17 @@ function UserProfileForm({ userData }: { userData: Customer }) {
             value={addressTab}
             onChange={handleAddressTabChange}
             aria-label="addresses-tabs"
-            sx={{ borderRight: 1, borderColor: 'divider', minWidth: '110px' }}
+            sx={{
+              borderRight: 1,
+              borderColor: 'divider',
+              minWidth: {
+                xs: '90px',
+                md: '110px',
+              },
+            }}
           >
-            <Tab label="Shipping" {...a11yProps(0, 'vertical')} />
-            <Tab label="Billing" {...a11yProps(1, 'vertical')} />
+            <Tab label="Shipping" {...a11yProps(0, 'vertical')} sx={{ ...verticalTabsPadding }} />
+            <Tab label="Billing" {...a11yProps(1, 'vertical')} sx={{ ...verticalTabsPadding }} />
           </Tabs>
           <TabPanel value={addressTab} index={0} orientation="vertical">
             <AddressesList
