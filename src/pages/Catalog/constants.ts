@@ -2,7 +2,8 @@ import { FilterAttributes } from '@/types';
 
 export enum ButtonLabels {
   APPLY = 'Apply Filters',
-  CLEAR = 'Clear Filters',
+  CLEAR_FILTER = 'Clear Filters',
+  CLEAR = 'Clear',
   OPEN = 'Sort / Filter',
 }
 
