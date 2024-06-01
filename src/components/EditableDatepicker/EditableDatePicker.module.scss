@@ -1,0 +1,32 @@
+.editable {
+  & > div {
+    padding-right: 10px;
+  }
+
+  & > div::before {
+    border: none !important;
+  }
+
+  & > div input {
+    padding: 0;
+    // border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+
+    & ~ div > button {
+      padding: 0;
+      position: relative;
+      bottom: 2px;
+    }
+  }
+
+  & > div input:disabled {
+    // border-bottom: none;
+
+    & ~ div > button {
+      visibility: hidden;
+    }
+  }
+
+  & > div input:not(:disabled) ~ div::after {
+    transform: scale(1);
+  }
+}

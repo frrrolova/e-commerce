@@ -56,5 +56,21 @@
         transform: scale(1.05);
       }
     }
+
+    .description {
+      min-width: 100%;
+    }
+
+    .bottomContent {
+      display: flex;
+      align-items: center;
+
+      .discount {
+        font-size: larger;
+        font-weight: bold;
+        color: $border-green-color;
+        border-right: 2px solid $border-light-color;
+      }
+    }
   }
 }
