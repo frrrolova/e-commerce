@@ -1,5 +1,5 @@
 import { ClientResponse, Customer, ErrorObject, ErrorResponse } from '@commercetools/platform-sdk';
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { Draft, PayloadAction, createSlice } from '@reduxjs/toolkit';
 import client from '@/client/client';
 import { LSTokenPrefixes } from '@/enums/ls.enums';
 import {
@@ -8,6 +8,7 @@ import {
   userGetInfoThunk,
   userUpdateThunk,
   userAddressUpdateThunk,
+  changePasswordThunk,
 } from './thunks';
 
 export interface UserState {
@@ -19,6 +20,18 @@ export interface UserState {
 }
 
 const userFromLS = localStorage.getItem('user');
+
+const handleRejection = (
+  errorFieldToUpdate: keyof Pick<typeof initialState, 'authError' | 'userUpdateError'>,
+  state: Draft<UserState>,
+  action: PayloadAction<ErrorResponse>,
+) => {
+  const payload = action.payload;
+  const err: ErrorObject | null = payload.errors?.[0] || null;
+  if (err) {
+    state[errorFieldToUpdate] = err.message ?? '';
+  }
+};
 
 const initialState: UserState = {
   user: userFromLS ? JSON.parse(userFromLS) : null,
@@ -63,11 +76,7 @@ export const userSlice = createSlice({
         if (action.error) {
           state.authError = action.error.message || '';
         } else {
-          const payload = action.payload as ErrorResponse;
-          const err: ErrorObject | null = payload.errors?.[0] || null;
-          if (err) {
-            state.authError = err.message ?? '';
-          }
+          handleRejection('authError', state, action as PayloadAction<ErrorResponse>);
         }
       })
       // login
@@ -80,11 +89,7 @@ export const userSlice = createSlice({
       })
       .addCase(userLoginThunk.rejected, (state, action) => {
         state.isAuthPending = false;
-        const payload = action.payload as ErrorResponse;
-        const err: ErrorObject | null = payload.errors?.[0] || null;
-        if (err) {
-          state.authError = err.message ?? '';
-        }
+        handleRejection('authError', state, action as PayloadAction<ErrorResponse>);
       })
       // get User info
       .addCase(userGetInfoThunk.pending, (state) => {
@@ -99,18 +104,13 @@ export const userSlice = createSlice({
       })
       // upd User
       .addCase(userUpdateThunk.rejected, (state, action) => {
-        const payload = action.payload as ErrorResponse;
-        const err: ErrorObject | null = payload.errors?.[0] || null;
-        if (err) {
-          state.userUpdateError = err.message ?? '';
-        }
+        handleRejection('userUpdateError', state, action as PayloadAction<ErrorResponse>);
       })
       .addCase(userAddressUpdateThunk.rejected, (state, action) => {
-        const payload = action.payload as ErrorResponse;
-        const err: ErrorObject | null = payload.errors?.[0] || null;
-        if (err) {
-          state.userUpdateError = err.message ?? '';
-        }
+        handleRejection('userUpdateError', state, action as PayloadAction<ErrorResponse>);
+      })
+      .addCase(changePasswordThunk.rejected, (state, action) => {
+        handleRejection('userUpdateError', state, action as PayloadAction<ErrorResponse>);
       });
   },
 });
