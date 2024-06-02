@@ -10,6 +10,7 @@ import {
   userAddressUpdateThunk,
   changePasswordThunk,
 } from './thunks';
+import { lsUserKey } from '@/core/commonConstants';
 
 export interface UserState {
   user: Customer | null;
@@ -19,7 +20,7 @@ export interface UserState {
   isUserDataLoading: boolean;
 }
 
-const userFromLS = localStorage.getItem('user');
+const userFromLS = localStorage.getItem(lsUserKey);
 
 const handleRejection = (
   errorFieldToUpdate: keyof Pick<typeof initialState, 'authError' | 'userUpdateError'>,
@@ -45,7 +46,7 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setUser: (state, action: PayloadAction<Customer>) => {
+    setUser: (state, action: PayloadAction<Customer | null>) => {
       state.user = action.payload;
     },
     clearError: (state) => {
@@ -55,7 +56,7 @@ export const userSlice = createSlice({
     logout: (state) => {
       state.user = null;
       localStorage.removeItem(`${LSTokenPrefixes.LOGGED_IN}_token`);
-      localStorage.removeItem('user');
+      localStorage.removeItem(lsUserKey);
       client.clearCurrentClient();
     },
   },
