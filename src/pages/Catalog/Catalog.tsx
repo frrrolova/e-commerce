@@ -2,7 +2,7 @@ import styles from './Catalog.module.scss';
 import { catalogService } from '@/services/catalogService';
 import { useEffect, useState } from 'react';
 import Grid from '@mui/material/Unstable_Grid2';
-import { Typography, Box, Button, Drawer, Slider, Divider } from '@mui/material';
+import { Typography, Box, Button, Drawer, Slider, Divider, TextField, IconButton } from '@mui/material';
 import ProductCard from '@/components/ProductCard/ProductCard';
 import { Filter, Product } from '@/types';
 import FormSelect from '@/components/FormSelect/FormSelect';
@@ -10,6 +10,7 @@ import { SelectChangeEvent } from '@mui/material/Select';
 import { ButtonLabels, PageData, SortOptions, defaultPriceRange } from './constants';
 import useQuery from '@/utils/useQuery';
 import { useNavigate } from 'react-router-dom';
+import SearchIcon from '@mui/icons-material/Search';
 
 function Catalog() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -20,6 +21,7 @@ function Catalog() {
   const [selectedColor, setSelectedColor] = useState<string>('');
   const [selectedPriceRange, setSelectedPriceRange] = useState<number[]>(defaultPriceRange);
   const [sorting, setSorting] = useState<string>(SortOptions[0].key);
+  const [search, setSearch] = useState('');
 
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
@@ -58,6 +60,19 @@ function Catalog() {
     }
   };
 
+  const loadSearchResults = async (searchQuery: string) => {
+    try {
+      setIsLoading(true);
+      const searchResults = await catalogService.fetchProducts({ search: searchQuery });
+      setProducts(searchResults);
+    } catch (err) {
+      setError('Failed to fetch products');
+      console.log('Failed to fetch products');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
     const loadFilters = async () => {
       try {
@@ -73,24 +88,31 @@ function Catalog() {
     let color: string = '';
     let price: number[] = defaultPriceRange;
     let sort: string = SortOptions[0].key;
+    let search: string = '';
 
     const setFiltersFromUrl = () => {
+      search = query.get('search') || '';
       size = query.get('size') || '';
       color = query.get('color') || '';
       price = query.get('price')?.split(',').map(Number) || defaultPriceRange;
+      sort = query.get('sort') || SortOptions[0].key;
       sort = query.get('sort') || SortOptions[0].key;
 
       if (size) setSelectedSize(size);
       if (color) setSelectedColor(color);
       if (price) setSelectedPriceRange(price);
       if (sort) setSorting(sort);
+      if (search) setSearch(search);
     };
 
     loadFilters();
 
     // Load filter values from URL
     setFiltersFromUrl();
-    if (size || color || (price && (price[0] != selectedPriceRange[0] || price[1] != selectedPriceRange[1]))) {
+
+    if (search) {
+      loadSearchResults(search);
+    } else if (size || color || (price && (price[0] !== selectedPriceRange[0] || price[1] !== selectedPriceRange[1]))) {
       loadFilteredProducts({ size, color, price }, sort);
     } else {
       loadAllProducts(sort);
@@ -100,11 +122,21 @@ function Catalog() {
 
   const updateUrlWithFilters = (filters: { size: string; color: string; price: number[]; sort: string }) => {
     const queryParams = [];
-    if (filters.size) queryParams.push(`size=${filters.size}`);
-    if (filters.color) queryParams.push(`color=${filters.color}`);
-    if (filters.price[0] != defaultPriceRange[0] || filters.price[1] != defaultPriceRange[1])
+    if (filters.size) {
+      queryParams.push(`size=${filters.size}`);
+    }
+    if (filters.color) {
+      queryParams.push(`color=${filters.color}`);
+    }
+    if (filters.price[0] != defaultPriceRange[0] || filters.price[1] != defaultPriceRange[1]) {
       queryParams.push(`price=${filters.price[0]},${filters.price[1]}`);
-    if (filters.sort) queryParams.push(`sort=${filters.sort}`);
+    }
+    if (filters.sort) {
+      queryParams.push(`sort=${filters.sort}`);
+    }
+    if (search) {
+      queryParams.push(`search=${search}`);
+    }
     navigate('?' + queryParams.join('&'));
   };
 
@@ -158,6 +190,31 @@ function Catalog() {
     loadAllProducts();
   };
 
+  const clearSearch = async () => {
+    setSearch('');
+    navigate('');
+    loadAllProducts();
+  };
+
+  const handleSearch = async () => {
+    setIsLoading(true);
+    setError(null);
+    setSelectedSize('');
+    setSelectedColor('');
+    setSelectedPriceRange(defaultPriceRange);
+
+    try {
+      const results = await catalogService.fetchProducts({ search });
+      setProducts(results);
+    } catch (err) {
+      setError('Failed to fetch products');
+    } finally {
+      setIsLoading(false);
+    }
+
+    navigate(`?search=${search}`);
+  };
+
   const drawer = (
     <Box className={styles.containerFilters} sx={{ overflow: 'auto' }}>
       <FormSelect
@@ -201,7 +258,7 @@ function Catalog() {
           </Button>
 
           <Button fullWidth variant="outlined" color="primary" sx={{ mt: 2 }} onClick={clearFilters}>
-            {ButtonLabels.CLEAR}
+            {ButtonLabels.CLEAR_FILTER}
           </Button>
         </>
       )}
@@ -247,10 +304,36 @@ function Catalog() {
       </Drawer>
 
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        <Grid container>
+        <Grid container justifyContent="space-between" sx={{ mb: 3 }}>
           <Grid>
             <Button variant="text" color="primary" onClick={handleDrawerToggle} sx={{ mr: 2, display: { sm: 'none' } }}>
               {ButtonLabels.OPEN}
+            </Button>
+          </Grid>
+          <Grid display="flex">
+            <TextField
+              fullWidth
+              variant="outlined"
+              size="small"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  handleSearch();
+                }
+              }}
+              placeholder="Search..."
+              InputProps={{
+                endAdornment: (
+                  <IconButton onClick={handleSearch}>
+                    <SearchIcon />
+                  </IconButton>
+                ),
+              }}
+            />
+
+            <Button variant="outlined" color="primary" onClick={clearSearch} sx={{ ml: 2 }}>
+              {ButtonLabels.CLEAR}
             </Button>
           </Grid>
         </Grid>

@@ -11,7 +11,7 @@ interface FilterData {
 }
 
 class CatalogService {
-  async fetchProducts(params?: { filters?: FilterData; sort?: string }): Promise<Product[]> {
+  async fetchProducts(params?: { filters?: FilterData; sort?: string; search?: string }): Promise<Product[]> {
     try {
       const filterStr = params?.filters ? this.buildFilterString(params?.filters) : [];
 
@@ -26,6 +26,8 @@ class CatalogService {
             filter: filterStr,
             markMatchingVariants: true,
             sort: params?.sort ? [sortMapping[params.sort]] : [],
+            'text.en-GB': params?.search,
+            fuzzy: true,
           },
         })
         .execute();
