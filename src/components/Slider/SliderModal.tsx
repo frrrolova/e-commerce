@@ -14,7 +14,7 @@ function SliderModal({ product, open, handleClose }: SliderModalProp) {
       const slides = product.images.map((slide, index) => {
         return <SliderItem isSlider={false} product={product} index={index} url={slide.url} label={slide.label} />;
       });
-      return <SingleModal isSlider={true} open={open} handleClose={handleClose} boxPadding={0} slides={slides} />;
+      return <SingleModal isSlider={true} open={open} handleClose={handleClose} slides={slides} />;
     }
     return (
       <SingleModal
@@ -23,7 +23,6 @@ function SliderModal({ product, open, handleClose }: SliderModalProp) {
         handleClose={handleClose}
         url={product.images[0].url}
         label={product.images[0].label}
-        boxPadding={1}
       />
     );
   }

@@ -9,13 +9,13 @@ interface SlideModalProp {
   open: boolean;
   handleClose: () => void;
   isSlider: boolean;
-  boxPadding: number;
   url?: string;
   label?: string | undefined;
   slides?: ReactElement[];
 }
 
-function SingleModal({ open, handleClose, url, label, isSlider, boxPadding, slides }: SlideModalProp) {
+function SingleModal({ open, handleClose, url, label, isSlider, slides }: SlideModalProp) {
+  const boxPadding = isSlider ? 0 : 1;
   return (
     <Modal
       open={open}
