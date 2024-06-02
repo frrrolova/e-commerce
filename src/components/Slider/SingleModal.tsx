@@ -48,18 +48,12 @@ function SingleModal({ open, handleClose, url, label, isSlider, boxPadding, slid
             {slides}
           </Carousel>
         )}
-        {/* <Typography id="modal-modal-title" variant="h6" component="h2">
-              Text in a modal
-            </Typography>
-            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-              Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-            </Typography> */}
         <Box
           onClick={handleClose}
           sx={{
             position: 'absolute',
             top: '10px',
-            right: '20px',
+            right: '25px',
             cursor: 'pointer',
           }}
         >

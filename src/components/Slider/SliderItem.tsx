@@ -19,6 +19,8 @@ function SliderItem({ index, url, label, product, isSlider }: SliderItemProp) {
     setOpen(true);
   };
   const handleClose = () => setOpen(false);
+  const cursor = isSlider ? 'pointer' : 'auto';
+  const hover = isSlider ? 'rgb(22, 45, 20)' : 'rgb(22, 35, 20)';
   return (
     <Box
       onClick={handleOpen}
@@ -30,6 +32,12 @@ function SliderItem({ index, url, label, product, isSlider }: SliderItemProp) {
         background: 'rgb(22, 35, 20)',
         border: '1px solid gray',
         backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08))',
+        cursor: cursor,
+        transition: 'all linear .5s',
+        '&:hover': {
+          background: hover,
+          backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08))',
+        },
       }}
     >
       {isSlider && <SliderModal open={open} handleClose={handleClose} product={product} />}
