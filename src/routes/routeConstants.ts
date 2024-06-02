@@ -6,7 +6,7 @@ export enum Paths {
   ABOUT = '/about',
   BASKET = '/basket',
   PROFILE = '/profile',
-  PRODUCT = '/product',
+  PRODUCTS = '/products/:productId',
   NOT_FOUND = '/*',
 }
 
@@ -19,7 +19,7 @@ export enum Titles {
   ABOUT = 'About us',
   BASKET = 'Basket',
   PROFILE = 'Profile',
-  PRODUCT = 'Product',
+  PRODUCTS = 'Product',
 }
 
 export const navLinksData = {

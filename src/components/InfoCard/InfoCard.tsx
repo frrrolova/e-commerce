@@ -1,8 +1,17 @@
 import styles from './InfoCard.module.scss';
-import { Paper, Typography, Box } from '@mui/material';
+import { Paper, Typography, Box, Button } from '@mui/material';
 import { InfoCardProps } from './types';
+import { useNavigate } from 'react-router-dom';
 
 function InfoCard({ data, button }: InfoCardProps) {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    if (button) {
+      navigate(button.url);
+    }
+  };
+
   return (
     <Box className={styles.container}>
       <Paper elevation={3} className={styles.card}>
@@ -21,7 +30,13 @@ function InfoCard({ data, button }: InfoCardProps) {
               </Typography>
             )}
             <Typography variant="h6">{data.subHeading}</Typography>
-            {button && <Box sx={{ mt: 1 }}>{button}</Box>}
+            {button && (
+              <Box>
+                <Button variant="contained" color="primary" sx={{ mt: 2 }} onClick={handleClick}>
+                  {button.label}
+                </Button>
+              </Box>
+            )}
           </Box>
         </Box>
       </Paper>
