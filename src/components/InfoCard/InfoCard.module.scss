@@ -34,9 +34,15 @@
       padding-right: 1.5rem;
 
       p {
-        margin-top: 3rem;
+        margin-top: 2rem;
         @media (max-width: 599px) {
           margin-top: 1rem;
+        }
+      }
+
+      .description {
+        @media screen and (min-width: 600px) {
+          margin-top: $offset-product-top;
         }
       }
     }

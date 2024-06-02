@@ -3,7 +3,7 @@ import { Container, Typography, Box, Button } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 import ProductCard from '@/components/ProductCard/ProductCard';
 import { Product } from '@/types';
-import { ButtonLabels, InfoCardData, PageData } from './constants';
+import { ButtonLabels, InfoCardBtn, InfoCardData, PageData } from './constants';
 import Title from '@/components/Title/Title';
 import ImageBg from '/images/home/home-bg.png';
 import InfoCard from '@/components/InfoCard/InfoCard';
@@ -76,7 +76,7 @@ function Main() {
             <Title title={PageData.TITLE_PROMO} />
           </Grid>
           <Grid xs={12} mt={3}>
-            <InfoCard data={InfoCardData} />
+            <InfoCard data={InfoCardData} button={InfoCardBtn} />
           </Grid>
 
           {/* DISCOUNT Section */}
