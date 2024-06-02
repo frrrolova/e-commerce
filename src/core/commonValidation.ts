@@ -5,7 +5,7 @@ const validationConstants = {
   passwordMinLength: 8,
 };
 
-export const passwordRegexp = /^(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n ])(?=.*[A-Z])(?=.*[a-z])\S*$/;
+export const passwordRegexp = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[A-Za-z\d!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]{8,}$/;
 
 export const emailRegexp = /^[\w-.]+@([\w-]+\.)+[\w-]+$/;
 

@@ -2,7 +2,13 @@ import client from '@/client/client';
 import { AddressTypes } from '@/enums/auth-form.enum';
 import { ResponseErrorCodes } from '@/enums/responseErrors.enum';
 import NetworkError from '@/errors/network.error';
-import { BaseAddress, ClientResponse, Customer, MyCustomerUpdateAction } from '@commercetools/platform-sdk';
+import {
+  BaseAddress,
+  ClientResponse,
+  Customer,
+  MyCustomerChangePassword,
+  MyCustomerUpdateAction,
+} from '@commercetools/platform-sdk';
 
 export function getUser(): Promise<ClientResponse<Customer>> {
   return client.getClient().me().get().execute();
@@ -79,5 +85,25 @@ export function addAddress(
         });
       }
       return response;
+    });
+}
+
+export function changePassword(data: MyCustomerChangePassword): Promise<ClientResponse<Customer>> {
+  return client
+    .getClient()
+    .me()
+    .password()
+    .post({
+      body: data,
+    })
+    .execute()
+    .catch((e) => {
+      if (e.name === ResponseErrorCodes.NETWORK_ERR || e.statusCode === 0) {
+        throw new NetworkError();
+      }
+      if (e.name === ResponseErrorCodes.CONCURRENT_MODIFICATION) {
+        return changePassword({ ...data, version: e.body.errors[0].currentVersion });
+      }
+      throw e;
     });
 }

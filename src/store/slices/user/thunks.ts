@@ -6,13 +6,14 @@ import {
   Customer,
   CustomerDraft,
   BaseAddress,
+  MyCustomerChangePassword,
 } from '@commercetools/platform-sdk';
 import client from '@client/client';
-import { setUser } from './userSlice';
+import { logout, setUser } from './userSlice';
 import { LSTokenPrefixes } from '@/enums/ls.enums';
 import { loginService } from '@/services/loginService';
 import { AsyncThunkApi } from '@/store/store';
-import { addAddress, getUser, updateUser } from '@/services/userService';
+import { addAddress, changePassword, getUser, updateUser } from '@/services/userService';
 import { UserUpdateData } from '@/types';
 import { AddressTypes } from '@/enums/auth-form.enum';
 
@@ -92,6 +93,20 @@ export const userAddressUpdateThunk = createAsyncThunk(
       .then((resp) => {
         localStorage.setItem('user', JSON.stringify(resp.body));
         thunkAPI.dispatch(setUser(resp.body));
+      })
+      .catch((err: ErrorResponse) => {
+        return thunkAPI.rejectWithValue(err);
+      });
+  },
+);
+
+export const changePasswordThunk = createAsyncThunk(
+  'user/password-update',
+  (updData: MyCustomerChangePassword, thunkAPI: AsyncThunkApi) => {
+    return changePassword(updData)
+      .then((resp) => {
+        thunkAPI.dispatch(logout());
+        return thunkAPI.dispatch(userLoginThunk({ email: resp.body.email, password: updData.newPassword }));
       })
       .catch((err: ErrorResponse) => {
         return thunkAPI.rejectWithValue(err);
