@@ -20,13 +20,6 @@ export interface InfoDataCard {
   description?: string;
 }
 
-export interface ProductCard {
-  id: string;
-  name: string;
-  description: string;
-  images: Image[] | undefined;
-  prices: Price[] | undefined;
-}
 export interface UserUpdateData {
   updAction: MyCustomerUpdateAction;
   version: number;
