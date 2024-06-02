@@ -3,6 +3,7 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { Carousel } from 'react-responsive-carousel';
 import { Product } from '@/types';
 import SliderItem from './SliderItem';
+import Placeholder from '/images/catalog/placeholder_plant.png';
 
 interface ProductCardProp {
   product: Product;
@@ -38,6 +39,8 @@ function Slider({ product }: ProductCardProp) {
       );
     }
     return <SliderItem isSlider={true} product={product} url={product.images[0].url} label={product.images[0].label} />;
+  } else {
+    return <SliderItem isSlider={false} product={product} url={Placeholder} label={'Plant'} />;
   }
 }
 
