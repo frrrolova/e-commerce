@@ -9,10 +9,9 @@ interface SliderItemProp {
   url: string;
   label: string | undefined;
   isSlider: boolean;
-  index?: number;
 }
 
-function SliderItem({ index, url, label, product, isSlider }: SliderItemProp) {
+function SliderItem({ url, label, product, isSlider }: SliderItemProp) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
     if (open) return;
@@ -24,7 +23,6 @@ function SliderItem({ index, url, label, product, isSlider }: SliderItemProp) {
   return (
     <Box
       onClick={handleOpen}
-      key={index}
       sx={{
         display: 'flex',
         justifyContent: 'center',

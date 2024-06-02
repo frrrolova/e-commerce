@@ -12,7 +12,15 @@ function SliderModal({ product, open, handleClose }: SliderModalProp) {
   if (product.images) {
     if (product.images.length > 1) {
       const slides = product.images.map((slide, index) => {
-        return <SliderItem isSlider={false} product={product} index={index} url={slide.url} label={slide.label} />;
+        return (
+          <SliderItem
+            key={Date.now() + index + Math.random()}
+            isSlider={false}
+            product={product}
+            url={slide.url}
+            label={slide.label}
+          />
+        );
       });
       return <SingleModal isSlider={true} open={open} handleClose={handleClose} slides={slides} />;
     }
