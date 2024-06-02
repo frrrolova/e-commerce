@@ -1,5 +1,5 @@
 // import { MyCustomerUpdateAction } from '@commercetools/platform-sdk';
-import { Image, Price, MyCustomerUpdateAction } from '@commercetools/platform-sdk';
+import { Image, Price, MyCustomerUpdateAction, CategoryReference } from '@commercetools/platform-sdk';
 
 export type PropsWithChildren = {
   children: JSX.Element;
@@ -34,4 +34,16 @@ export interface Filter {
   name: string;
   label: string;
   options: FilterAttributes[];
+}
+
+export interface Category {
+  id: string;
+  name: string;
+  key: string | undefined;
+  ancestors: CategoryReference[] | [];
+  parent: CategoryReference | undefined;
+}
+
+export interface CategoryTree extends Category {
+  subcategories?: Category[];
 }

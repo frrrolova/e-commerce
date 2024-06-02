@@ -1,8 +1,9 @@
 import client from '@/client/client';
-import { Filter, Product } from '@/types';
+import { Category, Filter, Product } from '@/types';
 import { mapProductProjections } from '@/utils/mapProductProjections';
 import { AttributeEnumType } from '@commercetools/platform-sdk';
 import sortMapping from './constants';
+import { mapCategories } from '@/utils/mapCategories';
 
 interface FilterData {
   size: string;
@@ -96,6 +97,17 @@ class CatalogService {
       return filtersData;
     } catch (error) {
       console.error('Error fetching product attributes:', error);
+      throw error;
+    }
+  }
+
+  async fetchCategories(): Promise<Category[]> {
+    try {
+      const response = await client.getClient().categories().get().execute();
+      const categories: Category[] = mapCategories(response.body.results);
+      return categories;
+    } catch (error) {
+      console.error('Error!', error);
       throw error;
     }
   }

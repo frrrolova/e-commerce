@@ -7,10 +7,11 @@ import ProductCard from '@/components/ProductCard/ProductCard';
 import { Filter, Product } from '@/types';
 import FormSelect from '@/components/FormSelect/FormSelect';
 import { SelectChangeEvent } from '@mui/material/Select';
-import { ButtonLabels, PageData, SortOptions, defaultPriceRange } from './constants';
+import { ButtonLabels, PageData, SortOptions, defaultPriceRange, scrollbarStyles } from './constants';
 import useQuery from '@/utils/useQuery';
 import { useNavigate } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
+import CategoriesTree from '@/components/CategoriesTree/CategoriesTree';
 
 function Catalog() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -22,6 +23,7 @@ function Catalog() {
   const [selectedPriceRange, setSelectedPriceRange] = useState<number[]>(defaultPriceRange);
   const [sorting, setSorting] = useState<string>(SortOptions[0].key);
   const [search, setSearch] = useState('');
+  // const [categories, setCategories] = useState<Category[] | null>(null);
 
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
@@ -215,8 +217,22 @@ function Catalog() {
     navigate(`?search=${search}`);
   };
 
+  const onSelectCategory = async (categoryId: string) => {
+    console.log('Category clicked: ', categoryId);
+    if (categoryId === 'all') {
+      loadAllProducts();
+    } else {
+      const productsData = await catalogService.fetchProductsByCategory(categoryId);
+      setProducts(productsData);
+    }
+  };
+
   const drawer = (
-    <Box className={styles.containerFilters} sx={{ overflow: 'auto' }}>
+    <Box className={styles.containerFilters}>
+      <CategoriesTree onSelectCategory={onSelectCategory} />
+
+      <Divider sx={{ mt: 2, mb: 2 }} />
+
       <FormSelect
         label={PageData.SORT_LABEL as string}
         value={sorting}
@@ -285,6 +301,7 @@ function Catalog() {
 
       <Drawer
         variant="permanent"
+        className={styles.containerDrawer}
         sx={{
           display: { xs: 'none', sm: 'block' },
           width: PageData.DRAWER_WIDTH,
@@ -293,9 +310,11 @@ function Catalog() {
             zIndex: 1099,
             top: PageData.DRAWER_TOP,
             width: PageData.DRAWER_WIDTH,
+            maxHeight: 'calc(100% - 70px)',
             boxSizing: 'border-box',
-            padding: '1.5rem',
+            padding: '0 1.5rem 1.5rem 1.5rem',
             backgroundColor: 'transparent',
+            ...scrollbarStyles,
           },
         }}
         open
