@@ -16,6 +16,7 @@ import { AsyncThunkApi } from '@/store/store';
 import { addAddress, changePassword, getUser, updateUser } from '@/services/userService';
 import { UserUpdateData } from '@/types';
 import { AddressTypes } from '@/enums/auth-form.enum';
+import { lsUserKey } from '@/core/commonConstants';
 
 export const userRegistrationThunk = createAsyncThunk('user/registration', (regData: CustomerDraft, thunkAPI) => {
   return client
@@ -24,7 +25,7 @@ export const userRegistrationThunk = createAsyncThunk('user/registration', (regD
     .post({ body: regData })
     .execute()
     .then((resp) => {
-      localStorage.setItem('user', JSON.stringify(resp.body.customer));
+      localStorage.setItem(lsUserKey, JSON.stringify(resp.body.customer));
       thunkAPI.dispatch(setUser(resp.body.customer));
 
       client.initNewClient({
@@ -54,14 +55,14 @@ export const userLoginThunk = createAsyncThunk('user/login', (regData: MyCustome
 
 function handleSuccessfulLoginResponse(email: string, password: string, customer: Customer, thunkAPI: AsyncThunkApi) {
   client.initNewClient({ login: email, password: password, tokenType: LSTokenPrefixes.LOGGED_IN });
-  localStorage.setItem('user', JSON.stringify(customer));
+  localStorage.setItem(lsUserKey, JSON.stringify(customer));
   thunkAPI.dispatch(setUser(customer));
   return client.getClient().me().get().execute(); // doing this for login-token request
 }
 
 export const userGetInfoThunk = createAsyncThunk('user/get-info', () => {
   return getUser().then((resp) => {
-    localStorage.setItem('user', JSON.stringify(resp.body));
+    localStorage.setItem(lsUserKey, JSON.stringify(resp.body));
     return resp;
   });
 });
@@ -69,7 +70,7 @@ export const userGetInfoThunk = createAsyncThunk('user/get-info', () => {
 export const userUpdateThunk = createAsyncThunk('user/update', (updData: UserUpdateData, thunkAPI: AsyncThunkApi) => {
   return updateUser(updData.updAction, updData.version)
     .then((resp) => {
-      localStorage.setItem('user', JSON.stringify(resp.body));
+      localStorage.setItem(lsUserKey, JSON.stringify(resp.body));
       thunkAPI.dispatch(setUser(resp.body));
     })
     .catch((err: ErrorResponse) => {
@@ -91,7 +92,7 @@ export const userAddressUpdateThunk = createAsyncThunk(
   ) => {
     return addAddress(value, version, addressType, isDefault, useAsBoth)
       .then((resp) => {
-        localStorage.setItem('user', JSON.stringify(resp.body));
+        localStorage.setItem(lsUserKey, JSON.stringify(resp.body));
         thunkAPI.dispatch(setUser(resp.body));
       })
       .catch((err: ErrorResponse) => {

@@ -26,12 +26,13 @@ import {
   FieldNames,
   RegistrationErrors,
   RegistrationResultMessages,
-  RegistrationResults,
+  AuthResults,
+  CommonAuthRes,
 } from '@enums/auth-form.enum';
 import { formFieldsConfig } from '@shared/auth-form.constants';
-import { CustomerDraft, ErrorObject } from '@commercetools/platform-sdk';
+import { Customer, CustomerDraft, ErrorObject } from '@commercetools/platform-sdk';
 import { userRegistrationThunk } from '@store/slices/user/thunks';
-import { clearError } from '@/store/slices/user/userSlice';
+import { clearError, setUser } from '@/store/slices/user/userSlice';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { Paths } from '@/routes/routeConstants';
 import { useSnackbar } from 'notistack';
@@ -39,6 +40,7 @@ import { countriesList } from './constants';
 import AddressGroup from '@components/AddressGroup/AddressGroup';
 import { snackbarBasicParams } from '@/shared/snackbarConstans';
 import { getFormattedDateValue } from '@/utils/getFormattedDateValue';
+import { lsUserKey } from '@/core/commonConstants';
 
 function RegistrationForm() {
   const dispatch = useAppDispatch();
@@ -77,6 +79,17 @@ function RegistrationForm() {
     isInitialValid: false,
     validationSchema: SignupSchema,
     onSubmit: (values) => {
+      const currentUserStr = localStorage.getItem(lsUserKey);
+      if (currentUserStr) {
+        const currentUser: Customer = JSON.parse(currentUserStr);
+        dispatch(setUser(currentUser));
+        navigate(Paths.HOME);
+        enqueueSnackbar(`${CommonAuthRes.ALREADY_LOGGED_IN} ${currentUser.email}`, {
+          variant: AuthResults.WARN,
+          ...snackbarBasicParams,
+        });
+        return;
+      }
       const dateValue = getFormattedDateValue(values[FieldNames.DATE_OF_BIRTH]);
       const newCustomerData: CustomerDraft = {
         email: values[FieldNames.EMAIL],
@@ -114,7 +127,7 @@ function RegistrationForm() {
         .unwrap()
         .then(() => {
           enqueueSnackbar(RegistrationResultMessages.SUCCESS, {
-            variant: RegistrationResults.SUCCESS,
+            variant: AuthResults.SUCCESS,
             ...snackbarBasicParams,
           });
         })
@@ -130,7 +143,7 @@ function RegistrationForm() {
                 formik.setFieldError(FieldNames.EMAIL, msg);
               }
               enqueueSnackbar(error.message, {
-                variant: RegistrationResults.ERROR,
+                variant: AuthResults.ERROR,
                 ...snackbarBasicParams,
               });
             });

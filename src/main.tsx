@@ -15,9 +15,5 @@ client
   .get()
   .execute()
   .then((resp) => {
-    ReactDOM.createRoot(root).render(
-      <React.StrictMode>
-        <App project={resp.body} />
-      </React.StrictMode>,
-    );
+    ReactDOM.createRoot(root).render(<App project={resp.body} />);
   });
