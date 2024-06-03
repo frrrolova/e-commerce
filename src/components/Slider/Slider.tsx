@@ -13,15 +13,7 @@ function Slider({ product }: ProductCardProp) {
   if (product.images) {
     if (product.images.length > 1) {
       const slides = product.images.map((slide, index) => {
-        return (
-          <SliderItem
-            key={Date.now() + index + Math.random()}
-            isSlider={true}
-            product={product}
-            url={slide.url}
-            label={slide.label}
-          />
-        );
+        return <SliderItem key={index} isSlider={true} product={product} url={slide.url} label={slide.label} />;
       });
       return (
         <Box

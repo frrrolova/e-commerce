@@ -68,7 +68,7 @@ function SliderItem({ url, label, product, isSlider }: SliderItemProp) {
             height: '100%',
             maxWidth: '100%',
             maxHeight: '100%',
-            objectFit: 'cover',
+            objectFit: 'contain',
             padding: '10px',
           }}
           image={url}
