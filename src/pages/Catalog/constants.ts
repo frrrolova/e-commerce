@@ -30,6 +30,10 @@ export const SortOptions: FilterAttributes[] = [
     key: 'name-asc',
     label: 'Name: A to Z',
   },
+  {
+    key: 'name-desc',
+    label: 'Name: Z to A',
+  },
 ];
 
 export const scrollbarStyles = {
