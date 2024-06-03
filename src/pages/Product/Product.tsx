@@ -42,8 +42,6 @@ function Product() {
           <Container
             sx={{
               display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
               paddingX: '5px',
               paddingY: {
                 xs: '10px',
@@ -77,10 +75,10 @@ function Product() {
               <Box
                 sx={{
                   display: 'flex',
-                  alignItems: {
-                    md: 'center',
-                  },
-                  justifyContent: 'center',
+                  // alignItems: {
+                  //   md: 'center',
+                  // },
+                  // justifyContent: 'center',
                   gap: {
                     xs: '15px',
                     md: '40px',
@@ -100,7 +98,14 @@ function Product() {
                       xs: '7px',
                       md: '14px',
                     },
-                    padding: 3,
+                    padding: {
+                      xs: 3,
+                      md: 2,
+                    },
+                    paddingRight: {
+                      xs: 3,
+                      md: 0,
+                    },
                   }}
                 >
                   <Box
