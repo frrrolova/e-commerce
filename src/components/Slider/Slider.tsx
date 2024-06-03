@@ -27,18 +27,31 @@ function Slider({ product }: ProductCardProp) {
         <Box
           sx={{
             maxWidth: {
-              xs: '90%',
-              sm: '60%',
+              xs: '80%',
+              sm: '50%',
             },
+            flexBasis: '50%',
           }}
         >
-          <Carousel autoPlay showThumbs={false} showStatus={false}>
+          <Carousel showThumbs={false} showStatus={false}>
             {slides}
           </Carousel>
         </Box>
       );
     }
-    return <SliderItem isSlider={true} product={product} url={product.images[0].url} label={product.images[0].label} />;
+    return (
+      <Box
+        sx={{
+          maxWidth: {
+            xs: '80%',
+            sm: '59%',
+          },
+          flexBasis: '50%',
+        }}
+      >
+        <SliderItem isSlider={true} product={product} url={product.images[0].url} label={product.images[0].label} />
+      </Box>
+    );
   } else {
     return <SliderItem isSlider={false} product={product} url={Placeholder} label={'Plant'} />;
   }

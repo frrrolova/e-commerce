@@ -16,65 +16,121 @@ interface SlideModalProp {
 
 function SingleModal({ open, handleClose, url, label, isSlider, slides }: SlideModalProp) {
   const boxPadding = isSlider ? 0 : 1;
-  return (
-    <Modal
-      open={open}
-      onClose={handleClose}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-    >
-      <Box
-        sx={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          width: {
-            xs: '90%',
-            sm: '85%',
-          },
-          maxWidth: {
-            xs: '400px',
-            sm: '600px',
-          },
-          bgcolor: 'background.paper',
-          border: '2px solid gray',
-          boxShadow: 24,
-          p: boxPadding,
-        }}
+  if (isSlider) {
+    return (
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
       >
-        {isSlider && (
-          <Carousel autoPlay showThumbs={false} showStatus={false}>
-            {slides}
-          </Carousel>
-        )}
         <Box
-          onClick={handleClose}
           sx={{
             position: 'absolute',
-            top: '10px',
-            right: '25px',
-            cursor: 'pointer',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: {
+              xs: '90%',
+              sm: '85%',
+            },
+            maxWidth: {
+              xs: '400px',
+              sm: '600px',
+            },
+            maxHeight: {
+              xs: '400px',
+              sm: '600px',
+            },
+            bgcolor: 'background.paper',
+            border: '2px solid gray',
+            boxShadow: 24,
+            p: boxPadding,
           }}
         >
-          <CloseIcon />
+          <Carousel showThumbs={false} showStatus={false}>
+            {slides}
+          </Carousel>
+          <Box
+            onClick={handleClose}
+            sx={{
+              position: 'absolute',
+              top: '10px',
+              right: '10px',
+              cursor: 'pointer',
+              zIndex: '100',
+            }}
+          >
+            <CloseIcon />
+          </Box>
         </Box>
-        {!isSlider && (
+      </Modal>
+    );
+  } else {
+    return (
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: {
+              xs: '250px',
+              sm: '400px',
+            },
+            height: {
+              xs: '250px',
+              sm: '400px',
+            },
+            maxWidth: {
+              xs: '400px',
+              sm: '600px',
+            },
+            maxHeight: {
+              xs: '400px',
+              sm: '600px',
+            },
+            bgcolor: 'background.paper',
+            border: '2px solid gray',
+            boxShadow: 24,
+            p: boxPadding,
+          }}
+        >
+          <Box
+            onClick={handleClose}
+            sx={{
+              position: 'absolute',
+              top: '10px',
+              right: '10px',
+              zIndex: '100',
+              cursor: 'pointer',
+            }}
+          >
+            <CloseIcon />
+          </Box>
           <CardMedia
             component="img"
             style={{
-              width: '95%',
-              height: '95%',
+              width: '100%',
+              height: '100%',
+              maxWidth: '100%',
+              maxHeight: '100%',
               objectFit: 'cover',
-              padding: '30px',
+              padding: '10px',
             }}
             image={url}
             alt={label}
           />
-        )}
-      </Box>
-    </Modal>
-  );
+        </Box>
+      </Modal>
+    );
+  }
 }
 
 export default SingleModal;

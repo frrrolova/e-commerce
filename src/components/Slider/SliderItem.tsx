@@ -24,6 +24,8 @@ function SliderItem({ url, label, product, isSlider }: SliderItemProp) {
     <Box
       onClick={handleOpen}
       sx={{
+        width: '100%',
+        height: '100%',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
@@ -39,17 +41,40 @@ function SliderItem({ url, label, product, isSlider }: SliderItemProp) {
       }}
     >
       {isSlider && <SliderModal open={open} handleClose={handleClose} product={product} />}
-      <CardMedia
-        component="img"
-        style={{
-          width: '80%',
-          height: '80%',
-          objectFit: 'cover',
-          padding: '30px',
+      <Box
+        sx={{
+          maxWidth: {
+            xs: '250px',
+            sm: '400px',
+          },
+          maxHeight: {
+            xs: '250px',
+            sm: '400px',
+          },
+          width: {
+            xs: '250px',
+            sm: '400px',
+          },
+          height: {
+            xs: '250px',
+            sm: '400px',
+          },
         }}
-        image={url}
-        alt={label}
-      />
+      >
+        <CardMedia
+          component="img"
+          style={{
+            width: '100%',
+            height: '100%',
+            maxWidth: '100%',
+            maxHeight: '100%',
+            objectFit: 'cover',
+            padding: '10px',
+          }}
+          image={url}
+          alt={label}
+        />
+      </Box>
     </Box>
   );
 }

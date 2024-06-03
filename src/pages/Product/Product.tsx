@@ -35,21 +35,26 @@ function Product() {
   if (product) {
     return (
       <>
-        <Box>
+        <Box
+          sx={{
+            width: '100%',
+            margin: '0 auto',
+          }}
+        >
           <Container
             sx={{
+              maxWidth: '80%',
+              margin: '0 auto',
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-              paddingX: '5px',
-              paddingY: {
-                xs: '30px',
-                sm: '50px',
-              },
             }}
           >
             <Card
               sx={{
+                maxWidth: '95%',
+                width: '95%',
+                margin: '0 auto',
                 paddingX: {
                   xs: '30px',
                   sm: '20px',
@@ -59,6 +64,8 @@ function Product() {
             >
               <Box
                 sx={{
+                  width: '100%',
+                  margin: '0 auto',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
@@ -70,7 +77,7 @@ function Product() {
                 }}
               >
                 <Slider product={product} />
-                <CardContent>
+                <CardContent sx={{ flexBasis: '50%' }}>
                   <Typography gutterBottom variant="h3" component="div">
                     {product.name}
                   </Typography>
