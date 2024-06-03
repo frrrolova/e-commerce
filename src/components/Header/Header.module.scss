@@ -1,4 +1,4 @@
-@import '../../styles/variables.scss';
+@import '../../styles/variables';
 
 .header {
   .logoBox {
@@ -29,7 +29,7 @@
     padding: 8px;
   }
 
-  &[data-scrolled="true"] {
+  &[data-scrolled='true'] {
     background-color: $paper-color;
     opacity: 0.8;
   }
@@ -59,9 +59,9 @@
   .activeMenuItem {
     color: $border-green-color;
   }
-  
+
   .activeMenuItem::after {
-    width: 100%!important;
+    width: 100% !important;
   }
 }
 

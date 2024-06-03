@@ -6,24 +6,21 @@ import SignupLoginSchema from '../../core/loginValidation';
 import { useState, useEffect } from 'react';
 import FormTextInput from '../FormTextInput/FormTextInput';
 import { formFieldsConfig } from '../../shared/auth-form.constants';
-import { FieldNames, LoginErrors, LoginResultMessages, LoginResults } from '@enums/auth-form.enum';
-import { MyCustomerDraft, ErrorObject } from '@commercetools/platform-sdk';
+import { FieldNames, LoginErrors, LoginResultMessages, AuthResults, CommonAuthRes } from '@enums/auth-form.enum';
+import { MyCustomerDraft, ErrorObject, Customer } from '@commercetools/platform-sdk';
 import { userLoginThunk } from '@/store/slices/user/thunks';
 import { useAppSelector, useAppDispatch } from '@/store/store';
-import { clearError } from '@/store/slices/user/userSlice';
+import { clearError, setUser } from '@/store/slices/user/userSlice';
 import { useSnackbar } from 'notistack';
 import { Link as RouterLink } from 'react-router-dom';
 import { Paths } from '@/routes/routeConstants';
 import { useNavigate } from 'react-router-dom';
-
-const snackbarBasicParams = {
-  style: { width: '300px' },
-  anchorOrigin: { vertical: 'top' as const, horizontal: 'center' as const },
-};
+import { snackbarBasicParams } from '@/shared/snackbarConstans';
+import { lsUserKey } from '@/core/commonConstants';
 
 function LoginForm() {
   const dispatch = useAppDispatch();
-  const isPending = useAppSelector((state) => state.user.isPending);
+  const isPending = useAppSelector((state) => state.user.isAuthPending);
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
 
@@ -40,6 +37,17 @@ function LoginForm() {
     validateOnMount: true,
     validationSchema: SignupLoginSchema,
     onSubmit: (values) => {
+      const currentUserStr = localStorage.getItem(lsUserKey);
+      if (currentUserStr) {
+        const currentUser: Customer = JSON.parse(currentUserStr);
+        dispatch(setUser(currentUser));
+        navigate(Paths.HOME);
+        enqueueSnackbar(`${CommonAuthRes.ALREADY_LOGGED_IN} ${currentUser.email}`, {
+          variant: AuthResults.WARN,
+          ...snackbarBasicParams,
+        });
+        return;
+      }
       const newCustomerData: MyCustomerDraft = {
         email: values[FieldNames.EMAIL],
         password: values[FieldNames.PASSWORD],
@@ -48,7 +56,7 @@ function LoginForm() {
         .unwrap()
         .then(() => {
           enqueueSnackbar(LoginResultMessages.SUCCESS, {
-            variant: LoginResults.SUCCESS,
+            variant: AuthResults.SUCCESS,
             ...snackbarBasicParams,
           });
         })
@@ -59,13 +67,12 @@ function LoginForm() {
           const errors: ErrorObject[] = e.body?.errors;
           if (errors) {
             errors.forEach((error: ErrorObject) => {
-              console.log(error.code);
               if (error.code === LoginErrors.NOT_FOUND) {
                 const msg = `${error.message} ${LoginResultMessages.NOT_FOUND}`;
                 formik.setFieldError(FieldNames.EMAIL, msg);
               }
               enqueueSnackbar(error.message, {
-                variant: LoginResults.ERROR,
+                variant: AuthResults.ERROR,
                 ...snackbarBasicParams,
               });
             });

@@ -1,4 +1,5 @@
-@import './variables.scss';
+@import '_variables';
+@import '_mixins';
 
 header + div {
   padding-top: $height-header;
@@ -7,4 +8,32 @@ header + div {
 
 #root {
   position: relative;
+}
+
+.strikethrough {
+  text-decoration: line-through;
+}
+
+.carousel.carousel-slider .control-arrow {
+  &:hover {
+    background: transparent !important;
+
+    &.control-next.control-arrow:before {
+      border-left: 8px solid green;
+    }
+
+    &.control-prev.control-arrow:before {
+      border-right: 8px solid green;
+    }
+  }
+}
+
+// .slide {
+//   &:hover {
+//     background-color: '#323d2d';
+//   }
+// }
+
+.carousel:hover .MuiPaper-root {
+  background-color: #5257502e;
 }

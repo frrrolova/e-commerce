@@ -6,7 +6,7 @@ export enum FieldNames {
   DATE_OF_BIRTH = 'dateOfBirth',
   COUNTRY = 'country',
   CITY = 'city',
-  STREET = 'street',
+  STREET = 'streetName',
   BUILDING = 'building',
   APARTMENT = 'apartment',
   POSTAL_CODE = 'postalCode',
@@ -28,9 +28,10 @@ export enum ValidationErrors {
   ONLY_LETTERS_AND_NUMBERS = 'Should contain only English letters and numbers',
 }
 
-export enum RegistrationResults {
+export enum AuthResults {
   SUCCESS = 'success',
   ERROR = 'error',
+  WARN = 'warning',
 }
 export enum RegistrationResultMessages {
   SUCCESS = 'Successful Registration!',
@@ -41,10 +42,6 @@ export enum RegistrationErrors {
   ALREADY_EXIST = 'DuplicateField',
 }
 
-export enum LoginResults {
-  SUCCESS = 'success',
-  ERROR = 'error',
-}
 export enum LoginResultMessages {
   SUCCESS = 'Successful Authentication!',
   NOT_FOUND = 'Please, check the entered data.',
@@ -52,4 +49,8 @@ export enum LoginResultMessages {
 
 export enum LoginErrors {
   NOT_FOUND = 'InvalidCredentials',
+}
+
+export enum CommonAuthRes {
+  ALREADY_LOGGED_IN = 'Already logged in as ',
 }

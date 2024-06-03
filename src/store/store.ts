@@ -17,7 +17,7 @@ const initStore = (project: Project) =>
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({
         serializableCheck: false,
-      }), // here will be middleware for asynk side effects
+      }),
   });
 
 export type RootState = ReturnType<ReturnType<typeof initStore>['getState']>;

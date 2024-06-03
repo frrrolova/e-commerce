@@ -1,78 +1,117 @@
-import { Customer, ErrorObject, ErrorResponse } from '@commercetools/platform-sdk';
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-// import { userRegistrationThunk } from './thunks';
+import { ClientResponse, Customer, ErrorObject, ErrorResponse } from '@commercetools/platform-sdk';
+import { Draft, PayloadAction, createSlice } from '@reduxjs/toolkit';
 import client from '@/client/client';
 import { LSTokenPrefixes } from '@/enums/ls.enums';
-import { userRegistrationThunk, userLoginThunk } from './thunks';
+import {
+  userRegistrationThunk,
+  userLoginThunk,
+  userGetInfoThunk,
+  userUpdateThunk,
+  userAddressUpdateThunk,
+  changePasswordThunk,
+} from './thunks';
+import { lsUserKey } from '@/core/commonConstants';
 
 export interface UserState {
   user: Customer | null;
-  error: string;
-  isPending: boolean;
+  authError: string;
+  userUpdateError: string;
+  isAuthPending: boolean;
+  isUserDataLoading: boolean;
 }
 
-const userFromLS = localStorage.getItem('user');
+const userFromLS = localStorage.getItem(lsUserKey);
+
+const handleRejection = (
+  errorFieldToUpdate: keyof Pick<typeof initialState, 'authError' | 'userUpdateError'>,
+  state: Draft<UserState>,
+  action: PayloadAction<ErrorResponse>,
+) => {
+  const payload = action.payload;
+  const err: ErrorObject | null = payload.errors?.[0] || null;
+  if (err) {
+    state[errorFieldToUpdate] = err.message ?? '';
+  }
+};
 
 const initialState: UserState = {
   user: userFromLS ? JSON.parse(userFromLS) : null,
-  error: '',
-  isPending: false,
+  authError: '',
+  userUpdateError: '',
+  isAuthPending: false,
+  isUserDataLoading: false,
 };
 
 export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setUser: (state, action: PayloadAction<Customer>) => {
+    setUser: (state, action: PayloadAction<Customer | null>) => {
       state.user = action.payload;
     },
     clearError: (state) => {
-      state.error = '';
+      state.authError = '';
+      state.userUpdateError = '';
     },
     logout: (state) => {
       state.user = null;
       localStorage.removeItem(`${LSTokenPrefixes.LOGGED_IN}_token`);
-      localStorage.removeItem('user');
+      localStorage.removeItem(lsUserKey);
       client.clearCurrentClient();
     },
   },
   extraReducers: (builder) => {
     builder
+      // registration
       .addCase(userRegistrationThunk.pending, (state) => {
-        state.error = '';
-        state.isPending = true;
+        state.authError = '';
+        state.isAuthPending = true;
       })
       .addCase(userRegistrationThunk.fulfilled, (state) => {
-        state.isPending = false;
+        state.isAuthPending = false;
         // update state with user or credentials
       })
       .addCase(userRegistrationThunk.rejected, (state, action) => {
-        state.isPending = false;
+        state.isAuthPending = false;
 
         if (action.error) {
-          state.error = action.error.message || '';
+          state.authError = action.error.message || '';
         } else {
-          const payload = action.payload as ErrorResponse;
-          const err: ErrorObject | null = payload.errors?.[0] || null;
-          if (err) {
-            state.error = err.message ?? '';
-          }
+          handleRejection('authError', state, action as PayloadAction<ErrorResponse>);
         }
       })
+      // login
       .addCase(userLoginThunk.pending, (state) => {
-        state.error = '';
-        state.isPending = true;
+        state.authError = '';
+        state.isAuthPending = true;
       })
       .addCase(userLoginThunk.fulfilled, (state) => {
-        state.isPending = false;
+        state.isAuthPending = false;
       })
       .addCase(userLoginThunk.rejected, (state, action) => {
-        state.isPending = false;
-        const payload = action.payload as ErrorResponse;
-        const err: ErrorObject | null = payload.errors?.[0] || null;
-        if (err) {
-          state.error = err.message ?? '';
-        }
+        state.isAuthPending = false;
+        handleRejection('authError', state, action as PayloadAction<ErrorResponse>);
+      })
+      // get User info
+      .addCase(userGetInfoThunk.pending, (state) => {
+        state.isUserDataLoading = true;
+      })
+      .addCase(userGetInfoThunk.fulfilled, (state, action: PayloadAction<ClientResponse<Customer>>) => {
+        state.isUserDataLoading = false;
+        state.user = action.payload.body;
+      })
+      .addCase(userGetInfoThunk.rejected, (state) => {
+        state.isUserDataLoading = false;
+      })
+      // upd User
+      .addCase(userUpdateThunk.rejected, (state, action) => {
+        handleRejection('userUpdateError', state, action as PayloadAction<ErrorResponse>);
+      })
+      .addCase(userAddressUpdateThunk.rejected, (state, action) => {
+        handleRejection('userUpdateError', state, action as PayloadAction<ErrorResponse>);
+      })
+      .addCase(changePasswordThunk.rejected, (state, action) => {
+        handleRejection('userUpdateError', state, action as PayloadAction<ErrorResponse>);
       });
   },
 });

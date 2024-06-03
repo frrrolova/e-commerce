@@ -52,8 +52,31 @@
     }
 
     &:hover {
+      cursor: pointer;
+      background-color: #323d2d;
+      transition: all 500ms ease-in-out;
       .image {
         transform: scale(1.05);
+      }
+    }
+
+    .description {
+      min-width: 100%;
+    }
+
+    .bottomContent {
+      display: flex;
+      align-items: center;
+      position: absolute;
+      bottom: 1.75rem;
+      left: 1.5rem;
+
+      .discount {
+        font-size: larger;
+        line-height: 1.5rem;
+        font-weight: bold;
+        color: $border-green-color;
+        border-right: 2px solid $border-light-color;
       }
     }
   }
