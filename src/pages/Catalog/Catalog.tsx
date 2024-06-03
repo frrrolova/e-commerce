@@ -1,16 +1,28 @@
 import styles from './Catalog.module.scss';
 import { catalogService } from '@/services/catalogService';
-import { useEffect, useState } from 'react';
+import { SyntheticEvent, useEffect, useState } from 'react';
 import Grid from '@mui/material/Unstable_Grid2';
-import { Typography, Box, Button, Drawer, Slider, Divider, TextField, IconButton } from '@mui/material';
+import {
+  Typography,
+  Box,
+  Button,
+  Drawer,
+  Slider,
+  Divider,
+  TextField,
+  IconButton,
+  Breadcrumbs,
+  Link,
+} from '@mui/material';
 import ProductCard from '@/components/ProductCard/ProductCard';
-import { Filter, Product } from '@/types';
+import { Category, Filter, FilterData, FilterDataUrl, Product } from '@/types';
 import FormSelect from '@/components/FormSelect/FormSelect';
 import { SelectChangeEvent } from '@mui/material/Select';
-import { ButtonLabels, PageData, SortOptions, defaultPriceRange } from './constants';
+import { ButtonLabels, PageData, SortOptions, defaultPriceRange, scrollbarStyles } from './constants';
 import useQuery from '@/utils/useQuery';
 import { useNavigate } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
+import CategoriesTree from '@/components/CategoriesTree/CategoriesTree';
 
 function Catalog() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -22,6 +34,8 @@ function Catalog() {
   const [selectedPriceRange, setSelectedPriceRange] = useState<number[]>(defaultPriceRange);
   const [sorting, setSorting] = useState<string>(SortOptions[0].key);
   const [search, setSearch] = useState('');
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const [breadcrumbs, setBreadcrumbs] = useState<Category[]>([]);
 
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
@@ -41,10 +55,7 @@ function Catalog() {
     }
   };
 
-  const loadFilteredProducts = async (
-    filters: { size: string; color: string; price: number[] },
-    sort = SortOptions[0].key,
-  ) => {
+  const loadFilteredProducts = async (filters: FilterData, sort = SortOptions[0].key) => {
     try {
       setIsLoading(true);
       const filteredProducts = await catalogService.fetchProducts({
@@ -73,6 +84,47 @@ function Catalog() {
     }
   };
 
+  const fetchBreadcrumbs = async (categoryId: string | null) => {
+    if (!categoryId) {
+      setBreadcrumbs([]);
+      return;
+    }
+
+    const crumbs = [];
+    try {
+      const categoriesData = await catalogService.fetchCategories();
+      console.log('++++categoriesData: ', categoriesData);
+      let currCat = categoriesData.find((category) => category.id === categoryId);
+
+      if (!currCat) {
+        setError('Category not found');
+        return;
+      }
+
+      crumbs.unshift(currCat);
+      console.log('++++crumbs: ', crumbs);
+      let currParent = currCat.parent;
+      while (currParent?.id) {
+        currCat = categoriesData.find((category) => category.id === currParent?.id);
+        if (currCat) {
+          crumbs.unshift(currCat);
+          currParent = currCat.parent;
+        } else {
+          break;
+        }
+      }
+      console.log('++++crumbs: ', crumbs);
+      setBreadcrumbs(crumbs);
+    } catch (err) {
+      setError('Failed to fetch breadcrumb data');
+      console.log('Failed to fetch breadcrumb data');
+    }
+  };
+
+  useEffect(() => {
+    fetchBreadcrumbs(activeCategory);
+  }, [activeCategory]);
+
   useEffect(() => {
     const loadFilters = async () => {
       try {
@@ -89,38 +141,71 @@ function Catalog() {
     let price: number[] = defaultPriceRange;
     let sort: string = SortOptions[0].key;
     let search: string = '';
+    let filter: string = '';
 
-    const setFiltersFromUrl = () => {
-      search = query.get('search') || '';
-      size = query.get('size') || '';
-      color = query.get('color') || '';
-      price = query.get('price')?.split(',').map(Number) || defaultPriceRange;
-      sort = query.get('sort') || SortOptions[0].key;
-      sort = query.get('sort') || SortOptions[0].key;
+    const setFiltersFromUrl = async () => {
+      try {
+        search = query.get('search') || '';
+        size = query.get('size') || '';
+        color = query.get('color') || '';
+        price = query.get('price')?.split(',').map(Number) || defaultPriceRange;
+        sort = query.get('sort') || SortOptions[0].key;
+        filter = query.get('filter') || '';
+        console.log('filter: ', filter);
+        if (size) {
+          setSelectedSize(size);
+        }
+        if (color) {
+          setSelectedColor(color);
+        }
+        if (price) {
+          setSelectedPriceRange(price);
+        }
+        if (sort) {
+          setSorting(sort);
+        }
+        if (search) {
+          setSearch(search);
+        }
+        if (filter) {
+          setActiveCategory(filter);
+          fetchBreadcrumbs(filter);
+        }
+      } catch (err) {
+        setError('Failed to fetch url params');
+        console.log('Failed to fetch url params');
+      }
+    };
 
-      if (size) setSelectedSize(size);
-      if (color) setSelectedColor(color);
-      if (price) setSelectedPriceRange(price);
-      if (sort) setSorting(sort);
-      if (search) setSearch(search);
+    const fetchInitialProducts = async () => {
+      const search = query.get('search') || '';
+      const size = query.get('size') || '';
+      const color = query.get('color') || '';
+      const price = query.get('price')?.split(',').map(Number) || defaultPriceRange;
+      const sort = query.get('sort') || SortOptions[0].key;
+      const filter = query.get('filter') || '';
+
+      if (search) {
+        loadSearchResults(search);
+      } else if (
+        filter ||
+        size ||
+        color ||
+        (price && (price[0] !== defaultPriceRange[0] || price[1] !== defaultPriceRange[1]))
+      ) {
+        loadFilteredProducts({ size, color, price, categoryId: filter }, sort);
+      } else {
+        loadAllProducts(sort);
+      }
     };
 
     loadFilters();
-
-    // Load filter values from URL
     setFiltersFromUrl();
-
-    if (search) {
-      loadSearchResults(search);
-    } else if (size || color || (price && (price[0] !== selectedPriceRange[0] || price[1] !== selectedPriceRange[1]))) {
-      loadFilteredProducts({ size, color, price }, sort);
-    } else {
-      loadAllProducts(sort);
-    }
+    fetchInitialProducts();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const updateUrlWithFilters = (filters: { size: string; color: string; price: number[]; sort: string }) => {
+  const updateUrlWithFilters = (filters: FilterDataUrl) => {
     const queryParams = [];
     if (filters.size) {
       queryParams.push(`size=${filters.size}`);
@@ -134,6 +219,9 @@ function Catalog() {
     if (filters.sort) {
       queryParams.push(`sort=${filters.sort}`);
     }
+    if (filters.categoryId) {
+      queryParams.push(`filter=${filters.categoryId}`);
+    }
     if (search) {
       queryParams.push(`search=${search}`);
     }
@@ -143,8 +231,17 @@ function Catalog() {
   const handleSorting = (event: SelectChangeEvent) => {
     const newSort = event.target.value;
     setSorting(newSort);
-    loadFilteredProducts({ size: selectedSize, color: selectedColor, price: selectedPriceRange }, newSort);
-    updateUrlWithFilters({ size: selectedSize, color: selectedColor, price: selectedPriceRange, sort: newSort });
+    loadFilteredProducts(
+      { size: selectedSize, color: selectedColor, price: selectedPriceRange, categoryId: activeCategory },
+      newSort,
+    );
+    updateUrlWithFilters({
+      size: selectedSize,
+      color: selectedColor,
+      price: selectedPriceRange,
+      categoryId: activeCategory,
+      sort: newSort,
+    });
   };
 
   const handleSize = (event: SelectChangeEvent) => {
@@ -160,9 +257,18 @@ function Catalog() {
   };
 
   const applyFilters = async () => {
-    loadFilteredProducts({ size: selectedSize, color: selectedColor, price: selectedPriceRange }, sorting);
+    loadFilteredProducts(
+      { size: selectedSize, color: selectedColor, price: selectedPriceRange, categoryId: activeCategory },
+      sorting,
+    );
 
-    updateUrlWithFilters({ size: selectedSize, color: selectedColor, price: selectedPriceRange, sort: sorting });
+    updateUrlWithFilters({
+      size: selectedSize,
+      color: selectedColor,
+      price: selectedPriceRange,
+      sort: sorting,
+      categoryId: activeCategory,
+    });
   };
 
   if (error) return <Typography color="error">{error}</Typography>;
@@ -186,8 +292,9 @@ function Catalog() {
     setSelectedSize('');
     setSelectedColor('');
     setSelectedPriceRange(defaultPriceRange);
-    navigate('');
-    loadAllProducts();
+    navigate(`?filter=${activeCategory}`);
+    // loadAllProducts();
+    loadFilteredProducts({ size: '', color: '', price: defaultPriceRange, categoryId: activeCategory }, sorting);
   };
 
   const clearSearch = async () => {
@@ -202,6 +309,7 @@ function Catalog() {
     setSelectedSize('');
     setSelectedColor('');
     setSelectedPriceRange(defaultPriceRange);
+    setActiveCategory(null);
 
     try {
       const results = await catalogService.fetchProducts({ search });
@@ -215,8 +323,48 @@ function Catalog() {
     navigate(`?search=${search}`);
   };
 
+  const onSelectCategory = async (categoryId: string) => {
+    console.log('Category clicked: ', categoryId);
+    if (categoryId === 'all') {
+      loadAllProducts();
+      setActiveCategory(null);
+      navigate('');
+    } else {
+      const productsData = await catalogService.fetchProductsByCategory(categoryId);
+      setProducts(productsData);
+      setActiveCategory(categoryId);
+
+      navigate(`?filter=${categoryId}`);
+    }
+  };
+
+  const handleBreadcrumbClick = (category: Category) => (e: SyntheticEvent) => {
+    e.preventDefault();
+    setActiveCategory(category.id);
+    updateUrlWithFilters({
+      categoryId: category.id,
+      size: selectedSize,
+      color: selectedColor,
+      price: selectedPriceRange,
+      sort: sorting,
+    });
+    loadFilteredProducts(
+      {
+        size: selectedSize,
+        color: selectedColor,
+        price: selectedPriceRange,
+        categoryId: category.id,
+      },
+      sorting,
+    );
+  };
+
   const drawer = (
-    <Box className={styles.containerFilters} sx={{ overflow: 'auto' }}>
+    <Box className={styles.containerFilters}>
+      <CategoriesTree onSelectCategory={onSelectCategory} activeCategory={activeCategory} />
+
+      <Divider sx={{ mt: 2, mb: 2 }} />
+
       <FormSelect
         label={PageData.SORT_LABEL as string}
         value={sorting}
@@ -227,7 +375,9 @@ function Catalog() {
       <Divider sx={{ mt: 2, mb: 2 }} />
 
       {/* Filters */}
-      <Typography variant="body2">Filters:</Typography>
+      <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.7)' }}>
+        Filters:
+      </Typography>
       {filters && (
         <>
           <FormSelect
@@ -285,6 +435,7 @@ function Catalog() {
 
       <Drawer
         variant="permanent"
+        className={styles.containerDrawer}
         sx={{
           display: { xs: 'none', sm: 'block' },
           width: PageData.DRAWER_WIDTH,
@@ -293,9 +444,11 @@ function Catalog() {
             zIndex: 1099,
             top: PageData.DRAWER_TOP,
             width: PageData.DRAWER_WIDTH,
+            maxHeight: 'calc(100% - 70px)',
             boxSizing: 'border-box',
-            padding: '1.5rem',
+            padding: '0 1.5rem 1.5rem 1.5rem',
             backgroundColor: 'transparent',
+            ...scrollbarStyles,
           },
         }}
         open
@@ -304,6 +457,25 @@ function Catalog() {
       </Drawer>
 
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+        <Grid container xs={12} sx={{ mb: 2 }}>
+          <Grid>
+            {breadcrumbs.length > 0 && (
+              <Breadcrumbs aria-label="breadcrumb">
+                {breadcrumbs.map((category, index) => (
+                  <Link
+                    key={category.id}
+                    underline="hover"
+                    color={index === breadcrumbs.length - 1 ? 'text.primary' : 'inherit'}
+                    href={`/catalog?filter=${category.id}`}
+                    onClick={handleBreadcrumbClick(category)}
+                  >
+                    {category.name}
+                  </Link>
+                ))}
+              </Breadcrumbs>
+            )}
+          </Grid>
+        </Grid>
         <Grid container justifyContent="space-between" sx={{ mb: 3 }}>
           <Grid>
             <Button variant="text" color="primary" onClick={handleDrawerToggle} sx={{ mr: 2, display: { sm: 'none' } }}>

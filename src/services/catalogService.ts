@@ -1,14 +1,9 @@
 import client from '@/client/client';
-import { Filter, Product } from '@/types';
+import { Category, Filter, FilterData, Product } from '@/types';
 import { mapProductProjections } from '@/utils/mapProductProjections';
 import { AttributeEnumType } from '@commercetools/platform-sdk';
 import sortMapping from './constants';
-
-interface FilterData {
-  size: string;
-  color: string;
-  price: number[];
-}
+import { mapCategories } from '@/utils/mapCategories';
 
 class CatalogService {
   async fetchProducts(params?: { filters?: FilterData; sort?: string; search?: string }): Promise<Product[]> {
@@ -23,6 +18,7 @@ class CatalogService {
           queryArgs: {
             limit: 25,
             offset: 0,
+            // where: params?.categoryId ? [`categories(id="${params.categoryId}")`] : [],
             filter: filterStr,
             markMatchingVariants: true,
             sort: params?.sort ? [sortMapping[params.sort]] : [],
@@ -100,6 +96,17 @@ class CatalogService {
     }
   }
 
+  async fetchCategories(): Promise<Category[]> {
+    try {
+      const response = await client.getClient().categories().get().execute();
+      const categories: Category[] = mapCategories(response.body.results);
+      return categories;
+    } catch (error) {
+      console.error('Error!', error);
+      throw error;
+    }
+  }
+
   private buildFilterString(filters: FilterData): string[] {
     const filterStr: string[] = [];
 
@@ -108,6 +115,8 @@ class CatalogService {
         if (key === 'price' && Array.isArray(value)) {
           const [minPrice, maxPrice] = value;
           filterStr.push(`variants.price.centAmount:range(${minPrice * 100} to ${maxPrice * 100})`);
+        } else if (key === 'categoryId') {
+          filterStr.push(`categories.id:subtree("${value}")`);
         } else {
           filterStr.push(`variants.attributes.${key}.key:"${value}"`);
         }

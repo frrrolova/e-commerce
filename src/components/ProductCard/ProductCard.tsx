@@ -37,7 +37,7 @@ function ProductCard({ product }: ProductCardProps) {
               {product.description}
             </Typography>
 
-            <Box className={styles.bottomContent}>
+            {/* <Box className={styles.bottomContent}>
               {!!discountedPrice && (
                 <Typography className={styles.discount} variant="body1" pr={1} mt={1} mr={1}>
                   {discountedPrice} &euro;
@@ -46,8 +46,18 @@ function ProductCard({ product }: ProductCardProps) {
               <Typography className={discountedPrice !== undefined ? 'strikethrough' : ''} variant="body1" mt={1}>
                 {price} &euro;
               </Typography>
-            </Box>
+            </Box> */}
           </Box>
+        </Box>
+        <Box className={styles.bottomContent}>
+          {!!discountedPrice && (
+            <Typography className={styles.discount} variant="body1" pr={1} mt={1} mr={1}>
+              {discountedPrice} &euro;
+            </Typography>
+          )}
+          <Typography className={discountedPrice !== undefined ? 'strikethrough' : ''} variant="body1" mt={1}>
+            {price} &euro;
+          </Typography>
         </Box>
       </Paper>
     </Box>
