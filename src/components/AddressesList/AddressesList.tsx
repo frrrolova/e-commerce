@@ -40,7 +40,7 @@ interface AddressesListProps {
     id?: string,
   ) => void;
   defaultId?: string;
-  onDefaultClick: (id: string) => void;
+  onDefaultClick: (id?: string) => void;
   onRemoveClick: (address: BaseAddress) => void;
 }
 
@@ -130,7 +130,15 @@ function AddressesList({ addresses, type, onSubmit, defaultId, onDefaultClick, o
               }}
             >
               {address.id === defaultId ? (
-                <Chip label="default" size="small" color="primary" />
+                <Chip
+                  clickable={true}
+                  label="default"
+                  size="small"
+                  color="primary"
+                  onClick={() => {
+                    onDefaultClick();
+                  }}
+                />
               ) : (
                 <Chip
                   clickable={true}
