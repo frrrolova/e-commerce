@@ -375,7 +375,9 @@ function Catalog() {
       <Divider sx={{ mt: 2, mb: 2 }} />
 
       {/* Filters */}
-      <Typography variant="body2">Filters:</Typography>
+      <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.7)' }}>
+        Filters:
+      </Typography>
       {filters && (
         <>
           <FormSelect

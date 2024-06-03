@@ -74,7 +74,9 @@ const CategoriesTree: FC<CategoriesTreeProps> = ({ onSelectCategory, activeCateg
 
   return (
     <Stack spacing={1}>
-      <Typography>Categories: </Typography>
+      <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.7)' }}>
+        Categories:{' '}
+      </Typography>
       <Box>
         <SimpleTreeView onItemSelectionToggle={handleItemSelectionToggle} sx={{ maxWidth: '100%' }}>
           <TreeItem
