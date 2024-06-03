@@ -47,3 +47,13 @@ export interface Category {
 export interface CategoryTree extends Category {
   subcategories?: Category[];
 }
+
+export interface FilterData {
+  size: string;
+  color: string;
+  price: number[];
+  categoryId: string | null;
+}
+export interface FilterDataUrl extends FilterData {
+  sort: string;
+}

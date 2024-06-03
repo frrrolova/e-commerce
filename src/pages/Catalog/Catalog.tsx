@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Grid from '@mui/material/Unstable_Grid2';
 import { Typography, Box, Button, Drawer, Slider, Divider, TextField, IconButton } from '@mui/material';
 import ProductCard from '@/components/ProductCard/ProductCard';
-import { Filter, Product } from '@/types';
+import { Filter, FilterData, FilterDataUrl, Product } from '@/types';
 import FormSelect from '@/components/FormSelect/FormSelect';
 import { SelectChangeEvent } from '@mui/material/Select';
 import { ButtonLabels, PageData, SortOptions, defaultPriceRange, scrollbarStyles } from './constants';
@@ -23,7 +23,7 @@ function Catalog() {
   const [selectedPriceRange, setSelectedPriceRange] = useState<number[]>(defaultPriceRange);
   const [sorting, setSorting] = useState<string>(SortOptions[0].key);
   const [search, setSearch] = useState('');
-  // const [categories, setCategories] = useState<Category[] | null>(null);
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
 
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
@@ -43,10 +43,7 @@ function Catalog() {
     }
   };
 
-  const loadFilteredProducts = async (
-    filters: { size: string; color: string; price: number[] },
-    sort = SortOptions[0].key,
-  ) => {
+  const loadFilteredProducts = async (filters: FilterData, sort = SortOptions[0].key) => {
     try {
       setIsLoading(true);
       const filteredProducts = await catalogService.fetchProducts({
@@ -91,38 +88,70 @@ function Catalog() {
     let price: number[] = defaultPriceRange;
     let sort: string = SortOptions[0].key;
     let search: string = '';
+    let filter: string = '';
 
-    const setFiltersFromUrl = () => {
-      search = query.get('search') || '';
-      size = query.get('size') || '';
-      color = query.get('color') || '';
-      price = query.get('price')?.split(',').map(Number) || defaultPriceRange;
-      sort = query.get('sort') || SortOptions[0].key;
-      sort = query.get('sort') || SortOptions[0].key;
+    const setFiltersFromUrl = async () => {
+      try {
+        search = query.get('search') || '';
+        size = query.get('size') || '';
+        color = query.get('color') || '';
+        price = query.get('price')?.split(',').map(Number) || defaultPriceRange;
+        sort = query.get('sort') || SortOptions[0].key;
+        filter = query.get('filter') || '';
+        console.log('filter: ', filter);
+        if (size) {
+          setSelectedSize(size);
+        }
+        if (color) {
+          setSelectedColor(color);
+        }
+        if (price) {
+          setSelectedPriceRange(price);
+        }
+        if (sort) {
+          setSorting(sort);
+        }
+        if (search) {
+          setSearch(search);
+        }
+        if (filter) {
+          setActiveCategory(filter);
+        }
+      } catch (err) {
+        setError('Failed to fetch url params');
+        console.log('Failed to fetch url params');
+      }
+    };
 
-      if (size) setSelectedSize(size);
-      if (color) setSelectedColor(color);
-      if (price) setSelectedPriceRange(price);
-      if (sort) setSorting(sort);
-      if (search) setSearch(search);
+    const fetchInitialProducts = async () => {
+      const search = query.get('search') || '';
+      const size = query.get('size') || '';
+      const color = query.get('color') || '';
+      const price = query.get('price')?.split(',').map(Number) || defaultPriceRange;
+      const sort = query.get('sort') || SortOptions[0].key;
+      const filter = query.get('filter') || '';
+
+      if (search) {
+        loadSearchResults(search);
+      } else if (
+        filter ||
+        size ||
+        color ||
+        (price && (price[0] !== defaultPriceRange[0] || price[1] !== defaultPriceRange[1]))
+      ) {
+        loadFilteredProducts({ size, color, price, categoryId: filter }, sort);
+      } else {
+        loadAllProducts(sort);
+      }
     };
 
     loadFilters();
-
-    // Load filter values from URL
     setFiltersFromUrl();
-
-    if (search) {
-      loadSearchResults(search);
-    } else if (size || color || (price && (price[0] !== selectedPriceRange[0] || price[1] !== selectedPriceRange[1]))) {
-      loadFilteredProducts({ size, color, price }, sort);
-    } else {
-      loadAllProducts(sort);
-    }
+    fetchInitialProducts();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const updateUrlWithFilters = (filters: { size: string; color: string; price: number[]; sort: string }) => {
+  const updateUrlWithFilters = (filters: FilterDataUrl) => {
     const queryParams = [];
     if (filters.size) {
       queryParams.push(`size=${filters.size}`);
@@ -136,6 +165,9 @@ function Catalog() {
     if (filters.sort) {
       queryParams.push(`sort=${filters.sort}`);
     }
+    if (filters.categoryId) {
+      queryParams.push(`filter=${filters.categoryId}`);
+    }
     if (search) {
       queryParams.push(`search=${search}`);
     }
@@ -145,8 +177,17 @@ function Catalog() {
   const handleSorting = (event: SelectChangeEvent) => {
     const newSort = event.target.value;
     setSorting(newSort);
-    loadFilteredProducts({ size: selectedSize, color: selectedColor, price: selectedPriceRange }, newSort);
-    updateUrlWithFilters({ size: selectedSize, color: selectedColor, price: selectedPriceRange, sort: newSort });
+    loadFilteredProducts(
+      { size: selectedSize, color: selectedColor, price: selectedPriceRange, categoryId: activeCategory },
+      newSort,
+    );
+    updateUrlWithFilters({
+      size: selectedSize,
+      color: selectedColor,
+      price: selectedPriceRange,
+      categoryId: activeCategory,
+      sort: newSort,
+    });
   };
 
   const handleSize = (event: SelectChangeEvent) => {
@@ -162,9 +203,18 @@ function Catalog() {
   };
 
   const applyFilters = async () => {
-    loadFilteredProducts({ size: selectedSize, color: selectedColor, price: selectedPriceRange }, sorting);
+    loadFilteredProducts(
+      { size: selectedSize, color: selectedColor, price: selectedPriceRange, categoryId: activeCategory },
+      sorting,
+    );
 
-    updateUrlWithFilters({ size: selectedSize, color: selectedColor, price: selectedPriceRange, sort: sorting });
+    updateUrlWithFilters({
+      size: selectedSize,
+      color: selectedColor,
+      price: selectedPriceRange,
+      sort: sorting,
+      categoryId: activeCategory,
+    });
   };
 
   if (error) return <Typography color="error">{error}</Typography>;
@@ -188,8 +238,9 @@ function Catalog() {
     setSelectedSize('');
     setSelectedColor('');
     setSelectedPriceRange(defaultPriceRange);
-    navigate('');
-    loadAllProducts();
+    navigate(`?filter=${activeCategory}`);
+    // loadAllProducts();
+    loadFilteredProducts({ size: '', color: '', price: defaultPriceRange, categoryId: activeCategory }, sorting);
   };
 
   const clearSearch = async () => {
@@ -204,6 +255,7 @@ function Catalog() {
     setSelectedSize('');
     setSelectedColor('');
     setSelectedPriceRange(defaultPriceRange);
+    setActiveCategory(null);
 
     try {
       const results = await catalogService.fetchProducts({ search });
@@ -224,12 +276,15 @@ function Catalog() {
     } else {
       const productsData = await catalogService.fetchProductsByCategory(categoryId);
       setProducts(productsData);
+      setActiveCategory(categoryId);
+
+      navigate(`?filter=${categoryId}`);
     }
   };
 
   const drawer = (
     <Box className={styles.containerFilters}>
-      <CategoriesTree onSelectCategory={onSelectCategory} />
+      <CategoriesTree onSelectCategory={onSelectCategory} activeCategory={activeCategory} />
 
       <Divider sx={{ mt: 2, mb: 2 }} />
 

@@ -1,15 +1,9 @@
 import client from '@/client/client';
-import { Category, Filter, Product } from '@/types';
+import { Category, Filter, FilterData, Product } from '@/types';
 import { mapProductProjections } from '@/utils/mapProductProjections';
 import { AttributeEnumType } from '@commercetools/platform-sdk';
 import sortMapping from './constants';
 import { mapCategories } from '@/utils/mapCategories';
-
-interface FilterData {
-  size: string;
-  color: string;
-  price: number[];
-}
 
 class CatalogService {
   async fetchProducts(params?: { filters?: FilterData; sort?: string; search?: string }): Promise<Product[]> {
@@ -24,6 +18,7 @@ class CatalogService {
           queryArgs: {
             limit: 25,
             offset: 0,
+            // where: params?.categoryId ? [`categories(id="${params.categoryId}")`] : [],
             filter: filterStr,
             markMatchingVariants: true,
             sort: params?.sort ? [sortMapping[params.sort]] : [],
@@ -120,6 +115,8 @@ class CatalogService {
         if (key === 'price' && Array.isArray(value)) {
           const [minPrice, maxPrice] = value;
           filterStr.push(`variants.price.centAmount:range(${minPrice * 100} to ${maxPrice * 100})`);
+        } else if (key === 'categoryId') {
+          filterStr.push(`categories.id:subtree("${value}")`);
         } else {
           filterStr.push(`variants.attributes.${key}.key:"${value}"`);
         }
