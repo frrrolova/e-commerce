@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Product as ProductType } from '@/types';
 import { productService } from '@/services/productService';
-import { Box, Typography, Button, Container } from '@mui/material';
-import Card from '@mui/material/Card';
+import { Box, Typography, Button, Container, Paper } from '@mui/material';
 import CardContent from '@mui/material/CardContent';
 import { Link as RouterLink, useParams } from 'react-router-dom';
 import { Paths } from '@/routes/routeConstants';
@@ -47,31 +46,48 @@ function Product() {
               alignItems: 'center',
               paddingX: '5px',
               paddingY: {
-                xs: '30px',
-                sm: '50px',
+                xs: '10px',
+                md: '50px',
               },
-              width: '85%',
+              width: {
+                xs: '95%',
+                md: '85%',
+              },
             }}
           >
-            <Card
+            <Paper
+              elevation={3}
               sx={{
+                backgroundColor: 'transparent',
                 paddingX: {
-                  xs: '30px',
-                  sm: '50px',
+                  xs: '10px',
+                  md: '50px',
                 },
-                paddingY: '50px',
+                paddingTop: {
+                  xs: '30px',
+                  md: '50px',
+                },
+                paddingBottom: {
+                  xs: '5px',
+                  md: '50px',
+                },
                 width: '100%',
               }}
             >
               <Box
                 sx={{
                   display: 'flex',
-                  alignItems: 'center',
+                  alignItems: {
+                    md: 'center',
+                  },
                   justifyContent: 'center',
-                  gap: '40px',
+                  gap: {
+                    xs: '15px',
+                    md: '40px',
+                  },
                   flexDirection: {
                     xs: 'column',
-                    sm: 'row',
+                    md: 'row',
                   },
                 }}
               >
@@ -80,53 +96,73 @@ function Product() {
                   sx={{
                     display: 'flex',
                     flexDirection: 'column',
-                    gap: '14px',
+                    gap: {
+                      xs: '7px',
+                      md: '14px',
+                    },
+                    padding: 3,
                   }}
                 >
-                  <Typography gutterBottom variant="h3" component="div">
-                    {product.name}
-                  </Typography>
                   <Box
                     sx={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '20px',
+                      display: {
+                        xs: 'flex',
+                        md: 'block',
+                      },
+                      justifyContent: 'space-between',
+                      flexWrap: 'wrap',
                     }}
                   >
-                    {product.prices![0].discounted ? (
-                      <Typography
-                        gutterBottom
-                        variant="h4"
-                        component="div"
-                        sx={{
-                          fontWeight: 'bold',
-                          color: '#447A14',
-                        }}
-                      >
-                        {product.prices![0].discounted.value.centAmount / 100}
-                        &euro;
-                      </Typography>
-                    ) : (
-                      <Typography gutterBottom variant="h4" component="div">
-                        {product.prices![0].value.centAmount / 100}
-                        &euro;
-                      </Typography>
-                    )}
-                    {product.prices![0].discounted && (
-                      <Typography
-                        gutterBottom
-                        variant="h5"
-                        component="span"
-                        color="text.secondary"
-                        sx={{
-                          display: 'inline',
-                          textDecoration: 'line-through',
-                        }}
-                      >
-                        {product.prices![0].value.centAmount / 100} &euro;
-                      </Typography>
-                    )}
+                    <Typography gutterBottom variant="h3" component="div">
+                      {product.name}
+                    </Typography>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '20px',
+                      }}
+                    >
+                      {product.prices![0].discounted ? (
+                        <Typography
+                          gutterBottom
+                          variant="h4"
+                          component="div"
+                          sx={{
+                            fontWeight: 'bold',
+                            color: '#447A14',
+                            textWrap: 'nowrap',
+                          }}
+                        >
+                          {product.prices![0].discounted.value.centAmount / 100}
+                          &euro;
+                        </Typography>
+                      ) : (
+                        <Typography gutterBottom variant="h4" component="div" sx={{ textWrap: 'nowrap' }}>
+                          {product.prices![0].value.centAmount / 100}
+                          &euro;
+                        </Typography>
+                      )}
+                      {product.prices![0].discounted && (
+                        <Typography
+                          gutterBottom
+                          variant="h5"
+                          component="span"
+                          color="text.secondary"
+                          sx={{
+                            display: 'inline',
+                            textDecoration: 'line-through',
+                            textWrap: 'nowrap',
+                          }}
+                        >
+                          {product.prices![0].value.centAmount / 100} &euro;
+                        </Typography>
+                      )}
+                    </Box>
                   </Box>
+                  <Typography variant="body2" color="text.secondary">
+                    {product.description}
+                  </Typography>
                   <CardActions>
                     <Button variant="outlined" size="small">
                       Buy now
@@ -135,12 +171,9 @@ function Product() {
                       Go back
                     </Button>
                   </CardActions>
-                  <Typography variant="body2" color="text.secondary">
-                    {product.description}
-                  </Typography>
                 </CardContent>
               </Box>
-            </Card>
+            </Paper>
           </Container>
         </Box>
       </>
