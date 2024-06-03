@@ -50,23 +50,25 @@ function Product() {
                 xs: '30px',
                 sm: '50px',
               },
+              width: '85%',
             }}
           >
             <Card
               sx={{
                 paddingX: {
                   xs: '30px',
-                  sm: '20px',
+                  sm: '50px',
                 },
-                paddingY: '15px',
+                paddingY: '50px',
+                width: '100%',
               }}
             >
               <Box
                 sx={{
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'space-between',
-                  gap: '10px',
+                  justifyContent: 'center',
+                  gap: '40px',
                   flexDirection: {
                     xs: 'column',
                     sm: 'row',
@@ -74,7 +76,13 @@ function Product() {
                 }}
               >
                 <Slider product={product} />
-                <CardContent>
+                <CardContent
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '14px',
+                  }}
+                >
                   <Typography gutterBottom variant="h3" component="div">
                     {product.name}
                   </Typography>

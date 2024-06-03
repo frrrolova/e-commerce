@@ -17,13 +17,16 @@ function Slider({ product }: ProductCardProp) {
       return (
         <Box
           sx={{
-            maxWidth: {
-              xs: '90%',
-              sm: '60%',
-            },
+            // maxWidth: {
+            //   xs: '90%',
+            //   sm: '60%',
+            // },
+            width: '355px',
+            // display: 'flex',
+            // justifyContent: 'center',
           }}
         >
-          <Carousel autoPlay showThumbs={false} showStatus={false}>
+          <Carousel showThumbs={false} showStatus={false}>
             {slides}
           </Carousel>
         </Box>
