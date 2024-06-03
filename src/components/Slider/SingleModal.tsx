@@ -1,9 +1,10 @@
-import { Box, Modal } from '@mui/material';
+import { Box, Dialog, useMediaQuery } from '@mui/material';
 import CardMedia from '@mui/material/CardMedia';
 import CloseIcon from '@mui/icons-material/Close';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { Carousel } from 'react-responsive-carousel';
 import { ReactElement } from 'react';
+import styles from './Slider.module.scss';
 
 interface SlideModalProp {
   open: boolean;
@@ -12,39 +13,33 @@ interface SlideModalProp {
   url?: string;
   label?: string | undefined;
   slides?: ReactElement[];
+  size: number;
 }
 
-function SingleModal({ open, handleClose, url, label, isSlider, slides }: SlideModalProp) {
-  const boxPadding = isSlider ? 0 : 1;
+function SingleModal({ open, handleClose, url, label, isSlider, slides, size }: SlideModalProp) {
+  const matchesBigScreen = useMediaQuery('(min-width:600px)');
+  const matchesMidScreen = useMediaQuery('(min-width:400px)');
+
   return (
-    <Modal
+    <Dialog
       open={open}
       onClose={handleClose}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
+      aria-labelledby="product-modal-title"
+      aria-describedby="product-modal-description"
+      slotProps={{
+        root: {
+          className: styles.test,
+        },
+      }}
     >
       <Box
         sx={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          width: {
-            xs: '90%',
-            sm: '85%',
-          },
-          maxWidth: {
-            xs: '400px',
-            sm: '600px',
-          },
           bgcolor: 'background.paper',
-          border: '2px solid gray',
-          boxShadow: 24,
-          p: boxPadding,
+          margin: 0,
         }}
       >
         {isSlider && (
-          <Carousel autoPlay showThumbs={false} showStatus={false}>
+          <Carousel showThumbs={false} showStatus={false} infiniteLoop={true} autoPlay={false} width={size}>
             {slides}
           </Carousel>
         )}
@@ -53,8 +48,9 @@ function SingleModal({ open, handleClose, url, label, isSlider, slides }: SlideM
           sx={{
             position: 'absolute',
             top: '10px',
-            right: '25px',
+            right: '10px',
             cursor: 'pointer',
+            zIndex: 100,
           }}
         >
           <CloseIcon />
@@ -63,17 +59,17 @@ function SingleModal({ open, handleClose, url, label, isSlider, slides }: SlideM
           <CardMedia
             component="img"
             style={{
-              width: '95%',
-              height: '95%',
-              objectFit: 'cover',
-              padding: '30px',
+              width: matchesBigScreen ? '500px' : matchesMidScreen ? '330px' : '280px',
+              height: matchesBigScreen ? '500px' : matchesMidScreen ? '330px' : '280px',
+              objectFit: 'contain',
+              padding: 1,
             }}
             image={url}
             alt={label}
           />
         )}
       </Box>
-    </Modal>
+    </Dialog>
   );
 }
 

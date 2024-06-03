@@ -1,58 +1,69 @@
 import { useState } from 'react';
-import { Box } from '@mui/material';
+import { Box, Paper } from '@mui/material';
 import { Product } from '@/types';
-import CardMedia from '@mui/material/CardMedia';
+// import CardMedia from '@mui/material/CardMedia';
 import SliderModal from './SliderModal';
+// import { imageSizes } from './constants';
 
 interface SliderItemProp {
   product: Product;
   url: string;
   label: string | undefined;
+  width: number;
   isSlider: boolean;
   index?: number;
 }
 
-function SliderItem({ index, url, label, product, isSlider }: SliderItemProp) {
+function SliderItem({ index, url, label, product, isSlider, width }: SliderItemProp) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
     if (open) return;
     setOpen(true);
   };
   const handleClose = () => setOpen(false);
-  const cursor = isSlider ? 'pointer' : 'auto';
-  const hover = isSlider ? 'rgb(22, 45, 20)' : 'rgb(22, 35, 20)';
+
   return (
-    <Box
+    <Paper
+      elevation={3}
       onClick={handleOpen}
       key={index}
       sx={{
+        overflow: 'hidden',
+        backgroundColor: 'transparent',
+        alignSelf: 'center',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        background: 'rgb(22, 35, 20)',
-        border: '1px solid gray',
-        backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08))',
-        cursor: cursor,
-        transition: 'all linear .5s',
-        '&:hover': {
-          background: hover,
-          backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08))',
-        },
+        transition: 'background-color 0.3s ease-in-out',
+        boxShadow: 'none',
+        cursor: 'pointer',
+        width: `${width}px`,
+        minWidth: `${width}px`,
+        height: `${width}px`,
+        // height: {
+        //   xs: imageSizes.smallHeight,
+        //   sm: imageSizes.height,
+        // },
+        // minWidth: {
+        //   xs: imageSizes.smallWidth,
+        //   sm: imageSizes.width,
+        // },
+        padding: 1,
       }}
     >
       {isSlider && <SliderModal open={open} handleClose={handleClose} product={product} />}
-      <CardMedia
+      <Box
         component="img"
-        style={{
-          width: '80%',
-          height: '80%',
-          objectFit: 'cover',
-          padding: '30px',
+        sx={{
+          objectFit: 'contain',
+          width: `${width - 16}px`,
+          height: `${width - 16}px`,
+          flex: 1,
         }}
-        image={url}
+        src={url}
         alt={label}
       />
-    </Box>
+    </Paper>
   );
 }
 
