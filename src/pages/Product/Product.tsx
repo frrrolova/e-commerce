@@ -42,8 +42,6 @@ function Product() {
           <Container
             sx={{
               display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
               paddingX: '5px',
               paddingY: {
                 xs: '10px',
