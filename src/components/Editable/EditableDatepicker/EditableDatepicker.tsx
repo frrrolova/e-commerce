@@ -2,7 +2,7 @@ import { FormHelperText, InputProps, SxProps } from '@mui/material';
 import { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import EditableField from '../Editable/EditableField';
+import EditableField from '../EditableField';
 import dayjs from 'dayjs';
 import { DateField } from '@mui/x-date-pickers';
 

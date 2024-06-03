@@ -1,10 +1,10 @@
-import EditableInput from '@/components/EditableInput/EditableInput';
+import EditableInput from '@/components/Editable/EditableInput/EditableInput';
 import { dateOfBirthSchema, emailSchema, firstNameSchema, lastNameSchema } from '@/core/commonValidation';
 import { FieldNames } from '@/enums/auth-form.enum';
 import { formFieldsConfig } from '@/shared/auth-form.constants';
 import { Customer, ErrorObject } from '@commercetools/platform-sdk';
 import { SnackBarMsgs } from '../constants';
-import EditableDatePicker from '@/components/EditableDatepicker/EditableDatepicker';
+import EditableDatePicker from '@/components/Editable/EditableDatepicker/EditableDatepicker';
 import { getFormattedDateValue } from '@/utils/getFormattedDateValue';
 import { Button, Dialog, Divider } from '@mui/material';
 import ChangePasswordForm from '@/components/ChangePasswordForm/ChangePasswordForm';
