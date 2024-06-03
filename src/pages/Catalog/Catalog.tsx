@@ -1,10 +1,21 @@
 import styles from './Catalog.module.scss';
 import { catalogService } from '@/services/catalogService';
-import { useEffect, useState } from 'react';
+import { SyntheticEvent, useEffect, useState } from 'react';
 import Grid from '@mui/material/Unstable_Grid2';
-import { Typography, Box, Button, Drawer, Slider, Divider, TextField, IconButton } from '@mui/material';
+import {
+  Typography,
+  Box,
+  Button,
+  Drawer,
+  Slider,
+  Divider,
+  TextField,
+  IconButton,
+  Breadcrumbs,
+  Link,
+} from '@mui/material';
 import ProductCard from '@/components/ProductCard/ProductCard';
-import { Filter, FilterData, FilterDataUrl, Product } from '@/types';
+import { Category, Filter, FilterData, FilterDataUrl, Product } from '@/types';
 import FormSelect from '@/components/FormSelect/FormSelect';
 import { SelectChangeEvent } from '@mui/material/Select';
 import { ButtonLabels, PageData, SortOptions, defaultPriceRange, scrollbarStyles } from './constants';
@@ -24,6 +35,7 @@ function Catalog() {
   const [sorting, setSorting] = useState<string>(SortOptions[0].key);
   const [search, setSearch] = useState('');
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const [breadcrumbs, setBreadcrumbs] = useState<Category[]>([]);
 
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
@@ -72,6 +84,47 @@ function Catalog() {
     }
   };
 
+  const fetchBreadcrumbs = async (categoryId: string | null) => {
+    if (!categoryId) {
+      setBreadcrumbs([]);
+      return;
+    }
+
+    const crumbs = [];
+    try {
+      const categoriesData = await catalogService.fetchCategories();
+      console.log('++++categoriesData: ', categoriesData);
+      let currCat = categoriesData.find((category) => category.id === categoryId);
+
+      if (!currCat) {
+        setError('Category not found');
+        return;
+      }
+
+      crumbs.unshift(currCat);
+      console.log('++++crumbs: ', crumbs);
+      let currParent = currCat.parent;
+      while (currParent?.id) {
+        currCat = categoriesData.find((category) => category.id === currParent?.id);
+        if (currCat) {
+          crumbs.unshift(currCat);
+          currParent = currCat.parent;
+        } else {
+          break;
+        }
+      }
+      console.log('++++crumbs: ', crumbs);
+      setBreadcrumbs(crumbs);
+    } catch (err) {
+      setError('Failed to fetch breadcrumb data');
+      console.log('Failed to fetch breadcrumb data');
+    }
+  };
+
+  useEffect(() => {
+    fetchBreadcrumbs(activeCategory);
+  }, [activeCategory]);
+
   useEffect(() => {
     const loadFilters = async () => {
       try {
@@ -116,6 +169,7 @@ function Catalog() {
         }
         if (filter) {
           setActiveCategory(filter);
+          fetchBreadcrumbs(filter);
         }
       } catch (err) {
         setError('Failed to fetch url params');
@@ -273,6 +327,8 @@ function Catalog() {
     console.log('Category clicked: ', categoryId);
     if (categoryId === 'all') {
       loadAllProducts();
+      setActiveCategory(null);
+      navigate('');
     } else {
       const productsData = await catalogService.fetchProductsByCategory(categoryId);
       setProducts(productsData);
@@ -280,6 +336,27 @@ function Catalog() {
 
       navigate(`?filter=${categoryId}`);
     }
+  };
+
+  const handleBreadcrumbClick = (category: Category) => (e: SyntheticEvent) => {
+    e.preventDefault();
+    setActiveCategory(category.id);
+    updateUrlWithFilters({
+      categoryId: category.id,
+      size: selectedSize,
+      color: selectedColor,
+      price: selectedPriceRange,
+      sort: sorting,
+    });
+    loadFilteredProducts(
+      {
+        size: selectedSize,
+        color: selectedColor,
+        price: selectedPriceRange,
+        categoryId: category.id,
+      },
+      sorting,
+    );
   };
 
   const drawer = (
@@ -378,6 +455,25 @@ function Catalog() {
       </Drawer>
 
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+        <Grid container xs={12} sx={{ mb: 2 }}>
+          <Grid>
+            {breadcrumbs.length > 0 && (
+              <Breadcrumbs aria-label="breadcrumb">
+                {breadcrumbs.map((category, index) => (
+                  <Link
+                    key={category.id}
+                    underline="hover"
+                    color={index === breadcrumbs.length - 1 ? 'text.primary' : 'inherit'}
+                    href={`/catalog?filter=${category.id}`}
+                    onClick={handleBreadcrumbClick(category)}
+                  >
+                    {category.name}
+                  </Link>
+                ))}
+              </Breadcrumbs>
+            )}
+          </Grid>
+        </Grid>
         <Grid container justifyContent="space-between" sx={{ mb: 3 }}>
           <Grid>
             <Button variant="text" color="primary" onClick={handleDrawerToggle} sx={{ mr: 2, display: { sm: 'none' } }}>
