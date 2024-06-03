@@ -44,7 +44,7 @@ function Slider({ product }: ProductCardProp) {
         sx={{
           maxWidth: {
             xs: '80%',
-            sm: '59%',
+            sm: '50%',
           },
           flexBasis: '50%',
         }}
