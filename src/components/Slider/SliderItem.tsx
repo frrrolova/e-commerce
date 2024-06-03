@@ -3,17 +3,18 @@ import { Box, Paper } from '@mui/material';
 import { Product } from '@/types';
 // import CardMedia from '@mui/material/CardMedia';
 import SliderModal from './SliderModal';
-import { imageSizes } from './constants';
+// import { imageSizes } from './constants';
 
 interface SliderItemProp {
   product: Product;
   url: string;
   label: string | undefined;
+  width: number;
   isSlider: boolean;
   index?: number;
 }
 
-function SliderItem({ index, url, label, product, isSlider }: SliderItemProp) {
+function SliderItem({ index, url, label, product, isSlider, width }: SliderItemProp) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
     if (open) return;
@@ -29,27 +30,24 @@ function SliderItem({ index, url, label, product, isSlider }: SliderItemProp) {
       sx={{
         overflow: 'hidden',
         backgroundColor: 'transparent',
+        alignSelf: 'center',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         transition: 'background-color 0.3s ease-in-out',
         boxShadow: 'none',
         cursor: 'pointer',
-        // '&:hover': {
-        //   backgroundColor: '#5257502e',
+        width: `${width}px`,
+        minWidth: `${width}px`,
+        height: `${width}px`,
+        // height: {
+        //   xs: imageSizes.smallHeight,
+        //   sm: imageSizes.height,
         // },
-        width: {
-          xs: imageSizes.smallWidth,
-          sm: imageSizes.width,
-        },
-        height: {
-          xs: imageSizes.smallHeight,
-          sm: imageSizes.height,
-        },
-        minWidth: {
-          xs: imageSizes.smallWidth,
-          sm: imageSizes.width,
-        },
+        // minWidth: {
+        //   xs: imageSizes.smallWidth,
+        //   sm: imageSizes.width,
+        // },
         padding: 1,
       }}
     >
@@ -58,8 +56,8 @@ function SliderItem({ index, url, label, product, isSlider }: SliderItemProp) {
         component="img"
         sx={{
           objectFit: 'contain',
-          maxWidth: '330px',
-          maxHeight: '330px',
+          width: `${width - 16}px`,
+          height: `${width - 16}px`,
           flex: 1,
         }}
         src={url}

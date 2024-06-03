@@ -168,7 +168,7 @@ function Product() {
                       Buy now
                     </Button>
                     <Button variant="outlined" size="small" component={RouterLink} to={Paths.CATALOG}>
-                      Go back
+                      To catalog
                     </Button>
                   </CardActions>
                 </CardContent>
