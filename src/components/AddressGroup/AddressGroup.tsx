@@ -107,7 +107,7 @@ const AddressGroup = ({
         <FormTextInput
           disabled={disabled}
           name={getFieldName(FieldNames.STREET, prefix)}
-          value={values.street}
+          value={values.streetName}
           label={formFieldsConfig.streetName.label}
           placeholder={formFieldsConfig.streetName.placeholder}
           onChange={(e: SelectChangeEvent) => {
