@@ -42,12 +42,15 @@ export function addToCart(productId: string): Promise<ClientResponse<Cart>> {
     })
     .catch((e) => {
       // if e === 404 then we need to create a new cart
+      if (e.statusCode === 404) {
+        return client
+          .getClient()
+          .me()
+          .carts()
+          .post({ body: { currency: 'EUR', lineItems: [{ productId }] } })
+          .execute(); // need to get it from store
+      }
       console.log(e);
-      return client
-        .getClient()
-        .me()
-        .carts()
-        .post({ body: { currency: 'EUR', lineItems: [{ productId }] } })
-        .execute(); // need to get it from store
+      throw e;
     });
 }
