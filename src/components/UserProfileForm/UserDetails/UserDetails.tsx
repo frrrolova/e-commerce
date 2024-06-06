@@ -136,7 +136,6 @@ export function UserDetails({ userData }: { userData: Customer }) {
         <ChangePasswordForm
           onClose={handleDialogClose}
           onSubmit={(currentPass, newPass) => {
-            // console.log(currentPass, newPass);
             changePasswordHandler(currentPass, newPass);
           }}
         />
