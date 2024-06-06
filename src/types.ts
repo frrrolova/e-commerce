@@ -57,3 +57,12 @@ export interface FilterData {
 export interface FilterDataUrl extends FilterData {
   sort: string;
 }
+
+export interface TeamMember {
+  role: string;
+  name: string;
+  bio: string;
+  photo: string;
+  git: string;
+  contributions: string[];
+}
