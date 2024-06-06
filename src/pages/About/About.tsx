@@ -1,31 +1,16 @@
 import { Box, Container, Typography, Link, Paper } from '@mui/material';
-import Logo from '/images/RSLOGO.png';
+import Logo from '/images/rs-logo.svg';
 import TeamMemberCard from '@/components/TeamMemberCard/TeamMemberCard';
-import Placeholder from '/images/catalog/placeholder_plant.png';
-
-const member = {
-  role: 'Front-end developer',
-  name: 'Ivan Ivanow',
-  bio: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit recusandae, suscipit sunt ad debitis, Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit recusandae, suscipit sunt ad debit',
-  photo: Placeholder,
-  git: 'https://github.com/REGEMLER',
-  contributions: [
-    'Well done',
-    'Lorem ipsum dolor sit',
-    'Lorem ipsum dolor sit',
-    'Lorem ipsum dolor sit amet consectetur adipisicing',
-  ],
-};
+import { members } from './data';
 
 function About() {
   return (
     <>
       <Container
         sx={{
-          outline: '1px solid red',
           display: 'flex',
           flexDirection: 'column',
-          gap: '10px',
+          gap: '20px',
           paddingX: '5px',
           paddingY: {
             xs: '10px',
@@ -36,19 +21,53 @@ function About() {
             md: '85%',
           },
           margin: {
-            xs: '20px auto',
+            xs: '30px auto',
             md: '60px auto',
           },
         }}
         component="main"
       >
+        <Typography
+          component="h1"
+          sx={{
+            width: '100%',
+            fontSize: '26px',
+            fontWeight: 'bold',
+            color: '#3A7609',
+            textAlign: 'center',
+          }}
+        >
+          Our team
+        </Typography>
         <Box
           component="div"
           sx={{
-            outline: '1px solid green',
+            width: '100%',
+            margin: '0 auto',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            gap: '20px',
+            flexDirection: {
+              xs: 'column',
+              md: 'row',
+            },
+          }}
+        >
+          {members.map((item, index) => {
+            return <TeamMemberCard key={index} teamMember={item} />;
+          })}
+        </Box>
+        <Box
+          component="div"
+          sx={{
             width: '100%',
             display: 'flex',
             gap: '10px',
+            flexDirection: {
+              xs: 'column',
+              md: 'row',
+            },
           }}
         >
           <Box
@@ -60,18 +79,6 @@ function About() {
               gap: '10px',
             }}
           >
-            <Typography
-              component="h1"
-              sx={{
-                width: '100%',
-                fontSize: '26px',
-                fontWeight: 'bold',
-                color: '#3A7609',
-                textAlign: 'center',
-              }}
-            >
-              Our team
-            </Typography>
             <Typography
               component="h2"
               sx={{
@@ -150,19 +157,6 @@ function About() {
               Made with love in 2024
             </Typography>
           </Box>
-        </Box>
-        <Box
-          component="div"
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            outline: '1px solid yellow',
-          }}
-        >
-          <TeamMemberCard teamMember={member} />
-          <TeamMemberCard teamMember={member} />
-          <TeamMemberCard teamMember={member} />
         </Box>
       </Container>
     </>

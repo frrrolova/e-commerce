@@ -1,4 +1,4 @@
-import { Box, Link, Typography } from '@mui/material';
+import { Box, Link, Paper, Typography } from '@mui/material';
 import { TeamMember } from '@/types';
 
 interface TeamMemberCardProps {
@@ -8,68 +8,118 @@ interface TeamMemberCardProps {
 function TeamMemberCard({ teamMember }: TeamMemberCardProps) {
   return (
     <>
-      <Box
-        component="div"
+      <Paper
+        elevation={3}
         sx={{
-          outline: '1px solid red',
-          minWidth: '300px',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '10px',
-          p: 1,
+          backgroundColor: 'transparent',
         }}
       >
         <Box
-          component="header"
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            borderBottom: '1px solid gray',
-            p: 1,
-          }}
-        >
-          <Typography component="h2">{teamMember.name}</Typography>
-          <Link href={teamMember.git}>Github</Link>
-        </Box>
-        <Box
           component="div"
           sx={{
+            minWidth: {
+              xs: '300px',
+              md: '200px',
+              lg: '300px',
+            },
             display: 'flex',
             flexDirection: 'column',
-            alignItems: 'center',
+            gap: '10px',
+            padding: '10px',
           }}
         >
           <Box
+            component="header"
             sx={{
-              width: `200px`,
-              height: `200px`,
-              borderRadius: '50%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              borderBottom: '1px solid gray',
+              p: 1,
+            }}
+          >
+            <Typography component="h2">{teamMember.name}</Typography>
+            <Link href={teamMember.git}>Github</Link>
+          </Box>
+          <Box
+            component="div"
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              p: 1,
             }}
           >
             <Box
-              component="img"
               sx={{
-                objectFit: 'contain',
-                width: `100%`,
-                height: `100%`,
+                width: `200px`,
+                height: `200px`,
+                borderRadius: '50%',
+                overflow: 'hidden',
               }}
-              src={teamMember.photo}
-              alt="Photo"
-            ></Box>
+            >
+              <Box
+                component="img"
+                sx={{
+                  objectFit: 'cover',
+                  width: `100%`,
+                  height: `100%`,
+                }}
+                src={teamMember.photo}
+                alt="Photo"
+              ></Box>
+            </Box>
+            <Typography
+              sx={{
+                fontStyle: 'italic',
+                textAlign: 'center',
+              }}
+              component="p"
+            >
+              {teamMember.role}
+            </Typography>
+            <Typography
+              component="h4"
+              sx={{
+                alignSelf: 'flex-start',
+                fontSize: '18px',
+                marginY: '10px',
+                fontWeight: 'bold',
+              }}
+            >
+              Bio
+            </Typography>
+            <Typography component="h5">{teamMember.bio}</Typography>
           </Box>
-          <Typography component="h3">{teamMember.role}</Typography>
-          <Typography component="h5">{teamMember.bio}</Typography>
-        </Box>
-        <Box component="footer">
-          <Typography component="h3">Contributions</Typography>
-          <Box component="div">
-            {teamMember.contributions.map((item, index) => (
-              <Box key={index}> ✅ {item}</Box>
-            ))}
+          <Box component="footer">
+            <Typography
+              component="h3"
+              sx={{
+                alignSelf: 'flex-start',
+                fontSize: '18px',
+                marginY: '10px',
+                fontWeight: 'bold',
+              }}
+            >
+              Contributions
+            </Typography>
+            <Box component="div">
+              {teamMember.contributions.map((item, index) => (
+                <Box
+                  sx={{
+                    p: 1,
+                    borderBottom: '1px solid gray',
+                  }}
+                  key={index}
+                >
+                  {' '}
+                  ✅ {item}
+                </Box>
+              ))}
+            </Box>
           </Box>
         </Box>
-      </Box>
+      </Paper>
     </>
   );
 }
