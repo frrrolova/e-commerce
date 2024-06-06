@@ -1,7 +1,8 @@
 import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
 import './styles/styles.scss';
-import client from './client/client.ts';
+// import client from './client/client.ts';
+import { initCart } from './services/basketService.ts';
 
 const root: HTMLElement = document.createElement('div');
 root.setAttribute('id', 'root');
@@ -9,10 +10,6 @@ root.setAttribute('id', 'root');
 // TODO: add nice page loader
 document.body.insertAdjacentElement('afterbegin', root);
 
-client
-  .getClient()
-  .get()
-  .execute()
-  .then((resp) => {
-    ReactDOM.createRoot(root).render(<App project={resp.body} />);
-  });
+initCart().then((resp) => {
+  ReactDOM.createRoot(root).render(<App cart={resp} />);
+});

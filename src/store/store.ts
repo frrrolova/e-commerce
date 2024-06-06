@@ -1,18 +1,18 @@
 import { GetThunkAPI, configureStore } from '@reduxjs/toolkit';
 import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux';
-import projectSlice from './slices/projectSlice';
+import cartSlice from './slices/cartSlice';
 import userSlice from './slices/user/userSlice';
-import { Project } from '@commercetools/platform-sdk';
+import { Cart } from '@commercetools/platform-sdk';
 import { AsyncThunkConfig } from '@reduxjs/toolkit/dist/createAsyncThunk';
 
-const initStore = (project: Project) =>
+const initStore = (cart: Cart | null) =>
   configureStore({
     reducer: {
-      project: projectSlice.reducer,
+      cart: cartSlice.reducer,
       user: userSlice.reducer,
     },
     preloadedState: {
-      project: project,
+      cart: cart,
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({

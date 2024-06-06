@@ -1,10 +1,21 @@
 import client from '@/client/client';
+import { Cart, ClientResponse } from '@commercetools/platform-sdk';
 
-export function getActiveCart() {
+export function getActiveCart(): Promise<ClientResponse<Cart>> {
   return client.getClient().me().activeCart().get().execute();
 }
 
-export function addToCart(productId: string) {
+export function initCart(): Promise<Cart | null> {
+  return getActiveCart()
+    .then((resp) => {
+      return resp.body;
+    })
+    .catch(() => {
+      return Promise.resolve(null);
+    });
+}
+
+export function addToCart(productId: string): Promise<ClientResponse<Cart>> {
   return getActiveCart()
     .then((res) => {
       // if active cart is existing we need to call updatedCart action

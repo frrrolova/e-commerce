@@ -36,10 +36,10 @@ const mockShop: Project = {
 export function renderWithProviders(ui: React.ReactElement, extendedRenderOptions: ExtendedRenderOptions = {}) {
   const {
     preloadedState = {
-      project: mockShop,
+      cart: mockShop,
     },
     // Automatically create a store instance if no store was passed in
-    store = initStore(preloadedState.project as Project),
+    store = initStore(preloadedState.cart as Project),
     ...renderOptions
   } = extendedRenderOptions;
 
