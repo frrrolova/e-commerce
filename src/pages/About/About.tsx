@@ -121,7 +121,7 @@ function About() {
               elevation={3}
               sx={{
                 overflow: 'hidden',
-                backgroundColor: 'transparent',
+                backgroundColor: 'white',
                 alignSelf: 'center',
                 display: 'flex',
                 justifyContent: 'center',
@@ -132,6 +132,8 @@ function About() {
                 width: `300px`,
                 minWidth: `300px`,
                 padding: 1,
+                borderRadius: '30px',
+                '&:hover': { backgroundColor: '#323d2d' },
               }}
             >
               <Link href="https://rs.school/">
