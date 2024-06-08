@@ -22,6 +22,8 @@ import { logout } from '@/store/slices/user/userSlice';
 
 const pages = [navLinksData.home, navLinksData.catalog, navLinksData.about];
 
+// use totalLineItemQuantity from cart in store (useAppSelector((store) => store.cart.cart?.totalLineItemQuantity)) to get total count of products in cart
+
 function Header() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();

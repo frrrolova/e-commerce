@@ -7,6 +7,7 @@ import { Link as RouterLink, useParams } from 'react-router-dom';
 import { Paths } from '@/routes/routeConstants';
 import CardActions from '@mui/material/CardActions';
 import Slider from '@/components/Slider/Slider';
+import { addToCart } from '@/services/cartService';
 
 //69ca9376-354e-4a8e-890c-a9e37ae95a59
 //c28e093c-32e3-4e4f-9f93-527ed519ba20
@@ -169,7 +170,15 @@ function Product() {
                     {product.description}
                   </Typography>
                   <CardActions>
-                    <Button variant="outlined" size="small">
+                    <Button
+                      variant="outlined"
+                      size="small"
+                      onClick={() => {
+                        addToCart(product.id).then((resp) => {
+                          console.log(resp);
+                        });
+                      }}
+                    >
                       Buy now
                     </Button>
                     <Button variant="outlined" size="small" component={RouterLink} to={Paths.CATALOG}>

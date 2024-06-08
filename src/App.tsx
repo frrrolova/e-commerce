@@ -6,14 +6,14 @@ import { Box, CssBaseline } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import initStore from './store/store.ts';
-import { Project } from '@commercetools/platform-sdk';
+import { Cart } from '@commercetools/platform-sdk';
 import { SnackbarProvider } from 'notistack';
 import styles from '@/App.module.scss';
 import texture from '/images/texture.png';
 
-function App({ project }: { project: Project }) {
+function App({ cart }: { cart: Cart | null }) {
   return (
-    <Provider store={initStore(project)}>
+    <Provider store={initStore(cart)}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <ThemeProvider theme={theme}>
           <SnackbarProvider maxSnack={3} classes={{ containerRoot: styles.test }}>
