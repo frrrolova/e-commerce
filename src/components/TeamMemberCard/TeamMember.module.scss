@@ -2,14 +2,16 @@
 
 .container {
   position: relative;
+  flex-grow: 1;
+  flex-basis: 0;
 
   .card {
     border-radius: $border-radius-card;
     opacity: $opacity-item;
     display: flow-root;
-    height: 900px;
+    height: 950px;
     @media screen and (max-width: 1105px){
-      height: 1000px;
+      height: 1050px;
     }
     @media screen and (max-width: 899px){
       height: auto;

@@ -1,5 +1,7 @@
 import { TeamMember } from '@/types';
 import Placeholder from '/images/catalog/placeholder_plant.png';
+import Yar from '/images/Yar.jpg';
+import frrrolova from '/images/frrrolova.png';
 
 export const members: TeamMember[] = [
   {
@@ -9,7 +11,7 @@ export const members: TeamMember[] = [
     photo: Placeholder,
     git: 'https://github.com/tanykos',
     contributions: [
-      'CommerceTools Project and API Client Setup',
+      'CommerceTools Project Setup',
       'Task Board Setup (Trello)',
       'Main Page Implementation',
       'Header Implementation',
@@ -21,28 +23,23 @@ export const members: TeamMember[] = [
     role: 'Front-end developer',
     name: 'Tatiana Frolova',
     bio: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit recusandae, suscipit sunt ad debitis, Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit recusandae, suscipit sunt ad debit',
-    photo: Placeholder,
+    photo: frrrolova,
     git: 'https://github.com/frrrolova',
     contributions: [
       'Development Scripts',
-      'Development Environment Configuration',
+      'Environment Configuration',
       'Repository Setup',
-      'Registration Page Implementation',
+      'Registration Page',
       'Routing Implementation',
-      'User Profile Page Implementation',
+      'User Profile Page',
     ],
   },
   {
     role: 'Front-end developer',
     name: 'Yaroslaw Rychik',
-    bio: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit recusandae, suscipit sunt ad debitis, Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit recusandae, suscipit sunt ad debit',
-    photo: Placeholder,
+    bio: 'My name is Yaroslaw. I am from Gomel. I have graduated from technical State University in 2019. Firstly I have worked as a design engineer but I made a decision to change my profession. So I went to an IT course at RS School.',
+    photo: Yar,
     git: 'https://github.com/REGEMLER',
-    contributions: [
-      'Development README',
-      'Login Page Implementation',
-      'Detailed Product Page Implementation',
-      'About Us Page Implementation',
-    ],
+    contributions: ['Development README', 'Login Page', 'Product Page', 'About Us Page'],
   },
 ];

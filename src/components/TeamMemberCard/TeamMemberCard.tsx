@@ -65,23 +65,29 @@ function TeamMemberCard({ teamMember }: TeamMemberCardProps) {
             >
               <Box
                 sx={{
-                  width: `200px`,
-                  height: `200px`,
+                  width: {
+                    xs: '400px',
+                    md: '200px',
+                    lg: '300px',
+                  },
+                  minWidth: {
+                    xs: '400px',
+                    md: '200px',
+                    lg: '300px',
+                  },
+                  height: {
+                    xs: '400px',
+                    md: '200px',
+                    lg: '300px',
+                  },
                   borderRadius: '50%',
+                  backgroundImage: `url('${teamMember.photo}')`,
+                  backgroundRepeat: 'no-repeat',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center center',
                   overflow: 'hidden',
                 }}
-              >
-                <Box
-                  component="img"
-                  sx={{
-                    objectFit: 'cover',
-                    width: `100%`,
-                    height: `100%`,
-                  }}
-                  src={teamMember.photo}
-                  alt="Photo"
-                ></Box>
-              </Box>
+              ></Box>
               <Typography
                 sx={{
                   fontStyle: 'italic',
@@ -102,7 +108,18 @@ function TeamMemberCard({ teamMember }: TeamMemberCardProps) {
               >
                 Bio
               </Typography>
-              <Typography component="h5">{teamMember.bio}</Typography>
+              <Typography
+                sx={{
+                  height: {
+                    xs: 'auto',
+                    md: '220px',
+                    lg: '170px',
+                  },
+                }}
+                component="h5"
+              >
+                {teamMember.bio}
+              </Typography>
             </Box>
             <Box component="footer">
               <Typography
@@ -120,6 +137,7 @@ function TeamMemberCard({ teamMember }: TeamMemberCardProps) {
                 {teamMember.contributions.map((item, index) => (
                   <Box
                     sx={{
+                      fontSize: '14px',
                       p: 1,
                       borderBottom: '1px solid gray',
                       '&:last-child': { borderBottom: 'none' },

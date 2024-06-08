@@ -16,10 +16,7 @@ function About() {
             xs: '10px',
             md: '30px',
           },
-          width: {
-            xs: '95%',
-            md: '85%',
-          },
+          width: '98%',
           margin: {
             xs: '30px auto',
             md: '60px auto',
@@ -91,20 +88,27 @@ function About() {
             >
               Collaboration
             </Typography>
-            <Typography component="p">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit recusandae, suscipit sunt ad debitis, amet
-              rem accusantium tempore, a consequuntur est animi delectus laborum repellendus distinctio beatae labore!
-              Enim, nemo?
+            <Typography
+              component="p"
+              sx={{
+                textIndent: '20px',
+              }}
+            >
+              We were working together as a group on a project for seven weaks. We created a project task board using a
+              project management tool Trello to organize tasks into lists or columns corresponding to their status.
             </Typography>
-            <Typography component="p">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit recusandae, suscipit sunt ad debitis, amet
-              rem accusantium tempore, a consequuntur est animi delectus laborum repellendus distinctio beatae labore!
-              Enim, nemo?
-            </Typography>
-            <Typography component="p">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit recusandae, suscipit sunt ad debitis, amet
-              rem accusantium tempore, a consequuntur est animi delectus laborum repellendus distinctio beatae labore!
-              Enim, nemo?
+            <Typography
+              component="p"
+              sx={{
+                textIndent: '20px',
+              }}
+            >
+              We started each sprint with sprint planning, where we break down project tasks into smaller, manageable
+              subtasks and assign them to each other, ensuring a clear delegation of responsibilities. During the
+              sprint, we met for dailies, where each team member shared the status of their tasks. We shared workloads
+              while discussing ideas, new methods, or different perspectives to attain better solutions. We actively
+              participated in code reviews, providing constructive feedback and suggestions to our peers. At the end of
+              the sprint we summed up the results and planned further work.
             </Typography>
           </Box>
           <Box
@@ -121,7 +125,7 @@ function About() {
               elevation={3}
               sx={{
                 overflow: 'hidden',
-                backgroundColor: 'white',
+                backgroundColor: 'transparent',
                 alignSelf: 'center',
                 display: 'flex',
                 justifyContent: 'center',
