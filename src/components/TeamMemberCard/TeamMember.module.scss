@@ -9,9 +9,9 @@
     border-radius: $border-radius-card;
     opacity: $opacity-item;
     display: flow-root;
-    height: 950px;
+    height: 1100px;
     @media screen and (max-width: 1105px){
-      height: 1050px;
+      height: 1200px;
     }
     @media screen and (max-width: 899px){
       height: auto;

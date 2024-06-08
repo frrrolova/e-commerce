@@ -23,7 +23,8 @@ function TeamMemberCard({ teamMember }: TeamMemberCardProps) {
             component="div"
             sx={{
               minWidth: {
-                xs: '300px',
+                xs: '250px',
+                sm: '300px',
                 md: '200px',
                 lg: '300px',
               },
@@ -66,21 +67,19 @@ function TeamMemberCard({ teamMember }: TeamMemberCardProps) {
               <Box
                 sx={{
                   width: {
-                    xs: '400px',
+                    xs: '250px',
+                    sm: '400px',
                     md: '200px',
                     lg: '300px',
                   },
                   minWidth: {
-                    xs: '400px',
+                    xs: '250px',
+                    sm: '400px',
                     md: '200px',
                     lg: '300px',
                   },
-                  height: {
-                    xs: '400px',
-                    md: '200px',
-                    lg: '300px',
-                  },
-                  borderRadius: '50%',
+                  height: '400px',
+                  borderRadius: '40px',
                   backgroundImage: `url('${teamMember.photo}')`,
                   backgroundRepeat: 'no-repeat',
                   backgroundSize: 'cover',
