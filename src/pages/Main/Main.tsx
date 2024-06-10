@@ -5,7 +5,7 @@ import ProductCard from '@/components/ProductCard/ProductCard';
 import { Product } from '@/types';
 import { InfoCardBtn, InfoCardData, PageData } from './constants';
 import Title from '@/components/Title/Title';
-import ImageBg from '/images/home/home-bg.png';
+import ImageBg from '/images/home/home-bg.webp';
 import InfoCard from '@/components/InfoCard/InfoCard';
 import { useState, useEffect } from 'react';
 import { catalogService } from '@/services/catalogService';
