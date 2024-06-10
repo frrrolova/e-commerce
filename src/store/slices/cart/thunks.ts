@@ -1,8 +1,8 @@
-import { addToCart } from '@/services/cartService';
+import { addToCart, changeLineItemQuantity } from '@/services/cartService';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ErrorResponse } from 'react-router-dom';
 
-export const addToCartThunk = createAsyncThunk('user/login', (productId: string, thunkAPI) => {
+export const addToCartThunk = createAsyncThunk('cart/create', (productId: string, thunkAPI) => {
   return addToCart(productId)
     .then((resp) => {
       return resp.body;
@@ -11,3 +11,16 @@ export const addToCartThunk = createAsyncThunk('user/login', (productId: string,
       return thunkAPI.rejectWithValue(err);
     });
 });
+
+export const changeLineItemQuantityThunk = createAsyncThunk(
+  'cart/change-quantity',
+  ({ id, quantity }: { id: string; quantity: number }, thunkAPI) => {
+    return changeLineItemQuantity(id, quantity)
+      .then((resp) => {
+        return resp.body;
+      })
+      .catch((err: ErrorResponse) => {
+        return thunkAPI.rejectWithValue(err);
+      });
+  },
+);

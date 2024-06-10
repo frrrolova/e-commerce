@@ -7,7 +7,11 @@ import { Link as RouterLink, useParams } from 'react-router-dom';
 import { Paths } from '@/routes/routeConstants';
 import CardActions from '@mui/material/CardActions';
 import Slider from '@/components/Slider/Slider';
-import { addToCart } from '@/services/cartService';
+import { useAppDispatch, useAppSelector } from '@/store/store';
+import { addToCartThunk, changeLineItemQuantityThunk } from '@/store/slices/cart/thunks';
+import { enqueueSnackbar } from 'notistack';
+import { snackbarBasicParams } from '@/shared/snackbarConstans';
+import { ErrorObject } from '@commercetools/platform-sdk';
 
 //69ca9376-354e-4a8e-890c-a9e37ae95a59
 //c28e093c-32e3-4e4f-9f93-527ed519ba20
@@ -17,6 +21,13 @@ function Product() {
   const { productId } = useParams();
   const [product, setProduct] = useState<ProductType | null>(null);
   const [error, setError] = useState<string | null>(null);
+
+  const dispatch = useAppDispatch();
+
+  // const cart = useAppSelector((state) => state.cart.cart);
+  const productQuantity = useAppSelector(
+    (state) => state.cart.cart?.lineItems.find((item) => item.productId === productId)?.quantity || 0,
+  );
 
   const loadProduct = async () => {
     try {
@@ -170,17 +181,51 @@ function Product() {
                     {product.description}
                   </Typography>
                   <CardActions>
-                    <Button
-                      variant="outlined"
-                      size="small"
-                      onClick={() => {
-                        addToCart(product.id).then((resp) => {
-                          console.log(resp);
-                        });
-                      }}
-                    >
-                      Buy now
-                    </Button>
+                    {productQuantity ? (
+                      <Button
+                        variant="outlined"
+                        size="small"
+                        onClick={() => {
+                          dispatch(changeLineItemQuantityThunk({ id: product.id, quantity: 0 }))
+                            .then(() => {
+                              enqueueSnackbar('Product removed from cart', {
+                                variant: 'success',
+                                ...snackbarBasicParams,
+                              });
+                            })
+                            .catch((err: ErrorObject) => {
+                              enqueueSnackbar(err.message, {
+                                variant: 'error',
+                                ...snackbarBasicParams,
+                              });
+                            });
+                        }}
+                      >
+                        Remove from cart
+                      </Button>
+                    ) : (
+                      <Button
+                        variant="outlined"
+                        size="small"
+                        onClick={() => {
+                          dispatch(addToCartThunk(product.id))
+                            .then(() => {
+                              enqueueSnackbar('Product added to cart', {
+                                variant: 'success',
+                                ...snackbarBasicParams,
+                              });
+                            })
+                            .catch((err: ErrorObject) => {
+                              enqueueSnackbar(err.message, {
+                                variant: 'error',
+                                ...snackbarBasicParams,
+                              });
+                            });
+                        }}
+                      >
+                        Buy now
+                      </Button>
+                    )}
                     <Button variant="outlined" size="small" component={RouterLink} to={Paths.CATALOG}>
                       To catalog
                     </Button>

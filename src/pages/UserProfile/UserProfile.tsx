@@ -37,7 +37,6 @@ function UserProfile() {
         flexDirection: 'column',
         alignItems: {
           xs: 'center',
-          // md: 'flex-start',
         },
       }}
     >
@@ -82,8 +81,3 @@ function UserProfile() {
 }
 
 export default UserProfile;
-
-// width: {
-//   md: '75%',
-//   xs: '90%',
-// },
