@@ -54,3 +54,28 @@ export function addToCart(productId: string): Promise<ClientResponse<Cart>> {
       throw e;
     });
 }
+
+// quantity should be 0 to remove item from cart
+export function changeLineItemQuantity(productId: string, quantity: number): Promise<ClientResponse<Cart>> {
+  return getActiveCart().then((resp) => {
+    const currentItem = resp.body.lineItems.find((item) => item.productId === productId);
+    return client
+      .getClient()
+      .me()
+      .carts()
+      .withId({ ID: resp.body.id })
+      .post({
+        body: {
+          version: resp.body.version,
+          actions: [
+            {
+              action: 'changeLineItemQuantity',
+              lineItemId: currentItem?.id,
+              quantity: quantity,
+            },
+          ],
+        },
+      })
+      .execute();
+  });
+}
