@@ -4,7 +4,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import { useState } from 'react';
 
-interface EditableFieldProps {
+export interface EditableFieldProps {
   placeholder?: string;
   label: string;
   onEditClick: () => void;
@@ -27,7 +27,6 @@ function EditableField({
   return (
     <Box
       display={'flex'}
-      // gap={'12px'}
       alignItems={'baseline'}
       sx={{
         mb: 1,
@@ -54,6 +53,7 @@ function EditableField({
         {!isEditMode && (
           <IconButton
             color="primary"
+            data-testid="edit-btn"
             onClick={() => {
               setIsEditMode(!isEditMode);
               onEditClick();
@@ -64,6 +64,7 @@ function EditableField({
         )}
         {isEditMode && (
           <Box
+            data-testid="edit-mode-btns"
             sx={{
               display: 'flex',
               gap: '3px',
@@ -72,6 +73,7 @@ function EditableField({
             <IconButton
               disabled={isSaveDisabled}
               color="primary"
+              data-testid="edit-save"
               onClick={() => {
                 setIsEditMode(false);
                 onSaveClick();
@@ -81,6 +83,7 @@ function EditableField({
             </IconButton>
             <IconButton
               color="primary"
+              data-testid="edit-cancel"
               onClick={() => {
                 setIsEditMode(false);
                 onCancelClick();

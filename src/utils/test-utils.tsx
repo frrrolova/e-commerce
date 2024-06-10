@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from 'react';
-import { render } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import type { RenderOptions } from '@testing-library/react';
 import { Provider } from 'react-redux';
 
@@ -10,6 +10,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { Cart } from '@commercetools/platform-sdk';
+import userEvent from '@testing-library/user-event';
 
 // This type interface extends the default options for render from RTL, as well
 // as allows the user to specify other things such as initialState, store.
@@ -68,4 +69,12 @@ export function renderWithProviders(ui: React.ReactElement, extendedRenderOption
     store,
     ...render(ui, { wrapper: Wrapper, ...renderOptions }),
   };
+}
+
+export async function muiSelectValue(selectTestId: string, optionTestId: string): Promise<void> {
+  const dropDown = within(await screen.findByTestId(selectTestId)).getByRole('combobox');
+  await userEvent.click(dropDown);
+  const option = screen.getByTestId(optionTestId);
+  expect(option).toBeInTheDocument();
+  await userEvent.click(option);
 }

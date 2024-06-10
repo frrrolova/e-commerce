@@ -13,7 +13,7 @@ import { Address, BaseAddress } from '@commercetools/platform-sdk';
 import { AddressActions } from '@/enums/addressActions.enum';
 import { ControlLabels, FormTitles } from './constants';
 
-interface AddressFormProps {
+export interface AddressFormProps {
   open: boolean;
   address: Address | null;
   type: AddressTypes;
@@ -64,6 +64,7 @@ function AddressModalForm({ open, type, address, onSubmit, onClose }: AddressFor
       onClose={onClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
+      data-testid="address-modal"
     >
       <Box
         component={'form'}
