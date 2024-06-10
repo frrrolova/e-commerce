@@ -4,7 +4,7 @@ import * as Yup from 'yup';
 import EditableField from '../EditableField';
 import { useState } from 'react';
 
-interface EditableInputProps {
+export interface EditableInputProps {
   name: string;
   initialValue: string;
   placeholder: string;
@@ -34,6 +34,7 @@ function EditableInput({ name, initialValue, placeholder, label, schema, onSave 
   return (
     <EditableField
       placeholder={placeholder}
+      data-testid={`${name}-field`}
       label={label}
       isSaveDisabled={!formik.isValid}
       onEditClick={() => {
@@ -58,6 +59,7 @@ function EditableInput({ name, initialValue, placeholder, label, schema, onSave 
           title={matches ? '' : formik.values[name]}
           aria-describedby="my-helper-text"
           id={`${name}-input`}
+          data-testid={`${name}-input`}
           onChange={(e) => {
             formik.handleChange(e);
             formik.setFieldTouched(name).then(() => {

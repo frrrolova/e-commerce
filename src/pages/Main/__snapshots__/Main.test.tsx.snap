@@ -92,6 +92,7 @@ exports[`Main component rendering performs snapshot testing 1`] = `
             >
               <div
                 class="MuiBox-root css-0"
+                data-testid="info"
               >
                 <div
                   class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3 css-3su884-MuiPaper-root"
@@ -300,6 +301,7 @@ exports[`Main component rendering performs snapshot testing 1`] = `
           >
             <div
               class="MuiBox-root css-0"
+              data-testid="info"
             >
               <div
                 class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3 css-3su884-MuiPaper-root"

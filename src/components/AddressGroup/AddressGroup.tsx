@@ -16,6 +16,20 @@ function getFieldName(name: FieldNames, prefix?: string): string {
   return nameArr.join('.');
 }
 
+export interface AddressGroupProps {
+  prefix?: AddressTypes;
+  touched: AddressFormFormik['touched'];
+  errors: AddressFormFormik['errors'];
+  values: AddressFormFormik['values'];
+  handleChange: AddressFormFormik['handleChange'];
+  handleBlur: AddressFormFormik['handleBlur'];
+  setFieldTouched: AddressFormFormik['setFieldTouched'];
+  validateField: AddressFormFormik['validateField'];
+  countryCodes: TCountryCode[];
+  disabled?: boolean;
+  onFieldChange?: (fieldName: string, value: string) => void;
+}
+
 const AddressGroup = ({
   prefix,
   touched,
@@ -28,19 +42,7 @@ const AddressGroup = ({
   countryCodes,
   disabled,
   onFieldChange,
-}: {
-  prefix?: AddressTypes;
-  touched: AddressFormFormik['touched'];
-  errors: AddressFormFormik['errors'];
-  values: AddressFormFormik['values'];
-  handleChange: AddressFormFormik['handleChange'];
-  handleBlur: AddressFormFormik['handleBlur'];
-  setFieldTouched: AddressFormFormik['setFieldTouched'];
-  validateField: AddressFormFormik['validateField'];
-  countryCodes: TCountryCode[];
-  disabled?: boolean;
-  onFieldChange?: (fieldName: string, value: string) => void;
-}) => {
+}: AddressGroupProps) => {
   return (
     <Grid container spacing={0.5}>
       <Grid item xs={12} md={6}>
@@ -57,6 +59,7 @@ const AddressGroup = ({
             labelId={formFieldsConfig.country.labelId}
             id={formFieldsConfig.country.id}
             name={getFieldName(FieldNames.COUNTRY, prefix)}
+            data-testid={getFieldName(FieldNames.COUNTRY, prefix)}
             value={values.country}
             label={formFieldsConfig.country.label}
             onChange={(e: SelectChangeEvent) => {
@@ -72,7 +75,7 @@ const AddressGroup = ({
             error={!disabled && touched.country && Boolean(errors.country)}
           >
             {countryCodes.map((countryCode) => (
-              <MenuItem value={countryCode} key={countryCode}>
+              <MenuItem value={countryCode} key={countryCode} data-testid={`menuItem.${countryCode}`}>
                 {getCountryData(countryCode).name}
               </MenuItem>
             ))}
@@ -87,6 +90,7 @@ const AddressGroup = ({
         <FormTextInput
           disabled={disabled}
           name={getFieldName(FieldNames.CITY, prefix)}
+          data-testid={getFieldName(FieldNames.CITY, prefix)}
           value={values.city}
           label={formFieldsConfig.city.label}
           placeholder={formFieldsConfig.city.placeholder}
@@ -107,6 +111,7 @@ const AddressGroup = ({
         <FormTextInput
           disabled={disabled}
           name={getFieldName(FieldNames.STREET, prefix)}
+          data-testid={getFieldName(FieldNames.STREET, prefix)}
           value={values.street}
           label={formFieldsConfig.streetName.label}
           placeholder={formFieldsConfig.streetName.placeholder}
@@ -126,6 +131,7 @@ const AddressGroup = ({
         <FormTextInput
           disabled={disabled}
           name={getFieldName(FieldNames.POSTAL_CODE, prefix)}
+          data-testid={getFieldName(FieldNames.POSTAL_CODE, prefix)}
           value={values.postalCode}
           label={formFieldsConfig.postalCode.label}
           placeholder={formFieldsConfig.postalCode.placeholder}
@@ -145,6 +151,7 @@ const AddressGroup = ({
         <FormTextInput
           disabled={disabled}
           name={getFieldName(FieldNames.BUILDING, prefix)}
+          data-testid={getFieldName(FieldNames.BUILDING, prefix)}
           value={values.building}
           label={formFieldsConfig.building.label}
           placeholder={formFieldsConfig.building.placeholder}
@@ -164,6 +171,7 @@ const AddressGroup = ({
         <FormTextInput
           disabled={disabled}
           name={getFieldName(FieldNames.APARTMENT, prefix)}
+          data-testid={getFieldName(FieldNames.APARTMENT, prefix)}
           value={values.apartment}
           label={formFieldsConfig.apartment.label}
           placeholder={formFieldsConfig.apartment.placeholder}
