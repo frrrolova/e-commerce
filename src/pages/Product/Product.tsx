@@ -75,10 +75,6 @@ function Product() {
               <Box
                 sx={{
                   display: 'flex',
-                  // alignItems: {
-                  //   md: 'center',
-                  // },
-                  // justifyContent: 'center',
                   gap: {
                     xs: '15px',
                     md: '40px',
@@ -118,7 +114,7 @@ function Product() {
                       flexWrap: 'wrap',
                     }}
                   >
-                    <Typography gutterBottom variant="h3" component="div">
+                    <Typography gutterBottom variant="h3" component="div" data-testid="product-name">
                       {product.name}
                     </Typography>
                     <Box
@@ -165,7 +161,7 @@ function Product() {
                       )}
                     </Box>
                   </Box>
-                  <Typography variant="body2" color="text.secondary">
+                  <Typography variant="body2" color="text.secondary" data-testid="product-description">
                     {product.description}
                   </Typography>
                   <CardActions>

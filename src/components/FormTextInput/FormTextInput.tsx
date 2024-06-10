@@ -8,7 +8,7 @@ import {
   TextField,
 } from '@mui/material';
 
-interface FormTextInputProps {
+export interface FormTextInputProps {
   name: string;
   value: string;
   label?: string;
@@ -32,13 +32,18 @@ function FormTextInput({ errorMsg, disabled, ...muiInputProps }: FormTextInputPr
         size="small"
         aria-describedby="my-helper-text"
         id={`${muiInputProps.name}-input`}
+        data-testid={`${muiInputProps.name}-input`}
         sx={{
           '& input:-webkit-autofill': {
             WebkitBoxShadow: '0 0 0 100px #262e22e6 inset',
           },
         }}
       />
-      {muiInputProps.error && Boolean(errorMsg) && <FormHelperText error>{errorMsg}</FormHelperText>}
+      {muiInputProps.error && Boolean(errorMsg) && (
+        <FormHelperText data-testid="test-error-text" error>
+          {errorMsg}
+        </FormHelperText>
+      )}
     </FormControl>
   );
 }

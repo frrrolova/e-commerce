@@ -26,8 +26,6 @@ function Main() {
       } catch (err) {
         setError('Failed to fetch products');
         console.log('Failed to fetch products');
-      } finally {
-        console.log('Data is fetched');
       }
     };
 

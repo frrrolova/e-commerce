@@ -1,10 +1,15 @@
-// import { fireEvent, render, waitFor } from '@testing-library/react';
-import { renderWithProviders } from '../../utils/test-utils';
 import Main from './Main';
-// import { ButtonLabels } from './constants';
+import { catalogService } from '@/services/catalogService';
+import { render, waitFor, screen, fireEvent } from '@testing-library/react';
+import { act } from 'react';
+import { mockProduct1, mockProduct2, clientMock } from '@/utils/test-client-mock';
+import { InfoCardBtn } from './constants';
 
+// Mock for client
 jest.mock('../../client/client', () => {
-  return null;
+  return {
+    client: jest.fn().mockImplementation(() => clientMock),
+  };
 });
 
 //Mock for useNavigate
@@ -14,22 +19,49 @@ jest.mock('react-router-dom', () => ({
   useNavigate: () => mockNavigate,
 }));
 
+jest.mock('@/services/catalogService', () => {
+  const actualCatalogService = jest.requireActual('@/services/catalogService');
+  return {
+    catalogService: {
+      ...actualCatalogService.catalogService,
+      fetchProductById: jest.fn(),
+      fetchProductsByCategory: jest.fn(),
+    },
+  };
+});
+
 describe('Main component rendering', () => {
-  test('performs snapshot testing', () => {
-    const tree = renderWithProviders(<Main />);
+  beforeEach(() => {
+    jest.clearAllMocks();
+
+    (catalogService.fetchProductById as jest.Mock).mockResolvedValue(mockProduct1);
+    (catalogService.fetchProductsByCategory as jest.Mock).mockResolvedValue([mockProduct2]);
+  });
+
+  test('performs snapshot testing', async () => {
+    let tree;
+    await act(async () => {
+      tree = render(<Main />);
+    });
+
+    await waitFor(() => {
+      const productElement = screen.getByText('Product Test1');
+      expect(productElement).toBeInTheDocument();
+    });
+
     expect(tree).toMatchSnapshot();
   });
 });
 
-// describe('Header component behavior', () => {
-//   test('should navigate, when clicking on a section title button', async () => {
-//     const { getByText } = render(<Main />);
+describe('Header component behavior', () => {
+  test('should navigate, when clicking on a section button', async () => {
+    const { getByText } = render(<Main />);
 
-//     await waitFor(() => {
-//       const loginButton = getByText(ButtonLabels.LOGIN);
+    await waitFor(() => {
+      const button = getByText(InfoCardBtn.label);
 
-//       fireEvent.click(loginButton);
-//       expect(mockNavigate).toHaveBeenCalledTimes(1);
-//     });
-//   });
-// });
+      fireEvent.click(button);
+      expect(mockNavigate).toHaveBeenCalledTimes(1);
+    });
+  });
+});
