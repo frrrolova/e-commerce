@@ -13,7 +13,7 @@ function InfoCard({ data, button }: InfoCardProps) {
   };
 
   return (
-    <Box className={styles.container}>
+    <Box className={styles.container} data-testid={'info'}>
       <Paper elevation={3} className={styles.card}>
         <Box
           className={styles.content}

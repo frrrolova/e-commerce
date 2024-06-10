@@ -5,7 +5,7 @@ import AddressGroup, { AddressGroupProps } from './AddressGroup';
 import { AddressTypes } from '@/enums/auth-form.enum';
 import { fireEvent } from '@testing-library/react';
 
-jest.mock('../../client/client', () => {
+jest.mock('@client/client', () => {
   return null;
 });
 
@@ -50,22 +50,22 @@ describe('AddressGroup', () => {
     const { getByTestId } = renderComponent({ prefix: 'test' as unknown as AddressTypes });
 
     expect(getByTestId('test.country')).toBeDefined();
-    expect(getByTestId('test.city')).toBeDefined();
-    expect(getByTestId('test.streetName')).toBeDefined();
-    expect(getByTestId('test.building')).toBeDefined();
-    expect(getByTestId('test.apartment')).toBeDefined();
-    expect(getByTestId('test.postalCode')).toBeDefined();
+    expect(getByTestId('test.city-input')).toBeDefined();
+    expect(getByTestId('test.streetName-input')).toBeDefined();
+    expect(getByTestId('test.building-input')).toBeDefined();
+    expect(getByTestId('test.apartment-input')).toBeDefined();
+    expect(getByTestId('test.postalCode-input')).toBeDefined();
   });
 
   test('handle change is called when user types', async () => {
     const { getByTestId } = renderComponent({ countryCodes: ['AT'] });
 
     await fireEvent.change(getByTestId('country').querySelector('input')!!, { target: { value: 'AT' } });
-    await fireEvent.change(getByTestId('city').querySelector('input')!!, { target: { value: 'test' } });
-    await fireEvent.change(getByTestId('streetName').querySelector('input')!!, { target: { value: 'test' } });
-    await fireEvent.change(getByTestId('postalCode').querySelector('input')!!, { target: { value: 'test' } });
-    await fireEvent.change(getByTestId('building').querySelector('input')!!, { target: { value: 'test' } });
-    await fireEvent.change(getByTestId('apartment').querySelector('input')!!, { target: { value: 'test' } });
+    await fireEvent.change(getByTestId('city-input').querySelector('input')!!, { target: { value: 'test' } });
+    await fireEvent.change(getByTestId('streetName-input').querySelector('input')!!, { target: { value: 'test' } });
+    await fireEvent.change(getByTestId('postalCode-input').querySelector('input')!!, { target: { value: 'test' } });
+    await fireEvent.change(getByTestId('building-input').querySelector('input')!!, { target: { value: 'test' } });
+    await fireEvent.change(getByTestId('apartment-input').querySelector('input')!!, { target: { value: 'test' } });
 
     expect(handleChangeMock).toHaveBeenCalledTimes(6);
     expect(onFieldChangeMock).toHaveBeenCalledTimes(6);
@@ -76,11 +76,11 @@ describe('AddressGroup', () => {
 
     await muiSelectValue('country', 'menuItem.AT');
 
-    await fireEvent.change(getByTestId('city').querySelector('input')!!, { target: { value: 'test' } });
-    await fireEvent.change(getByTestId('streetName').querySelector('input')!!, { target: { value: 'test' } });
-    await fireEvent.change(getByTestId('postalCode').querySelector('input')!!, { target: { value: 'test' } });
-    await fireEvent.change(getByTestId('building').querySelector('input')!!, { target: { value: 'test' } });
-    await fireEvent.change(getByTestId('apartment').querySelector('input')!!, { target: { value: 'test' } });
+    await fireEvent.change(getByTestId('city-input').querySelector('input')!!, { target: { value: 'test' } });
+    await fireEvent.change(getByTestId('streetName-input').querySelector('input')!!, { target: { value: 'test' } });
+    await fireEvent.change(getByTestId('postalCode-input').querySelector('input')!!, { target: { value: 'test' } });
+    await fireEvent.change(getByTestId('building-input').querySelector('input')!!, { target: { value: 'test' } });
+    await fireEvent.change(getByTestId('apartment-input').querySelector('input')!!, { target: { value: 'test' } });
 
     expect(setFieldTouchedMock).toHaveBeenCalledTimes(6);
     expect(validateFieldMock).toHaveBeenCalledTimes(6);
