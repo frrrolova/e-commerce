@@ -7,7 +7,6 @@ export enum Paths {
   BASKET = '/basket',
   PROFILE = '/profile',
   PRODUCTS = '/products/:productId',
-  NOT_FOUND = '/*',
 }
 
 export enum Titles {
