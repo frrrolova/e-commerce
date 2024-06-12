@@ -1,5 +1,5 @@
 import { Box, Container, Paper, Typography } from '@mui/material';
-import backPlantImg from '/images/registration/reg-back.png';
+import backPlantImg from '/images/registration/reg-back.webp';
 import LoginForm from '../../components/LoginForm/LoginForm';
 
 function Login() {

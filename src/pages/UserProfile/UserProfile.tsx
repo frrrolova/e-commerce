@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from '@/store/store';
 import theme from '@/themes/theme';
 import { Box, Container, Typography } from '@mui/material';
 import { useEffect } from 'react';
-import backImg from '/images/prof.png';
+import backImg from '/images/prof.webp';
 import { formWidth } from './constants';
 
 function UserProfile() {

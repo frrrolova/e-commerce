@@ -9,7 +9,7 @@ import initStore from './store/store.ts';
 import { Cart } from '@commercetools/platform-sdk';
 import { SnackbarProvider } from 'notistack';
 import styles from '@/App.module.scss';
-import texture from '/images/texture.png';
+import texture from '/images/texture.webp';
 
 function App({ cart }: { cart: Cart | null }) {
   return (
