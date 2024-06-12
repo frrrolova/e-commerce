@@ -2,6 +2,7 @@ import { Box, Container, Typography, Link, Paper } from '@mui/material';
 import Logo from '/images/rs-logo.svg';
 import TeamMemberCard from '@/components/TeamMemberCard/TeamMemberCard';
 import { members } from './data';
+import { aboutConstants } from './constants';
 
 function About() {
   return (
@@ -34,7 +35,7 @@ function About() {
             textAlign: 'center',
           }}
         >
-          Our team
+          {aboutConstants.common.title}
         </Typography>
         <Box
           component="div"
@@ -86,7 +87,7 @@ function About() {
                 textAlign: 'center',
               }}
             >
-              Collaboration
+              {aboutConstants.collaboration.title}
             </Typography>
             <Typography
               component="p"
@@ -94,8 +95,7 @@ function About() {
                 textIndent: '20px',
               }}
             >
-              We were working together as a group on a project for seven weaks. We created a project task board using a
-              project management tool Trello to organize tasks into lists or columns corresponding to their status.
+              {aboutConstants.collaboration.p1}
             </Typography>
             <Typography
               component="p"
@@ -103,12 +103,7 @@ function About() {
                 textIndent: '20px',
               }}
             >
-              We started each sprint with sprint planning, where we break down project tasks into smaller, manageable
-              subtasks and assign them to each other, ensuring a clear delegation of responsibilities. During the
-              sprint, we met for dailies, where each team member shared the status of their tasks. We shared workloads
-              while discussing ideas, new methods, or different perspectives to attain better solutions. We actively
-              participated in code reviews, providing constructive feedback and suggestions to our peers. At the end of
-              the sprint we summed up the results and planned further work.
+              {aboutConstants.collaboration.p2}
             </Typography>
           </Box>
           <Box
@@ -160,7 +155,7 @@ function About() {
               }}
               component="h2"
             >
-              Made with love in 2024
+              {aboutConstants.common.subtitle}
             </Typography>
           </Box>
         </Box>
