@@ -1,14 +1,30 @@
 import client from '@/client/client';
-import { Category, Filter, FilterData, Product } from '@/types';
+import { Category, FetchProductsRequest, FetchProductsResponse, Filter, FilterData, Product } from '@/types';
 import { mapProductProjections } from '@/utils/mapProductProjections';
 import { AttributeEnumType } from '@commercetools/platform-sdk';
 import sortMapping from './constants';
 import { mapCategories } from '@/utils/mapCategories';
+import { FilterNames, SortOptions } from '@/pages/Catalog/constants';
+import { defaultPriceRange } from '@/components/catalog/FiltersForm/constants';
 
 class CatalogService {
-  async fetchProducts(params?: { filters?: FilterData; sort?: string; search?: string }): Promise<Product[]> {
+  fetchProducts = async ({ request }: FetchProductsRequest): Promise<FetchProductsResponse> => {
+    const url = new URL(request.url);
+
+    const queryParams = {
+      filters: {
+        size: url.searchParams.get(FilterNames.SIZE) === 'all' ? '' : url.searchParams.get(FilterNames.SIZE),
+        color: url.searchParams.get(FilterNames.COLOR) === 'all' ? '' : url.searchParams.get(FilterNames.COLOR),
+        price: this.parsPrice(url.searchParams.get(FilterNames.PRICE)),
+        categoryId:
+          url.searchParams.get(FilterNames.CATEGORY_ID) === 'all' ? '' : url.searchParams.get(FilterNames.CATEGORY_ID),
+      },
+      search: url.searchParams.get(FilterNames.SEARCH) || '',
+      sort: url.searchParams.get(FilterNames.SORT) || SortOptions[0].key,
+    };
+
     try {
-      const filterStr = params?.filters ? this.buildFilterString(params?.filters) : [];
+      const filterStr = this.buildFilterString(queryParams.filters);
 
       const response = await client
         .getClient()
@@ -18,23 +34,22 @@ class CatalogService {
           queryArgs: {
             limit: 25,
             offset: 0,
-            // where: params?.categoryId ? [`categories(id="${params.categoryId}")`] : [],
             filter: filterStr,
             markMatchingVariants: true,
-            sort: params?.sort ? [sortMapping[params.sort]] : [],
-            'text.en-GB': params?.search,
+            sort: queryParams?.sort ? [sortMapping[queryParams.sort]] : [],
+            'text.en-GB': queryParams?.search,
             fuzzy: true,
           },
         })
         .execute();
 
       const products: Product[] = mapProductProjections(response.body.results);
-      return products;
+      return { products, queryParams };
     } catch (error) {
       console.error('Error fetching products:', error);
       throw error;
     }
-  }
+  };
 
   async fetchProductById(productID: string) {
     try {
@@ -124,6 +139,12 @@ class CatalogService {
     }
 
     return filterStr;
+  }
+
+  private parsPrice(str: string | null): number[] {
+    if (!str) return defaultPriceRange;
+    const arr = str.split(',').map((item: string) => Number(item));
+    return arr;
   }
 }
 

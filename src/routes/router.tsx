@@ -5,16 +5,18 @@ import { AuthProtectedRoute } from './AuthProtectedRoute';
 import Main from '@/pages/Main/Main';
 import Login from '@/pages/Login/Login';
 import Registration from '@/pages/Registration/Registration';
-import Catalog from '@/pages/Catalog/Catalog';
+import { Catalog } from '@/pages/Catalog/Catalog';
 import Basket from '@/pages/Basket/Basket';
 import UserProfile from '@/pages/UserProfile/UserProfile';
 import About from '@/pages/About/About';
 import Product from '@/pages/Product/Product';
 import PageNotFound from '@/pages/PageNotFound/PageNotFound';
+import { catalogService } from '@/services/catalogService';
 
 export const routes: RouteObject[] = [
   {
     element: <RootLayout />,
+    errorElement: <PageNotFound />,
     children: [
       {
         path: Paths.HOME,
@@ -39,6 +41,7 @@ export const routes: RouteObject[] = [
       {
         path: Paths.CATALOG,
         element: <Catalog />,
+        loader: catalogService.fetchProducts,
       },
       {
         path: Paths.BASKET,
@@ -59,10 +62,6 @@ export const routes: RouteObject[] = [
             <UserProfile />
           </AuthProtectedRoute>
         ),
-      },
-      {
-        path: Paths.NOT_FOUND,
-        element: <PageNotFound />,
       },
     ],
   },

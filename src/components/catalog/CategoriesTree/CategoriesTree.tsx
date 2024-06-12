@@ -3,24 +3,23 @@ import { Stack, Typography, Box } from '@mui/material';
 import { SimpleTreeView, TreeItem } from '@mui/x-tree-view';
 import { catalogService } from '@/services/catalogService';
 import { Category, CategoryTree } from '@/types';
-// import useQuery from '@/utils/useQuery';
+import { useLocation, useSubmit } from 'react-router-dom';
+import { CategoryAllNode, FilterNames } from '@/pages/Catalog/constants';
 
 interface CategoriesTreeProps {
-  onSelectCategory: (categoryId: string) => void;
+  setActiveCategory: (categoryId: string) => void;
   activeCategory: string | null;
 }
 
-const CategoriesTree: FC<CategoriesTreeProps> = ({ onSelectCategory, activeCategory }) => {
-  // const [categories, setCategories] = useState<Category[] | null>(null);
+const CategoriesTree: FC<CategoriesTreeProps> = ({ setActiveCategory, activeCategory }) => {
   const [categoriesTree, setCategoriesTree] = useState<CategoryTree[] | null>(null);
-  // const [activeItem, setActiveItem] = useState<string | null>(null);
-  // const query = useQuery();
-  // const categoryFromUrl = query.get('filter') || '';
-  // console.log('!!filter in tree', categoryFromUrl);
+
+  const submit = useSubmit();
+  const location = useLocation();
 
   const loadCategories = async () => {
     const categoriesData = await catalogService.fetchCategories();
-    // console.log('categoriesData in tree', categoriesData);
+
     sortSubcategories(categoriesData);
   };
 
@@ -35,30 +34,43 @@ const CategoriesTree: FC<CategoriesTreeProps> = ({ onSelectCategory, activeCateg
   };
 
   useEffect(() => {
-    console.log('in Tree: ', activeCategory);
     loadCategories();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handleClick = (category: Category) => {
+    setActiveCategory(category.id);
+
+    const newSearchParams = new URLSearchParams(location.search);
+    newSearchParams.set(FilterNames.CATEGORY_ID, category.id);
+    submit(newSearchParams);
+  };
 
   const renderTree = (nodes: CategoryTree) => (
     <TreeItem
       key={nodes.id}
       itemId={nodes.id}
       label={nodes.name}
+      onClick={() => handleClick(nodes)}
       sx={{
         [`& .MuiTreeItem-iconContainer`]: {
           width: 0,
         },
-        ...(activeCategory === null && {
-          [`& .MuiTreeItem-content`]: {
+        ...(activeCategory === nodes.id && {
+          [`& .MuiTreeItem-content.Mui-selected`]: {
+            backgroundColor: 'rgba(68, 140, 68, 0.16)!important',
+          },
+        }),
+        ...(activeCategory !== nodes.id && {
+          [`& .MuiTreeItem-content:not(.Mui-selected)`]: {
             backgroundColor: 'transparent!important',
           },
         }),
-        // ...(categoryFromUrl === nodes.id && {
-        //   [`& .MuiTreeItem-content`]: {
-        //     backgroundColor: 'rgba(68, 140, 68, 0.16)!important',
-        //   },
-        // }),
+        ...(activeCategory !== nodes.id && {
+          [`& .MuiTreeItem-content:hover`]: {
+            backgroundColor: 'rgba(255, 255, 255, 0.08)!important',
+          },
+        }),
       }}
     >
       {Array.isArray(nodes.subcategories) ? nodes.subcategories.map((node) => renderTree(node)) : null}
@@ -67,8 +79,7 @@ const CategoriesTree: FC<CategoriesTreeProps> = ({ onSelectCategory, activeCateg
 
   const handleItemSelectionToggle = (_event: SyntheticEvent, itemId: string, isSelected: boolean) => {
     if (isSelected) {
-      // setActiveItem(itemId);
-      onSelectCategory(itemId);
+      setActiveCategory(itemId);
     }
   };
 
@@ -80,9 +91,10 @@ const CategoriesTree: FC<CategoriesTreeProps> = ({ onSelectCategory, activeCateg
       <Box>
         <SimpleTreeView onItemSelectionToggle={handleItemSelectionToggle} sx={{ maxWidth: '100%' }}>
           <TreeItem
-            key="all"
-            itemId="all"
-            label="All Plants"
+            onClick={() => handleClick(CategoryAllNode)}
+            key={`${CategoryAllNode.key}`}
+            itemId={`${CategoryAllNode.id}`}
+            label={`${CategoryAllNode.name}`}
             sx={{
               [`& .MuiTreeItem-content.MuiTreeItem-iconContainer`]: {
                 width: 0,
@@ -90,9 +102,9 @@ const CategoriesTree: FC<CategoriesTreeProps> = ({ onSelectCategory, activeCateg
               [`& .MuiTreeItem-iconContainer`]: {
                 width: '0!important',
               },
-              ...(activeCategory == null && {
+              ...(!activeCategory && {
                 [`& .MuiTreeItem-content`]: {
-                  backgroundColor: 'rgba(68, 140, 68, 0.16)',
+                  backgroundColor: 'rgba(68, 140, 68, 0.16)!important',
                 },
               }),
             }}
