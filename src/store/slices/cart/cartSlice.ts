@@ -1,6 +1,6 @@
 import { Cart } from '@commercetools/platform-sdk';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { addToCartThunk, changeLineItemQuantityThunk } from './thunks';
+import { addToCartThunk, changeLineItemQuantityThunk, getCartThunk } from './thunks';
 
 export interface CartState {
   cart: Cart | null;
@@ -22,6 +22,9 @@ export const cartSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(getCartThunk.fulfilled, (state, action) => {
+        state.cart = action.payload;
+      })
       .addCase(addToCartThunk.pending, (state) => {
         state.isAddProductPending = true;
       })
