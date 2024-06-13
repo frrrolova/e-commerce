@@ -1,7 +1,7 @@
 import { TeamMember } from '@/types';
 import Placeholder from '/images/catalog/placeholder_plant.png';
-import Yar from '/images/Yar.jpg';
-import frrrolova from '/images/frrrolova.png';
+import Yar from '/images/Yar.webp';
+import frrrolova from '/images/frrrolova.webp';
 
 export const members: TeamMember[] = [
   {
@@ -32,6 +32,7 @@ export const members: TeamMember[] = [
       'Registration Page',
       'Routing Implementation',
       'User Profile Page',
+      'Basket',
     ],
   },
   {
