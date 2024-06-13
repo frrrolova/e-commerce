@@ -5,7 +5,7 @@ export default {
   },
 
   moduleNameMapper: {
-    '\\.(css|less|sass|scss|png|jpg|svg)$': 'identity-obj-proxy',
+    '\\.(css|less|sass|scss|png|jpg|svg|webp)$': 'identity-obj-proxy',
     '^.+\\.svg$': 'jest-transformer-svg',
     '^@/(.*)$': '<rootDir>/src/$1',
     '^@components/(.*)$': '<rootDir>/src/components/$1',
