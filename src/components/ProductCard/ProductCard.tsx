@@ -28,7 +28,13 @@ function ProductCard({ product }: ProductCardProps) {
     <Box className={styles.container} onClick={handleClick}>
       <Paper elevation={3} className={styles.card}>
         <Box className={styles.content}>
-          <Box component="img" className={styles.image} alt="Plant" src={product.images?.[0].url || Placeholder} />
+          <Box
+            component="img"
+            className={styles.image}
+            alt="Plant"
+            src={product.images?.[0]?.url || Placeholder}
+            loading="lazy"
+          />
           <Box className={styles.description}>
             <Typography gutterBottom variant="h5" component="div" mt={1}>
               {product.name}

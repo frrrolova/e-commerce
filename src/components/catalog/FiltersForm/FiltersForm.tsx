@@ -44,6 +44,8 @@ const FiltersForm = ({ filtersValuesUrl }: { filtersValuesUrl: FilterData }) => 
     newSearchParams.set(FilterNames.COLOR, colorValue);
     if (priceValue) newSearchParams.set(FilterNames.PRICE, priceValue);
 
+    newSearchParams.set(FilterNames.PAGE, '1');
+
     submit(newSearchParams);
   };
 
@@ -53,6 +55,8 @@ const FiltersForm = ({ filtersValuesUrl }: { filtersValuesUrl: FilterData }) => 
     newSearchParams.delete(FilterNames.SIZE);
     newSearchParams.delete(FilterNames.COLOR);
     newSearchParams.delete(FilterNames.PRICE);
+
+    newSearchParams.set(FilterNames.PAGE, '1');
 
     submit(newSearchParams);
   };

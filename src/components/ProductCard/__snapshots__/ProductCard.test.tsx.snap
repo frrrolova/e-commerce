@@ -17,6 +17,7 @@ exports[`Main component rendering performs snapshot testing 1`] = `
             <img
               alt="Plant"
               class="MuiBox-root css-0"
+              loading="lazy"
               src="image.png"
             />
             <div
@@ -61,6 +62,7 @@ exports[`Main component rendering performs snapshot testing 1`] = `
           <img
             alt="Plant"
             class="MuiBox-root css-0"
+            loading="lazy"
             src="image.png"
           />
           <div
