@@ -1,7 +1,7 @@
 import { changeLineItemQuantityThunk, getCartThunk } from '@/store/slices/cart/thunks';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 import theme from '@/themes/theme';
-import { Cart, ErrorObject } from '@commercetools/platform-sdk';
+import { Cart, ErrorObject, LineItem } from '@commercetools/platform-sdk';
 import {
   Avatar,
   Box,
@@ -20,10 +20,8 @@ import Counter from '@/components/Counter/Counter';
 import { enqueueSnackbar } from 'notistack';
 import { bottomSnackbarBasicParams } from '@/shared/snackbarConstans';
 import RemoveBtn from '@/components/RemoveBtn/RemoveBtn';
-
-const drawerWidth = '350px';
-const centsPerEuro = 100;
-const currency = '€';
+import { centsPerEuro, currency, drawerWidth } from './constants';
+import BottomBar from '@/components/BottomBar/BottomBar';
 
 function Basket() {
   const dispatch = useAppDispatch();
@@ -96,7 +94,7 @@ function Basket() {
     <Box>
       <Paper elevation={1} sx={{ display: 'flex', flexDirection: 'column', gap: 1, padding: 1 }}>
         <Button variant="contained" sx={{ alignSelf: 'center' }}>
-          Checkout
+          Confirm order
         </Button>
         <Divider />
         <Box display="flex" justifyContent="space-between" alignItems="baseline">
@@ -127,6 +125,33 @@ function Basket() {
     </Box>
   );
 
+  const drawPrices = (product: LineItem) => {
+    return (
+      <>
+        <Typography
+          sx={{
+            textDecoration: product.price.discounted ? 'line-through' : 'none',
+            lineHeight: '1',
+            fontSize: 'inherit',
+          }}
+        >{`${(product.price.value.centAmount / centsPerEuro) * product.quantity} ${currency}`}</Typography>
+        {Boolean(product.price.discounted) && (
+          <Typography
+            sx={{
+              color: theme.palette.primary.main,
+              fontWeight: 600,
+              ml: 1,
+              lineHeight: '1',
+              fontSize: 'inherit',
+            }}
+          >
+            {`${(product.totalPrice.centAmount || 0) / centsPerEuro} ${currency}`}
+          </Typography>
+        )}
+      </>
+    );
+  };
+
   return (
     <Box sx={{ display: 'flex' }}>
       <Box
@@ -134,10 +159,17 @@ function Basket() {
         sx={{
           flexGrow: 1,
           p: { xs: 1, sm: 3 },
-          width: matchesBigScreen ? `calc(100% - ${drawerWidth}px)` : 0,
+          width: matchesPricesTextContent ? `calc(100% - ${drawerWidth}px)` : 0,
         }}
       >
-        <List sx={{ paddingX: { lg: 4 } }}>
+        <Typography component="h1" fontSize={matchesSmallScreen ? '1.4rem' : '1.6rem'} fontWeight={600} mb={2} pl={3}>
+          Your Cart:
+        </Typography>
+        <List
+          sx={{
+            paddingX: { lg: 4 },
+          }}
+        >
           {cart?.lineItems.map((product, i) => {
             return (
               <ListItem
@@ -148,7 +180,6 @@ function Basket() {
                   alignItems: 'stretch',
                   justifyContent: 'space-between',
                   width: '100%',
-                  // pr: 0,
                   paddingX: { xs: 1, sm: 2 },
                   mb: {
                     xs: 1.5,
@@ -253,26 +284,7 @@ function Basket() {
                         display: matchesPricesTextContent ? 'flex' : 'none',
                       }}
                     >
-                      <Typography
-                        sx={{
-                          textDecoration: product.price.discounted ? 'line-through' : 'none',
-                          lineHeight: '1',
-                          fontSize: 'inherit',
-                        }}
-                      >{`${(product.price.value.centAmount / centsPerEuro) * product.quantity} ${currency}`}</Typography>
-                      {Boolean(product.price.discounted) && (
-                        <Typography
-                          sx={{
-                            color: theme.palette.primary.main,
-                            fontWeight: 600,
-                            ml: 1,
-                            lineHeight: '1',
-                            fontSize: 'inherit',
-                          }}
-                        >
-                          {`${(product.totalPrice.centAmount || 0) / centsPerEuro} ${currency}`}
-                        </Typography>
-                      )}
+                      {drawPrices(product)}
                     </Box>
                   </Box>
                 </Box>
@@ -301,26 +313,7 @@ function Basket() {
                       display: matchesPricesTextContent ? 'none' : 'flex',
                     }}
                   >
-                    <Typography
-                      sx={{
-                        textDecoration: product.price.discounted ? 'line-through' : 'none',
-                        lineHeight: '1',
-                        fontSize: 'inherit',
-                      }}
-                    >{`${(product.price.value.centAmount / centsPerEuro) * product.quantity} ${currency}`}</Typography>
-                    {Boolean(product.price.discounted) && (
-                      <Typography
-                        sx={{
-                          color: theme.palette.primary.main,
-                          fontWeight: 600,
-                          ml: 1,
-                          lineHeight: '1',
-                          fontSize: 'inherit',
-                        }}
-                      >
-                        {`${(product.totalPrice.centAmount || 0) / centsPerEuro} ${currency}`}
-                      </Typography>
-                    )}
+                    {drawPrices(product)}
                   </Box>
                 </Box>
               </ListItem>
@@ -366,29 +359,12 @@ function Basket() {
         {drawer}
       </Drawer>
       {!matchesBigScreen && (
-        <Paper
-          sx={{
-            position: 'fixed',
-            bottom: 0,
-            left: 0,
-            right: 0,
-            padding: 2,
-            cursor: 'pointer',
-            display: 'flex',
-            justifyContent: 'center',
-          }}
-          elevation={7}
-          onClick={handleDrawerToggle}
-        >
-          <Button
-            variant="contained"
-            color="primary"
-            sx={{ display: matchesBigScreen ? 'none' : 'inline-flex', alignItems: 'center', gap: 2 }}
-          >
-            <Typography sx={{ fontSize: { xs: '0.8rem', sm: '1rem' } }}>Confirm order</Typography>
+        <BottomBar isMatchMedia={matchesBigScreen} onClick={handleDrawerToggle}>
+          <>
+            <Typography sx={{ fontSize: { xs: '0.8rem', sm: '1rem' } }}>Checkout</Typography>
             <Typography>{`${(cart?.totalPrice.centAmount || 0) / centsPerEuro} ${currency}`}</Typography>
-          </Button>
-        </Paper>
+          </>
+        </BottomBar>
       )}
     </Box>
   );
