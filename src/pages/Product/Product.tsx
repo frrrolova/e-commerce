@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
 import { Product as ProductType } from '@/types';
 import { productService } from '@/services/productService';
-import { Box, Typography, Button, Container, Paper } from '@mui/material';
+import { Box, Typography, Button, Container, Paper, useMediaQuery } from '@mui/material';
 import CardContent from '@mui/material/CardContent';
-import { Link as RouterLink, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Paths } from '@/routes/routeConstants';
 import CardActions from '@mui/material/CardActions';
 import Slider from '@/components/Slider/Slider';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 import { addToCartThunk, changeLineItemQuantityThunk } from '@/store/slices/cart/thunks';
 import { enqueueSnackbar } from 'notistack';
-import { snackbarBasicParams } from '@/shared/snackbarConstans';
+import { bottomSnackbarBasicParams } from '@/shared/snackbarConstans';
 import { ErrorObject } from '@commercetools/platform-sdk';
 
 //69ca9376-354e-4a8e-890c-a9e37ae95a59
@@ -22,9 +22,12 @@ function Product() {
   const [product, setProduct] = useState<ProductType | null>(null);
   const [error, setError] = useState<string | null>(null);
 
+  const navigate = useNavigate();
+
   const dispatch = useAppDispatch();
 
-  // const cart = useAppSelector((state) => state.cart.cart);
+  const matches = useMediaQuery('(min-width:1000px)');
+
   const productQuantity = useAppSelector(
     (state) => state.cart.cart?.lineItems.find((item) => item.productId === productId)?.quantity || 0,
   );
@@ -69,32 +72,17 @@ function Product() {
               elevation={3}
               sx={{
                 backgroundColor: 'transparent',
-                paddingX: {
-                  xs: '10px',
-                  md: '50px',
-                },
-                paddingTop: {
-                  xs: '30px',
-                  md: '50px',
-                },
-                paddingBottom: {
-                  xs: '5px',
-                  md: '50px',
-                },
+                paddingX: matches ? '50px' : '10px',
+                paddingTop: matches ? '50px' : '30px',
+                paddingBottom: matches ? '50px' : '5px',
                 width: '100%',
               }}
             >
               <Box
                 sx={{
                   display: 'flex',
-                  gap: {
-                    xs: '15px',
-                    md: '40px',
-                  },
-                  flexDirection: {
-                    xs: 'column',
-                    md: 'row',
-                  },
+                  gap: matches ? '30px' : '15px',
+                  flexDirection: matches ? 'row' : 'column',
                 }}
               >
                 <Slider product={product} />
@@ -102,26 +90,17 @@ function Product() {
                   sx={{
                     display: 'flex',
                     flexDirection: 'column',
-                    gap: {
-                      xs: '7px',
-                      md: '14px',
-                    },
+                    gap: matches ? '14px' : '7px',
                     padding: {
-                      xs: 3,
-                      md: 2,
+                      xs: 1,
+                      sm: 2,
                     },
-                    paddingRight: {
-                      xs: 3,
-                      md: 0,
-                    },
+                    paddingRight: matches ? 0 : 3,
                   }}
                 >
                   <Box
                     sx={{
-                      display: {
-                        xs: 'flex',
-                        md: 'block',
-                      },
+                      display: matches ? 'block' : 'flex',
                       justifyContent: 'space-between',
                       flexWrap: 'wrap',
                     }}
@@ -176,23 +155,29 @@ function Product() {
                   <Typography variant="body2" color="text.secondary" data-testid="product-description">
                     {product.description}
                   </Typography>
-                  <CardActions>
+                  <CardActions
+                    sx={{
+                      paddingX: matches ? 1 : 0,
+                      gap: 1,
+                    }}
+                  >
                     {productQuantity ? (
                       <Button
                         variant="outlined"
                         size="small"
+                        sx={{ fontSize: { xs: '0.7rem', sm: '1rem' } }}
                         onClick={() => {
                           dispatch(changeLineItemQuantityThunk({ id: product.id, quantity: 0 }))
                             .then(() => {
                               enqueueSnackbar('Product removed from cart', {
                                 variant: 'success',
-                                ...snackbarBasicParams,
+                                ...bottomSnackbarBasicParams,
                               });
                             })
                             .catch((err: ErrorObject) => {
                               enqueueSnackbar(err.message, {
                                 variant: 'error',
-                                ...snackbarBasicParams,
+                                ...bottomSnackbarBasicParams,
                               });
                             });
                         }}
@@ -203,18 +188,19 @@ function Product() {
                       <Button
                         variant="outlined"
                         size="small"
+                        sx={{ fontSize: { xs: '0.7rem', sm: '1rem' } }}
                         onClick={() => {
                           dispatch(addToCartThunk(product.id))
                             .then(() => {
                               enqueueSnackbar('Product added to cart', {
                                 variant: 'success',
-                                ...snackbarBasicParams,
+                                ...bottomSnackbarBasicParams,
                               });
                             })
                             .catch((err: ErrorObject) => {
                               enqueueSnackbar(err.message, {
                                 variant: 'error',
-                                ...snackbarBasicParams,
+                                ...bottomSnackbarBasicParams,
                               });
                             });
                         }}
@@ -222,7 +208,14 @@ function Product() {
                         Buy now
                       </Button>
                     )}
-                    <Button variant="outlined" size="small" component={RouterLink} to={Paths.CATALOG}>
+                    <Button
+                      variant="outlined"
+                      size="small"
+                      onClick={() => {
+                        navigate(Paths.CATALOG);
+                      }}
+                      sx={{ fontSize: { xs: '0.7rem', sm: '1rem' }, ml: '0 !important' }}
+                    >
                       To catalog
                     </Button>
                   </CardActions>

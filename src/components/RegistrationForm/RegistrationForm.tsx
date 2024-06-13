@@ -38,7 +38,7 @@ import { Paths } from '@/routes/routeConstants';
 import { useSnackbar } from 'notistack';
 import { countriesList } from './constants';
 import AddressGroup from '@components/AddressGroup/AddressGroup';
-import { snackbarBasicParams } from '@/shared/snackbarConstans';
+import { topSnackbarBasicParams } from '@/shared/snackbarConstans';
 import { getFormattedDateValue } from '@/utils/getFormattedDateValue';
 import { lsUserKey } from '@/core/commonConstants';
 
@@ -86,7 +86,7 @@ function RegistrationForm() {
         navigate(Paths.HOME);
         enqueueSnackbar(`${CommonAuthRes.ALREADY_LOGGED_IN} ${currentUser.email}`, {
           variant: AuthResults.WARN,
-          ...snackbarBasicParams,
+          ...topSnackbarBasicParams,
         });
         return;
       }
@@ -128,7 +128,7 @@ function RegistrationForm() {
         .then(() => {
           enqueueSnackbar(RegistrationResultMessages.SUCCESS, {
             variant: AuthResults.SUCCESS,
-            ...snackbarBasicParams,
+            ...topSnackbarBasicParams,
           });
         })
         .then(() => {
@@ -144,7 +144,7 @@ function RegistrationForm() {
               }
               enqueueSnackbar(error.message, {
                 variant: AuthResults.ERROR,
-                ...snackbarBasicParams,
+                ...topSnackbarBasicParams,
               });
             });
           }
