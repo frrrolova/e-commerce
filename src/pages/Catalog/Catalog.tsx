@@ -187,10 +187,10 @@ export function Catalog() {
             <SearchForm value={queryParams.search} />
           </Grid>
         </Grid>
-        <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
+        <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, md: 12 }}>
           {!products.length && <Typography>{PageData.NO_PRODUCTS}</Typography>}
           {products.map((product) => (
-            <Grid xs={4} sm={4} md={4} key={product.id}>
+            <Grid xs={4} key={product.id}>
               <ProductCard product={product} />
             </Grid>
           ))}
