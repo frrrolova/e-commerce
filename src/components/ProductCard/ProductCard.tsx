@@ -70,17 +70,19 @@ function ProductCard({ product }: ProductCardProps) {
               </Typography>
             )}
 
-            <Tooltip title={addTooltip}>
-              <IconButton
-                disabled={isAdded}
-                onClick={handleAddToCart}
-                className={styles.customIconButton}
-                size="large"
-                sx={{ p: 0 }}
-                aria-label="add"
-              >
-                {currentIcon}
-              </IconButton>
+            <Tooltip title={isAdded ? '' : addTooltip}>
+              <span>
+                <IconButton
+                  disabled={isAdded}
+                  onClick={handleAddToCart}
+                  className={styles.customIconButton}
+                  size="large"
+                  sx={{ p: 0 }}
+                  aria-label="add"
+                >
+                  {currentIcon}
+                </IconButton>
+              </span>
             </Tooltip>
           </Box>
         </Box>
