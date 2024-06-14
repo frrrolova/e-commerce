@@ -9,7 +9,7 @@ import { Box, Tab, Tabs, TabsOwnProps, useMediaQuery } from '@mui/material';
 import { useSnackbar } from 'notistack';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { SnackBarMsgs, addressesTabsStyles } from '../constants';
-import { snackbarBasicParams } from '@/shared/snackbarConstans';
+import { topSnackbarBasicParams } from '@/shared/snackbarConstans';
 import theme from '@/themes/theme';
 import { AddressActions } from '@/enums/addressActions.enum';
 
@@ -68,7 +68,7 @@ export function UserAddresses({ userData }: { userData: Customer }) {
       .then(() => {
         enqueueSnackbar(SnackBarMsgs.ADDRESS_ADDED, {
           variant: 'success',
-          ...snackbarBasicParams,
+          ...topSnackbarBasicParams,
         });
       })
       .catch((e) => {
@@ -77,7 +77,7 @@ export function UserAddresses({ userData }: { userData: Customer }) {
           errors.forEach((err) => {
             enqueueSnackbar(err.message, {
               variant: 'error',
-              ...snackbarBasicParams,
+              ...topSnackbarBasicParams,
             });
           });
         }

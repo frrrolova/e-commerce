@@ -4,7 +4,7 @@ import { useAppDispatch } from '@/store/store';
 import { Customer, ErrorObject, MyCustomerUpdateAction } from '@commercetools/platform-sdk';
 import { useSnackbar } from 'notistack';
 import { useState } from 'react';
-import { snackbarBasicParams } from '@/shared/snackbarConstans';
+import { topSnackbarBasicParams } from '@/shared/snackbarConstans';
 
 export function useUserUpdateAction(initialUserData: Customer) {
   const [user, setUser] = useState<Customer>(initialUserData);
@@ -24,7 +24,7 @@ export function useUserUpdateAction(initialUserData: Customer) {
       .then(() => {
         enqueueSnackbar(successMsg, {
           variant: 'success',
-          ...snackbarBasicParams,
+          ...topSnackbarBasicParams,
         });
       })
       .catch((e) => {
@@ -34,7 +34,7 @@ export function useUserUpdateAction(initialUserData: Customer) {
           errors.forEach((err) => {
             enqueueSnackbar(err.message, {
               variant: 'error',
-              ...snackbarBasicParams,
+              ...topSnackbarBasicParams,
             });
           });
         }

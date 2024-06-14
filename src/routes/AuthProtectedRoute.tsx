@@ -8,5 +8,5 @@ export function AuthProtectedRoute({ children }: PropsWithChildren) {
   const userFromLS = localStorage.getItem(lsUserKey);
   const IsUser = location.pathname === Paths.PROFILE ? !userFromLS : !!userFromLS;
 
-  return !IsUser ? children : <Navigate to={Paths.HOME} replace state={{ path: location.pathname }} />;
+  return !IsUser ? children : <Navigate to={Paths.AUTH} replace state={{ path: location.pathname }} />;
 }
