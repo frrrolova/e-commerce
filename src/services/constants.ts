@@ -5,4 +5,8 @@ const sortMapping: Record<string, string> = {
   'name-desc': 'name.en-GB desc',
 };
 
+export const enum pageLimit {
+  productAmount = 6,
+}
+
 export default sortMapping;

@@ -70,6 +70,9 @@ export interface FetchProductsRequest {
 
 export interface FetchProductsResponse {
   products: Product[];
+  pagination: {
+    pageAmount: number;
+  };
   queryParams: {
     filters: FilterData;
     search: string;

@@ -2,8 +2,6 @@ import {
   Box,
   Button,
   Chip,
-  Dialog,
-  DialogActions,
   DialogContent,
   DialogTitle,
   IconButton,
@@ -24,10 +22,7 @@ import ModeEditOutlineIcon from '@mui/icons-material/ModeEditOutline';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import theme from '@/themes/theme';
 import { AddressActions } from '@/enums/addressActions.enum';
-import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
-import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
-
-// import DialogActionBtns from '../DialogActionBtns/DialogActionBtns';
+import ConfirmModal from '../ConfirmModal/ConfirmModal';
 
 interface AddressesListProps {
   addresses: Address[];
@@ -186,37 +181,29 @@ function AddressesList({ addresses, type, onSubmit, defaultId, onDefaultClick, o
         onSubmit={onSubmit}
         address={editingAddress}
       />
-      <Dialog onClose={handleDialogClose} open={dialogOpen}>
-        <DialogTitle color={theme.palette.primary.main} fontWeight={600}>
-          {'Are you sure you want to remove this address?'}
-        </DialogTitle>
-        <DialogContent sx={{ letterSpacing: '0.05em' }}>
-          {removingAddress ? getAddressString(removingAddress) : ''}
-        </DialogContent>
-        <DialogActions>
-          <IconButton
-            color="error"
-            size="small"
-            onClick={() => {
-              if (removingAddress) {
-                onRemoveClick(removingAddress);
-                handleDialogClose();
-              }
-            }}
-          >
-            <CheckCircleOutlineOutlinedIcon />
-          </IconButton>
-          <IconButton
-            size="small"
-            onClick={() => {
-              setRemovingAddress(null);
-              handleDialogClose();
-            }}
-          >
-            <CancelOutlinedIcon />
-          </IconButton>{' '}
-        </DialogActions>
-      </Dialog>
+      <ConfirmModal
+        onClose={handleDialogClose}
+        open={dialogOpen}
+        onConfirm={() => {
+          if (removingAddress) {
+            onRemoveClick(removingAddress);
+            handleDialogClose();
+          }
+        }}
+        onCancel={() => {
+          setRemovingAddress(null);
+          handleDialogClose();
+        }}
+      >
+        <>
+          <DialogTitle color={theme.palette.primary.main} fontWeight={600}>
+            {'Are you sure you want to remove this address?'}
+          </DialogTitle>
+          <DialogContent sx={{ letterSpacing: '0.05em' }}>
+            {removingAddress ? getAddressString(removingAddress) : ''}
+          </DialogContent>
+        </>
+      </ConfirmModal>
     </>
   );
 }

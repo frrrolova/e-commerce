@@ -1,18 +1,29 @@
 import { catalogService } from '@/services/catalogService';
 import { SyntheticEvent, useEffect, useState } from 'react';
 import Grid from '@mui/material/Unstable_Grid2';
-import { Typography, Box, Button, Drawer, Divider, Breadcrumbs, Link } from '@mui/material';
+import {
+  Typography,
+  Box,
+  Button,
+  Drawer,
+  Divider,
+  Breadcrumbs,
+  Link,
+  Pagination,
+  PaginationItem,
+  CircularProgress,
+} from '@mui/material';
 import ProductCard from '@/components/ProductCard/ProductCard';
 import { Category, FetchProductsResponse } from '@/types';
 import { ButtonLabels, CategoryAllNode, FilterNames, PageData, SortOptions, scrollbarStyles } from './constants';
-import { useLoaderData, useSubmit } from 'react-router-dom';
+import { useLoaderData, useLocation, useSubmit, Link as PageLink } from 'react-router-dom';
 import CategoriesTree from '@/components/catalog/CategoriesTree/CategoriesTree';
 import SearchForm from '@/components/catalog/SearchForm/SearchForm';
 import SortForm from '@/components/catalog/SortForm/SortForm';
 import FiltersForm from '@/components/catalog/FiltersForm/FiltersForm';
 
 export function Catalog() {
-  const { products, queryParams } = useLoaderData() as FetchProductsResponse;
+  const { products, pagination, queryParams } = useLoaderData() as FetchProductsResponse;
 
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [breadcrumbs, setBreadcrumbs] = useState<Category[]>([CategoryAllNode]);
@@ -21,6 +32,10 @@ export function Catalog() {
   const [isClosing, setIsClosing] = useState(false);
 
   const submit = useSubmit();
+  const location = useLocation();
+  const query = new URLSearchParams(location.search);
+
+  const page = parseInt(query.get('page') || '1', 10);
 
   const fetchBreadcrumbs = async (categoryId: string | null) => {
     if (!categoryId) {
@@ -80,9 +95,10 @@ export function Catalog() {
     e.preventDefault();
     setActiveCategory(category.id);
 
-    const newSearchParams = new URLSearchParams(location.search);
-    newSearchParams.set(FilterNames.CATEGORY_ID, category.id);
-    submit(newSearchParams);
+    query.set(FilterNames.CATEGORY_ID, category.id);
+    query.set(FilterNames.PAGE, '1');
+
+    submit(query);
   };
 
   const drawer = (
@@ -158,43 +174,69 @@ export function Catalog() {
       </Drawer>
 
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        <Grid container xs={12} sx={{ mb: 2 }}>
-          <Grid>
-            {breadcrumbs.length > 0 && (
-              <Breadcrumbs aria-label="breadcrumb">
-                {breadcrumbs.map((category, index) => (
-                  <Link
-                    key={category.id}
-                    underline="hover"
-                    color={index === breadcrumbs.length - 1 ? 'text.primary' : 'inherit'}
-                    href={`/catalog?filter=${category.id}`}
-                    onClick={handleBreadcrumbClick(category)}
-                  >
-                    {category.name}
-                  </Link>
-                ))}
-              </Breadcrumbs>
-            )}
-          </Grid>
-        </Grid>
-        <Grid container justifyContent="space-between" sx={{ mb: 3 }}>
-          <Grid>
-            <Button variant="text" color="primary" onClick={handleDrawerToggle} sx={{ mr: 2, display: { sm: 'none' } }}>
-              {ButtonLabels.OPEN}
-            </Button>
-          </Grid>
-          <Grid display="flex">
-            <SearchForm value={queryParams.search} />
-          </Grid>
-        </Grid>
-        <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, md: 12 }}>
-          {!products.length && <Typography>{PageData.NO_PRODUCTS}</Typography>}
-          {products.map((product) => (
-            <Grid xs={4} key={product.id}>
-              <ProductCard product={product} />
+        {catalogService.loading === true ? (
+          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+            <CircularProgress />
+          </Box>
+        ) : (
+          <>
+            <Grid container xs={12} sx={{ mb: 2 }}>
+              <Grid>
+                {breadcrumbs.length > 0 && (
+                  <Breadcrumbs aria-label="breadcrumb">
+                    {breadcrumbs.map((category, index) => (
+                      <Link
+                        key={category.id}
+                        underline="hover"
+                        color={index === breadcrumbs.length - 1 ? 'text.primary' : 'inherit'}
+                        href={`/catalog?filter=${category.id}`}
+                        onClick={handleBreadcrumbClick(category)}
+                      >
+                        {category.name}
+                      </Link>
+                    ))}
+                  </Breadcrumbs>
+                )}
+              </Grid>
             </Grid>
-          ))}
-        </Grid>
+            <Grid container justifyContent="space-between" sx={{ mb: 3 }}>
+              <Grid>
+                <Button
+                  variant="text"
+                  color="primary"
+                  onClick={handleDrawerToggle}
+                  sx={{ mr: 2, display: { sm: 'none' } }}
+                >
+                  {ButtonLabels.OPEN}
+                </Button>
+              </Grid>
+              <Grid display="flex">
+                <SearchForm value={queryParams.search} />
+              </Grid>
+            </Grid>
+            <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, md: 12 }}>
+              {!products.length && <Typography>{PageData.NO_PRODUCTS}</Typography>}
+              {products.map((product) => (
+                <Grid xs={4} key={product.id}>
+                  <ProductCard product={product} />
+                </Grid>
+              ))}
+            </Grid>
+            {!!products.length && (
+              <Grid sx={{ mt: 4 }}>
+                <Pagination
+                  page={page}
+                  count={pagination.pageAmount}
+                  renderItem={(item) => {
+                    const newQuery = new URLSearchParams(query.toString());
+                    newQuery.set('page', item.page?.toString() || '1');
+                    return <PaginationItem component={PageLink} to={`?${newQuery.toString()}`} {...item} />;
+                  }}
+                />
+              </Grid>
+            )}
+          </>
+        )}
       </Box>
     </Box>
   );

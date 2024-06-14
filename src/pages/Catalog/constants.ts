@@ -24,6 +24,7 @@ export enum FilterNames {
   SIZE = 'size',
   COLOR = 'color',
   PRICE = 'price',
+  PAGE = 'page',
 }
 
 export const SortOptions: FilterAttributes[] = [

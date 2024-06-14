@@ -2,13 +2,17 @@ import client from '@/client/client';
 import { Category, FetchProductsRequest, FetchProductsResponse, Filter, FilterData, Product } from '@/types';
 import { mapProductProjections } from '@/utils/mapProductProjections';
 import { AttributeEnumType } from '@commercetools/platform-sdk';
-import sortMapping from './constants';
+import sortMapping, { pageLimit } from './constants';
 import { mapCategories } from '@/utils/mapCategories';
 import { FilterNames, SortOptions } from '@/pages/Catalog/constants';
 import { defaultPriceRange } from '@/components/catalog/FiltersForm/constants';
 
 class CatalogService {
+  loading = false;
+
   fetchProducts = async ({ request }: FetchProductsRequest): Promise<FetchProductsResponse> => {
+    this.loading = true;
+
     const url = new URL(request.url);
 
     const queryParams = {
@@ -21,6 +25,7 @@ class CatalogService {
       },
       search: url.searchParams.get(FilterNames.SEARCH) || '',
       sort: url.searchParams.get(FilterNames.SORT) || SortOptions[0].key,
+      page: Number(url.searchParams.get(FilterNames.PAGE)) || 1,
     };
 
     try {
@@ -32,8 +37,8 @@ class CatalogService {
         .search()
         .get({
           queryArgs: {
-            limit: 25,
-            offset: 0,
+            limit: pageLimit.productAmount,
+            offset: (queryParams.page - 1) * pageLimit.productAmount,
             filter: filterStr,
             markMatchingVariants: true,
             sort: queryParams?.sort ? [sortMapping[queryParams.sort]] : [],
@@ -44,10 +49,15 @@ class CatalogService {
         .execute();
 
       const products: Product[] = mapProductProjections(response.body.results);
-      return { products, queryParams };
+      const pagination = {
+        pageAmount: Math.ceil((response.body.total || 0) / response.body.limit),
+      };
+      return { products, pagination, queryParams };
     } catch (error) {
       console.error('Error fetching products:', error);
       throw error;
+    } finally {
+      this.loading = false;
     }
   };
 
