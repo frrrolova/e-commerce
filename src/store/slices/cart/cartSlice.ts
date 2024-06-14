@@ -1,12 +1,13 @@
 import { Cart } from '@commercetools/platform-sdk';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { addToCartThunk, changeLineItemQuantityThunk, getCartThunk } from './thunks';
+import { addToCartThunk, changeLineItemQuantityThunk, clearCartThunk, getCartThunk } from './thunks';
 
 export interface CartState {
   cart: Cart | null;
   isAddProductPending: boolean; // using to handle LoadingButton's state
   isQuantityChanging: boolean; // handling counter btns state
   updatingProductIds: string[];
+  isCartClearing: boolean;
 }
 
 export const initialState: CartState = {
@@ -14,6 +15,7 @@ export const initialState: CartState = {
   isAddProductPending: false,
   isQuantityChanging: false,
   updatingProductIds: [],
+  isCartClearing: false,
 };
 
 export const cartSlice = createSlice({
@@ -54,6 +56,17 @@ export const cartSlice = createSlice({
       .addCase(changeLineItemQuantityThunk.rejected, (state, action) => {
         state.isQuantityChanging = true;
         state.updatingProductIds = state.updatingProductIds.filter((id) => id !== action.meta.arg.id);
+      })
+      // cart clear
+      .addCase(clearCartThunk.fulfilled, (state) => {
+        state.isCartClearing = false;
+        state.cart = null;
+      })
+      .addCase(clearCartThunk.pending, (state) => {
+        state.isCartClearing = true;
+      })
+      .addCase(clearCartThunk.rejected, (state) => {
+        state.isCartClearing = false;
       });
   },
 });
