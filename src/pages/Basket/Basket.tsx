@@ -1,4 +1,4 @@
-import { changeLineItemQuantityThunk, getCartThunk } from '@/store/slices/cart/thunks';
+import { changeLineItemQuantityThunk, clearCartThunk, getCartThunk } from '@/store/slices/cart/thunks';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 import theme from '@/themes/theme';
 import { Cart, ErrorObject, LineItem } from '@commercetools/platform-sdk';
@@ -6,6 +6,8 @@ import {
   Avatar,
   Box,
   Button,
+  DialogContent,
+  DialogTitle,
   Divider,
   Drawer,
   List,
@@ -22,6 +24,8 @@ import { bottomSnackbarBasicParams } from '@/shared/snackbarConstans';
 import RemoveBtn from '@/components/RemoveBtn/RemoveBtn';
 import { centsPerEuro, currency, drawerWidth } from './constants';
 import BottomBar from '@/components/BottomBar/BottomBar';
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
+import ConfirmModal from '@/components/ConfirmModal/ConfirmModal';
 
 function Basket() {
   const dispatch = useAppDispatch();
@@ -29,6 +33,10 @@ function Basket() {
   const cart: Cart | null = useAppSelector((store) => store.cart.cart);
   const isPending = useAppSelector((state) => state.cart.isQuantityChanging);
   const updatingProducts = useAppSelector((state) => state.cart.updatingProductIds);
+
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const handleDialogOpen = () => setDialogOpen(true);
+  const handleDialogClose = () => setDialogOpen(false);
 
   useEffect(() => {
     dispatch(getCartThunk());
@@ -121,6 +129,14 @@ function Basket() {
             >{`${(cart?.discountOnTotalPrice?.discountedAmount.centAmount || 0) / centsPerEuro} ${currency}`}</Typography>
           </Box>
         )}
+        <Button
+          variant="outlined"
+          disabled={!(Boolean(cart) && Boolean(cart?.lineItems.length))}
+          endIcon={<DeleteOutlinedIcon />}
+          onClick={handleDialogOpen}
+        >
+          Clear cart
+        </Button>
       </Paper>
     </Box>
   );
@@ -366,6 +382,26 @@ function Basket() {
           </>
         </BottomBar>
       )}
+      <ConfirmModal
+        onClose={handleDialogClose}
+        open={dialogOpen}
+        onCancel={handleDialogClose}
+        onConfirm={() => {
+          handleDialogClose();
+          if (cart) {
+            dispatch(clearCartThunk({ id: cart?.id, version: cart?.version }));
+          }
+        }}
+      >
+        <>
+          <DialogTitle color={theme.palette.primary.main} fontWeight={600}>
+            Shopping cart cleaning
+          </DialogTitle>
+          <DialogContent sx={{ letterSpacing: '0.05em' }}>
+            Are you sure you want to remove all items from your cart?
+          </DialogContent>
+        </>
+      </ConfirmModal>
     </Box>
   );
 }
