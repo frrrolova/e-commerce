@@ -1,6 +1,6 @@
 import '@/styles/styles.scss';
 import styles from './ProductCard.module.scss';
-import { Box, IconButton, Paper, Tooltip, Typography } from '@mui/material';
+import { Box, CircularProgress, IconButton, Paper, Tooltip, Typography } from '@mui/material';
 import { Product } from '@/types';
 import Placeholder from '/images/catalog/placeholder_plant.webp';
 import { PageData, centsInEuro } from './constants';
@@ -26,6 +26,7 @@ function ProductCard({ product }: ProductCardProps) {
     (state) => state.cart.cart?.lineItems.find((item) => item.productId === product.id)?.quantity || 0,
   );
 
+  const [isLoading, setIsLoading] = useState(false);
   const [isAdded, setIsAdded] = useState(productQuantity > 0 ? true : false);
   const currentIcon = isAdded ? <CheckOutlinedIcon /> : <AddShoppingCartIcon />;
 
@@ -43,6 +44,7 @@ function ProductCard({ product }: ProductCardProps) {
   const handleAddToCart = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
     setIsAdded(!isAdded);
+    setIsLoading(true);
 
     dispatch(addToCartThunk(product.id))
       .then(() => {
@@ -56,6 +58,9 @@ function ProductCard({ product }: ProductCardProps) {
           variant: 'error',
           ...bottomSnackbarBasicParams,
         });
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
@@ -82,36 +87,44 @@ function ProductCard({ product }: ProductCardProps) {
         <Box className={styles.bottomContent}>
           <Box className={styles.left}>
             {!!discountedPrice && (
-              <Typography className={styles.discount} variant="body1" pr={1} mt={1} mr={1}>
+              <Typography className={styles.discount} variant="body1" pr={1} mr={1}>
                 {discountedPrice} &euro;
               </Typography>
             )}
-            <Typography className={discountedPrice !== undefined ? 'strikethrough' : ''} variant="body1" mt={1}>
+            <Typography className={discountedPrice !== undefined ? 'strikethrough' : ''} variant="body1">
               {price} &euro;
             </Typography>
           </Box>
 
           <Box className={styles.right}>
-            {isAdded && (
-              <Typography variant="h6" className={styles.inCart}>
-                In Cart
-              </Typography>
-            )}
+            {isLoading === true ? (
+              <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <CircularProgress sx={{ padding: '0.5rem' }} />
+              </Box>
+            ) : (
+              <>
+                {isAdded && (
+                  <Typography variant="h6" className={styles.inCart}>
+                    In Cart
+                  </Typography>
+                )}
 
-            <Tooltip title={isAdded ? '' : PageData.addTooltip}>
-              <span>
-                <IconButton
-                  disabled={isAdded}
-                  onClick={handleAddToCart}
-                  className={styles.customIconButton}
-                  size="large"
-                  sx={{ p: 0 }}
-                  aria-label="add"
-                >
-                  {currentIcon}
-                </IconButton>
-              </span>
-            </Tooltip>
+                <Tooltip title={isAdded ? '' : PageData.addTooltip}>
+                  <span>
+                    <IconButton
+                      disabled={isAdded}
+                      onClick={handleAddToCart}
+                      className={styles.customIconButton}
+                      size="large"
+                      sx={{ p: 0 }}
+                      aria-label="add"
+                    >
+                      {currentIcon}
+                    </IconButton>
+                  </span>
+                </Tooltip>
+              </>
+            )}
           </Box>
         </Box>
       </Paper>
