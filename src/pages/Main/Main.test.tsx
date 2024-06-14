@@ -1,9 +1,10 @@
 import Main from './Main';
 import { catalogService } from '@/services/catalogService';
-import { render, waitFor, screen, fireEvent } from '@testing-library/react';
+import { waitFor, screen, fireEvent } from '@testing-library/react';
 import { act } from 'react';
 import { mockProduct1, mockProduct2, clientMock } from '@/utils/test-client-mock';
 import { InfoCardBtn } from './constants';
+import { renderWithProviders } from '@/utils/test-utils';
 
 // Mock for client
 jest.mock('../../client/client', () => {
@@ -41,7 +42,7 @@ describe('Main component rendering', () => {
   test('performs snapshot testing', async () => {
     let tree;
     await act(async () => {
-      tree = render(<Main />);
+      tree = renderWithProviders(<Main />);
     });
 
     await waitFor(() => {
@@ -55,7 +56,7 @@ describe('Main component rendering', () => {
 
 describe('Header component behavior', () => {
   test('should navigate, when clicking on a section button', async () => {
-    const { getByText } = render(<Main />);
+    const { getByText } = renderWithProviders(<Main />);
 
     await waitFor(() => {
       const button = getByText(InfoCardBtn.label);

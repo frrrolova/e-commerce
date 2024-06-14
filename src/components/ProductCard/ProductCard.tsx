@@ -3,11 +3,16 @@ import styles from './ProductCard.module.scss';
 import { Box, IconButton, Paper, Tooltip, Typography } from '@mui/material';
 import { Product } from '@/types';
 import Placeholder from '/images/catalog/placeholder_plant.webp';
-import { addTooltip, centsInEuro } from './constants';
+import { PageData, centsInEuro } from './constants';
 import { useNavigate } from 'react-router-dom';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
 import { useState } from 'react';
+import { useAppDispatch, useAppSelector } from '@/store/store';
+import { addToCartThunk } from '@/store/slices/cart/thunks';
+import { enqueueSnackbar } from 'notistack';
+import { bottomSnackbarBasicParams } from '@/shared/snackbarConstans';
+import { ErrorObject } from '@commercetools/platform-sdk';
 
 interface ProductCardProps {
   product: Product;
@@ -15,9 +20,13 @@ interface ProductCardProps {
 
 function ProductCard({ product }: ProductCardProps) {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
-  // TODO add check: is product in the cart
-  const [isAdded, setIsAdded] = useState(false);
+  const productQuantity = useAppSelector(
+    (state) => state.cart.cart?.lineItems.find((item) => item.productId === product.id)?.quantity || 0,
+  );
+
+  const [isAdded, setIsAdded] = useState(productQuantity > 0 ? true : false);
   const currentIcon = isAdded ? <CheckOutlinedIcon /> : <AddShoppingCartIcon />;
 
   let price;
@@ -32,9 +41,22 @@ function ProductCard({ product }: ProductCardProps) {
   };
 
   const handleAddToCart = (event: React.MouseEvent<HTMLButtonElement>) => {
-    console.log('in handleAddToCart');
     event.stopPropagation();
     setIsAdded(!isAdded);
+
+    dispatch(addToCartThunk(product.id))
+      .then(() => {
+        enqueueSnackbar(PageData.addSnackbar, {
+          variant: 'success',
+          ...bottomSnackbarBasicParams,
+        });
+      })
+      .catch((err: ErrorObject) => {
+        enqueueSnackbar(err.message, {
+          variant: 'error',
+          ...bottomSnackbarBasicParams,
+        });
+      });
   };
 
   return (
@@ -70,7 +92,7 @@ function ProductCard({ product }: ProductCardProps) {
               </Typography>
             )}
 
-            <Tooltip title={isAdded ? '' : addTooltip}>
+            <Tooltip title={isAdded ? '' : PageData.addTooltip}>
               <span>
                 <IconButton
                   disabled={isAdded}

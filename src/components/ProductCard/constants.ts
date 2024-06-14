@@ -1,3 +1,6 @@
 export const centsInEuro = 100;
 
-export const addTooltip = 'Add to Cart';
+export enum PageData {
+  addTooltip = 'Add to Cart',
+  addSnackbar = 'Product was added to cart',
+}
