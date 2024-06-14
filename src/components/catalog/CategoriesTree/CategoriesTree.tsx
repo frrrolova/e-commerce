@@ -43,6 +43,8 @@ const CategoriesTree: FC<CategoriesTreeProps> = ({ setActiveCategory, activeCate
 
     const newSearchParams = new URLSearchParams(location.search);
     newSearchParams.set(FilterNames.CATEGORY_ID, category.id);
+    newSearchParams.set(FilterNames.PAGE, '1');
+
     submit(newSearchParams);
   };
 
