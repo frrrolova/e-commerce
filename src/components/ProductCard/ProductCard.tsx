@@ -2,7 +2,7 @@ import '@/styles/styles.scss';
 import styles from './ProductCard.module.scss';
 import { Box, Paper, Typography } from '@mui/material';
 import { Product } from '@/types';
-import Placeholder from '/images/catalog/placeholder_plant.png';
+import Placeholder from '/images/catalog/placeholder_plant.webp';
 import { centsInEuro } from './constants';
 import { useNavigate } from 'react-router-dom';
 

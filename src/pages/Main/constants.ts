@@ -17,7 +17,7 @@ export enum ButtonLabels {
 
 export const InfoCardData = {
   heading: 'Summer time',
-  imgPath: '/images/home/promo.png',
+  imgPath: '/images/home/promo.webp',
   description: 'Take advantage of an additional discount during the summer using the promotional code:',
   subHeading: 'SUMMER2024',
 };
