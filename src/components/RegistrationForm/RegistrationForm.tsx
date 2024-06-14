@@ -30,7 +30,7 @@ import {
   CommonAuthRes,
 } from '@enums/auth-form.enum';
 import { formFieldsConfig } from '@shared/auth-form.constants';
-import { Customer, CustomerDraft, ErrorObject } from '@commercetools/platform-sdk';
+import { Customer, ErrorObject, MyCustomerDraft } from '@commercetools/platform-sdk';
 import { userRegistrationThunk } from '@store/slices/user/thunks';
 import { clearError, setUser } from '@/store/slices/user/userSlice';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
@@ -91,7 +91,7 @@ function RegistrationForm() {
         return;
       }
       const dateValue = getFormattedDateValue(values[FieldNames.DATE_OF_BIRTH]);
-      const newCustomerData: CustomerDraft = {
+      const newCustomerData: MyCustomerDraft = {
         email: values[FieldNames.EMAIL],
         password: values[FieldNames.PASSWORD],
         firstName: values[FieldNames.FIRST_NAME],
@@ -107,12 +107,12 @@ function RegistrationForm() {
             apartment: values[AddressTypes.SHIPPING][FieldNames.APARTMENT],
           },
         ],
-        shippingAddresses: [0],
-        billingAddresses: [],
+        // shippingAddresses: [0],
+        // billingAddresses: [],
         defaultShippingAddress: isShippingDefault ? 0 : undefined,
         defaultBillingAddress: isBillingDefault ? (billingAsShipping ? 0 : 1) : undefined,
       };
-      billingAsShipping ? newCustomerData.billingAddresses?.push(0) : newCustomerData.billingAddresses?.push(1);
+      // billingAsShipping ? newCustomerData.billingAddresses?.push(0) : newCustomerData.billingAddresses?.push(1);
       if (!billingAsShipping) {
         newCustomerData.addresses?.push({
           country: values[AddressTypes.BILLING][FieldNames.COUNTRY],

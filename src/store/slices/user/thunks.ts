@@ -10,7 +10,7 @@ import {
 import client from '@client/client';
 import { logout, setUser } from './userSlice';
 import { LSTokenPrefixes } from '@/enums/ls.enums';
-import { loginService, registrationService } from '@/services/authService';
+import { loginService, registrationService, setAddressesService } from '@/services/authService';
 import { AsyncThunkApi } from '@/store/store';
 import { addAddress, changePassword, getUser, updateUser } from '@/services/userService';
 import { UserUpdateData } from '@/types';
@@ -29,9 +29,15 @@ export const userRegistrationThunk = createAsyncThunk('user/registration', (regD
         tokenType: LSTokenPrefixes.LOGGED_IN,
       });
 
-      return loginService(regData.email, regData.password as string).then(() => {
-        return handleSuccessfulLoginResponse(regData.email, regData.password as string, resp.body.customer, thunkAPI);
-      });
+      return loginService(regData.email, regData.password as string)
+        .then((r) => {
+          const billId = r.body.customer.addresses[1]?.id || r.body.customer.addresses[0]?.id || '';
+          const shipId = r.body.customer.addresses[0].id || '';
+          return setAddressesService(r.body.customer, shipId, billId);
+        })
+        .then(() => {
+          return handleSuccessfulLoginResponse(regData.email, regData.password as string, resp.body.customer, thunkAPI);
+        });
     })
     .catch((err: ClientResponse<ErrorResponse>) => {
       return thunkAPI.rejectWithValue(err.body ?? err);
