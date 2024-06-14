@@ -4,26 +4,21 @@ import {
   MyCustomerDraft,
   ClientResponse,
   Customer,
-  CustomerDraft,
   BaseAddress,
   MyCustomerChangePassword,
 } from '@commercetools/platform-sdk';
 import client from '@client/client';
 import { logout, setUser } from './userSlice';
 import { LSTokenPrefixes } from '@/enums/ls.enums';
-import { loginService } from '@/services/loginService';
+import { loginService, registrationService } from '@/services/authService';
 import { AsyncThunkApi } from '@/store/store';
 import { addAddress, changePassword, getUser, updateUser } from '@/services/userService';
 import { UserUpdateData } from '@/types';
 import { AddressTypes } from '@/enums/auth-form.enum';
 import { lsUserKey } from '@/core/commonConstants';
 
-export const userRegistrationThunk = createAsyncThunk('user/registration', (regData: CustomerDraft, thunkAPI) => {
-  return client
-    .getClient()
-    .customers()
-    .post({ body: regData })
-    .execute()
+export const userRegistrationThunk = createAsyncThunk('user/registration', (regData: MyCustomerDraft, thunkAPI) => {
+  return registrationService(regData)
     .then((resp) => {
       localStorage.setItem(lsUserKey, JSON.stringify(resp.body.customer));
       thunkAPI.dispatch(setUser(resp.body.customer));
