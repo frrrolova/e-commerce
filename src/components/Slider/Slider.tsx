@@ -14,7 +14,6 @@ function Slider({ product }: ProductCardProp) {
   if (product.images) {
     if (product.images.length > 1) {
       const slides = product.images.map((slide, index) => {
-        console.log(index, Math.random());
         return (
           <SliderItem
             key={`product-slider-${index}`}

@@ -12,7 +12,7 @@ import { useEffect, useState } from 'react';
 import { useUserUpdateAction } from '@/core/hooks/useUserUpdateAction';
 import { useAppDispatch } from '@/store/store';
 import { changePasswordThunk } from '@/store/slices/user/thunks';
-import { snackbarBasicParams } from '@/shared/snackbarConstans';
+import { topSnackbarBasicParams } from '@/shared/snackbarConstans';
 import { useSnackbar } from 'notistack';
 
 export function UserDetails({ userData }: { userData: Customer }) {
@@ -32,7 +32,7 @@ export function UserDetails({ userData }: { userData: Customer }) {
       .then(() => {
         enqueueSnackbar(SnackBarMsgs.PASSWORD_CHANGED, {
           variant: 'success',
-          ...snackbarBasicParams,
+          ...topSnackbarBasicParams,
         });
       })
       .catch((e) => {
@@ -42,7 +42,7 @@ export function UserDetails({ userData }: { userData: Customer }) {
           errors.forEach((err) => {
             enqueueSnackbar(err.message, {
               variant: 'error',
-              ...snackbarBasicParams,
+              ...topSnackbarBasicParams,
             });
           });
         }
@@ -136,7 +136,6 @@ export function UserDetails({ userData }: { userData: Customer }) {
         <ChangePasswordForm
           onClose={handleDialogClose}
           onSubmit={(currentPass, newPass) => {
-            // console.log(currentPass, newPass);
             changePasswordHandler(currentPass, newPass);
           }}
         />

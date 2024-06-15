@@ -1,32 +1,44 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { FilterAttributes } from '@/types';
+import { allOption } from '@/pages/Catalog/constants';
 
 interface FormSelectProps {
   label: string;
-  value: string;
+  name: string;
   options: FilterAttributes[];
+  value: string;
   onChange: (event: SelectChangeEvent) => void;
+  typeProps?: string;
 }
 
-const FormSelect: React.FC<FormSelectProps> = ({ label, value, options, onChange }) => {
+const FormSelect: React.FC<FormSelectProps> = ({ label, name, options, value, onChange, typeProps }) => {
   return (
-    <Box>
-      <FormControl fullWidth sx={{ mt: 1, mb: 1 }} size="small">
-        <InputLabel id="select-label">{label}</InputLabel>
-        <Select labelId="select-label" id="select" value={value} label={label} onChange={onChange}>
-          {options.map((option) => (
-            <MenuItem key={option.key} value={option.key}>
-              {option.label}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-    </Box>
+    <FormControl fullWidth sx={{ mt: 1, mb: 1 }} size="small">
+      <InputLabel id="select-label">{label}</InputLabel>
+      <Select
+        labelId={label}
+        id={`${label}-select`}
+        value={value}
+        onChange={onChange}
+        label={label}
+        native
+        inputProps={{
+          id: name,
+          type: typeProps,
+          name: name,
+        }}
+      >
+        <option value={allOption.TITLE}>{allOption.TITLE}</option>
+        {options.map((option) => (
+          <option key={option.key} value={option.key}>
+            {option.label}
+          </option>
+        ))}
+      </Select>
+    </FormControl>
   );
 };
 
