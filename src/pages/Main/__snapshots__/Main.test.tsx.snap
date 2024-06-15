@@ -134,12 +134,12 @@ exports[`Main component rendering performs snapshot testing 1`] = `
                   class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3 css-3su884-MuiPaper-root"
                 >
                   <div
-                    class="MuiBox-root css-1nnw2ij"
+                    class="undefined  MuiBox-root css-1nnw2ij"
                   >
                     <img
                       alt="Plant"
                       class="MuiBox-root css-0"
-                      src="/images/home/promo.webp"
+                      src="/img"
                     />
                     <div
                       class="MuiBox-root css-0"
@@ -147,17 +147,17 @@ exports[`Main component rendering performs snapshot testing 1`] = `
                       <div
                         class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom css-1r10n4f-MuiTypography-root"
                       >
-                        Summer time
+                        Promo Name
                       </div>
                       <p
                         class="MuiTypography-root MuiTypography-body2 css-r40f8v-MuiTypography-root"
                       >
-                        Take advantage of an additional discount during the summer using the promotional code:
+                        promo description
                       </p>
                       <h6
                         class="MuiTypography-root MuiTypography-h6 css-2ulfj5-MuiTypography-root"
                       >
-                        SUMMER2024
+                        promocode
                       </h6>
                       <div
                         class="MuiBox-root css-0"
@@ -415,12 +415,12 @@ exports[`Main component rendering performs snapshot testing 1`] = `
                 class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3 css-3su884-MuiPaper-root"
               >
                 <div
-                  class="MuiBox-root css-1nnw2ij"
+                  class="undefined  MuiBox-root css-1nnw2ij"
                 >
                   <img
                     alt="Plant"
                     class="MuiBox-root css-0"
-                    src="/images/home/promo.webp"
+                    src="/img"
                   />
                   <div
                     class="MuiBox-root css-0"
@@ -428,17 +428,17 @@ exports[`Main component rendering performs snapshot testing 1`] = `
                     <div
                       class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom css-1r10n4f-MuiTypography-root"
                     >
-                      Summer time
+                      Promo Name
                     </div>
                     <p
                       class="MuiTypography-root MuiTypography-body2 css-r40f8v-MuiTypography-root"
                     >
-                      Take advantage of an additional discount during the summer using the promotional code:
+                      promo description
                     </p>
                     <h6
                       class="MuiTypography-root MuiTypography-h6 css-2ulfj5-MuiTypography-root"
                     >
-                      SUMMER2024
+                      promocode
                     </h6>
                     <div
                       class="MuiBox-root css-0"

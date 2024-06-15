@@ -2,18 +2,20 @@ import styles from './Main.module.scss';
 import { Container, Typography, Box } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 import ProductCard from '@/components/ProductCard/ProductCard';
-import { Product } from '@/types';
-import { InfoCardBtn, InfoCardData, PageData } from './constants';
+import { Product, PromoData } from '@/types';
+import { InfoCardBtn, PageData } from './constants';
 import Title from '@/components/Title/Title';
 import ImageBg from '/images/home/home-bg.webp';
 import InfoCard from '@/components/InfoCard/InfoCard';
 import { useState, useEffect } from 'react';
 import { catalogService } from '@/services/catalogService';
+import { promoService } from '@/services/promoService';
 
 function Main() {
   const [productTop, setProductTop] = useState<Product | null>(null);
   const [productsOffer, setProductsOffer] = useState<Product[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [promoData, setPromoData] = useState<PromoData[] | null>(null);
 
   useEffect(() => {
     const loadProducts = async () => {
@@ -30,6 +32,20 @@ function Main() {
     };
 
     loadProducts();
+
+    const loadPromo = async () => {
+      try {
+        const resp = await promoService.fetchPromoCodes();
+        setPromoData(resp);
+      } catch (err) {
+        setError('Failed to fetch PromoCodes');
+        console.log('Failed to fetch PromoCodes');
+      }
+    };
+
+    loadProducts();
+
+    loadPromo();
   }, []);
 
   if (error || !productTop) return <Typography color="error">{error}</Typography>;
@@ -56,13 +72,15 @@ function Main() {
             <ProductCard product={productTop} />
           </Grid>
 
-          {/* PROMO Section */}
           <Grid xs={12} className={styles.sectionTitle}>
             <Title title={PageData.TITLE_PROMO} />
           </Grid>
-          <Grid xs={12} mt={3}>
-            <InfoCard data={InfoCardData} button={InfoCardBtn} />
-          </Grid>
+          {promoData &&
+            promoData.map((promo, index) => (
+              <Grid xs={12} mt={3} key={`card-${index}`}>
+                <InfoCard data={promo} button={InfoCardBtn} imageRight={index % 2 !== 0} />
+              </Grid>
+            ))}
 
           {/* DISCOUNT Section */}
           <Grid xs={12} className={styles.sectionTitle}>

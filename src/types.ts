@@ -17,6 +17,7 @@ export interface Product {
 }
 
 export interface InfoDataCard {
+  id: string;
   heading: string;
   imgPath: string;
   subHeading: string;
@@ -78,4 +79,12 @@ export interface FetchProductsResponse {
     search: string;
     sort: string;
   };
+}
+
+export interface PromoData {
+  id: string;
+  heading: string;
+  imgPath: string;
+  description: string;
+  subHeading: string;
 }
