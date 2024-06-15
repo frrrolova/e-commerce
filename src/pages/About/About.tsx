@@ -8,6 +8,7 @@ function About() {
   return (
     <>
       <Container
+        data-testid={'about'}
         sx={{
           display: 'flex',
           flexDirection: 'column',
