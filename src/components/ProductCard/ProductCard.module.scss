@@ -85,14 +85,13 @@
 
         .inCart {
           position: absolute;
-          top: 6px;
+          top: -2px;
           font-size: 0.6rem;
           color: $disabled-color;
         }
 
         .customIconButton {
-          padding: 8px;
-          margin-top: 8px;
+          padding: 0.5rem;
           
           &:hover {
             color: $border-green-color;
