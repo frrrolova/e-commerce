@@ -3,7 +3,7 @@ import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux';
 import userSlice from './slices/user/userSlice';
 import { Cart } from '@commercetools/platform-sdk';
 import { AsyncThunkConfig } from '@reduxjs/toolkit/dist/createAsyncThunk';
-import cartSlice from './slices/cart/cartSlice';
+import cartSlice, { initialState as cartInitialState } from './slices/cart/cartSlice';
 
 const initStore = (cart: Cart | null) =>
   configureStore({
@@ -12,7 +12,7 @@ const initStore = (cart: Cart | null) =>
       user: userSlice.reducer,
     },
     preloadedState: {
-      cart: { cart, isAddProductPending: false },
+      cart: { ...cartInitialState, cart },
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({

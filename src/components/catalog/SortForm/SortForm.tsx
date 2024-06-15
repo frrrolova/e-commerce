@@ -25,6 +25,8 @@ const SortForm: React.FC<FormSelectProps> = ({ label, name, options }) => {
     const newSearchParams = new URLSearchParams(location.search);
     newSearchParams.set(FilterNames.SORT, sortValue);
 
+    newSearchParams.set(FilterNames.PAGE, '1');
+
     submit(newSearchParams);
   };
 

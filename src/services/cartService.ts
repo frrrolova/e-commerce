@@ -79,3 +79,13 @@ export function changeLineItemQuantity(productId: string, quantity: number): Pro
       .execute();
   });
 }
+
+export function clearCart(id: string, version: number) {
+  return client
+    .getClient()
+    .me()
+    .carts()
+    .withId({ ID: id })
+    .delete({ queryArgs: { version: version } })
+    .execute();
+}
