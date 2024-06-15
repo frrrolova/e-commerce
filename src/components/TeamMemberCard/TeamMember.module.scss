@@ -9,9 +9,12 @@
     border-radius: $border-radius-card;
     opacity: $opacity-item;
     display: flow-root;
-    height: 1100px;
-    @media screen and (max-width: 1105px){
-      height: 1200px;
+    height: 1110px;
+    @media screen and (max-width: 1065px){
+      height: 1180px;
+    }
+    @media screen and (max-width: 985px){
+      height: 1220px;
     }
     @media screen and (max-width: 899px){
       height: auto;
@@ -31,5 +34,21 @@
       -webkit-mask-composite: destination-out;
       mask-composite: exclude;
     }
+  }
+}
+
+.bio {
+  height: 170px;
+  @media screen and (max-width: 1205px){
+    height: 200px;
+  }
+  @media screen and (max-width: 1065px){
+    height: 250px;
+  }
+  @media screen and (max-width: 985px){
+    height: 300px;
+  }
+  @media screen and (max-width: 899px){
+    height: auto;
   }
 }

@@ -1,26 +1,29 @@
 import { TeamMember } from '@/types';
-import Placeholder from '/images/catalog/placeholder_plant.png';
-import Yar from '/images/Yar.webp';
+import tanykos from '/images/tanykos.webp';
+import Yar from '/images/yar.webp';
 import frrrolova from '/images/frrrolova.webp';
 
 export const members: TeamMember[] = [
   {
     role: 'Front-end developer',
-    name: 'Tetiana Kostromitska',
-    bio: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit recusandae, suscipit sunt ad debitis, Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit recusandae, suscipit sunt ad debit',
-    photo: Placeholder,
+    name: 'Tetiana Kostomitska',
+    bio: `Graduated from Taurida National University with a degree in Mathematics. 
+          Possesses 5 years of experience as a html-developer with expertise in web 
+          development and responsive design. I enjoy learning new things and applying 
+          knowledge in practice. I am happy to observe my progress in web-development.`,
+    photo: tanykos,
     git: 'https://github.com/tanykos',
     contributions: [
       'CommerceTools Project Setup',
       'Task Board Setup (Trello)',
       'Main Page Implementation',
       'Header Implementation',
-      'Catalog Page Implementation',
-      'Header Implementation',
+      'Catalog Page',
+      'Routing Implementation',
     ],
   },
   {
-    role: 'Front-end developer',
+    role: 'Team leader',
     name: 'Tatiana Frolova',
     bio: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit recusandae, suscipit sunt ad debitis, Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit recusandae, suscipit sunt ad debit',
     photo: frrrolova,

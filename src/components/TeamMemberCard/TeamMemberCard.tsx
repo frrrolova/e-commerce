@@ -91,6 +91,7 @@ function TeamMemberCard({ teamMember }: TeamMemberCardProps) {
                 sx={{
                   fontStyle: 'italic',
                   textAlign: 'center',
+                  p: 1,
                 }}
                 component="p"
               >
@@ -107,16 +108,7 @@ function TeamMemberCard({ teamMember }: TeamMemberCardProps) {
               >
                 Bio
               </Typography>
-              <Typography
-                sx={{
-                  height: {
-                    xs: 'auto',
-                    md: '220px',
-                    lg: '170px',
-                  },
-                }}
-                component="h5"
-              >
+              <Typography className={styles.bio} component="h5">
                 {teamMember.bio}
               </Typography>
             </Box>
