@@ -73,7 +73,7 @@ exports[`Main component rendering performs snapshot testing 1`] = `
                       class="MuiBox-root css-0"
                     >
                       <p
-                        class="MuiTypography-root MuiTypography-body1 css-1coh8cf-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
                       >
                         20
                          €
@@ -236,7 +236,7 @@ exports[`Main component rendering performs snapshot testing 1`] = `
                             class="MuiBox-root css-0"
                           >
                             <p
-                              class="MuiTypography-root MuiTypography-body1 css-1coh8cf-MuiTypography-root"
+                              class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
                             >
                               20
                                €
@@ -354,7 +354,7 @@ exports[`Main component rendering performs snapshot testing 1`] = `
                     class="MuiBox-root css-0"
                   >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1coh8cf-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
                     >
                       20
                        €
@@ -517,7 +517,7 @@ exports[`Main component rendering performs snapshot testing 1`] = `
                           class="MuiBox-root css-0"
                         >
                           <p
-                            class="MuiTypography-root MuiTypography-body1 css-1coh8cf-MuiTypography-root"
+                            class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
                           >
                             20
                              €

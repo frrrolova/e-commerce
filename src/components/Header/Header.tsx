@@ -13,12 +13,14 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { Paths, navLinksData, rightMenuData } from '@/routes/routeConstants';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
 import styles from './Header.module.scss';
 import { RootState, useAppDispatch, useAppSelector } from '@/store/store';
 import { useEffect, useState } from 'react';
 import LogoImg from '/images/logo.svg';
 import { logout } from '@/store/slices/user/userSlice';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import { Badge } from '@mui/material';
 
 const pages = [navLinksData.home, navLinksData.catalog, navLinksData.about];
 
@@ -34,6 +36,7 @@ function Header() {
   const [activePage, setActivePage] = useState(location.pathname);
 
   const user = useAppSelector((state: RootState) => state.user.user);
+  const cartTotal = useAppSelector((store) => store.cart.cart?.totalLineItemQuantity);
 
   const isLogged = !!user;
 
@@ -199,12 +202,27 @@ function Header() {
 
           {/* Right Dropdown-Menu */}
           <Box sx={{ display: 'flex', flex: '1 1 0', justifyContent: 'flex-end' }}>
+            <Tooltip title={rightMenuData.toBasket.tooltipTitle}>
+              <IconButton
+                className={styles.toCart}
+                component={RouterLink}
+                to={Paths.BASKET}
+                size="large"
+                sx={{ p: 0 }}
+                aria-label="to basket"
+              >
+                <Badge badgeContent={cartTotal} color="primary" max={99}>
+                  <ShoppingCartOutlinedIcon />
+                </Badge>
+              </IconButton>
+            </Tooltip>
+
             <Tooltip title={menuData.tooltipTitle}>
               <IconButton
                 onClick={handleOpenUserMenu}
                 className={styles.customIconButton}
                 size="large"
-                sx={{ p: 0 }}
+                sx={{ p: 0, ml: { xs: 1, sm: 2, md: 3 } }}
                 aria-label="login"
               >
                 {currentIcon}
