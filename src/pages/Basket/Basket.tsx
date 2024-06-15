@@ -10,6 +10,7 @@ import {
   DialogTitle,
   Divider,
   Drawer,
+  Link,
   List,
   ListItem,
   ListItemAvatar,
@@ -26,9 +27,12 @@ import { centsPerEuro, currency, drawerWidth } from './constants';
 import BottomBar from '@/components/BottomBar/BottomBar';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import ConfirmModal from '@/components/ConfirmModal/ConfirmModal';
+import { useNavigate } from 'react-router-dom';
+import { Paths } from '@/routes/routeConstants';
 
 function Basket() {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const cart: Cart | null = useAppSelector((store) => store.cart.cart);
   const isPending = useAppSelector((state) => state.cart.isQuantityChanging);
@@ -181,6 +185,24 @@ function Basket() {
         <Typography component="h1" fontSize={matchesSmallScreen ? '1.4rem' : '1.6rem'} fontWeight={600} mb={2} pl={3}>
           Your Cart:
         </Typography>
+        {(!cart || !cart.lineItems.length) && (
+          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <Paper sx={{ width: '50%', padding: 2, textAlign: 'center' }}>
+              <Typography fontSize="1.35rem">There are no products in your cart yet</Typography>
+              <Link
+                color={theme.palette.primary.main}
+                fontSize="1.2rem"
+                fontWeight="600"
+                sx={{ cursor: 'pointer' }}
+                onClick={() => {
+                  navigate(Paths.CATALOG);
+                }}
+              >
+                Start shopping
+              </Link>
+            </Paper>
+          </Box>
+        )}
         <List
           sx={{
             paddingX: { lg: 4 },
