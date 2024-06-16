@@ -1,6 +1,6 @@
 import { TeamMember } from '@/types';
 import tanykos from '/images/tanykos.webp';
-import Yar from '/images/yar.webp';
+import yar from '/images/Yar.webp';
 import frrrolova from '/images/frrrolova.webp';
 
 export const members: TeamMember[] = [
@@ -42,7 +42,7 @@ export const members: TeamMember[] = [
     role: 'Front-end developer',
     name: 'Yaroslaw Rychik',
     bio: 'My name is Yaroslaw. I am from Gomel. I have graduated from technical State University in 2019. Firstly I have worked as a design engineer but I made a decision to change my profession. So I went to an IT course at RS School.',
-    photo: Yar,
+    photo: yar,
     git: 'https://github.com/REGEMLER',
     contributions: ['Development README', 'Login Page', 'Product Page', 'About Us Page'],
   },
