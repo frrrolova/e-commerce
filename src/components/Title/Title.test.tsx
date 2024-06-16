@@ -6,7 +6,7 @@ jest.mock('@client/client', () => {
   return null;
 });
 
-describe('Team Member Card', () => {
+describe('Title Component', () => {
   test('Data in document is correct', async () => {
     renderWithProviders(<Title title="Hello" />);
     const name = screen.getByText('Hello');
