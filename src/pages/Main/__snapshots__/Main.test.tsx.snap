@@ -75,8 +75,7 @@ exports[`Main component rendering performs snapshot testing 1`] = `
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
                       >
-                        20
-                         €
+                        20 €
                       </p>
                     </div>
                     <div
@@ -238,8 +237,7 @@ exports[`Main component rendering performs snapshot testing 1`] = `
                             <p
                               class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
                             >
-                              20
-                               €
+                              20 €
                             </p>
                           </div>
                           <div
@@ -356,8 +354,7 @@ exports[`Main component rendering performs snapshot testing 1`] = `
                     <p
                       class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
                     >
-                      20
-                       €
+                      20 €
                     </p>
                   </div>
                   <div
@@ -519,8 +516,7 @@ exports[`Main component rendering performs snapshot testing 1`] = `
                           <p
                             class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
                           >
-                            20
-                             €
+                            20 €
                           </p>
                         </div>
                         <div
