@@ -24,6 +24,14 @@ export interface InfoDataCard {
   description?: string;
 }
 
+export interface PromoData {
+  id: string;
+  heading: string;
+  imgPath: string;
+  subHeading: string;
+  description: string;
+}
+
 export interface UserUpdateData {
   updAction: MyCustomerUpdateAction;
   version: number;
@@ -79,12 +87,4 @@ export interface FetchProductsResponse {
     search: string;
     sort: string;
   };
-}
-
-export interface PromoData {
-  id: string;
-  heading: string;
-  imgPath: string;
-  description: string;
-  subHeading: string;
 }

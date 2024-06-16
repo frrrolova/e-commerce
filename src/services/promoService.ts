@@ -1,8 +1,9 @@
 import client from '@/client/client';
+import { InfoDataCard } from '@/types';
 import { mapPromoCodes } from '@/utils/mapPromoCodes';
 
 class PromoService {
-  async fetchPromoCodes() {
+  async fetchPromoCodes(): Promise<InfoDataCard[]> {
     try {
       const response = await client.getClient().cartDiscounts().get().execute();
       const codes = response.body.results;

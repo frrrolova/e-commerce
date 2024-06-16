@@ -1,7 +1,7 @@
-import { PromoData } from '@/types';
+import { InfoDataCard } from '@/types';
 import { CartDiscount } from '@commercetools/platform-sdk';
 
-export function mapPromoCodes(promoResponse: CartDiscount[]): PromoData[] {
+export function mapPromoCodes(promoResponse: CartDiscount[]): InfoDataCard[] {
   return promoResponse.map((code, index) => ({
     id: code.id,
     heading: code.name['en-GB'],

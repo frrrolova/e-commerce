@@ -2,7 +2,7 @@ import styles from './Main.module.scss';
 import { Container, Typography, Box } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 import ProductCard from '@/components/ProductCard/ProductCard';
-import { Product, PromoData } from '@/types';
+import { InfoDataCard, Product } from '@/types';
 import { InfoCardBtn, PageData } from './constants';
 import Title from '@/components/Title/Title';
 import ImageBg from '/images/home/home-bg.webp';
@@ -15,7 +15,7 @@ function Main() {
   const [productTop, setProductTop] = useState<Product | null>(null);
   const [productsOffer, setProductsOffer] = useState<Product[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const [promoData, setPromoData] = useState<PromoData[] | null>(null);
+  const [promoData, setPromoData] = useState<InfoDataCard[] | null>(null);
 
   useEffect(() => {
     const loadProducts = async () => {
