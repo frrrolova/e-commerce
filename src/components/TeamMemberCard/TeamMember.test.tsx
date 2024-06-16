@@ -1,7 +1,7 @@
 import { renderWithProviders } from '@/utils/test-utils';
 import { screen } from '@testing-library/react';
 import TeamMemberCard from './TeamMemberCard';
-import Placeholder from '/images/catalog/placeholder_plant.png';
+import Placeholder from '/images/catalog/placeholder_plant.webp';
 import { TeamMember } from '@/types';
 
 jest.mock('@client/client', () => {

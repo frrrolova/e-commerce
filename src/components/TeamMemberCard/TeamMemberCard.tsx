@@ -2,7 +2,6 @@ import { Box, Link, Paper, Typography } from '@mui/material';
 import { TeamMember } from '@/types';
 import '@/styles/styles.scss';
 import styles from './TeamMember.module.scss';
-// import CheckIcon from '@mui/icons-material/Check';
 
 interface TeamMemberCardProps {
   teamMember: TeamMember;
