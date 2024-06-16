@@ -1,6 +1,15 @@
-import { addToCart, changeLineItemQuantity, clearCart, getActiveCart } from '@/services/cartService';
+import {
+  addPromo,
+  addToCart,
+  changeLineItemQuantity,
+  clearCart,
+  getActiveCart,
+  getActivePromo,
+  removePromo,
+} from '@/services/cartService';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ErrorResponse } from 'react-router-dom';
+import cartSlice from './cartSlice';
 
 export const getCartThunk = createAsyncThunk('cart/get', (_, thunkAPI) => {
   return getActiveCart()
@@ -37,6 +46,43 @@ export const clearCartThunk = createAsyncThunk(
   'cart/clear',
   ({ id, version }: { id: string; version: number }, thunkAPI) => {
     return clearCart(id, version)
+      .then((resp) => {
+        return resp.body;
+      })
+      .catch((err: ErrorResponse) => {
+        return thunkAPI.rejectWithValue(err);
+      });
+  },
+);
+
+export const addPromoThunk = createAsyncThunk(
+  'cart/add-promo',
+  ({ version, cartId, promo }: { version: number; cartId: string; promo: string }, thunkAPI) => {
+    return addPromo(cartId, version, promo)
+      .then((resp) => {
+        cartSlice.actions.setCart(resp.body);
+        return resp.body;
+      })
+      .catch((err: ErrorResponse) => {
+        return thunkAPI.rejectWithValue(err);
+      });
+  },
+);
+
+export const getActivePromoThunk = createAsyncThunk('cart/active-promo', (id: string, thunkAPI) => {
+  return getActivePromo(id)
+    .then((resp) => {
+      return resp.body;
+    })
+    .catch((err: ErrorResponse) => {
+      return thunkAPI.rejectWithValue(err);
+    });
+});
+
+export const removePromoThunk = createAsyncThunk(
+  'cart/remove-promo',
+  ({ cartId, promoId, version }: { cartId: string; promoId: string; version: number }, thunkAPI) => {
+    return removePromo(cartId, promoId, version)
       .then((resp) => {
         return resp.body;
       })

@@ -60,6 +60,7 @@ export const userSlice = createSlice({
       localStorage.removeItem(lsUserKey);
       client.clearCurrentClient();
       cartSlice.actions.setCart(null);
+      cartSlice.actions.removePromo();
     },
   },
   extraReducers: (builder) => {

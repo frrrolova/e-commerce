@@ -19,7 +19,6 @@ export function addToCart(productId: string): Promise<ClientResponse<Cart>> {
   return getActiveCart()
     .then((res) => {
       // if active cart is existing we need to call updatedCart action
-      console.log(res);
       return client
         .getClient()
         .me()
@@ -87,5 +86,47 @@ export function clearCart(id: string, version: number) {
     .carts()
     .withId({ ID: id })
     .delete({ queryArgs: { version: version } })
+    .execute();
+}
+
+export function addPromo(cartId: string, version: number, promo: string) {
+  return client
+    .getClient()
+    .me()
+    .carts()
+    .withId({ ID: cartId })
+    .post({
+      body: {
+        version,
+        actions: [{ action: 'addDiscountCode', code: promo }],
+      },
+    })
+    .execute();
+}
+
+export function getActivePromo(id: string) {
+  return client.getClient().discountCodes().withId({ ID: id }).get().execute();
+}
+
+export function removePromo(cartId: string, promoId: string, version: number) {
+  return client
+    .getClient()
+    .me()
+    .carts()
+    .withId({ ID: cartId })
+    .post({
+      body: {
+        version,
+        actions: [
+          {
+            action: 'removeDiscountCode',
+            discountCode: {
+              typeId: 'discount-code',
+              id: promoId,
+            },
+          },
+        ],
+      },
+    })
     .execute();
 }

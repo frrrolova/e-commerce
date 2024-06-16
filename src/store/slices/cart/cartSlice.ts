@@ -1,6 +1,14 @@
 import { Cart } from '@commercetools/platform-sdk';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { addToCartThunk, changeLineItemQuantityThunk, clearCartThunk, getCartThunk } from './thunks';
+import {
+  addPromoThunk,
+  addToCartThunk,
+  changeLineItemQuantityThunk,
+  clearCartThunk,
+  getActivePromoThunk,
+  getCartThunk,
+  removePromoThunk,
+} from './thunks';
 
 export interface CartState {
   cart: Cart | null;
@@ -8,6 +16,7 @@ export interface CartState {
   isQuantityChanging: boolean; // handling counter btns state
   updatingProductIds: string[];
   isCartClearing: boolean;
+  promo: string;
 }
 
 export const initialState: CartState = {
@@ -16,6 +25,7 @@ export const initialState: CartState = {
   isQuantityChanging: false,
   updatingProductIds: [],
   isCartClearing: false,
+  promo: '',
 };
 
 export const cartSlice = createSlice({
@@ -24,6 +34,9 @@ export const cartSlice = createSlice({
   reducers: {
     setCart: (state, action: PayloadAction<Cart | null>) => {
       state.cart = action.payload;
+    },
+    removePromo: (state) => {
+      state.promo = '';
     },
   },
   extraReducers: (builder) => {
@@ -61,12 +74,26 @@ export const cartSlice = createSlice({
       .addCase(clearCartThunk.fulfilled, (state) => {
         state.isCartClearing = false;
         state.cart = null;
+        state.promo = '';
       })
       .addCase(clearCartThunk.pending, (state) => {
         state.isCartClearing = true;
       })
       .addCase(clearCartThunk.rejected, (state) => {
         state.isCartClearing = false;
+      })
+      // add promo
+      .addCase(addPromoThunk.fulfilled, (state, action) => {
+        state.cart = action.payload;
+      })
+      // get active promo
+      .addCase(getActivePromoThunk.fulfilled, (state, action) => {
+        state.promo = action.payload.code;
+      })
+      // remove promo
+      .addCase(removePromoThunk.fulfilled, (state, action) => {
+        state.cart = action.payload;
+        state.promo = '';
       });
   },
 });
