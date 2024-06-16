@@ -9,33 +9,18 @@ import {
 } from '@/store/slices/cart/thunks';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 import theme from '@/themes/theme';
-import { Cart, ErrorObject, LineItem } from '@commercetools/platform-sdk';
-import {
-  Avatar,
-  Box,
-  Button,
-  DialogContent,
-  DialogTitle,
-  Divider,
-  Drawer,
-  InputBase,
-  List,
-  ListItem,
-  ListItemAvatar,
-  Paper,
-  Typography,
-  useMediaQuery,
-} from '@mui/material';
+import { Cart, ErrorObject } from '@commercetools/platform-sdk';
+import { Box, DialogContent, DialogTitle, Drawer, List, Typography, useMediaQuery } from '@mui/material';
 import { useCallback, useEffect, useState } from 'react';
-import Counter from '@/components/Counter/Counter';
 import { enqueueSnackbar } from 'notistack';
 import { bottomSnackbarBasicParams, topSnackbarBasicParams } from '@/shared/snackbarConstans';
-import RemoveBtn from '@/components/RemoveBtn/RemoveBtn';
-import { centsPerEuro, currency, drawerWidth } from './constants';
+import { drawerWidth } from './constants';
 import BottomBar from '@/components/BottomBar/BottomBar';
-import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import ConfirmModal from '@/components/ConfirmModal/ConfirmModal';
-import { useFormik } from 'formik';
+import BasketDrawerInner from '@/components/BasketDrawerInner/BasketDrawerInner';
+import BasketProduct from '@/components/BasketProduct/BasketProduct';
+import { centsInEuro, currency } from '@/core/commonConstants';
+import { BasketRespResultMessages } from '@/enums/basketRespResults.enum';
 
 function Basket() {
   const dispatch = useAppDispatch();
@@ -43,16 +28,17 @@ function Basket() {
   const cart: Cart | null = useAppSelector((store) => store.cart.cart);
   const isPending = useAppSelector((state) => state.cart.isQuantityChanging);
   const updatingProducts = useAppSelector((state) => state.cart.updatingProductIds);
-  const promo: string = useAppSelector((store) => store.cart.promo);
   const discountCodes = useAppSelector((store) => store.cart.cart?.discountCodes);
 
-  const totalPrice: number = (cart?.totalPrice.centAmount || 0) / centsPerEuro;
-  const discountedAmount: number = (cart?.discountOnTotalPrice?.discountedAmount.centAmount || 0) / centsPerEuro;
-  const priceWithoutDiscount: number = totalPrice + discountedAmount;
+  const totalPrice: number = (cart?.totalPrice.centAmount || 0) / centsInEuro;
 
   const [dialogOpen, setDialogOpen] = useState(false);
-  const handleDialogOpen = () => setDialogOpen(true);
-  const handleDialogClose = () => setDialogOpen(false);
+  const handleDialogOpen = () => {
+    setDialogOpen(true);
+  };
+  const handleDialogClose = () => {
+    setDialogOpen(false);
+  };
 
   useEffect(() => {
     dispatch(getCartThunk());
@@ -104,7 +90,7 @@ function Basket() {
     dispatch(changeLineItemQuantityThunk({ id, quantity: 0 }))
       .unwrap()
       .then(() => {
-        enqueueSnackbar('Removed successfully', {
+        enqueueSnackbar(BasketRespResultMessages.ITEM_REMOVED, {
           variant: 'success',
           ...bottomSnackbarBasicParams,
         });
@@ -123,258 +109,64 @@ function Basket() {
     }
   };
 
+  const handlePromoRemove = () => {
+    if (cart && discountCodes?.length) {
+      dispatch(
+        removePromoThunk({
+          cartId: cart.id,
+          promoId: discountCodes[0].discountCode.id,
+          version: cart.version,
+        }),
+      )
+        .then(() => {
+          enqueueSnackbar(BasketRespResultMessages.PROMO_REMOVED, {
+            variant: 'success',
+            ...topSnackbarBasicParams,
+          });
+        })
+        .catch((err: ErrorObject) => {
+          enqueueSnackbar(err.message, {
+            variant: 'error',
+            ...topSnackbarBasicParams,
+          });
+        });
+    }
+  };
+
+  const handlePromoApply = (promo: string) => {
+    if (cart && cart?.lineItems.length && promo) {
+      dispatch(addPromoThunk({ version: cart.version, cartId: cart.id, promo: promo }))
+        .unwrap()
+        .then(() => {
+          promo = '';
+          enqueueSnackbar(BasketRespResultMessages.PROMO_APPLIED, {
+            variant: 'success',
+            ...topSnackbarBasicParams,
+          });
+        })
+        .catch((err: ErrorObject) => {
+          enqueueSnackbar(err.message, {
+            variant: 'error',
+            ...topSnackbarBasicParams,
+          });
+        });
+    }
+  };
+
   const matchesBigScreen = useMediaQuery('(min-width:1100px)');
   const matchesSmallScreen = useMediaQuery('(max-width:700px)');
   const matchesPricesTextContent = useMediaQuery('(max-width:450px)');
-  const matchesExtraSmallScreen = useMediaQuery('(max-width:350px)');
-
-  const formik = useFormik({
-    initialValues: {
-      promo: '',
-    },
-    onSubmit: (values) => {
-      if (cart && cart?.lineItems.length && values.promo) {
-        dispatch(addPromoThunk({ version: cart.version, cartId: cart.id, promo: values.promo }))
-          .unwrap()
-          .then(() => {
-            formik.values.promo = '';
-            enqueueSnackbar('Promo code applied', {
-              variant: 'success',
-              ...topSnackbarBasicParams,
-            });
-          })
-          .catch((err: ErrorObject) => {
-            enqueueSnackbar(err.message, {
-              variant: 'error',
-              ...topSnackbarBasicParams,
-            });
-          });
-      }
-    },
-  });
 
   const drawer = (
-    <Box>
-      <Paper elevation={1} sx={{ display: 'flex', flexDirection: 'column', gap: 1, padding: 1 }}>
-        <Button
-          variant="contained"
-          sx={{ alignSelf: 'center' }}
-          disabled={!(Boolean(cart) && Boolean(cart?.lineItems.length))}
-        >
-          Confirm order
-        </Button>
-        <Divider />
-        <Box display="flex" justifyContent="space-between" alignItems="baseline">
-          <Typography component={'h6'} variant="h6" fontWeight={600}>
-            Your cart:{' '}
-          </Typography>
-          <Typography
-            color={theme.palette.grey[400]}
-          >{`${cart?.totalLineItemQuantity || 0} ${cart?.totalLineItemQuantity === 1 ? 'product' : 'products'}`}</Typography>
-        </Box>
-        <Box
-          display="flex"
-          justifyContent="space-between"
-          alignItems="baseline"
-          color={theme.palette.primary.main}
-          fontWeight={600}
-        >
-          <Typography fontSize="1.15rem">Total price</Typography>
-          <Typography fontSize="1.25rem" fontWeight={600}>{`${totalPrice} ${currency}`}</Typography>
-        </Box>
-        {Boolean(cart?.discountOnTotalPrice) && (
-          <>
-            <Box display="flex" justifyContent="space-between" alignItems="baseline" color={theme.palette.grey[600]}>
-              <Typography fontSize="0.95rem">Price without discount</Typography>
-              <Typography fontSize="1.05rem">{`${priceWithoutDiscount} ${currency}`}</Typography>
-            </Box>
-            <Box
-              display="flex"
-              justifyContent="space-between"
-              alignItems="baseline"
-              color={theme.palette.primary.contrastText}
-            >
-              <Typography fontSize="1.15rem">Discount with promo</Typography>
-              <Typography fontSize="1.25rem">{`${discountedAmount} ${currency}`}</Typography>
-            </Box>
-          </>
-        )}
-        <Divider />
-        {Boolean(promo) && (
-          <Box
-            sx={{
-              color: theme.palette.primary.contrastText,
-              display: matchesBigScreen ? 'block' : { xs: 'block', sm: 'flex' },
-              alignItems: 'flex-end',
-              gap: 5,
-            }}
-          >
-            <Typography
-              sx={{
-                fontWeight: 600,
-                fontSize: '1.05rem',
-                textAlign: 'center',
-                mb: matchesBigScreen ? 1 : { xs: 1, sm: 0 },
-              }}
-            >
-              Applied promo
-            </Typography>
-            <Paper
-              elevation={5}
-              sx={{
-                p: '2px 4px',
-                display: 'flex',
-                alignItems: 'center',
-                flex: 1,
-              }}
-            >
-              <InputBase
-                fullWidth
-                disabled
-                value={promo}
-                sx={{
-                  ml: 1,
-                  flex: 1,
-                  input: {
-                    textTransform: 'uppercase',
-                    fontSize: matchesExtraSmallScreen ? '0.8rem' : '1rem',
-                  },
-                }}
-                inputProps={{ 'aria-label': 'Applied promo code' }}
-              />
-              <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-              <Button
-                color="error"
-                sx={{ p: '10px' }}
-                aria-label="directions"
-                disabled={!cart}
-                onClick={() => {
-                  if (cart && discountCodes?.length) {
-                    dispatch(
-                      removePromoThunk({
-                        cartId: cart.id,
-                        promoId: discountCodes[0].discountCode.id,
-                        version: cart.version,
-                      }),
-                    )
-                      .then(() => {
-                        enqueueSnackbar('Promo code removed', {
-                          variant: 'success',
-                          ...topSnackbarBasicParams,
-                        });
-                      })
-                      .catch((err: ErrorObject) => {
-                        enqueueSnackbar(err.message, {
-                          variant: 'error',
-                          ...topSnackbarBasicParams,
-                        });
-                      });
-                  }
-                }}
-              >
-                Remove
-              </Button>
-            </Paper>
-          </Box>
-        )}
-        {!promo && (
-          <Box
-            sx={{
-              color: theme.palette.primary.contrastText,
-              display: matchesBigScreen ? 'block' : { xs: 'block', sm: 'flex' },
-              alignItems: 'flex-end',
-              gap: 5,
-            }}
-          >
-            <Typography
-              sx={{
-                fontWeight: 600,
-                fontSize: '1.05rem',
-                textAlign: 'center',
-                mb: matchesBigScreen ? 1 : { xs: 1, sm: 0 },
-              }}
-            >
-              Have a promo code?
-            </Typography>
-            <Paper
-              component="form"
-              elevation={5}
-              sx={{
-                p: '2px 4px',
-                display: 'flex',
-                alignItems: 'center',
-                flex: 1,
-              }}
-              onSubmit={(e) => {
-                e.preventDefault();
-                formik.handleSubmit(e);
-              }}
-            >
-              <InputBase
-                name="promo"
-                value={formik.values.promo}
-                fullWidth
-                sx={{
-                  ml: 1,
-                  flex: 1,
-                  input: { fontSize: matchesExtraSmallScreen ? '0.8rem' : '1rem' },
-                }}
-                placeholder="Enter promo code"
-                inputProps={{ 'aria-label': 'Enter promo code' }}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-              />
-              <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-              <Button
-                color="primary"
-                sx={{ p: '10px' }}
-                aria-label="directions"
-                type="submit"
-                disabled={!(Boolean(cart) && Boolean(cart?.lineItems.length))}
-              >
-                Apply
-              </Button>
-            </Paper>
-          </Box>
-        )}
-        <Button
-          variant="outlined"
-          disabled={!(Boolean(cart) && Boolean(cart?.lineItems.length))}
-          endIcon={<DeleteOutlinedIcon />}
-          onClick={handleDialogOpen}
-        >
-          Clear cart
-        </Button>
-      </Paper>
-    </Box>
+    <BasketDrawerInner
+      cart={cart}
+      onPromoRemove={handlePromoRemove}
+      handleDialogOpen={handleDialogOpen}
+      onPromoApply={(values) => {
+        handlePromoApply(values.promo);
+      }}
+    />
   );
-
-  const drawPrices = (product: LineItem) => {
-    return (
-      <>
-        <Typography
-          sx={{
-            textDecoration: product.price.discounted ? 'line-through' : 'none',
-            lineHeight: '1',
-            fontSize: 'inherit',
-          }}
-        >{`${(product.price.value.centAmount / centsPerEuro) * product.quantity} ${currency}`}</Typography>
-        {Boolean(product.price.discounted) && (
-          <Typography
-            sx={{
-              color: theme.palette.primary.main,
-              fontWeight: 600,
-              ml: 1,
-              lineHeight: '1',
-              fontSize: 'inherit',
-            }}
-          >
-            {`${(product.totalPrice.centAmount || 0) / centsPerEuro} ${currency}`}
-          </Typography>
-        )}
-      </>
-    );
-  };
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -394,153 +186,18 @@ function Basket() {
             paddingX: { lg: 4 },
           }}
         >
-          {cart?.lineItems.map((product, i) => {
+          {cart?.lineItems.map((product) => {
             return (
-              <ListItem
-                key={`${i}-cart-prod`}
-                sx={{
-                  borderBottom: `1px dotted ${theme.palette.divider}`,
-                  display: 'flex',
-                  alignItems: 'stretch',
-                  justifyContent: 'space-between',
-                  width: '100%',
-                  paddingX: { xs: 1, sm: 2 },
-                  mb: {
-                    xs: 1.5,
-                    sm: 0,
-                  },
+              <BasketProduct
+                product={product}
+                onRemoveClick={() => {
+                  handleRemoveClick(product.productId);
                 }}
-              >
-                <ListItemAvatar sx={{ mr: 3, alignSelf: 'center' }}>
-                  <Avatar
-                    alt={product.name['en-GB']}
-                    src={product.variant.images?.[0].url}
-                    sx={{
-                      width: matchesExtraSmallScreen ? '75px' : { xs: '90px', md: '120px' },
-                      height: matchesExtraSmallScreen ? '75px' : { xs: '90px', md: '120px' },
-                    }}
-                  />
-                </ListItemAvatar>
-                <Box
-                  display="flex"
-                  justifyContent="space-between"
-                  width="100%"
-                  sx={{
-                    flexDirection: matchesSmallScreen ? 'column' : 'row',
-                    alignItems: matchesSmallScreen ? 'flex-start' : 'center',
-                  }}
-                  gap={matchesSmallScreen ? 1.5 : 0}
-                >
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                      width: '90%',
-                    }}
-                  >
-                    <Box>
-                      <Typography
-                        sx={{
-                          fontSize: matchesExtraSmallScreen ? '1.1rem' : '1.3rem',
-                          fontWeight: 600,
-                          mb: 1,
-                        }}
-                      >
-                        {product.name['en-GB']}
-                      </Typography>
-                      <Typography
-                        color={theme.palette.grey[400]}
-                        sx={{
-                          fontSize: matchesPricesTextContent ? '0.8rem' : '1rem',
-                          fontWeight: 600,
-                        }}
-                      >
-                        {product.variant.attributes?.map((attr) => {
-                          return `${attr.name}: ${attr.value['label']}; `;
-                        })}
-                      </Typography>
-                      <Box display="flex" alignItems="baseline" color={theme.palette.grey[500]} fontSize={'0.8rem'}>
-                        per item:&nbsp;
-                        <Typography
-                          sx={{
-                            textDecoration: product.price.discounted ? 'line-through' : 'none',
-                            fontSize: '0.8rem',
-                          }}
-                        >{`${product.price.value.centAmount / centsPerEuro} ${currency}`}</Typography>
-                        {Boolean(product.price.discounted) && (
-                          <Typography sx={{ fontSize: '0.8rem', fontWeight: 600, ml: 1 }}>
-                            {`${(product.price.discounted?.value.centAmount || 0) / centsPerEuro} ${currency}`}
-                          </Typography>
-                        )}
-                      </Box>
-                    </Box>
-                  </Box>
-                  <Box
-                    display="flex"
-                    gap="20px"
-                    alignItems={matchesPricesTextContent ? 'flex-start' : 'center'}
-                    flexDirection={matchesPricesTextContent ? 'column' : 'row'}
-                  >
-                    <Counter
-                      quantity={product.quantity}
-                      isLoading={isUpdatingProduct(product.productId)}
-                      disable={false}
-                      onDecreaseClick={() => {
-                        const currentQuantity = product.quantity - 1;
-                        handleQuantityChange(product.productId, currentQuantity);
-                      }}
-                      onIncreaseClick={() => {
-                        const currentQuantity = product.quantity + 1;
-                        handleQuantityChange(product.productId, currentQuantity);
-                      }}
-                      onValueChange={(val) => {
-                        if (val > 0) {
-                          handleQuantityChange(product.productId, val);
-                        }
-                      }}
-                    />
-                    <Box
-                      alignItems="baseline"
-                      whiteSpace="nowrap"
-                      pr={1}
-                      sx={{
-                        display: matchesPricesTextContent ? 'flex' : 'none',
-                      }}
-                    >
-                      {drawPrices(product)}
-                    </Box>
-                  </Box>
-                </Box>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'flex-end',
-                    justifyContent: 'space-between',
-                    minWidth: { sm: '160px' },
-                    minHeight: '100%',
-                    ml: matchesSmallScreen ? 0 : 2.5,
-                    fontSize: { xs: '1.1rem', sm: '1.4rem' },
-                  }}
-                >
-                  <RemoveBtn
-                    onClick={() => {
-                      handleRemoveClick(product.productId);
-                    }}
-                  />
-                  <Box
-                    alignItems="baseline"
-                    whiteSpace="nowrap"
-                    pr={1}
-                    sx={{
-                      display: matchesPricesTextContent ? 'none' : 'flex',
-                    }}
-                  >
-                    {drawPrices(product)}
-                  </Box>
-                </Box>
-              </ListItem>
+                onQuantityChange={(quantity) => {
+                  handleQuantityChange(product.productId, quantity);
+                }}
+                isCounterLoading={isUpdatingProduct(product.productId)}
+              />
             );
           })}
         </List>

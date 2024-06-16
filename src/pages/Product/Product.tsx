@@ -12,6 +12,7 @@ import { addToCartThunk, changeLineItemQuantityThunk } from '@/store/slices/cart
 import { enqueueSnackbar } from 'notistack';
 import { bottomSnackbarBasicParams } from '@/shared/snackbarConstans';
 import { ErrorObject } from '@commercetools/platform-sdk';
+import { centsInEuro, currency } from '@/core/commonConstants';
 
 //69ca9376-354e-4a8e-890c-a9e37ae95a59
 //c28e093c-32e3-4e4f-9f93-527ed519ba20
@@ -126,13 +127,11 @@ function Product() {
                             textWrap: 'nowrap',
                           }}
                         >
-                          {product.prices![0].discounted.value.centAmount / 100}
-                          &euro;
+                          {`${product.prices![0].discounted.value.centAmount / centsInEuro} ${currency}`}
                         </Typography>
                       ) : (
                         <Typography gutterBottom variant="h4" component="div" sx={{ textWrap: 'nowrap' }}>
-                          {product.prices![0].value.centAmount / 100}
-                          &euro;
+                          {`${product.prices![0].value.centAmount / centsInEuro} ${currency}`}
                         </Typography>
                       )}
                       {product.prices![0].discounted && (
@@ -147,7 +146,7 @@ function Product() {
                             textWrap: 'nowrap',
                           }}
                         >
-                          {product.prices![0].value.centAmount / 100} &euro;
+                          {product.prices![0].value.centAmount / centsInEuro} &euro;
                         </Typography>
                       )}
                     </Box>

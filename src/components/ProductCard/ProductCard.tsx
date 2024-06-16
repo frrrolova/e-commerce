@@ -3,7 +3,7 @@ import styles from './ProductCard.module.scss';
 import { Box, CircularProgress, IconButton, Paper, Tooltip, Typography } from '@mui/material';
 import { Product } from '@/types';
 import Placeholder from '/images/catalog/placeholder_plant.webp';
-import { PageData, centsInEuro } from './constants';
+import { PageData } from './constants';
 import { useNavigate } from 'react-router-dom';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
@@ -13,6 +13,7 @@ import { addToCartThunk } from '@/store/slices/cart/thunks';
 import { enqueueSnackbar } from 'notistack';
 import { bottomSnackbarBasicParams } from '@/shared/snackbarConstans';
 import { ErrorObject } from '@commercetools/platform-sdk';
+import { centsInEuro, currency } from '@/core/commonConstants';
 
 interface ProductCardProps {
   product: Product;
@@ -88,11 +89,11 @@ function ProductCard({ product }: ProductCardProps) {
           <Box className={styles.left}>
             {!!discountedPrice && (
               <Typography className={styles.discount} variant="body1" pr={1} mr={1}>
-                {discountedPrice} &euro;
+                {`${discountedPrice} ${currency}`}
               </Typography>
             )}
             <Typography className={discountedPrice !== undefined ? 'strikethrough' : ''} variant="body1">
-              {price} &euro;
+              {`${price} ${currency}`}
             </Typography>
           </Box>
 
