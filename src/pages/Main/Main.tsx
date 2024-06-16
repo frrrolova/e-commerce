@@ -77,7 +77,7 @@ function Main() {
           </Grid>
           {promoData &&
             promoData.map((promo, index) => (
-              <Grid xs={12} mt={3} key={`card-${index}`}>
+              <Grid xs={12} mt={5} key={`card-${index}`}>
                 <InfoCard data={promo} button={InfoCardBtn} imageRight={index % 2 !== 0} />
               </Grid>
             ))}
@@ -89,7 +89,7 @@ function Main() {
           <Grid xs={12} mt={3}>
             <Box sx={{ flexGrow: 1 }}>
               <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
-                {productsOffer.map((product) => (
+                {productsOffer.slice(0, 6).map((product) => (
                   <Grid xs={4} sm={4} md={4} key={product.id}>
                     <ProductCard product={product} />
                   </Grid>
