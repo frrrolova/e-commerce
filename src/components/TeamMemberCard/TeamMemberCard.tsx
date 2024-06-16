@@ -83,7 +83,7 @@ function TeamMemberCard({ teamMember }: TeamMemberCardProps) {
                   backgroundImage: `url('${teamMember.photo}')`,
                   backgroundRepeat: 'no-repeat',
                   backgroundSize: 'cover',
-                  backgroundPosition: 'center center',
+                  backgroundPosition: 'top center',
                   overflow: 'hidden',
                 }}
               ></Box>

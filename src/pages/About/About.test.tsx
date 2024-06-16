@@ -9,13 +9,12 @@ jest.mock('@client/client', () => {
 describe('About', () => {
   test('Data in document is correct', async () => {
     const { getByTestId } = renderWithProviders(<About />);
-
     expect(getByTestId('about')).toBeInTheDocument();
+    expect(getByTestId('about')).toMatchSnapshot();
   });
   test('Title in the document is correct', async () => {
     render(<About />);
     const title = screen.getByText('Our team');
-
     expect(title).toBeInTheDocument();
   });
 });
