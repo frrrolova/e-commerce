@@ -24,14 +24,6 @@ export interface InfoDataCard {
   description?: string;
 }
 
-export interface PromoData {
-  id: string;
-  heading: string;
-  imgPath: string;
-  subHeading: string;
-  description: string;
-}
-
 export interface UserUpdateData {
   updAction: MyCustomerUpdateAction;
   version: number;

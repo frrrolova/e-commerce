@@ -1,4 +1,4 @@
-import { Category, Product, PromoData } from '@/types';
+import { Category, InfoDataCard, Product } from '@/types';
 
 export const mockProduct1: Product = {
   id: '1',
@@ -32,7 +32,7 @@ export const mockCategoryChild: Category = {
   parent: { typeId: 'category', id: '3' },
 };
 
-export const mockPromoData: PromoData = {
+export const mockPromoData: InfoDataCard = {
   id: '123',
   heading: 'Promo Name',
   imgPath: '/img',
