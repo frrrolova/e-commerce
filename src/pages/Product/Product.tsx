@@ -13,10 +13,7 @@ import { enqueueSnackbar } from 'notistack';
 import { bottomSnackbarBasicParams } from '@/shared/snackbarConstans';
 import { ErrorObject } from '@commercetools/platform-sdk';
 import { centsInEuro, currency } from '@/core/commonConstants';
-
-//69ca9376-354e-4a8e-890c-a9e37ae95a59
-//c28e093c-32e3-4e4f-9f93-527ed519ba20
-//1e72e7c5-c166-4082-a342-33e35f11c5c0
+import theme from '@/themes/theme';
 
 function Product() {
   const { productId } = useParams();
@@ -27,7 +24,7 @@ function Product() {
 
   const dispatch = useAppDispatch();
 
-  const matches = useMediaQuery('(min-width:1000px)');
+  const matches = useMediaQuery('(min-width:1100px)');
 
   const productQuantity = useAppSelector(
     (state) => state.cart.cart?.lineItems.find((item) => item.productId === productId)?.quantity || 0,
@@ -106,7 +103,13 @@ function Product() {
                       flexWrap: 'wrap',
                     }}
                   >
-                    <Typography gutterBottom variant="h3" component="div" data-testid="product-name">
+                    <Typography
+                      gutterBottom
+                      variant="h3"
+                      component="div"
+                      data-testid="product-name"
+                      color={theme.palette.primary.contrastText}
+                    >
                       {product.name}
                     </Typography>
                     <Box

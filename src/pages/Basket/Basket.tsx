@@ -10,7 +10,8 @@ import {
 import { useAppDispatch, useAppSelector } from '@/store/store';
 import theme from '@/themes/theme';
 import { Cart, ErrorObject } from '@commercetools/platform-sdk';
-import { Box, DialogContent, DialogTitle, Drawer, List, Typography, useMediaQuery } from '@mui/material';
+
+import { Box, DialogContent, DialogTitle, Drawer, Link, List, Paper, Typography, useMediaQuery } from '@mui/material';
 import { useCallback, useEffect, useState } from 'react';
 import { enqueueSnackbar } from 'notistack';
 import { bottomSnackbarBasicParams, topSnackbarBasicParams } from '@/shared/snackbarConstans';
@@ -21,9 +22,13 @@ import BasketDrawerInner from '@/components/BasketDrawerInner/BasketDrawerInner'
 import BasketProduct from '@/components/BasketProduct/BasketProduct';
 import { centsInEuro, currency } from '@/core/commonConstants';
 import { BasketRespResultMessages } from '@/enums/basketRespResults.enum';
+import { useNavigate } from 'react-router-dom';
+import { Paths } from '@/routes/routeConstants';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
 function Basket() {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const cart: Cart | null = useAppSelector((store) => store.cart.cart);
   const isPending = useAppSelector((state) => state.cart.isQuantityChanging);
@@ -156,6 +161,7 @@ function Basket() {
   const matchesBigScreen = useMediaQuery('(min-width:1100px)');
   const matchesSmallScreen = useMediaQuery('(max-width:700px)');
   const matchesPricesTextContent = useMediaQuery('(max-width:450px)');
+  const matchesExtraSmallScreen = useMediaQuery('(max-width:350px)');
 
   const drawer = (
     <BasketDrawerInner
@@ -178,9 +184,44 @@ function Basket() {
           width: matchesPricesTextContent ? `calc(100% - ${drawerWidth}px)` : 0,
         }}
       >
-        <Typography component="h1" fontSize={matchesSmallScreen ? '1.4rem' : '1.6rem'} fontWeight={600} mb={2} pl={3}>
-          Your Cart:
+        <Typography
+          component="h1"
+          fontSize={matchesSmallScreen ? '1.4rem' : '1.6rem'}
+          fontWeight={600}
+          mb={2}
+          pl={3}
+          color={theme.palette.primary.contrastText}
+        >
+          Your Cart
         </Typography>
+        {(!cart || !cart.lineItems.length) && (
+          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 7 }}>
+            <Paper
+              elevation={1}
+              sx={{
+                width: matchesExtraSmallScreen ? '90%' : matchesSmallScreen ? '75%' : '50%',
+                padding: 2,
+                textAlign: 'center',
+              }}
+            >
+              <Typography fontSize="1.35rem" color={theme.palette.grey[400]}>
+                There are no products in your cart yet
+              </Typography>
+              <Link
+                color={theme.palette.primary.main}
+                fontSize="1.2rem"
+                fontWeight="600"
+                sx={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 1, justifyContent: 'center' }}
+                onClick={() => {
+                  navigate(Paths.CATALOG);
+                }}
+              >
+                Start shopping
+                <AddShoppingCartIcon />
+              </Link>
+            </Paper>
+          </Box>
+        )}
         <List
           sx={{
             paddingX: { lg: 4 },

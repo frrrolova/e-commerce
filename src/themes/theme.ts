@@ -8,6 +8,7 @@ export const themeOptions: ThemeOptions = {
     mode: 'dark',
     primary: {
       main: '#448c44',
+      contrastText: '#e6e6e6',
     },
     secondary: {
       main: '#f1da5a',
