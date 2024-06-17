@@ -53,6 +53,7 @@ function BasketProduct({ product, onRemoveClick, onQuantityChange, isCounterLoad
         justifyContent: 'space-between',
         width: '100%',
         paddingX: { xs: 1, sm: 2 },
+        color: theme.palette.primary.contrastText,
         mb: {
           xs: 1.5,
           sm: 0,
