@@ -3,7 +3,7 @@ import { Container, Typography, Box } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 import ProductCard from '@/components/ProductCard/ProductCard';
 import { InfoDataCard, Product } from '@/types';
-import { InfoCardBtn, PageData } from './constants';
+import { InfoCardBtn, PageData, offersOnPage } from './constants';
 import Title from '@/components/Title/Title';
 import ImageBg from '/images/home/home-bg.webp';
 import InfoCard from '@/components/InfoCard/InfoCard';
@@ -89,7 +89,7 @@ function Main() {
           <Grid xs={12} mt={3}>
             <Box sx={{ flexGrow: 1 }}>
               <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
-                {productsOffer.slice(0, 6).map((product) => (
+                {productsOffer.slice(0, offersOnPage).map((product) => (
                   <Grid xs={4} sm={4} md={4} key={product.id}>
                     <ProductCard product={product} />
                   </Grid>

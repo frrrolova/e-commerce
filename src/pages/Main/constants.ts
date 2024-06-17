@@ -10,12 +10,9 @@ export enum PageData {
   TO_CATALOG = 'To Catalog',
 }
 
-export enum ButtonLabels {
-  LOGIN = 'Login',
-  REGISTRATION = 'Registration',
-}
-
 export const InfoCardBtn = {
   label: 'To Catalog',
   url: Paths.CATALOG,
 };
+
+export const offersOnPage = 6;
