@@ -13,7 +13,7 @@ describe('LoginForm', () => {
     await fireEvent.input(inputMail, {
       target: { value: '1' },
     });
-    await expect(screen.getByPlaceholderText('Email')).toContainHTML('1');
+    await expect(screen.getByPlaceholderText('Email')).toHaveValue('1');
   });
   test('Input password has a value', async () => {
     await renderWithProviders(<LoginForm />);
@@ -21,7 +21,7 @@ describe('LoginForm', () => {
     await fireEvent.input(inputMail, {
       target: { value: '1' },
     });
-    await expect(screen.getByPlaceholderText('Password')).toContainHTML('1');
+    await expect(screen.getByPlaceholderText('Password')).toHaveValue('1');
   });
   test('submit button should not be disabled', async () => {
     renderWithProviders(<LoginForm />);
@@ -34,18 +34,7 @@ describe('LoginForm', () => {
       expect(screen.getByTestId('login-btn')).not.toBeDisabled();
     });
   });
-  test('submit button should be disabled', async () => {
-    renderWithProviders(<LoginForm />);
-    act(() => {
-      fireEvent.change(screen.getByPlaceholderText('Email'), { target: { value: 'test' } });
-      fireEvent.change(screen.getByPlaceholderText('Password'), { target: { value: 'test' } });
-    });
-
-    await waitFor(() => {
-      expect(screen.getByTestId('login-btn')).toBeDisabled();
-    });
-  });
-  test('submit button should be disabled', async () => {
+  test('button disabled with invalid email', async () => {
     renderWithProviders(<LoginForm />);
     act(() => {
       fireEvent.change(screen.getByPlaceholderText('Email'), { target: { value: 'test' } });
@@ -56,10 +45,10 @@ describe('LoginForm', () => {
       expect(screen.getByTestId('login-btn')).toBeDisabled();
     });
   });
-  test('submit button should be disabled', async () => {
+  test('button disabled with invalid password', async () => {
     renderWithProviders(<LoginForm />);
     act(() => {
-      fireEvent.change(screen.getByPlaceholderText('Email'), { target: { value: 'anorret@gmail.com' } });
+      fireEvent.change(screen.getByPlaceholderText('Email'), { target: { value: 'anoret@gmail.com' } });
       fireEvent.change(screen.getByPlaceholderText('Password'), { target: { value: 'test' } });
     });
 
