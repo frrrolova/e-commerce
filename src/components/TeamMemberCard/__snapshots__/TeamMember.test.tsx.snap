@@ -12,13 +12,13 @@ exports[`Team Member Card Data in document is correct 1`] = `
           class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3 css-18v18mo-MuiPaper-root"
         >
           <div
-            class="MuiBox-root css-1t59ap3"
+            class="MuiBox-root css-x8ntnm"
           >
             <header
               class="MuiBox-root css-hkmrg5"
             >
               <h2
-                class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                class="MuiTypography-root MuiTypography-body1 css-4peds9-MuiTypography-root"
               >
                 Vasya
               </h2>
@@ -33,20 +33,20 @@ exports[`Team Member Card Data in document is correct 1`] = `
               class="MuiBox-root css-ig46ls"
             >
               <div
-                class="MuiBox-root css-6mdx69"
+                class="MuiBox-root css-1szi7j8"
               />
               <p
-                class="MuiTypography-root MuiTypography-body1 css-1nbuf93-MuiTypography-root"
+                class="MuiTypography-root MuiTypography-body1 css-1l08ofw-MuiTypography-root"
               >
                 Developer
               </p>
               <h4
-                class="MuiTypography-root MuiTypography-body1 css-xuwm4f-MuiTypography-root"
+                class="MuiTypography-root MuiTypography-body1 css-xlwalr-MuiTypography-root"
               >
                 Bio
               </h4>
               <h5
-                class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                class="MuiTypography-root MuiTypography-body1 css-4peds9-MuiTypography-root"
               >
                 Lorem ipsum dolor sit amet
               </h5>
@@ -55,7 +55,7 @@ exports[`Team Member Card Data in document is correct 1`] = `
               class="MuiBox-root css-0"
             >
               <h3
-                class="MuiTypography-root MuiTypography-body1 css-xuwm4f-MuiTypography-root"
+                class="MuiTypography-root MuiTypography-body1 css-xlwalr-MuiTypography-root"
               >
                 Contributions
               </h3>
@@ -63,7 +63,7 @@ exports[`Team Member Card Data in document is correct 1`] = `
                 class="MuiBox-root css-0"
               >
                 <div
-                  class="MuiBox-root css-1i8liqc"
+                  class="MuiBox-root css-1fr78rk"
                 >
                   ✅ 
                   CommerceTools Project Setup
@@ -83,13 +83,13 @@ exports[`Team Member Card Data in document is correct 1`] = `
         class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3 css-18v18mo-MuiPaper-root"
       >
         <div
-          class="MuiBox-root css-1t59ap3"
+          class="MuiBox-root css-x8ntnm"
         >
           <header
             class="MuiBox-root css-hkmrg5"
           >
             <h2
-              class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body1 css-4peds9-MuiTypography-root"
             >
               Vasya
             </h2>
@@ -104,20 +104,20 @@ exports[`Team Member Card Data in document is correct 1`] = `
             class="MuiBox-root css-ig46ls"
           >
             <div
-              class="MuiBox-root css-6mdx69"
+              class="MuiBox-root css-1szi7j8"
             />
             <p
-              class="MuiTypography-root MuiTypography-body1 css-1nbuf93-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body1 css-1l08ofw-MuiTypography-root"
             >
               Developer
             </p>
             <h4
-              class="MuiTypography-root MuiTypography-body1 css-xuwm4f-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body1 css-xlwalr-MuiTypography-root"
             >
               Bio
             </h4>
             <h5
-              class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body1 css-4peds9-MuiTypography-root"
             >
               Lorem ipsum dolor sit amet
             </h5>
@@ -126,7 +126,7 @@ exports[`Team Member Card Data in document is correct 1`] = `
             class="MuiBox-root css-0"
           >
             <h3
-              class="MuiTypography-root MuiTypography-body1 css-xuwm4f-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body1 css-xlwalr-MuiTypography-root"
             >
               Contributions
             </h3>
@@ -134,7 +134,7 @@ exports[`Team Member Card Data in document is correct 1`] = `
               class="MuiBox-root css-0"
             >
               <div
-                class="MuiBox-root css-1i8liqc"
+                class="MuiBox-root css-1fr78rk"
               >
                 ✅ 
                 CommerceTools Project Setup
@@ -218,13 +218,13 @@ exports[`Team Member Card Data in document is correct 2`] = `
           class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3 css-18v18mo-MuiPaper-root"
         >
           <div
-            class="MuiBox-root css-1t59ap3"
+            class="MuiBox-root css-x8ntnm"
           >
             <header
               class="MuiBox-root css-hkmrg5"
             >
               <h2
-                class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                class="MuiTypography-root MuiTypography-body1 css-4peds9-MuiTypography-root"
               >
                 Vasya
               </h2>
@@ -239,20 +239,20 @@ exports[`Team Member Card Data in document is correct 2`] = `
               class="MuiBox-root css-ig46ls"
             >
               <div
-                class="MuiBox-root css-6mdx69"
+                class="MuiBox-root css-1szi7j8"
               />
               <p
-                class="MuiTypography-root MuiTypography-body1 css-1nbuf93-MuiTypography-root"
+                class="MuiTypography-root MuiTypography-body1 css-1l08ofw-MuiTypography-root"
               >
                 Developer
               </p>
               <h4
-                class="MuiTypography-root MuiTypography-body1 css-xuwm4f-MuiTypography-root"
+                class="MuiTypography-root MuiTypography-body1 css-xlwalr-MuiTypography-root"
               >
                 Bio
               </h4>
               <h5
-                class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                class="MuiTypography-root MuiTypography-body1 css-4peds9-MuiTypography-root"
               >
                 Lorem ipsum dolor sit amet
               </h5>
@@ -261,7 +261,7 @@ exports[`Team Member Card Data in document is correct 2`] = `
               class="MuiBox-root css-0"
             >
               <h3
-                class="MuiTypography-root MuiTypography-body1 css-xuwm4f-MuiTypography-root"
+                class="MuiTypography-root MuiTypography-body1 css-xlwalr-MuiTypography-root"
               >
                 Contributions
               </h3>
@@ -269,7 +269,7 @@ exports[`Team Member Card Data in document is correct 2`] = `
                 class="MuiBox-root css-0"
               >
                 <div
-                  class="MuiBox-root css-1i8liqc"
+                  class="MuiBox-root css-1fr78rk"
                 >
                   ✅ 
                   CommerceTools Project Setup
@@ -289,13 +289,13 @@ exports[`Team Member Card Data in document is correct 2`] = `
         class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3 css-18v18mo-MuiPaper-root"
       >
         <div
-          class="MuiBox-root css-1t59ap3"
+          class="MuiBox-root css-x8ntnm"
         >
           <header
             class="MuiBox-root css-hkmrg5"
           >
             <h2
-              class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body1 css-4peds9-MuiTypography-root"
             >
               Vasya
             </h2>
@@ -310,20 +310,20 @@ exports[`Team Member Card Data in document is correct 2`] = `
             class="MuiBox-root css-ig46ls"
           >
             <div
-              class="MuiBox-root css-6mdx69"
+              class="MuiBox-root css-1szi7j8"
             />
             <p
-              class="MuiTypography-root MuiTypography-body1 css-1nbuf93-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body1 css-1l08ofw-MuiTypography-root"
             >
               Developer
             </p>
             <h4
-              class="MuiTypography-root MuiTypography-body1 css-xuwm4f-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body1 css-xlwalr-MuiTypography-root"
             >
               Bio
             </h4>
             <h5
-              class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body1 css-4peds9-MuiTypography-root"
             >
               Lorem ipsum dolor sit amet
             </h5>
@@ -332,7 +332,7 @@ exports[`Team Member Card Data in document is correct 2`] = `
             class="MuiBox-root css-0"
           >
             <h3
-              class="MuiTypography-root MuiTypography-body1 css-xuwm4f-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body1 css-xlwalr-MuiTypography-root"
             >
               Contributions
             </h3>
@@ -340,7 +340,7 @@ exports[`Team Member Card Data in document is correct 2`] = `
               class="MuiBox-root css-0"
             >
               <div
-                class="MuiBox-root css-1i8liqc"
+                class="MuiBox-root css-1fr78rk"
               >
                 ✅ 
                 CommerceTools Project Setup

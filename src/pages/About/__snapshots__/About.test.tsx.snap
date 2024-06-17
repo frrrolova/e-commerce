@@ -2,7 +2,7 @@
 
 exports[`About Data in document is correct 1`] = `
 <main
-  class="MuiContainer-root MuiContainer-maxWidthLg css-mfziix-MuiContainer-root"
+  class="MuiContainer-root MuiContainer-maxWidthLg css-wd36xf-MuiContainer-root"
   data-testid="about"
 >
   <h1
@@ -20,13 +20,13 @@ exports[`About Data in document is correct 1`] = `
         class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3 css-18v18mo-MuiPaper-root"
       >
         <div
-          class="MuiBox-root css-1t59ap3"
+          class="MuiBox-root css-x8ntnm"
         >
           <header
             class="MuiBox-root css-hkmrg5"
           >
             <h2
-              class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body1 css-4peds9-MuiTypography-root"
             >
               Tetiana Kostomitska
             </h2>
@@ -41,20 +41,20 @@ exports[`About Data in document is correct 1`] = `
             class="MuiBox-root css-ig46ls"
           >
             <div
-              class="MuiBox-root css-6mdx69"
+              class="MuiBox-root css-1szi7j8"
             />
             <p
-              class="MuiTypography-root MuiTypography-body1 css-1nbuf93-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body1 css-1l08ofw-MuiTypography-root"
             >
               Front-end developer
             </p>
             <h4
-              class="MuiTypography-root MuiTypography-body1 css-xuwm4f-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body1 css-xlwalr-MuiTypography-root"
             >
               Bio
             </h4>
             <h5
-              class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body1 css-4peds9-MuiTypography-root"
             >
               Graduated from Taurida National University with a degree in Mathematics. 
           Possesses 5 years of experience as a html-developer with expertise in web 
@@ -66,7 +66,7 @@ exports[`About Data in document is correct 1`] = `
             class="MuiBox-root css-0"
           >
             <h3
-              class="MuiTypography-root MuiTypography-body1 css-xuwm4f-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body1 css-xlwalr-MuiTypography-root"
             >
               Contributions
             </h3>
@@ -74,43 +74,43 @@ exports[`About Data in document is correct 1`] = `
               class="MuiBox-root css-0"
             >
               <div
-                class="MuiBox-root css-1i8liqc"
+                class="MuiBox-root css-1fr78rk"
               >
                 ✅ 
                 CommerceTools Project Setup
               </div>
               <div
-                class="MuiBox-root css-1i8liqc"
+                class="MuiBox-root css-1fr78rk"
               >
                 ✅ 
                 Trello Board Setup
               </div>
               <div
-                class="MuiBox-root css-1i8liqc"
+                class="MuiBox-root css-1fr78rk"
               >
                 ✅ 
                 Main Page Implementation
               </div>
               <div
-                class="MuiBox-root css-1i8liqc"
+                class="MuiBox-root css-1fr78rk"
               >
                 ✅ 
                 Header Implementation
               </div>
               <div
-                class="MuiBox-root css-1i8liqc"
+                class="MuiBox-root css-1fr78rk"
               >
                 ✅ 
                 Catalog Page
               </div>
               <div
-                class="MuiBox-root css-1i8liqc"
+                class="MuiBox-root css-1fr78rk"
               >
                 ✅ 
                 Routing Implementation
               </div>
               <div
-                class="MuiBox-root css-1i8liqc"
+                class="MuiBox-root css-1fr78rk"
               >
                 ✅ 
                 Pagination
@@ -127,13 +127,13 @@ exports[`About Data in document is correct 1`] = `
         class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3 css-18v18mo-MuiPaper-root"
       >
         <div
-          class="MuiBox-root css-1t59ap3"
+          class="MuiBox-root css-x8ntnm"
         >
           <header
             class="MuiBox-root css-hkmrg5"
           >
             <h2
-              class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body1 css-4peds9-MuiTypography-root"
             >
               Tatiana Frolova
             </h2>
@@ -148,30 +148,30 @@ exports[`About Data in document is correct 1`] = `
             class="MuiBox-root css-ig46ls"
           >
             <div
-              class="MuiBox-root css-6mdx69"
+              class="MuiBox-root css-1szi7j8"
             />
             <p
-              class="MuiTypography-root MuiTypography-body1 css-1nbuf93-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body1 css-1l08ofw-MuiTypography-root"
             >
               Team leader
             </p>
             <h4
-              class="MuiTypography-root MuiTypography-body1 css-xuwm4f-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body1 css-xlwalr-MuiTypography-root"
             >
               Bio
             </h4>
             <h5
-              class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body1 css-4peds9-MuiTypography-root"
             >
                Graduated from St. Petersburg State Pediatric Medical University. Started learning frontend in 2022. Now live in Novi Sad, Serbia.
-           In love with the process of creating interfaces, when you can visually observe the results of your work, I love the feeling of a working brain while solving a difficult task.
+           In love with the process of creating interfaces, when you can visually observe the results of your work. I love the feeling of a working brain while solving a difficult task.
             </h5>
           </div>
           <footer
             class="MuiBox-root css-0"
           >
             <h3
-              class="MuiTypography-root MuiTypography-body1 css-xuwm4f-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body1 css-xlwalr-MuiTypography-root"
             >
               Contributions
             </h3>
@@ -179,37 +179,37 @@ exports[`About Data in document is correct 1`] = `
               class="MuiBox-root css-0"
             >
               <div
-                class="MuiBox-root css-1i8liqc"
+                class="MuiBox-root css-1fr78rk"
               >
                 ✅ 
                 Environment Configuration
               </div>
               <div
-                class="MuiBox-root css-1i8liqc"
+                class="MuiBox-root css-1fr78rk"
               >
                 ✅ 
                 Repository Setup
               </div>
               <div
-                class="MuiBox-root css-1i8liqc"
+                class="MuiBox-root css-1fr78rk"
               >
                 ✅ 
                 Registration Page
               </div>
               <div
-                class="MuiBox-root css-1i8liqc"
+                class="MuiBox-root css-1fr78rk"
               >
                 ✅ 
                 Routing Implementation
               </div>
               <div
-                class="MuiBox-root css-1i8liqc"
+                class="MuiBox-root css-1fr78rk"
               >
                 ✅ 
                 User Profile Page
               </div>
               <div
-                class="MuiBox-root css-1i8liqc"
+                class="MuiBox-root css-1fr78rk"
               >
                 ✅ 
                 Basket Implementation
@@ -226,13 +226,13 @@ exports[`About Data in document is correct 1`] = `
         class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3 css-18v18mo-MuiPaper-root"
       >
         <div
-          class="MuiBox-root css-1t59ap3"
+          class="MuiBox-root css-x8ntnm"
         >
           <header
             class="MuiBox-root css-hkmrg5"
           >
             <h2
-              class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body1 css-4peds9-MuiTypography-root"
             >
               Yaroslaw Rychik
             </h2>
@@ -247,20 +247,20 @@ exports[`About Data in document is correct 1`] = `
             class="MuiBox-root css-ig46ls"
           >
             <div
-              class="MuiBox-root css-6mdx69"
+              class="MuiBox-root css-1szi7j8"
             />
             <p
-              class="MuiTypography-root MuiTypography-body1 css-1nbuf93-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body1 css-1l08ofw-MuiTypography-root"
             >
               Front-end developer
             </p>
             <h4
-              class="MuiTypography-root MuiTypography-body1 css-xuwm4f-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body1 css-xlwalr-MuiTypography-root"
             >
               Bio
             </h4>
             <h5
-              class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body1 css-4peds9-MuiTypography-root"
             >
               My name is Yaroslaw. I am from Gomel. I have graduated from technical State University in 2019. Firstly I have worked as a design engineer but I made a decision to change my profession. So I went to an IT course at RS School. I hope one day I shall become a professional front-end developer.
             </h5>
@@ -269,7 +269,7 @@ exports[`About Data in document is correct 1`] = `
             class="MuiBox-root css-0"
           >
             <h3
-              class="MuiTypography-root MuiTypography-body1 css-xuwm4f-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body1 css-xlwalr-MuiTypography-root"
             >
               Contributions
             </h3>
@@ -277,25 +277,25 @@ exports[`About Data in document is correct 1`] = `
               class="MuiBox-root css-0"
             >
               <div
-                class="MuiBox-root css-1i8liqc"
+                class="MuiBox-root css-1fr78rk"
               >
                 ✅ 
                 Development README
               </div>
               <div
-                class="MuiBox-root css-1i8liqc"
+                class="MuiBox-root css-1fr78rk"
               >
                 ✅ 
                 Login Page
               </div>
               <div
-                class="MuiBox-root css-1i8liqc"
+                class="MuiBox-root css-1fr78rk"
               >
                 ✅ 
                 Product Page
               </div>
               <div
-                class="MuiBox-root css-1i8liqc"
+                class="MuiBox-root css-1fr78rk"
               >
                 ✅ 
                 About Us Page
@@ -318,13 +318,13 @@ exports[`About Data in document is correct 1`] = `
         Collaboration
       </h2>
       <p
-        class="MuiTypography-root MuiTypography-body1 css-ozo7oo-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body1 css-kyll22-MuiTypography-root"
       >
         We were working together as a group on a project for seven weaks. We created a project task board using a
         project management tool Trello to organize tasks into lists or columns corresponding to their status.
       </p>
       <p
-        class="MuiTypography-root MuiTypography-body1 css-ozo7oo-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body1 css-kyll22-MuiTypography-root"
       >
         Our team effectively collaborated on the e-commerce store project by 
           maintaining open and constant communication through stand-up meetings. 
@@ -353,7 +353,7 @@ exports[`About Data in document is correct 1`] = `
         </a>
       </div>
       <h2
-        class="MuiTypography-root MuiTypography-body1 css-130dmu7-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body1 css-1bdcxv3-MuiTypography-root"
       >
         Made with love in 2024
       </h2>
