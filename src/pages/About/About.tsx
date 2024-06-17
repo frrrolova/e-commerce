@@ -3,6 +3,7 @@ import Logo from '/images/rs-logo.svg';
 import TeamMemberCard from '@/components/TeamMemberCard/TeamMemberCard';
 import { members } from './data';
 import { aboutConstants } from './constants';
+import theme from '@/themes/theme';
 
 function About() {
   return (
@@ -20,7 +21,7 @@ function About() {
           },
           width: '98%',
           margin: {
-            xs: '30px auto',
+            xs: '50px auto',
             md: '60px auto',
           },
         }}
@@ -91,6 +92,7 @@ function About() {
               {aboutConstants.collaboration.title}
             </Typography>
             <Typography
+              color={theme.palette.primary.contrastText}
               component="p"
               sx={{
                 textIndent: '20px',
@@ -99,6 +101,7 @@ function About() {
               {aboutConstants.collaboration.p1}
             </Typography>
             <Typography
+              color={theme.palette.primary.contrastText}
               component="p"
               sx={{
                 textIndent: '20px',
@@ -151,6 +154,7 @@ function About() {
             </Paper>
 
             <Typography
+              color={theme.palette.primary.contrastText}
               sx={{
                 p: 1,
               }}

@@ -2,6 +2,7 @@ import { Box, Link, Paper, Typography } from '@mui/material';
 import { TeamMember } from '@/types';
 import '@/styles/styles.scss';
 import styles from './TeamMember.module.scss';
+import theme from '@/themes/theme';
 
 interface TeamMemberCardProps {
   teamMember: TeamMember;
@@ -19,14 +20,9 @@ function TeamMemberCard({ teamMember }: TeamMemberCardProps) {
           }}
         >
           <Box
+            className={styles.inner}
             component="div"
             sx={{
-              minWidth: {
-                xs: '250px',
-                sm: '300px',
-                md: '200px',
-                lg: '300px',
-              },
               display: 'flex',
               flexDirection: 'column',
               gap: '10px',
@@ -43,7 +39,9 @@ function TeamMemberCard({ teamMember }: TeamMemberCardProps) {
                 p: 1,
               }}
             >
-              <Typography component="h2">{teamMember.name}</Typography>
+              <Typography color={theme.palette.primary.contrastText} component="h2">
+                {teamMember.name}
+              </Typography>
               <Link
                 sx={{
                   position: 'relative',
@@ -64,20 +62,8 @@ function TeamMemberCard({ teamMember }: TeamMemberCardProps) {
               }}
             >
               <Box
+                className={styles.img}
                 sx={{
-                  width: {
-                    xs: '250px',
-                    sm: '400px',
-                    md: '200px',
-                    lg: '300px',
-                  },
-                  minWidth: {
-                    xs: '250px',
-                    sm: '400px',
-                    md: '200px',
-                    lg: '300px',
-                  },
-                  height: '400px',
                   borderRadius: '40px',
                   backgroundImage: `url('${teamMember.photo}')`,
                   backgroundRepeat: 'no-repeat',
@@ -87,6 +73,7 @@ function TeamMemberCard({ teamMember }: TeamMemberCardProps) {
                 }}
               ></Box>
               <Typography
+                color={theme.palette.primary.contrastText}
                 sx={{
                   fontStyle: 'italic',
                   textAlign: 'center',
@@ -97,6 +84,7 @@ function TeamMemberCard({ teamMember }: TeamMemberCardProps) {
                 {teamMember.role}
               </Typography>
               <Typography
+                color={theme.palette.primary.contrastText}
                 component="h4"
                 sx={{
                   alignSelf: 'flex-start',
@@ -107,12 +95,13 @@ function TeamMemberCard({ teamMember }: TeamMemberCardProps) {
               >
                 Bio
               </Typography>
-              <Typography className={styles.bio} component="h5">
+              <Typography className={styles.bio} color={theme.palette.primary.contrastText} component="h5">
                 {teamMember.bio}
               </Typography>
             </Box>
             <Box component="footer">
               <Typography
+                color={theme.palette.primary.contrastText}
                 component="h3"
                 sx={{
                   alignSelf: 'flex-start',
@@ -126,6 +115,7 @@ function TeamMemberCard({ teamMember }: TeamMemberCardProps) {
               <Box component="div">
                 {teamMember.contributions.map((item, index) => (
                   <Box
+                    color={theme.palette.primary.contrastText}
                     sx={{
                       fontSize: '14px',
                       p: 1,
