@@ -46,7 +46,6 @@ function BasketProduct({ product, onRemoveClick, onQuantityChange, isCounterLoad
 
   return (
     <ListItem
-      key={`${product.id}-cart-prod`}
       sx={{
         borderBottom: `1px dotted ${theme.palette.divider}`,
         display: 'flex',

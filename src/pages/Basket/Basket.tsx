@@ -186,10 +186,11 @@ function Basket() {
             paddingX: { lg: 4 },
           }}
         >
-          {cart?.lineItems.map((product) => {
+          {cart?.lineItems.map((product, i) => {
             return (
               <BasketProduct
                 product={product}
+                key={`${i}-cart-prod`}
                 onRemoveClick={() => {
                   handleRemoveClick(product.productId);
                 }}
