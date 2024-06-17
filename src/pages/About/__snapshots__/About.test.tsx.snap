@@ -1,0 +1,363 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`About Data in document is correct 1`] = `
+<main
+  class="MuiContainer-root MuiContainer-maxWidthLg css-wd36xf-MuiContainer-root"
+  data-testid="about"
+>
+  <h1
+    class="MuiTypography-root MuiTypography-body1 css-1hp2ky8-MuiTypography-root"
+  >
+    Our team
+  </h1>
+  <div
+    class="MuiBox-root css-1bv4ar7"
+  >
+    <div
+      class="MuiBox-root css-0"
+    >
+      <div
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3 css-18v18mo-MuiPaper-root"
+      >
+        <div
+          class="MuiBox-root css-x8ntnm"
+        >
+          <header
+            class="MuiBox-root css-hkmrg5"
+          >
+            <h2
+              class="MuiTypography-root MuiTypography-body1 css-4peds9-MuiTypography-root"
+            >
+              Tetiana Kostomitska
+            </h2>
+            <a
+              class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-136cz29-MuiTypography-root-MuiLink-root"
+              href="https://github.com/tanykos"
+            >
+              Github
+            </a>
+          </header>
+          <div
+            class="MuiBox-root css-ig46ls"
+          >
+            <div
+              class="MuiBox-root css-1szi7j8"
+            />
+            <p
+              class="MuiTypography-root MuiTypography-body1 css-1l08ofw-MuiTypography-root"
+            >
+              Front-end developer
+            </p>
+            <h4
+              class="MuiTypography-root MuiTypography-body1 css-xlwalr-MuiTypography-root"
+            >
+              Bio
+            </h4>
+            <h5
+              class="MuiTypography-root MuiTypography-body1 css-4peds9-MuiTypography-root"
+            >
+              Graduated from Taurida National University with a degree in Mathematics. 
+          Possesses 5 years of experience as a html-developer with expertise in web 
+          development and responsive design. I enjoy learning new things and applying 
+          knowledge in practice. I am happy to observe my progress in web-development.
+            </h5>
+          </div>
+          <footer
+            class="MuiBox-root css-0"
+          >
+            <h3
+              class="MuiTypography-root MuiTypography-body1 css-xlwalr-MuiTypography-root"
+            >
+              Contributions
+            </h3>
+            <div
+              class="MuiBox-root css-0"
+            >
+              <div
+                class="MuiBox-root css-1fr78rk"
+              >
+                ✅ 
+                CommerceTools Project Setup
+              </div>
+              <div
+                class="MuiBox-root css-1fr78rk"
+              >
+                ✅ 
+                Trello Board Setup
+              </div>
+              <div
+                class="MuiBox-root css-1fr78rk"
+              >
+                ✅ 
+                Main Page Implementation
+              </div>
+              <div
+                class="MuiBox-root css-1fr78rk"
+              >
+                ✅ 
+                Header Implementation
+              </div>
+              <div
+                class="MuiBox-root css-1fr78rk"
+              >
+                ✅ 
+                Catalog Page
+              </div>
+              <div
+                class="MuiBox-root css-1fr78rk"
+              >
+                ✅ 
+                Routing Implementation
+              </div>
+              <div
+                class="MuiBox-root css-1fr78rk"
+              >
+                ✅ 
+                Pagination
+              </div>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </div>
+    <div
+      class="MuiBox-root css-0"
+    >
+      <div
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3 css-18v18mo-MuiPaper-root"
+      >
+        <div
+          class="MuiBox-root css-x8ntnm"
+        >
+          <header
+            class="MuiBox-root css-hkmrg5"
+          >
+            <h2
+              class="MuiTypography-root MuiTypography-body1 css-4peds9-MuiTypography-root"
+            >
+              Tatiana Frolova
+            </h2>
+            <a
+              class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-136cz29-MuiTypography-root-MuiLink-root"
+              href="https://github.com/frrrolova"
+            >
+              Github
+            </a>
+          </header>
+          <div
+            class="MuiBox-root css-ig46ls"
+          >
+            <div
+              class="MuiBox-root css-1szi7j8"
+            />
+            <p
+              class="MuiTypography-root MuiTypography-body1 css-1l08ofw-MuiTypography-root"
+            >
+              Team leader
+            </p>
+            <h4
+              class="MuiTypography-root MuiTypography-body1 css-xlwalr-MuiTypography-root"
+            >
+              Bio
+            </h4>
+            <h5
+              class="MuiTypography-root MuiTypography-body1 css-4peds9-MuiTypography-root"
+            >
+               Graduated from St. Petersburg State Pediatric Medical University. Started learning frontend in 2022. Now live in Novi Sad, Serbia.
+           In love with the process of creating interfaces, when you can visually observe the results of your work. I love the feeling of a working brain while solving a difficult task.
+            </h5>
+          </div>
+          <footer
+            class="MuiBox-root css-0"
+          >
+            <h3
+              class="MuiTypography-root MuiTypography-body1 css-xlwalr-MuiTypography-root"
+            >
+              Contributions
+            </h3>
+            <div
+              class="MuiBox-root css-0"
+            >
+              <div
+                class="MuiBox-root css-1fr78rk"
+              >
+                ✅ 
+                Environment Configuration
+              </div>
+              <div
+                class="MuiBox-root css-1fr78rk"
+              >
+                ✅ 
+                Repository Setup
+              </div>
+              <div
+                class="MuiBox-root css-1fr78rk"
+              >
+                ✅ 
+                Registration Page
+              </div>
+              <div
+                class="MuiBox-root css-1fr78rk"
+              >
+                ✅ 
+                Routing Implementation
+              </div>
+              <div
+                class="MuiBox-root css-1fr78rk"
+              >
+                ✅ 
+                User Profile Page
+              </div>
+              <div
+                class="MuiBox-root css-1fr78rk"
+              >
+                ✅ 
+                Basket Implementation
+              </div>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </div>
+    <div
+      class="MuiBox-root css-0"
+    >
+      <div
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3 css-18v18mo-MuiPaper-root"
+      >
+        <div
+          class="MuiBox-root css-x8ntnm"
+        >
+          <header
+            class="MuiBox-root css-hkmrg5"
+          >
+            <h2
+              class="MuiTypography-root MuiTypography-body1 css-4peds9-MuiTypography-root"
+            >
+              Yaroslaw Rychik
+            </h2>
+            <a
+              class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-136cz29-MuiTypography-root-MuiLink-root"
+              href="https://github.com/REGEMLER"
+            >
+              Github
+            </a>
+          </header>
+          <div
+            class="MuiBox-root css-ig46ls"
+          >
+            <div
+              class="MuiBox-root css-1szi7j8"
+            />
+            <p
+              class="MuiTypography-root MuiTypography-body1 css-1l08ofw-MuiTypography-root"
+            >
+              Front-end developer
+            </p>
+            <h4
+              class="MuiTypography-root MuiTypography-body1 css-xlwalr-MuiTypography-root"
+            >
+              Bio
+            </h4>
+            <h5
+              class="MuiTypography-root MuiTypography-body1 css-4peds9-MuiTypography-root"
+            >
+              My name is Yaroslaw. I am from Gomel. I have graduated from technical State University in 2019. Firstly I have worked as a design engineer but I made a decision to change my profession. So I went to an IT course at RS School. I hope one day I shall become a professional front-end developer.
+            </h5>
+          </div>
+          <footer
+            class="MuiBox-root css-0"
+          >
+            <h3
+              class="MuiTypography-root MuiTypography-body1 css-xlwalr-MuiTypography-root"
+            >
+              Contributions
+            </h3>
+            <div
+              class="MuiBox-root css-0"
+            >
+              <div
+                class="MuiBox-root css-1fr78rk"
+              >
+                ✅ 
+                Development README
+              </div>
+              <div
+                class="MuiBox-root css-1fr78rk"
+              >
+                ✅ 
+                Login Page
+              </div>
+              <div
+                class="MuiBox-root css-1fr78rk"
+              >
+                ✅ 
+                Product Page
+              </div>
+              <div
+                class="MuiBox-root css-1fr78rk"
+              >
+                ✅ 
+                About Us Page
+              </div>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="MuiBox-root css-1nnahni"
+  >
+    <div
+      class="MuiBox-root css-1nxextx"
+    >
+      <h2
+        class="MuiTypography-root MuiTypography-body1 css-lasnzx-MuiTypography-root"
+      >
+        Collaboration
+      </h2>
+      <p
+        class="MuiTypography-root MuiTypography-body1 css-kyll22-MuiTypography-root"
+      >
+        We were working together as a group on a project for seven weaks. We created a project task board using a
+        project management tool Trello to organize tasks into lists or columns corresponding to their status.
+      </p>
+      <p
+        class="MuiTypography-root MuiTypography-body1 css-kyll22-MuiTypography-root"
+      >
+        Our team effectively collaborated on the e-commerce store project by 
+          maintaining open and constant communication through stand-up meetings. 
+          Each member was assigned clear responsibilities, allowing for efficient task 
+          management and accountability. We utilized tools like Trello, Diskord and 
+          Telegram to track progress and address any issues in real-time. By 
+          leveraging each member's expertise and bringing up a supportive 
+          environment, we successfully developed a functional and user-friendly online plant store.
+      </p>
+    </div>
+    <div
+      class="MuiBox-root css-5ssijq"
+    >
+      <div
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3 css-ne5q8u-MuiPaper-root"
+      >
+        <a
+          class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1xylxj1-MuiTypography-root-MuiLink-root"
+          href="https://rs.school/"
+        >
+          <img
+            alt="RS School logo"
+            class="MuiBox-root css-g98gbd"
+            src="default"
+          />
+        </a>
+      </div>
+      <h2
+        class="MuiTypography-root MuiTypography-body1 css-1bdcxv3-MuiTypography-root"
+      >
+        Made with love in 2024
+      </h2>
+    </div>
+  </div>
+</main>
+`;

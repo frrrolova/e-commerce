@@ -79,3 +79,12 @@ export interface FetchProductsResponse {
     sort: string;
   };
 }
+
+export interface TeamMember {
+  role: string;
+  name: string;
+  bio: string;
+  photo: string;
+  git: string;
+  contributions: string[];
+}
