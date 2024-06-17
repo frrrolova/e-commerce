@@ -4,6 +4,7 @@ import App from '../App';
 import { Cart } from '@commercetools/platform-sdk';
 import { mockProduct1, mockProduct2, clientMock } from '@/utils/test-client-mock';
 import { catalogService } from '@/services/catalogService';
+import { promoService } from '@/services/promoService';
 
 // Mock for client
 jest.mock('../client/client', () => {
@@ -19,6 +20,14 @@ jest.mock('@/services/catalogService', () => {
       ...actualCatalogService.catalogService,
       fetchProductById: jest.fn(),
       fetchProductsByCategory: jest.fn(),
+    },
+  };
+});
+
+jest.mock('@/services/promoService', () => {
+  return {
+    promoService: {
+      fetchPromoCodes: jest.fn(),
     },
   };
 });
@@ -55,6 +64,9 @@ beforeEach(() => {
 
   (catalogService.fetchProductById as jest.Mock).mockResolvedValue(mockProduct1);
   (catalogService.fetchProductsByCategory as jest.Mock).mockResolvedValue([mockProduct2]);
+  (promoService.fetchPromoCodes as jest.Mock).mockResolvedValue([
+    { id: '123', heading: 'Promo Name', imgPath: '/img', description: 'promo description', subHeading: 'promocode' },
+  ]);
 });
 
 test('renders App component', async () => {

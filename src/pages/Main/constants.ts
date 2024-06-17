@@ -10,19 +10,9 @@ export enum PageData {
   TO_CATALOG = 'To Catalog',
 }
 
-export enum ButtonLabels {
-  LOGIN = 'Login',
-  REGISTRATION = 'Registration',
-}
-
-export const InfoCardData = {
-  heading: 'Summer time',
-  imgPath: '/images/home/promo.webp',
-  description: 'Take advantage of an additional discount during the summer using the promotional code:',
-  subHeading: 'SUMMER2024',
-};
-
 export const InfoCardBtn = {
   label: 'To Catalog',
   url: Paths.CATALOG,
 };
+
+export const offersOnPage = 6;

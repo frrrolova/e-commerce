@@ -1,4 +1,4 @@
-import { Category, Product } from '@/types';
+import { Category, InfoDataCard, Product } from '@/types';
 
 export const mockProduct1: Product = {
   id: '1',
@@ -32,6 +32,14 @@ export const mockCategoryChild: Category = {
   parent: { typeId: 'category', id: '3' },
 };
 
+export const mockPromoData: InfoDataCard = {
+  id: '123',
+  heading: 'Promo Name',
+  imgPath: '/img',
+  description: 'promo description',
+  subHeading: 'promocode',
+};
+
 export const clientMock = () => ({
   getClient: () => ({
     productProjections: () => ({
@@ -57,6 +65,11 @@ export const clientMock = () => ({
     categories: () => ({
       get: jest.fn().mockReturnValue({
         execute: jest.fn().mockResolvedValue({ body: { results: [mockCategoryParent, mockCategoryChild] } }),
+      }),
+    }),
+    cartDiscounts: () => ({
+      get: jest.fn().mockReturnValue({
+        execute: jest.fn().mockResolvedValue({ body: { results: [mockPromoData] } }),
       }),
     }),
   }),

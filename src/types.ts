@@ -17,6 +17,7 @@ export interface Product {
 }
 
 export interface InfoDataCard {
+  id: string;
   heading: string;
   imgPath: string;
   subHeading: string;

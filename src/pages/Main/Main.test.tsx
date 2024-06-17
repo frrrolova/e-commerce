@@ -1,32 +1,38 @@
 import Main from './Main';
 import { catalogService } from '@/services/catalogService';
+import { promoService } from '@/services/promoService';
 import { waitFor, screen, fireEvent } from '@testing-library/react';
 import { act } from 'react';
-import { mockProduct1, mockProduct2, clientMock } from '@/utils/test-client-mock';
-import { InfoCardBtn } from './constants';
 import { renderWithProviders } from '@/utils/test-utils';
+import { InfoCardBtn } from './constants';
+import { mockProduct1, mockProduct2, clientMock } from '@/utils/test-client-mock';
 
 // Mock for client
-jest.mock('../../client/client', () => {
-  return {
-    client: jest.fn().mockImplementation(() => clientMock),
-  };
-});
+jest.mock('@/client/client', () => ({
+  client: jest.fn().mockImplementation(() => clientMock),
+}));
 
-//Mock for useNavigate
+// Mock for useNavigate
 const mockNavigate = jest.fn();
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useNavigate: () => mockNavigate,
 }));
 
+// Mock for catalogService and promoService
 jest.mock('@/services/catalogService', () => {
-  const actualCatalogService = jest.requireActual('@/services/catalogService');
   return {
     catalogService: {
-      ...actualCatalogService.catalogService,
       fetchProductById: jest.fn(),
       fetchProductsByCategory: jest.fn(),
+    },
+  };
+});
+
+jest.mock('@/services/promoService', () => {
+  return {
+    promoService: {
+      fetchPromoCodes: jest.fn(),
     },
   };
 });
@@ -37,6 +43,9 @@ describe('Main component rendering', () => {
 
     (catalogService.fetchProductById as jest.Mock).mockResolvedValue(mockProduct1);
     (catalogService.fetchProductsByCategory as jest.Mock).mockResolvedValue([mockProduct2]);
+    (promoService.fetchPromoCodes as jest.Mock).mockResolvedValue([
+      { id: '123', heading: 'Promo Name', imgPath: '/img', description: 'promo description', subHeading: 'promocode' },
+    ]);
   });
 
   test('performs snapshot testing', async () => {

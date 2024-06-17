@@ -3,7 +3,7 @@ import { Paper, Typography, Box, Button } from '@mui/material';
 import { InfoCardProps } from './types';
 import { useNavigate } from 'react-router-dom';
 
-function InfoCard({ data, button }: InfoCardProps) {
+function InfoCard({ data, button, imageRight = false }: InfoCardProps) {
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -16,7 +16,7 @@ function InfoCard({ data, button }: InfoCardProps) {
     <Box className={styles.container} data-testid={'info'}>
       <Paper elevation={3} className={styles.card}>
         <Box
-          className={styles.content}
+          className={`${styles.content} ${imageRight ? styles.imageRight : ''}`}
           sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, alignItems: 'center' }}
         >
           <Box component="img" className={styles.image} alt="Plant" src={data.imgPath} />
