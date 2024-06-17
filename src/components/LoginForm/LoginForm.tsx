@@ -159,6 +159,7 @@ function LoginForm() {
           }}
         />
         <LoadingButton
+          data-testid="login-btn"
           type="submit"
           variant="contained"
           disabled={!formik.isValid}

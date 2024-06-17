@@ -31,10 +31,10 @@ describe('LoginForm', () => {
     });
 
     await waitFor(() => {
-      expect(screen.getByText('Login')).not.toHaveAttribute('disabled');
+      expect(screen.getByTestId('login-btn')).not.toBeDisabled();
     });
   });
-  test('submit button should disabled', async () => {
+  test('submit button should be disabled', async () => {
     renderWithProviders(<LoginForm />);
     act(() => {
       fireEvent.change(screen.getByPlaceholderText('Email'), { target: { value: 'test' } });
@@ -42,10 +42,10 @@ describe('LoginForm', () => {
     });
 
     await waitFor(() => {
-      expect(screen.getByText('Login')).not.toHaveAttribute('disabled');
+      expect(screen.getByTestId('login-btn')).toBeDisabled();
     });
   });
-  test('submit button should disabled', async () => {
+  test('submit button should be disabled', async () => {
     renderWithProviders(<LoginForm />);
     act(() => {
       fireEvent.change(screen.getByPlaceholderText('Email'), { target: { value: 'test' } });
@@ -53,10 +53,10 @@ describe('LoginForm', () => {
     });
 
     await waitFor(() => {
-      expect(screen.getByText('Login')).not.toHaveAttribute('disabled');
+      expect(screen.getByTestId('login-btn')).toBeDisabled();
     });
   });
-  test('submit button should disabled', async () => {
+  test('submit button should be disabled', async () => {
     renderWithProviders(<LoginForm />);
     act(() => {
       fireEvent.change(screen.getByPlaceholderText('Email'), { target: { value: 'anorret@gmail.com' } });
@@ -64,7 +64,7 @@ describe('LoginForm', () => {
     });
 
     await waitFor(() => {
-      expect(screen.getByText('Login')).not.toHaveAttribute('disabled');
+      expect(screen.getByTestId('login-btn')).toBeDisabled();
     });
   });
 });
