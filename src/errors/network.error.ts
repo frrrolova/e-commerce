@@ -12,6 +12,7 @@ class NetworkError extends Error {
   constructor() {
     super();
     this.name = 'NetworkError';
+    this.message = ResponseErrorMessages.NO_INTERNET;
   }
 }
 
