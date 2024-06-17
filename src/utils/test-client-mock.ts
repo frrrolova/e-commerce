@@ -4,7 +4,7 @@ export const mockProduct1: Product = {
   id: '1',
   name: 'Product Test1',
   description: 'Description 1',
-  images: [{ url: 'image.png', dimensions: { w: 200, h: 200 } }],
+  images: [{ url: 'image.webp', dimensions: { w: 200, h: 200 } }],
   prices: [{ id: '1', value: { type: 'centPrecision', centAmount: 2000, currencyCode: 'EUR', fractionDigits: 2 } }],
 };
 
@@ -12,7 +12,7 @@ export const mockProduct2: Product = {
   id: '2',
   name: 'Product Test2',
   description: 'Description 2',
-  images: [{ url: 'image2.png', dimensions: { w: 200, h: 200 } }],
+  images: [{ url: 'image2.webp', dimensions: { w: 200, h: 200 } }],
   prices: [{ id: '2', value: { type: 'centPrecision', centAmount: 2000, currencyCode: 'EUR', fractionDigits: 2 } }],
 };
 
