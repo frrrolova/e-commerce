@@ -10,7 +10,7 @@
     opacity: $opacity-item;
     display: flow-root;
     height: 1100px;
-    @media screen and (max-width: 899px){
+    @media screen and (max-width: 850px){
       height: auto;
     }
 
@@ -55,7 +55,7 @@
     min-width: 200px;
     width: 200px;
   }
-  @media screen and (max-width: 899px){
+  @media screen and (max-width: 850px){
     min-width: 600px;
     width: 600px;
     height: 600px;
@@ -98,7 +98,7 @@
   @media screen and (max-width: 985px){
     height: 300px;
   }
-  @media screen and (max-width: 899px){
+  @media screen and (max-width: 850px){
     height: auto;
   }
 }

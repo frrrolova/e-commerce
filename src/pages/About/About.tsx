@@ -4,6 +4,7 @@ import TeamMemberCard from '@/components/TeamMemberCard/TeamMemberCard';
 import { members } from './data';
 import { aboutConstants } from './constants';
 import theme from '@/themes/theme';
+import styles from './About.module.scss';
 
 function About() {
   return (
@@ -40,6 +41,7 @@ function About() {
           {aboutConstants.common.title}
         </Typography>
         <Box
+          className={styles.outer}
           component="div"
           sx={{
             width: '100%',
@@ -48,10 +50,6 @@ function About() {
             justifyContent: 'space-between',
             alignItems: 'center',
             gap: '20px',
-            flexDirection: {
-              xs: 'column',
-              md: 'row',
-            },
           }}
         >
           {members.map((item, index) => {
@@ -60,14 +58,11 @@ function About() {
         </Box>
         <Box
           component="div"
+          className={styles.inner}
           sx={{
             width: '100%',
             display: 'flex',
             gap: '10px',
-            flexDirection: {
-              xs: 'column',
-              md: 'row',
-            },
           }}
         >
           <Box
@@ -122,6 +117,7 @@ function About() {
           >
             <Paper
               elevation={3}
+              className={styles.logobox}
               sx={{
                 overflow: 'hidden',
                 backgroundColor: 'transparent',
@@ -132,8 +128,6 @@ function About() {
                 transition: 'background-color 0.3s ease-in-out',
                 boxShadow: 'none',
                 cursor: 'pointer',
-                width: `300px`,
-                minWidth: `300px`,
                 padding: 1,
                 borderRadius: '30px',
                 '&:hover': { backgroundColor: '#323d2d' },
@@ -142,10 +136,9 @@ function About() {
               <Link href="https://rs.school/">
                 <Box
                   component="img"
+                  className={styles.logo}
                   sx={{
                     objectFit: 'contain',
-                    width: `${300 - 16}px`,
-                    height: `${300 - 16}px`,
                   }}
                   src={Logo}
                   alt="RS School logo"

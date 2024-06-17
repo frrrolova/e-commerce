@@ -11,7 +11,7 @@ exports[`About Data in document is correct 1`] = `
     Our team
   </h1>
   <div
-    class="MuiBox-root css-1jmdmjy"
+    class="MuiBox-root css-1bv4ar7"
   >
     <div
       class="MuiBox-root css-0"
@@ -307,7 +307,7 @@ exports[`About Data in document is correct 1`] = `
     </div>
   </div>
   <div
-    class="MuiBox-root css-mg3fnb"
+    class="MuiBox-root css-1nnahni"
   >
     <div
       class="MuiBox-root css-1nxextx"
@@ -339,7 +339,7 @@ exports[`About Data in document is correct 1`] = `
       class="MuiBox-root css-5ssijq"
     >
       <div
-        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3 css-fklqe2-MuiPaper-root"
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3 css-ne5q8u-MuiPaper-root"
       >
         <a
           class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1xylxj1-MuiTypography-root-MuiLink-root"
@@ -347,7 +347,7 @@ exports[`About Data in document is correct 1`] = `
         >
           <img
             alt="RS School logo"
-            class="MuiBox-root css-vmjh6a"
+            class="MuiBox-root css-g98gbd"
             src="default"
           />
         </a>
