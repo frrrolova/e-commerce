@@ -1,0 +1,47 @@
+@import '../../styles/variables.scss';
+
+.outer {
+  flex-direction: row;
+  @media screen and (max-width: 850px){
+    flex-direction: column;
+  }
+}
+
+.inner {
+  flex-direction: row;
+  @media screen and (max-width: 850px){
+    flex-direction: column;
+  }
+}
+
+.logobox {
+  width: 300px;
+  min-width: 300px;
+  @media screen and (max-width: 850px){
+    width: 440px;
+    min-width: 440px;
+  }
+  @media screen and (max-width: 470px){
+    width: 300px;
+    min-width: 300px;
+  }
+}
+
+.logo {
+  width: 284px;
+  height: 284px;
+  @media screen and (max-width: 850px){
+    width: 420px;
+    height: 420px;
+  }
+  @media screen and (max-width: 470px){
+    width: 284px;
+    height: 284px;
+  }
+}
+
+.mainTitle {
+  text-align: center;
+  margin-bottom: 3rem;
+  margin-top: 3rem;
+}

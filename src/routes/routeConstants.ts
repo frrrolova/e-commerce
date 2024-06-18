@@ -7,7 +7,6 @@ export enum Paths {
   BASKET = '/basket',
   PROFILE = '/profile',
   PRODUCTS = '/products/:productId',
-  NOT_FOUND = '/*',
 }
 
 export enum Titles {
@@ -43,5 +42,9 @@ export const rightMenuData = {
       { url: Paths.PROFILE, title: Titles.PROFILE },
       { url: Paths.AUTH, title: Titles.LOGOUT },
     ],
+  },
+  toBasket: {
+    tooltipTitle: 'To Cart',
+    links: [{ url: Paths.BASKET, title: Titles.BASKET }],
   },
 };

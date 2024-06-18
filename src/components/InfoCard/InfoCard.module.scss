@@ -30,8 +30,12 @@
       position: absolute;
       top: 0;
       width: 100%;
-      padding-left: 1.5rem;
-      padding-right: 1.5rem;
+      padding-left: 2rem;
+      padding-right: 2rem;
+
+      &.imageRight {
+        flex-direction: row-reverse;
+      }
 
       p {
         margin-top: 2rem;

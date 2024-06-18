@@ -1,8 +1,11 @@
-// import { MyCustomerUpdateAction } from '@commercetools/platform-sdk';
 import { Image, Price, MyCustomerUpdateAction, CategoryReference } from '@commercetools/platform-sdk';
 
 export type PropsWithChildren = {
   children: JSX.Element;
+};
+
+export type SearchButtonParams = {
+  value: string;
 };
 
 export interface Product {
@@ -14,6 +17,7 @@ export interface Product {
 }
 
 export interface InfoDataCard {
+  id: string;
   heading: string;
   imgPath: string;
   subHeading: string;
@@ -49,11 +53,39 @@ export interface CategoryTree extends Category {
 }
 
 export interface FilterData {
-  size: string;
-  color: string;
+  size: string | null;
+  color: string | null;
   price: number[];
   categoryId: string | null;
 }
+
 export interface FilterDataUrl extends FilterData {
   sort: string;
+}
+
+export interface FetchProductsRequest {
+  request: {
+    url: string;
+  };
+}
+
+export interface FetchProductsResponse {
+  products: Product[];
+  pagination: {
+    pageAmount: number;
+  };
+  queryParams: {
+    filters: FilterData;
+    search: string;
+    sort: string;
+  };
+}
+
+export interface TeamMember {
+  role: string;
+  name: string;
+  bio: string;
+  photo: string;
+  git: string;
+  contributions: string[];
 }

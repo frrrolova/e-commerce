@@ -7,4 +7,5 @@ export interface InfoCardBtn {
 export interface InfoCardProps {
   data: InfoDataCard;
   button?: InfoCardBtn;
+  imageRight?: boolean;
 }

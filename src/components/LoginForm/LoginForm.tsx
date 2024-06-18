@@ -15,7 +15,7 @@ import { useSnackbar } from 'notistack';
 import { Link as RouterLink } from 'react-router-dom';
 import { Paths } from '@/routes/routeConstants';
 import { useNavigate } from 'react-router-dom';
-import { snackbarBasicParams } from '@/shared/snackbarConstans';
+import { topSnackbarBasicParams } from '@/shared/snackbarConstans';
 import { lsUserKey } from '@/core/commonConstants';
 
 function LoginForm() {
@@ -44,7 +44,7 @@ function LoginForm() {
         navigate(Paths.HOME);
         enqueueSnackbar(`${CommonAuthRes.ALREADY_LOGGED_IN} ${currentUser.email}`, {
           variant: AuthResults.WARN,
-          ...snackbarBasicParams,
+          ...topSnackbarBasicParams,
         });
         return;
       }
@@ -57,7 +57,7 @@ function LoginForm() {
         .then(() => {
           enqueueSnackbar(LoginResultMessages.SUCCESS, {
             variant: AuthResults.SUCCESS,
-            ...snackbarBasicParams,
+            ...topSnackbarBasicParams,
           });
         })
         .then(() => {
@@ -73,7 +73,7 @@ function LoginForm() {
               }
               enqueueSnackbar(error.message, {
                 variant: AuthResults.ERROR,
-                ...snackbarBasicParams,
+                ...topSnackbarBasicParams,
               });
             });
           }
@@ -159,6 +159,7 @@ function LoginForm() {
           }}
         />
         <LoadingButton
+          data-testid="login-btn"
           type="submit"
           variant="contained"
           disabled={!formik.isValid}

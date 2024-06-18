@@ -1,44 +1,68 @@
 import ProductCard from './ProductCard';
-// import { catalogService } from '@/services/catalogService';
-import { render, waitFor, screen, fireEvent } from '@testing-library/react';
+import { waitFor, screen, fireEvent } from '@testing-library/react';
 import { act } from 'react';
-import { mockProduct1 } from '@/utils/test-client-mock';
+import { clientMock, mockProduct1 } from '@/utils/test-client-mock';
+import { renderWithProviders } from '@/utils/test-utils';
 
 // Mock for client
-// jest.mock('../../client/client', () => {
-//   return {
-//     client: jest.fn().mockImplementation(() => clientMock),
-//   };
-// });
+jest.mock('../../client/client', () => {
+  return {
+    client: jest.fn().mockImplementation(() => clientMock),
+  };
+});
 
 //Mock for useNavigate
 const mockNavigate = jest.fn();
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useNavigate: () => mockNavigate,
+  useParams: jest.fn().mockReturnValue({ productId: 'testId' }),
 }));
 
-// jest.mock('@/services/catalogService', () => {
-//   const actualCatalogService = jest.requireActual('@/services/catalogService');
-//   return {
-//     catalogService: {
-//       ...actualCatalogService.catalogService,
-//       fetchProductById: jest.fn(),
-//     },
-//   };
-// });
+jest.mock('@/services/productService', function () {
+  return {
+    productService: {
+      fetchProduct: jest.fn().mockResolvedValue({
+        id: 'testId',
+        name: 'testName',
+        description: 'testDescription',
+        images: [
+          {
+            url: 'testUrl',
+            label: 'testLabel',
+          },
+        ],
+        prices: [
+          {
+            value: {
+              centAmount: 1000,
+            },
+            discounted: {
+              value: {
+                centAmount: 500,
+              },
+            },
+          },
+        ],
+      }),
+    },
+  };
+});
+
+// Mock for notistack
+jest.mock('notistack', () => ({
+  enqueueSnackbar: jest.fn(),
+}));
 
 describe('Main component rendering', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-
-    // (catalogService.fetchProductById as jest.Mock).mockResolvedValue(mockProduct1);
   });
 
   test('performs snapshot testing', async () => {
     let tree;
     await act(async () => {
-      tree = render(<ProductCard product={mockProduct1} />);
+      tree = renderWithProviders(<ProductCard product={mockProduct1} />);
     });
 
     await waitFor(() => {
@@ -52,7 +76,7 @@ describe('Main component rendering', () => {
 
 describe('Card component behavior', () => {
   test('should navigate, when clicking on a card', async () => {
-    const { getByText } = render(<ProductCard product={mockProduct1} />);
+    const { getByText } = renderWithProviders(<ProductCard product={mockProduct1} />);
 
     await waitFor(() => {
       const button = getByText(mockProduct1.name);

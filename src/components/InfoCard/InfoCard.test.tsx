@@ -17,7 +17,7 @@ jest.mock('react-router-dom', () => ({
 function renderComponent(componentProps?: Partial<InfoCardProps>) {
   return renderWithProviders(
     <InfoCard
-      data={{ heading: 'heading', subHeading: '', imgPath: '', description: '' }}
+      data={{ id: 'card-id-1', heading: 'heading', subHeading: '', imgPath: '', description: '' }}
       button={{ label: '', url: '' }}
       {...componentProps}
     />,
@@ -27,7 +27,7 @@ function renderComponent(componentProps?: Partial<InfoCardProps>) {
 describe('InfoCard', () => {
   test('Data in document is correct', () => {
     renderComponent({
-      data: { heading: 'test heading', subHeading: '', imgPath: '', description: '' },
+      data: { id: 'card-id-1', heading: 'test heading', subHeading: '', imgPath: '', description: '' },
     });
 
     const heading = screen.getByText('test heading');

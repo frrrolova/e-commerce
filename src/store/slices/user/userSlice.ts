@@ -11,6 +11,7 @@ import {
   changePasswordThunk,
 } from './thunks';
 import { lsUserKey } from '@/core/commonConstants';
+import cartSlice from '../cart/cartSlice';
 
 export interface UserState {
   user: Customer | null;
@@ -58,6 +59,8 @@ export const userSlice = createSlice({
       localStorage.removeItem(`${LSTokenPrefixes.LOGGED_IN}_token`);
       localStorage.removeItem(lsUserKey);
       client.clearCurrentClient();
+      cartSlice.actions.setCart(null);
+      cartSlice.actions.removePromo();
     },
   },
   extraReducers: (builder) => {

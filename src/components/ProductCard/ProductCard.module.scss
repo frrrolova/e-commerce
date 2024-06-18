@@ -66,10 +66,38 @@
 
     .bottomContent {
       display: flex;
+      justify-content: space-between;
       align-items: center;
       position: absolute;
-      bottom: 1.75rem;
+      bottom: 1rem;
+      width: calc(100% - 3rem);
       left: 1.5rem;
+      right: 1.5rem;
+
+      .left {
+        display: flex;
+      }
+
+      .right {
+        display: flex;
+        position: relative;
+        justify-content: center;
+
+        .inCart {
+          position: absolute;
+          top: -2px;
+          font-size: 0.6rem;
+          color: $disabled-color;
+        }
+
+        .customIconButton {
+          padding: 0.5rem;
+          
+          &:hover {
+            color: $border-green-color;
+          }
+        }
+      }
 
       .discount {
         font-size: larger;

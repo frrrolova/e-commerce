@@ -1,10 +1,10 @@
-import { Category, Product } from '@/types';
+import { Category, InfoDataCard, Product } from '@/types';
 
 export const mockProduct1: Product = {
   id: '1',
   name: 'Product Test1',
   description: 'Description 1',
-  images: [{ url: 'image.png', dimensions: { w: 200, h: 200 } }],
+  images: [{ url: 'image.webp', dimensions: { w: 200, h: 200 } }],
   prices: [{ id: '1', value: { type: 'centPrecision', centAmount: 2000, currencyCode: 'EUR', fractionDigits: 2 } }],
 };
 
@@ -12,7 +12,7 @@ export const mockProduct2: Product = {
   id: '2',
   name: 'Product Test2',
   description: 'Description 2',
-  images: [{ url: 'image2.png', dimensions: { w: 200, h: 200 } }],
+  images: [{ url: 'image2.webp', dimensions: { w: 200, h: 200 } }],
   prices: [{ id: '2', value: { type: 'centPrecision', centAmount: 2000, currencyCode: 'EUR', fractionDigits: 2 } }],
 };
 
@@ -30,6 +30,14 @@ export const mockCategoryChild: Category = {
   key: 'category-child-key',
   ancestors: [{ typeId: 'category', id: '3' }],
   parent: { typeId: 'category', id: '3' },
+};
+
+export const mockPromoData: InfoDataCard = {
+  id: '123',
+  heading: 'Promo Name',
+  imgPath: '/img',
+  description: 'promo description',
+  subHeading: 'promocode',
 };
 
 export const clientMock = () => ({
@@ -57,6 +65,11 @@ export const clientMock = () => ({
     categories: () => ({
       get: jest.fn().mockReturnValue({
         execute: jest.fn().mockResolvedValue({ body: { results: [mockCategoryParent, mockCategoryChild] } }),
+      }),
+    }),
+    cartDiscounts: () => ({
+      get: jest.fn().mockReturnValue({
+        execute: jest.fn().mockResolvedValue({ body: { results: [mockPromoData] } }),
       }),
     }),
   }),

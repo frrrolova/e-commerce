@@ -1,7 +1,7 @@
 import { Box, Container, Paper, Typography } from '@mui/material';
 import RegistrationForm from '@components/RegistrationForm/RegistrationForm';
-import backPlantImg from '/images/registration/reg-back.png';
-import cornerPlantImg from '/images/registration/bottom-plant.png';
+import backPlantImg from '/images/registration/reg-back.webp';
+import cornerPlantImg from '/images/registration/bottom-plant.webp';
 
 function Registration() {
   return (

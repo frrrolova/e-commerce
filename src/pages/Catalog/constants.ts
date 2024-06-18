@@ -1,8 +1,6 @@
 import { FilterAttributes } from '@/types';
 
 export enum ButtonLabels {
-  APPLY = 'Apply Filters',
-  CLEAR_FILTER = 'Clear Filters',
   CLEAR = 'Clear',
   OPEN = 'Sort / Filter',
 }
@@ -15,7 +13,19 @@ export enum PageData {
   SORT_LABEL = 'Sort By',
 }
 
-export const defaultPriceRange = [0, 200];
+export enum allOption {
+  TITLE = 'All',
+}
+
+export enum FilterNames {
+  SEARCH = 'search',
+  CATEGORY_ID = 'categoryId',
+  SORT = 'sort',
+  SIZE = 'size',
+  COLOR = 'color',
+  PRICE = 'price',
+  PAGE = 'page',
+}
 
 export const SortOptions: FilterAttributes[] = [
   {
@@ -35,6 +45,14 @@ export const SortOptions: FilterAttributes[] = [
     label: 'Name: Z to A',
   },
 ];
+
+export const CategoryAllNode = {
+  id: 'all',
+  name: 'All Plants',
+  key: 'all',
+  ancestors: [],
+  parent: undefined,
+};
 
 export const scrollbarStyles = {
   '&::-webkit-scrollbar': {
