@@ -7,6 +7,7 @@ import {
   IconButton,
   List,
   ListItem,
+  Tooltip,
   Typography,
   useMediaQuery,
 } from '@mui/material';
@@ -148,26 +149,30 @@ function AddressesList({ addresses, type, onSubmit, defaultId, onDefaultClick, o
                 />
               )}
             </Box>
-            <IconButton
-              color="primary"
-              size="small"
-              onClick={() => {
-                setEditingAddress(address);
-                handleFormOpen();
-              }}
-            >
-              <ModeEditOutlineIcon />
-            </IconButton>
-            <IconButton
-              color="error"
-              size="small"
-              onClick={() => {
-                setRemovingAddress(address);
-                handleDialogOpen();
-              }}
-            >
-              <DeleteOutlinedIcon />
-            </IconButton>
+            <Tooltip title="Edit">
+              <IconButton
+                color="primary"
+                size="small"
+                onClick={() => {
+                  setEditingAddress(address);
+                  handleFormOpen();
+                }}
+              >
+                <ModeEditOutlineIcon />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Delete">
+              <IconButton
+                color="error"
+                size="small"
+                onClick={() => {
+                  setRemovingAddress(address);
+                  handleDialogOpen();
+                }}
+              >
+                <DeleteOutlinedIcon />
+              </IconButton>
+            </Tooltip>
           </ListItem>
         ))}
       </List>

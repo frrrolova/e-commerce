@@ -1,4 +1,4 @@
-import { IconButton, SxProps, useMediaQuery } from '@mui/material';
+import { IconButton, SxProps, Tooltip, useMediaQuery } from '@mui/material';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import theme from '@/themes/theme';
 
@@ -11,19 +11,19 @@ function RemoveBtn({ onClick, sx }: RemoveBtnProps) {
   const matchesExtraSmallScreen = useMediaQuery('(max-width:450px)');
 
   return (
-    <IconButton
-      size={matchesExtraSmallScreen ? 'small' : 'medium'}
-      sx={{
-        // marginX: 1.5,
-        color: theme.palette.grey[500],
-        opacity: 0.8,
-        // alignSelf: { xs: 'flex-start', sm: 'center' },
-        ...sx,
-      }}
-      onClick={onClick}
-    >
-      <DeleteOutlinedIcon fontSize="inherit" />
-    </IconButton>
+    <Tooltip title="Delete">
+      <IconButton
+        size={matchesExtraSmallScreen ? 'small' : 'medium'}
+        sx={{
+          color: theme.palette.grey[500],
+          opacity: 0.8,
+          ...sx,
+        }}
+        onClick={onClick}
+      >
+        <DeleteOutlinedIcon fontSize="inherit" />
+      </IconButton>
+    </Tooltip>
   );
 }
 
