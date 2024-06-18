@@ -84,7 +84,7 @@ function Main() {
             <ProductCard product={productTop} />
           </Grid>
 
-          <Grid xs={12} className={styles.sectionTitle}>
+          <Grid xs={12} className="mainTitle">
             <Title title={PageData.TITLE_PROMO} />
           </Grid>
           {!!promoData.length &&
@@ -95,7 +95,7 @@ function Main() {
             ))}
 
           {/* DISCOUNT Section */}
-          <Grid xs={12} className={styles.sectionTitle}>
+          <Grid xs={12} className="mainTitle">
             <Title title={PageData.TITLE_DISCOUNT} />
           </Grid>
           <Grid xs={12} mt={3}>

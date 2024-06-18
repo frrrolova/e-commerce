@@ -5,3 +5,5 @@ export const formWidth = {
     md: '75%',
   },
 };
+
+export const pageTitle = 'Profile';

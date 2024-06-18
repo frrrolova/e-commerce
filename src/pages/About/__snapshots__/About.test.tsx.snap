@@ -2,11 +2,11 @@
 
 exports[`About Data in document is correct 1`] = `
 <main
-  class="MuiContainer-root MuiContainer-maxWidthLg css-1jhwm7d-MuiContainer-root"
+  class="MuiContainer-root MuiContainer-maxWidthLg css-1kd9fu-MuiContainer-root"
   data-testid="about"
 >
   <div
-    class="MuiBox-root css-0"
+    class="mainTitle MuiBox-root css-0"
   >
     <h4
       class="MuiTypography-root MuiTypography-h4 css-7uqf7p-MuiTypography-root"
@@ -316,11 +316,15 @@ exports[`About Data in document is correct 1`] = `
     <div
       class="MuiBox-root css-1nxextx"
     >
-      <h2
-        class="MuiTypography-root MuiTypography-body1 css-lasnzx-MuiTypography-root"
+      <div
+        class="mainTitle MuiBox-root css-0"
       >
-        Collaboration
-      </h2>
+        <h4
+          class="MuiTypography-root MuiTypography-h4 css-7uqf7p-MuiTypography-root"
+        >
+          Collaboration
+        </h4>
+      </div>
       <p
         class="MuiTypography-root MuiTypography-body1 css-zvq0wx-MuiTypography-root"
       >

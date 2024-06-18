@@ -114,7 +114,7 @@ exports[`Main component rendering performs snapshot testing 1`] = `
               </div>
             </div>
             <div
-              class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-16fnxy3-MuiGrid2-root"
+              class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 mainTitle css-16fnxy3-MuiGrid2-root"
             >
               <h4
                 class="MuiTypography-root MuiTypography-h4 css-7uqf7p-MuiTypography-root"
@@ -178,7 +178,7 @@ exports[`Main component rendering performs snapshot testing 1`] = `
               </div>
             </div>
             <div
-              class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-16fnxy3-MuiGrid2-root"
+              class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 mainTitle css-16fnxy3-MuiGrid2-root"
             >
               <h4
                 class="MuiTypography-root MuiTypography-h4 css-7uqf7p-MuiTypography-root"
@@ -393,7 +393,7 @@ exports[`Main component rendering performs snapshot testing 1`] = `
             </div>
           </div>
           <div
-            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-16fnxy3-MuiGrid2-root"
+            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 mainTitle css-16fnxy3-MuiGrid2-root"
           >
             <h4
               class="MuiTypography-root MuiTypography-h4 css-7uqf7p-MuiTypography-root"
@@ -457,7 +457,7 @@ exports[`Main component rendering performs snapshot testing 1`] = `
             </div>
           </div>
           <div
-            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-16fnxy3-MuiGrid2-root"
+            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 mainTitle css-16fnxy3-MuiGrid2-root"
           >
             <h4
               class="MuiTypography-root MuiTypography-h4 css-7uqf7p-MuiTypography-root"

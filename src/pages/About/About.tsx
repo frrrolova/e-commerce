@@ -22,6 +22,9 @@ function About() {
             md: '90px',
           },
           width: '98%',
+          '@media (min-width:1300px)': {
+            minWidth: '1300px',
+          },
           margin: {
             xs: '0 auto',
             md: '0 auto',
@@ -29,7 +32,7 @@ function About() {
         }}
         component="main"
       >
-        <Box className={styles.mainTitle}>
+        <Box className="mainTitle">
           <Title title={aboutConstants.common.title} />
         </Box>
 
@@ -67,18 +70,9 @@ function About() {
               gap: '10px',
             }}
           >
-            <Typography
-              component="h2"
-              sx={{
-                width: '100%',
-                fontSize: '22px',
-                fontWeight: 'bold',
-                color: '#3A7609',
-                textAlign: 'center',
-              }}
-            >
-              {aboutConstants.collaboration.title}
-            </Typography>
+            <Box className="mainTitle">
+              <Title title={aboutConstants.collaboration.title} />
+            </Box>
             <Typography
               color={theme.palette.primary.contrastText}
               component="p"
