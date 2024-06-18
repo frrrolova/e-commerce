@@ -65,8 +65,7 @@ export function Catalog() {
       }
       setBreadcrumbs(crumbs);
     } catch (err) {
-      // setError('Failed to fetch breadcrumb data');
-      console.log('Failed to fetch breadcrumb data');
+      console.error('Failed to fetch breadcrumb data');
     }
   };
 

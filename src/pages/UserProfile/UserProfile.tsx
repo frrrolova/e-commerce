@@ -14,14 +14,7 @@ function UserProfile() {
 
   // TODO: add err handling
   useEffect(() => {
-    dispatch(userGetInfoThunk())
-      .unwrap()
-      .then((resp) => {
-        console.log(resp);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    dispatch(userGetInfoThunk()).unwrap();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

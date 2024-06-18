@@ -27,7 +27,7 @@ function Main() {
         setProductsOffer(productsData);
       } catch (err) {
         setError('Failed to fetch products');
-        console.log('Failed to fetch products');
+        console.error('Failed to fetch products');
       }
     };
 
@@ -37,7 +37,7 @@ function Main() {
         setPromoData(resp);
       } catch (err) {
         setError('Failed to fetch PromoCodes');
-        console.log('Failed to fetch PromoCodes');
+        console.error('Failed to fetch PromoCodes');
       }
     };
 

@@ -22,8 +22,7 @@ const FiltersForm = ({ filtersValuesUrl }: { filtersValuesUrl: FilterData }) => 
       const resp = await catalogService.fetchFilterAttributes();
       setFiltersData(resp);
     } catch (err) {
-      // setError('Failed to fetch filters');
-      console.log('Failed to fetch filters');
+      console.error('Failed to fetch filters');
     }
   };
 
