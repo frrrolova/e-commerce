@@ -15,7 +15,7 @@ import { Box, DialogContent, DialogTitle, Drawer, Link, List, Paper, Typography,
 import { useCallback, useEffect, useState } from 'react';
 import { enqueueSnackbar } from 'notistack';
 import { bottomSnackbarBasicParams, topSnackbarBasicParams } from '@/shared/snackbarConstans';
-import { drawerWidth } from './constants';
+import { drawerWidth, pageTitle } from './constants';
 import BottomBar from '@/components/BottomBar/BottomBar';
 import ConfirmModal from '@/components/ConfirmModal/ConfirmModal';
 import BasketDrawerInner from '@/components/BasketDrawerInner/BasketDrawerInner';
@@ -25,6 +25,7 @@ import { BasketRespResultMessages } from '@/enums/basketRespResults.enum';
 import { useNavigate } from 'react-router-dom';
 import { Paths } from '@/routes/routeConstants';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import Title from '@/components/Title/Title';
 
 function Basket() {
   const dispatch = useAppDispatch();
@@ -198,16 +199,9 @@ function Basket() {
           width: matchesPricesTextContent ? `calc(100% - ${drawerWidth}px)` : 0,
         }}
       >
-        <Typography
-          component="h1"
-          fontSize={matchesSmallScreen ? '1.4rem' : '1.6rem'}
-          fontWeight={600}
-          mb={2}
-          pl={3}
-          color={theme.palette.primary.contrastText}
-        >
-          Your Cart
-        </Typography>
+        <Box className="mainTitle">
+          <Title title={pageTitle} />
+        </Box>
         {(!cart || !cart.lineItems.length) && (
           <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 7 }}>
             <Paper

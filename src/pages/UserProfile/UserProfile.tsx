@@ -1,11 +1,11 @@
 import UserProfileForm from '@/components/UserProfileForm/UserProfileForm';
 import { userGetInfoThunk } from '@/store/slices/user/thunks';
 import { useAppDispatch, useAppSelector } from '@/store/store';
-import theme from '@/themes/theme';
-import { Box, Container, Typography } from '@mui/material';
+import { Box, Container } from '@mui/material';
 import { useEffect } from 'react';
 import backImg from '/images/prof.webp';
-import { formWidth } from './constants';
+import { formWidth, pageTitle } from './constants';
+import Title from '@/components/Title/Title';
 
 function UserProfile() {
   const isPageLoading = useAppSelector((state) => state.user.isUserDataLoading);
@@ -60,20 +60,9 @@ function UserProfile() {
         alt="Ficus"
         src={backImg}
       />
-      <Typography
-        component="h1"
-        variant="h4"
-        sx={{
-          paddingX: 2,
-          marginY: '20px',
-          textAlign: 'start',
-          color: theme.palette.primary.main,
-          letterSpacing: 1.5,
-          ...formWidth,
-        }}
-      >
-        Profile
-      </Typography>
+      <Box className="mainTitle">
+        <Title title={pageTitle} />
+      </Box>
       {isPageLoading && <h3>Loading...</h3>}
       {user && <UserProfileForm userData={user} sxProps={formWidth} />}
     </Container>
