@@ -200,7 +200,7 @@ function Header() {
           <Box sx={{ display: 'flex', flex: '1 1 0', justifyContent: 'flex-end' }}>
             <Tooltip title={rightMenuData.toBasket.tooltipTitle}>
               <IconButton
-                className={styles.toCart}
+                className={styles.customIconButton}
                 component={RouterLink}
                 to={Paths.BASKET}
                 size="large"
