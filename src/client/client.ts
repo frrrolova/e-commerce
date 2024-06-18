@@ -59,8 +59,7 @@ class Client {
             },
           },
         })
-        .withHttpMiddleware(this.httpMiddlewareOptions)
-        .withLoggerMiddleware(); // Include middleware for logging
+        .withHttpMiddleware(this.httpMiddlewareOptions);
 
       if (refreshToken) {
         clientBuilder.withRefreshTokenFlow({ ...this.getMiddlewareOptions(LSTokenPrefixes.LOGGED_IN), refreshToken });
@@ -78,7 +77,6 @@ class Client {
         })
         .withRefreshTokenFlow({ ...this.getMiddlewareOptions(tokenType), refreshToken })
         .withHttpMiddleware(this.httpMiddlewareOptions)
-        .withLoggerMiddleware()
         .build();
       this.currentClient = createApiBuilderFromCtpClient(clientBuilder).withProjectKey({
         projectKey: VITE_CTP_PROJECT_KEY,
@@ -114,7 +112,6 @@ class Client {
       .withProjectKey(this.projectKey)
       .withAnonymousSessionFlow(this.getMiddlewareOptions(LSTokenPrefixes.ANONYMOUS))
       .withHttpMiddleware(this.httpMiddlewareOptions)
-      .withLoggerMiddleware()
       .build();
     this.currentClient = createApiBuilderFromCtpClient(clientBuilder).withProjectKey({
       projectKey: VITE_CTP_PROJECT_KEY,

@@ -24,8 +24,6 @@ import { Badge } from '@mui/material';
 
 const pages = [navLinksData.home, navLinksData.catalog, navLinksData.about];
 
-// use totalLineItemQuantity from cart in store (useAppSelector((store) => store.cart.cart?.totalLineItemQuantity)) to get total count of products in cart
-
 function Header() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -109,7 +107,6 @@ function Header() {
               noWrap
               sx={{
                 display: { xs: 'none', md: 'flex' },
-                // fontFamily: 'monospace',
                 fontWeight: 600,
                 letterSpacing: '0.1rem',
               }}
@@ -173,7 +170,6 @@ function Header() {
               sx={{
                 display: { xs: 'flex', md: 'none' },
                 flexGrow: 1,
-                // fontFamily: 'monospace',
                 fontWeight: 700,
                 letterSpacing: '0.2rem',
               }}

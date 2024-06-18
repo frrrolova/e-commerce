@@ -1,9 +1,7 @@
 import { useState } from 'react';
 import { Box, Paper } from '@mui/material';
 import { Product } from '@/types';
-// import CardMedia from '@mui/material/CardMedia';
 import SliderModal from './SliderModal';
-// import { imageSizes } from './constants';
 
 interface SliderItemProp {
   product: Product;
@@ -40,14 +38,6 @@ function SliderItem({ index, url, label, product, isSlider, width }: SliderItemP
         width: `${width}px`,
         minWidth: `${width}px`,
         height: `${width}px`,
-        // height: {
-        //   xs: imageSizes.smallHeight,
-        //   sm: imageSizes.height,
-        // },
-        // minWidth: {
-        //   xs: imageSizes.smallWidth,
-        //   sm: imageSizes.width,
-        // },
         padding: 1,
       }}
     >

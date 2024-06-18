@@ -1,4 +1,4 @@
-import { IconButton, Typography, Box } from '@mui/material';
+import { IconButton, Typography, Box, Tooltip } from '@mui/material';
 import ModeEditOutlineIcon from '@mui/icons-material/ModeEditOutline';
 import CloseIcon from '@mui/icons-material/Close';
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
@@ -51,16 +51,20 @@ function EditableField({
 
       <Box sx={{ minWidth: '55px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         {!isEditMode && (
-          <IconButton
-            color="primary"
-            data-testid="edit-btn"
-            onClick={() => {
-              setIsEditMode(!isEditMode);
-              onEditClick();
-            }}
-          >
-            <ModeEditOutlineIcon />
-          </IconButton>
+          <Tooltip title="Edit">
+            <span>
+              <IconButton
+                color="primary"
+                data-testid="edit-btn"
+                onClick={() => {
+                  setIsEditMode(!isEditMode);
+                  onEditClick();
+                }}
+              >
+                <ModeEditOutlineIcon />
+              </IconButton>
+            </span>
+          </Tooltip>
         )}
         {isEditMode && (
           <Box
@@ -70,27 +74,35 @@ function EditableField({
               gap: '3px',
             }}
           >
-            <IconButton
-              disabled={isSaveDisabled}
-              color="primary"
-              data-testid="edit-save"
-              onClick={() => {
-                setIsEditMode(false);
-                onSaveClick();
-              }}
-            >
-              <SaveOutlinedIcon />
-            </IconButton>
-            <IconButton
-              color="primary"
-              data-testid="edit-cancel"
-              onClick={() => {
-                setIsEditMode(false);
-                onCancelClick();
-              }}
-            >
-              <CloseIcon />
-            </IconButton>
+            <Tooltip title="Save">
+              <span>
+                <IconButton
+                  disabled={isSaveDisabled}
+                  color="primary"
+                  data-testid="edit-save"
+                  onClick={() => {
+                    setIsEditMode(false);
+                    onSaveClick();
+                  }}
+                >
+                  <SaveOutlinedIcon />
+                </IconButton>
+              </span>
+            </Tooltip>
+            <Tooltip title="Cancel">
+              <span>
+                <IconButton
+                  color="primary"
+                  data-testid="edit-cancel"
+                  onClick={() => {
+                    setIsEditMode(false);
+                    onCancelClick();
+                  }}
+                >
+                  <CloseIcon />
+                </IconButton>
+              </span>
+            </Tooltip>
           </Box>
         )}
       </Box>

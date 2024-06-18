@@ -1,5 +1,5 @@
 import { passwordSchema } from '@/core/commonValidation';
-import { Box, DialogActions, DialogContent, DialogTitle, IconButton, InputAdornment } from '@mui/material';
+import { Box, DialogActions, DialogContent, DialogTitle, IconButton, InputAdornment, Tooltip } from '@mui/material';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
@@ -117,12 +117,16 @@ function ChangePasswordForm({ onClose, onSubmit }: ChangePasswordFormProps) {
         />
       </DialogContent>
       <DialogActions>
-        <IconButton color="primary" type="submit" disabled={!formik.isValid}>
-          <CheckCircleOutlineOutlinedIcon />
-        </IconButton>
-        <IconButton onClick={onClose}>
-          <CancelOutlinedIcon />
-        </IconButton>
+        <Tooltip title="Apply">
+          <IconButton color="primary" type="submit" disabled={!formik.isValid}>
+            <CheckCircleOutlineOutlinedIcon />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="Cancel">
+          <IconButton onClick={onClose}>
+            <CancelOutlinedIcon />
+          </IconButton>
+        </Tooltip>
       </DialogActions>
     </Box>
   );
