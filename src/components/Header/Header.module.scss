@@ -25,15 +25,6 @@
     margin-right: 0.5rem;
   }
 
-  .customIconButton {
-    padding: 8px;
-
-    @media screen and (max-width: 400px) {
-      width: 40px;
-      height: 40px;
-    }
-  }
-
   &[data-scrolled='true'] {
     background-color: $paper-color;
     opacity: 0.8;
@@ -74,11 +65,16 @@
   color: $border-green-color;
 }
 
-.toCart {
-  width: 56px;
+.customIconButton {
+  padding: 8px;
 
-  @media screen and (max-width: 400px) {
+  @media screen and (max-width: 500px) {
     width: 40px;
     height: 40px;
+  }
+
+  @media screen and (min-width: 501px) {
+    width: 56px;
+    height: 56px;
   }
 }
