@@ -20,7 +20,7 @@ function Main() {
   useEffect(() => {
     const loadProducts = async () => {
       try {
-        const productData = await catalogService.fetchProductById(PageData.TOP_PLANT_ID);
+        const productData = await catalogService.fetchProductById(PageData.TOP_PLANT_ID + '123');
         setProductTop(productData);
 
         const productsData = await catalogService.fetchProductsByCategory(PageData.CATEGORY_ID);
@@ -46,7 +46,21 @@ function Main() {
     loadPromo();
   }, []);
 
-  if (error || !productTop) return <Typography color="error">{error}</Typography>;
+  if (error || !productTop)
+    return (
+      <Typography
+        color="error"
+        sx={{
+          position: 'absolute',
+          top: '50vh',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          textAlign: 'center',
+        }}
+      >
+        {error}
+      </Typography>
+    );
 
   return (
     <Box className={styles.container}>
