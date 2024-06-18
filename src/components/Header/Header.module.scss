@@ -6,7 +6,7 @@
       cursor: pointer;
     }
 
-    @media only screen and (max-width: 320px) {
+    @media only screen and (max-width: 380px) {
       .logoText {
         font-size: 1rem;
         line-height: 32px;
@@ -27,6 +27,11 @@
 
   .customIconButton {
     padding: 8px;
+
+    @media screen and (max-width: 400px) {
+      width: 40px;
+      height: 40px;
+    }
   }
 
   &[data-scrolled='true'] {
@@ -70,5 +75,10 @@
 }
 
 .toCart {
-  width: 40px;
+  width: 56px;
+
+  @media screen and (max-width: 400px) {
+    width: 40px;
+    height: 40px;
+  }
 }
