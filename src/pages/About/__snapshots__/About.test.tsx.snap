@@ -2,7 +2,7 @@
 
 exports[`About Data in document is correct 1`] = `
 <main
-  class="MuiContainer-root MuiContainer-maxWidthLg css-1kd9fu-MuiContainer-root"
+  class="MuiContainer-root MuiContainer-maxWidthLg css-17bh0pr-MuiContainer-root"
   data-testid="about"
 >
   <div

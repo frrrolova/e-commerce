@@ -34,6 +34,9 @@
 .img {
   height: 400px;
   width: 100%;
+  @media screen and (min-width: 1300px){
+    max-width: 300px;
+  }
 }
 .img {
   @media screen and (max-width: 1150px){

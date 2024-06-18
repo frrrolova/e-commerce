@@ -23,7 +23,10 @@ function About() {
           },
           width: '98%',
           '@media (min-width:1300px)': {
-            minWidth: '1300px',
+            minWidth: '96%',
+          },
+          '@media (min-width:1500px)': {
+            maxWidth: '1400px',
           },
           margin: {
             xs: '0 auto',
