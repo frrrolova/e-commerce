@@ -1,4 +1,6 @@
 import client from '@/client/client';
+import { ResponseErrorCodes } from '@/enums/responseErrors.enum';
+import NetworkError from '@/errors/network.error';
 import { Cart, ClientResponse } from '@commercetools/platform-sdk';
 
 export function getActiveCart(): Promise<ClientResponse<Cart>> {
@@ -11,6 +13,7 @@ export function initCart(): Promise<Cart | null> {
       return resp.body;
     })
     .catch(() => {
+      console.error('User has not active cart');
       return Promise.resolve(null);
     });
 }
@@ -40,6 +43,9 @@ export function addToCart(productId: string): Promise<ClientResponse<Cart>> {
         .execute();
     })
     .catch((e) => {
+      if (e.name === ResponseErrorCodes.NETWORK_ERR || e.statusCode === 0) {
+        throw new NetworkError();
+      }
       // if e === 404 then we need to create a new cart
       if (e.statusCode === 404) {
         return client
@@ -49,34 +55,40 @@ export function addToCart(productId: string): Promise<ClientResponse<Cart>> {
           .post({ body: { currency: 'EUR', lineItems: [{ productId }] } })
           .execute(); // need to get it from store
       }
-      console.log(e);
       throw e;
     });
 }
 
 // quantity should be 0 to remove item from cart
 export function changeLineItemQuantity(productId: string, quantity: number): Promise<ClientResponse<Cart>> {
-  return getActiveCart().then((resp) => {
-    const currentItem = resp.body.lineItems.find((item) => item.productId === productId);
-    return client
-      .getClient()
-      .me()
-      .carts()
-      .withId({ ID: resp.body.id })
-      .post({
-        body: {
-          version: resp.body.version,
-          actions: [
-            {
-              action: 'changeLineItemQuantity',
-              lineItemId: currentItem?.id,
-              quantity: quantity,
-            },
-          ],
-        },
-      })
-      .execute();
-  });
+  return getActiveCart()
+    .then((resp) => {
+      const currentItem = resp.body.lineItems.find((item) => item.productId === productId);
+      return client
+        .getClient()
+        .me()
+        .carts()
+        .withId({ ID: resp.body.id })
+        .post({
+          body: {
+            version: resp.body.version,
+            actions: [
+              {
+                action: 'changeLineItemQuantity',
+                lineItemId: currentItem?.id,
+                quantity: quantity,
+              },
+            ],
+          },
+        })
+        .execute();
+    })
+    .catch((e) => {
+      if (e.name === ResponseErrorCodes.NETWORK_ERR || e.statusCode === 0) {
+        throw new NetworkError();
+      }
+      throw e;
+    });
 }
 
 export function clearCart(id: string, version: number) {
@@ -86,7 +98,13 @@ export function clearCart(id: string, version: number) {
     .carts()
     .withId({ ID: id })
     .delete({ queryArgs: { version: version } })
-    .execute();
+    .execute()
+    .catch((e) => {
+      if (e.name === ResponseErrorCodes.NETWORK_ERR || e.statusCode === 0) {
+        throw new NetworkError();
+      }
+      throw e;
+    });
 }
 
 export function addPromo(cartId: string, version: number, promo: string) {
@@ -101,7 +119,13 @@ export function addPromo(cartId: string, version: number, promo: string) {
         actions: [{ action: 'addDiscountCode', code: promo }],
       },
     })
-    .execute();
+    .execute()
+    .catch((e) => {
+      if (e.name === ResponseErrorCodes.NETWORK_ERR || e.statusCode === 0) {
+        throw new NetworkError();
+      }
+      throw e;
+    });
 }
 
 export function getActivePromo(id: string) {
@@ -128,5 +152,11 @@ export function removePromo(cartId: string, promoId: string, version: number) {
         ],
       },
     })
-    .execute();
+    .execute()
+    .catch((e) => {
+      if (e.name === ResponseErrorCodes.NETWORK_ERR || e.statusCode === 0) {
+        throw new NetworkError();
+      }
+      throw e;
+    });
 }

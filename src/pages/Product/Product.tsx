@@ -170,6 +170,7 @@ function Product() {
                         sx={{ fontSize: { xs: '0.7rem', sm: '1rem' } }}
                         onClick={() => {
                           dispatch(changeLineItemQuantityThunk({ id: product.id, quantity: 0 }))
+                            .unwrap()
                             .then(() => {
                               enqueueSnackbar('Product removed from cart', {
                                 variant: 'success',
@@ -193,6 +194,7 @@ function Product() {
                         sx={{ fontSize: { xs: '0.7rem', sm: '1rem' } }}
                         onClick={() => {
                           dispatch(addToCartThunk(product.id))
+                            .unwrap()
                             .then(() => {
                               enqueueSnackbar('Product added to cart', {
                                 variant: 'success',

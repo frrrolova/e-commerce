@@ -46,7 +46,7 @@ function Basket() {
   };
 
   useEffect(() => {
-    dispatch(getCartThunk());
+    dispatch(getCartThunk()).unwrap();
   }, []);
 
   useEffect(() => {
@@ -110,7 +110,20 @@ function Basket() {
 
   const handleClearCartClick = () => {
     if (cart) {
-      dispatch(clearCartThunk({ id: cart.id, version: cart.version }));
+      dispatch(clearCartThunk({ id: cart.id, version: cart.version }))
+        .unwrap()
+        .then(() => {
+          enqueueSnackbar(BasketRespResultMessages.PROMO_REMOVED, {
+            variant: 'success',
+            ...topSnackbarBasicParams,
+          });
+        })
+        .catch((err: ErrorObject) => {
+          enqueueSnackbar(err.message, {
+            variant: 'error',
+            ...topSnackbarBasicParams,
+          });
+        });
     }
   };
 
@@ -123,6 +136,7 @@ function Basket() {
           version: cart.version,
         }),
       )
+        .unwrap()
         .then(() => {
           enqueueSnackbar(BasketRespResultMessages.PROMO_REMOVED, {
             variant: 'success',
