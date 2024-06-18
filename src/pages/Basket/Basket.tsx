@@ -47,7 +47,11 @@ function Basket() {
   };
 
   useEffect(() => {
-    dispatch(getCartThunk()).unwrap();
+    dispatch(getCartThunk())
+      .unwrap()
+      .catch(() => {
+        console.error('User has not active cart');
+      });
   }, []);
 
   useEffect(() => {
@@ -114,7 +118,7 @@ function Basket() {
       dispatch(clearCartThunk({ id: cart.id, version: cart.version }))
         .unwrap()
         .then(() => {
-          enqueueSnackbar(BasketRespResultMessages.PROMO_REMOVED, {
+          enqueueSnackbar(BasketRespResultMessages.CART_CREARED, {
             variant: 'success',
             ...topSnackbarBasicParams,
           });
