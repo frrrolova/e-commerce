@@ -4,7 +4,6 @@ import { ThemeOptions, createTheme, responsiveFontSizes } from '@mui/material/st
 
 export const themeOptions: ThemeOptions = {
   palette: {
-    // type: 'dark',
     mode: 'dark',
     primary: {
       main: '#448c44',
@@ -20,7 +19,6 @@ export const themeOptions: ThemeOptions = {
   },
   breakpoints: {
     values: {
-      // xxs: 0, // small phone
       xs: 0, // phone
       sm: 600, // tablets
       md: 900, // small laptop

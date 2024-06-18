@@ -44,9 +44,7 @@ function Counter({ quantity, onDecreaseClick, onIncreaseClick, onValueChange, is
           }
         }}
         sx={{ borderRadius: '7px', minWidth: 'min-content', span: { padding: 0, m: 0, textAlign: 'center' } }}
-      >
-        {/* <RemoveIcon /> */}
-      </LoadingButton>
+      ></LoadingButton>
       <Paper>
         <TextField
           size="small"
@@ -86,9 +84,7 @@ function Counter({ quantity, onDecreaseClick, onIncreaseClick, onValueChange, is
         startIcon={<AddIcon fontSize="inherit" />}
         onClick={onIncreaseClick}
         sx={{ borderRadius: '7px', minWidth: 'min-content', span: { padding: 0, m: 0, textAlign: 'center' } }}
-      >
-        {/* <AddIcon /> */}
-      </LoadingButton>
+      ></LoadingButton>
     </Box>
   );
 }

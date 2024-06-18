@@ -73,8 +73,6 @@ export function Catalog() {
     fetchBreadcrumbs(activeCategory);
   }, [activeCategory]);
 
-  // if (error) return <Typography color="error">{error}</Typography>;
-
   const handleDrawerClose = () => {
     setIsClosing(true);
     setMobileOpen(false);

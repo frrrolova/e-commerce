@@ -107,12 +107,9 @@ function RegistrationForm() {
             apartment: values[AddressTypes.SHIPPING][FieldNames.APARTMENT],
           },
         ],
-        // shippingAddresses: [0],
-        // billingAddresses: [],
         defaultShippingAddress: isShippingDefault ? 0 : undefined,
         defaultBillingAddress: isBillingDefault ? (billingAsShipping ? 0 : 1) : undefined,
       };
-      // billingAsShipping ? newCustomerData.billingAddresses?.push(0) : newCustomerData.billingAddresses?.push(1);
       if (!billingAsShipping) {
         newCustomerData.addresses?.push({
           country: values[AddressTypes.BILLING][FieldNames.COUNTRY],
@@ -311,11 +308,6 @@ function RegistrationForm() {
         validateField={formik.validateField}
         values={formik.values[AddressTypes.SHIPPING]}
         countryCodes={countryCodes}
-        onFieldChange={async () => {
-          if (billingAsShipping) {
-            // await copyAddress();
-          }
-        }}
       />
 
       <Container
