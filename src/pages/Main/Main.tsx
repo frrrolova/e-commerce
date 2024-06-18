@@ -15,7 +15,7 @@ function Main() {
   const [productTop, setProductTop] = useState<Product | null>(null);
   const [productsOffer, setProductsOffer] = useState<Product[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const [promoData, setPromoData] = useState<InfoDataCard[] | null>(null);
+  const [promoData, setPromoData] = useState<InfoDataCard[]>([]);
 
   useEffect(() => {
     const loadProducts = async () => {
@@ -30,8 +30,6 @@ function Main() {
         console.log('Failed to fetch products');
       }
     };
-
-    loadProducts();
 
     const loadPromo = async () => {
       try {
@@ -48,7 +46,21 @@ function Main() {
     loadPromo();
   }, []);
 
-  if (error || !productTop) return <Typography color="error">{error}</Typography>;
+  if (error || !productTop)
+    return (
+      <Typography
+        color="error"
+        sx={{
+          position: 'absolute',
+          top: '50vh',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          textAlign: 'center',
+        }}
+      >
+        {error}
+      </Typography>
+    );
 
   return (
     <Box className={styles.container}>
@@ -75,7 +87,7 @@ function Main() {
           <Grid xs={12} className={styles.sectionTitle}>
             <Title title={PageData.TITLE_PROMO} />
           </Grid>
-          {promoData &&
+          {!!promoData.length &&
             promoData.map((promo, index) => (
               <Grid xs={12} mt={5} key={`card-${index}`}>
                 <InfoCard data={promo} button={InfoCardBtn} imageRight={index % 2 !== 0} />

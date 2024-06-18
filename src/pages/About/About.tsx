@@ -5,6 +5,7 @@ import { members } from './data';
 import { aboutConstants } from './constants';
 import theme from '@/themes/theme';
 import styles from './About.module.scss';
+import Title from '@/components/Title/Title';
 
 function About() {
   return (
@@ -17,29 +18,21 @@ function About() {
           gap: '20px',
           paddingX: '5px',
           paddingY: {
-            xs: '10px',
-            md: '30px',
+            xs: '64px',
+            md: '90px',
           },
           width: '98%',
           margin: {
-            xs: '50px auto',
-            md: '60px auto',
+            xs: '0 auto',
+            md: '0 auto',
           },
         }}
         component="main"
       >
-        <Typography
-          component="h1"
-          sx={{
-            width: '100%',
-            fontSize: '26px',
-            fontWeight: 'bold',
-            color: '#3A7609',
-            textAlign: 'center',
-          }}
-        >
-          {aboutConstants.common.title}
-        </Typography>
+        <Box className={styles.mainTitle}>
+          <Title title={aboutConstants.common.title} />
+        </Box>
+
         <Box
           className={styles.outer}
           component="div"

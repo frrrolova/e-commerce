@@ -2,14 +2,18 @@
 
 exports[`About Data in document is correct 1`] = `
 <main
-  class="MuiContainer-root MuiContainer-maxWidthLg css-wd36xf-MuiContainer-root"
+  class="MuiContainer-root MuiContainer-maxWidthLg css-1jhwm7d-MuiContainer-root"
   data-testid="about"
 >
-  <h1
-    class="MuiTypography-root MuiTypography-body1 css-1hp2ky8-MuiTypography-root"
+  <div
+    class="MuiBox-root css-0"
   >
-    Our team
-  </h1>
+    <h4
+      class="MuiTypography-root MuiTypography-h4 css-7uqf7p-MuiTypography-root"
+    >
+      Our team
+    </h4>
+  </div>
   <div
     class="MuiBox-root css-1bv4ar7"
   >
