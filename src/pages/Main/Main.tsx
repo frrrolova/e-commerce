@@ -20,7 +20,7 @@ function Main() {
   useEffect(() => {
     const loadProducts = async () => {
       try {
-        const productData = await catalogService.fetchProductById(PageData.TOP_PLANT_ID + '123');
+        const productData = await catalogService.fetchProductById(PageData.TOP_PLANT_ID);
         setProductTop(productData);
 
         const productsData = await catalogService.fetchProductsByCategory(PageData.CATEGORY_ID);
