@@ -6,7 +6,7 @@ import {
   changeLineItemQuantityThunk,
   clearCartThunk,
   getActivePromoThunk,
-  getCartThunk,
+  initCartThunk,
   removePromoThunk,
 } from './thunks';
 
@@ -42,7 +42,7 @@ export const cartSlice = createSlice({
   extraReducers: (builder) => {
     builder
       // getting cart
-      .addCase(getCartThunk.fulfilled, (state, action) => {
+      .addCase(initCartThunk.fulfilled, (state, action) => {
         state.cart = action.payload;
       })
       // adding product
