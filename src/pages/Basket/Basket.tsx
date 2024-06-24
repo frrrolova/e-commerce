@@ -4,7 +4,7 @@ import {
   changeLineItemQuantityThunk,
   clearCartThunk,
   getActivePromoThunk,
-  getCartThunk,
+  initCartThunk,
   removePromoThunk,
 } from '@/store/slices/cart/thunks';
 import { useAppDispatch, useAppSelector } from '@/store/store';
@@ -47,7 +47,7 @@ function Basket() {
   };
 
   useEffect(() => {
-    dispatch(getCartThunk())
+    dispatch(initCartThunk())
       .unwrap()
       .catch(() => {
         console.error('User has not active cart');

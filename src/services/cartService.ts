@@ -8,52 +8,58 @@ export function getActiveCart(): Promise<ClientResponse<Cart>> {
 }
 
 export function initCart(): Promise<Cart | null> {
-  return getActiveCart()
+  return client
+    .getClient()
+    .me()
+    .carts()
+    .get()
+    .execute()
     .then((resp) => {
-      return resp.body;
-    })
-    .catch(() => {
-      console.error('User has not active cart');
-      return Promise.resolve(null);
+      if (resp.body.results.length) {
+        return getActiveCart().then((r) => r.body);
+      }
+      return null;
     });
 }
 
 export function addToCart(productId: string): Promise<ClientResponse<Cart>> {
-  return getActiveCart()
+  return initCart()
     .then((res) => {
       // if active cart is existing we need to call updatedCart action
-      return client
-        .getClient()
-        .me()
-        .carts()
-        .withId({ ID: res.body.id })
-        .post({
-          body: {
-            version: res.body.version,
-            actions: [
-              {
-                action: 'addLineItem',
-                productId,
-                variantId: 1,
-                quantity: 1,
-              },
-            ],
-          },
-        })
-        .execute();
-    })
-    .catch((e) => {
-      if (e.name === ResponseErrorCodes.NETWORK_ERR || e.statusCode === 0) {
-        throw new NetworkError();
-      }
-      // if e === 404 then we need to create a new cart
-      if (e.statusCode === 404) {
+      if (res) {
+        return client
+          .getClient()
+          .me()
+          .carts()
+          .withId({ ID: res.id })
+          .post({
+            body: {
+              version: res.version,
+              actions: [
+                {
+                  action: 'addLineItem',
+                  productId,
+                  variantId: 1,
+                  quantity: 1,
+                },
+              ],
+            },
+          })
+          .execute();
+        // if no carts then we need to create a new cart
+      } else {
         return client
           .getClient()
           .me()
           .carts()
           .post({ body: { currency: 'EUR', lineItems: [{ productId }] } })
-          .execute(); // need to get it from store
+          .execute();
+      }
+    })
+    .catch((e) => {
+      // if no internet
+      if (e.name === ResponseErrorCodes.NETWORK_ERR || e.statusCode === 0) {
+        throw new NetworkError();
       }
       throw e;
     });

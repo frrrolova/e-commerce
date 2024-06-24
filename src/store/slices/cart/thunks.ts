@@ -3,17 +3,17 @@ import {
   addToCart,
   changeLineItemQuantity,
   clearCart,
-  getActiveCart,
   getActivePromo,
+  initCart,
   removePromo,
 } from '@/services/cartService';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ErrorResponse } from 'react-router-dom';
 import cartSlice from './cartSlice';
 
-export const getCartThunk = createAsyncThunk('cart/get', (_, thunkAPI) => {
-  return getActiveCart()
-    .then((resp) => resp.body)
+export const initCartThunk = createAsyncThunk('cart/init', (_, thunkAPI) => {
+  return initCart()
+    .then((resp) => resp)
     .catch((err: ErrorResponse) => {
       return thunkAPI.rejectWithValue(err);
     });
