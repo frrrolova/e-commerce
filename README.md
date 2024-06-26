@@ -49,6 +49,6 @@ The purpose of the project is to create an application where users can freely pu
 - **npm run test** - runs Jest tests
 - **npm run test:coverage** - runs test coverage check
 
-## Commits style guide 📝
+## Branches style guide 📝
 
 _last_name/{issue_number}-description_
