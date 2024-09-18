@@ -3,7 +3,7 @@ import { Avatar, Box, ListItem, ListItemAvatar, Typography, useMediaQuery } from
 import Counter from '../Counter/Counter';
 import { LineItem } from '@commercetools/platform-sdk';
 import RemoveBtn from '../RemoveBtn/RemoveBtn';
-import { centsInEuro, currency } from '@/core/commonConstants';
+import { centsInEuro, currency, locale } from '@/core/commonConstants';
 
 interface BasketProductProps {
   product: LineItem;
@@ -62,7 +62,7 @@ function BasketProduct({ product, onRemoveClick, onQuantityChange, isCounterLoad
     >
       <ListItemAvatar sx={{ mr: 3, alignSelf: 'center' }}>
         <Avatar
-          alt={product.name['en-GB']}
+          alt={product.name[locale]}
           src={product.variant.images?.[0].url}
           sx={{
             width: matchesExtraSmallScreen ? '75px' : { xs: '90px', md: '120px' },
@@ -96,7 +96,7 @@ function BasketProduct({ product, onRemoveClick, onQuantityChange, isCounterLoad
                 mb: 1,
               }}
             >
-              {product.name['en-GB']}
+              {product.name[locale]}
             </Typography>
             <Typography
               color={theme.palette.grey[400]}

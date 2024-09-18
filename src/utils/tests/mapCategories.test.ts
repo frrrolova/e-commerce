@@ -8,7 +8,7 @@ describe('mapCategories', () => {
         version: 1,
         createdAt: 'createdAt',
         lastModifiedAt: 'lastModifiedAt',
-        name: { 'en-US': 'name' },
+        name: { 'en-GB': 'name' },
         slug: { slug: 'slug' },
         ancestors: [],
         orderHint: 'orderHint',

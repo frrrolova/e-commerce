@@ -107,7 +107,7 @@ class CatalogService {
         type.attributes.forEach((attr) => {
           const filter: Filter = {
             name: attr.name,
-            label: attr.label[`en-US`],
+            label: attr.label[`en-GB`],
             options: (attr.type as AttributeEnumType).values,
           };
           filtersData.push(filter);
