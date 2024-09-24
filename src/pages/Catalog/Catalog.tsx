@@ -111,7 +111,7 @@ export function Catalog() {
       <Divider sx={{ mt: 2, mb: 2 }} />
 
       {/* Filters */}
-      <FiltersForm filtersValuesUrl={queryParams.filters} />
+      <FiltersForm />
     </Box>
   );
 
