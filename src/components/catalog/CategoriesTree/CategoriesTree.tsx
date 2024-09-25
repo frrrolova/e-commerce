@@ -64,7 +64,7 @@ const CategoriesTree: FC<CategoriesTreeProps> = ({ setActiveCategory, activeCate
           },
         }),
         ...(activeCategory !== nodes.id && {
-          [`& .MuiTreeItem-content:not(.Mui-selected)`]: {
+          [`& .MuiTreeItem-content`]: {
             backgroundColor: 'transparent!important',
           },
         }),
