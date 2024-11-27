@@ -5,8 +5,8 @@ export enum PageData {
   SUBTEXT = 'Step into a lush oasis of tranquility with our exquisite collection of indoor plants, where every leaf tells a story of beauty and natural elegance.',
   TITLE_PROMO = 'Promotions',
   TITLE_DISCOUNT = 'Our special offers',
-  TOP_PLANT_ID = '13060b9f-0f5d-4163-8a42-224c3e7153a2',
-  CATEGORY_ID = '0603e9fb-a319-4165-85b7-048669d10e18',
+  TOP_PLANT_ID = '64a5194f-854c-4906-be07-3d3eda79a001',
+  CATEGORY_ID = 'daf5028f-772b-4b35-a568-385a353982d5',
   TO_CATALOG = 'To Catalog',
 }
 
