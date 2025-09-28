@@ -1,0 +1,10 @@
+@mixin scrollbar {
+  width: $scrollbar-width;
+  color: $scrollbar-color;
+}
+
+@mixin scrollbarThumb {
+  width: $thumb-width;
+  border-radius: $thumb-radius;
+  background-color: $thumb-back;
+}

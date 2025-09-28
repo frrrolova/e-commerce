@@ -1,0 +1,21 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.scrollable-list {
+  &::-webkit-scrollbar {
+    @include scrollbar;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    @include scrollbarThumb;
+  }
+
+  /* hiding arrows */
+  &::-webkit-scrollbar-button:vertical:start:decrement {
+    display: none;
+  }
+
+  &::-webkit-scrollbar-button:vertical:end:increment {
+    display: none;
+  }
+}

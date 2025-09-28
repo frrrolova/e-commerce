@@ -1,0 +1,80 @@
+@import '../../styles/variables';
+
+.header {
+  .logoBox {
+    &:hover {
+      cursor: pointer;
+    }
+
+    @media only screen and (max-width: 380px) {
+      .logoText {
+        font-size: 1rem;
+        line-height: 32px;
+      }
+    }
+
+    @media only screen and (max-width: 300px) {
+      .logoText {
+        display: none;
+      }
+    }
+  }
+
+  .logo {
+    height: 2rem;
+    margin-right: 0.5rem;
+  }
+
+  &[data-scrolled='true'] {
+    background-color: $paper-color;
+    opacity: 0.8;
+  }
+
+  .toolbar {
+    justify-content: space-between;
+  }
+
+  .navMd {
+    button {
+      position: relative;
+      margin-top: 21px;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background-color: $border-green-color;
+        transition: all 0.3s ease;
+      }
+    }
+  }
+
+  .activeMenuItem {
+    color: $border-green-color;
+  }
+
+  .activeMenuItem::after {
+    width: 100% !important;
+  }
+}
+
+.activeMenuItem {
+  color: $border-green-color;
+}
+
+.customIconButton {
+  padding: 8px;
+
+  @media screen and (max-width: 500px) {
+    width: 40px;
+    height: 40px;
+  }
+
+  @media screen and (min-width: 501px) {
+    width: 56px;
+    height: 56px;
+  }
+}
